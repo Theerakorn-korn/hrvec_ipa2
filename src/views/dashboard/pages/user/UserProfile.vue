@@ -12,7 +12,7 @@
         <base-material-card>
           <template v-slot:heading>
             <div class="display-2 font-weight-light">
-              Edit Profile
+             ข้อมูลบุคคล
             </div>
 
             <div class="subtitle-1 font-weight-light">
@@ -173,6 +173,34 @@
 
 <script>
   export default {
-    //
+    data(){
+      return{
+        editmemberdialog: false,
+        editmember: {},
+        personnel:{},
+      }
+    },
+    async mounted() {
+      let result = {}
+      let userSession = JSON.parse(sessionStorage.getItem('user')) || 0
+      // this.system_lock = userSession.system_lock
+      //console.log(userSession)
+      result = await this.$http.post('crud_personnel.php?crud=read', {
+        id_card: userSession.id_card,      
+      })     
+       this.personnel = result.data
+     
+    },
+
+     methods: {
+    //Edit data
+    async memberEdit(ID_m) {
+      let result = await this.$http.post("crud_personnel.php", { id_card: id_card });
+      this.editmember = result.data;
+      this.editmemberdialog = true;
+    },    
+  },
   }
+  
+ 
 </script>

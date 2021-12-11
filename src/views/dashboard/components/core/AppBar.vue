@@ -7,8 +7,7 @@
     height="75"
     elevate-on-scroll
       scroll-target="#scrolling-techniques-7" 
-    class="text_google"
-    
+    class="text_google"    
   >
     <v-btn
       class="mr-3"
@@ -33,27 +32,6 @@
     />
 
     <v-spacer />
-
-    <v-text-field
-      :label="$t('search')"
-      color="secondary"
-      hide-details
-      style="max-width: 300px;"
-    >
-      <template
-        v-if="$vuetify.breakpoint.mdAndUp"
-        v-slot:append-outer
-      >
-        <v-btn
-          class="mt-n2"
-          elevation="1"
-          fab
-          small
-        >
-          <v-icon>mdi-magnify</v-icon>
-        </v-btn>
-      </template>
-    </v-text-field>
 
     <div class="mx-3" />
 

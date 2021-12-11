@@ -1,16 +1,14 @@
 <template>
   <v-container id="dashboard" fluid tag="section">
     <v-row>
-      <v-col cols="12" sm="6" lg="3">
-         <vue-numeric currency="" separator="," v-model="showAlldata.count_id"></vue-numeric>
+      <v-col cols="12" sm="6" lg="3">        
         <base-material-stats-card
         v-model="showAlldata.count_id"
           color="info"
           icon="mdi-account-group"
           title="ครูบุคลากรทั้งหมด"         
           sub-icon="mdi-clock"
-          sub-text="Just Updated"
-        
+          sub-text="Just Updated"        
         />
       </v-col>
 

@@ -10,8 +10,7 @@
     app
     width="260"
     v-bind="$attrs"
-    class="text_google"
-    :elevation="hover ? 24 : 6"
+    class="text_google"   
   >
     <template v-slot:img="props">
       <v-img :gradient="`to bottom, ${barColor}`" v-bind="props" />

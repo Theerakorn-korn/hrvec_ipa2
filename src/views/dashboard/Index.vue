@@ -1,9 +1,9 @@
 <template>
   <v-app>
-    <dashboard-Core-App-Bar />
-    <dashboard-core-drawer  :elevation="hover ? 24 : 6" />
-    <dashboard-core-view />
-    <dashboard-core-settings />
+    <dashboard-Core-App-Bar/>
+    <dashboard-core-drawer/>
+    <dashboard-core-view/>
+    <dashboard-core-settings/>
   </v-app>
 </template>
 

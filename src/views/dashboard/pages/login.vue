@@ -2,7 +2,7 @@
   <v-container id="user-profile" fluid tag="section" class="text_google">
     <v-row justify="center">
       <v-col cols="12" md="8">
-        <base-material-card :elevation="hover ? 24 : 6">
+        <base-material-card>
           <template v-slot:heading>
             <div class="display-2 font-weight-light">Login Member</div>
 
@@ -91,9 +91,9 @@
                  this.dialog_msg = 'A'
                   this.$router.push("/admin")           
             }                  
-            else if (user.user_status == "u"){
+            else if (user.user_status == "tech"){
                 this.dialog = true
-                 this.dialog_msg = 'u'
+                 this.dialog_msg = 'tech'
            sessionStorage.setItem('user', JSON.stringify(user))
              this.$router.push("/user")   
             }           
