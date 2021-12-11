@@ -10,7 +10,7 @@
     app
     width="260"
     v-bind="$attrs"
-    class="text_google"   
+    class="text_google"
   >
     <template v-slot:img="props">
       <v-img :gradient="`to bottom, ${barColor}`" v-bind="props" />
@@ -33,8 +33,6 @@
     <v-divider class="mb-2" />
 
     <v-list expand nav>
-      <!-- Style cascading bug  -->
-      <!-- https://github.com/vuetifyjs/vuetify/pull/8574 -->
       <div />
 
       <template v-for="(item, i) in computedItems">
@@ -45,51 +43,9 @@
         <base-item v-else :key="`item-${i}`" :item="item" />
       </template>
 
-      <!-- Style cascading bug  -->
-      <!-- https://github.com/vuetifyjs/vuetify/pull/8574 -->
       <div />
     </v-list>
     <template v-slot:append>
-      <v-list>  
-
-        <v-list-group :value="true" prepend-icon="mdi-account-circle">
-          <template v-slot:activator>
-            <v-list-item-title>Users</v-list-item-title>
-          </template>
-
-          <v-list-group :value="true" no-action sub-group>
-            <template v-slot:activator>
-              <v-list-item-content>
-                <v-list-item-title>Admin</v-list-item-title>
-              </v-list-item-content>
-            </template>
-
-            <v-list-item v-for="([title, icon], i) in admins" :key="i" link>
-              <v-list-item-title v-text="title"></v-list-item-title>
-
-              <v-list-item-icon>
-                <v-icon v-text="icon"></v-icon>
-              </v-list-item-icon>
-            </v-list-item>
-          </v-list-group>
-
-          <v-list-group no-action sub-group>
-            <template v-slot:activator>
-              <v-list-item-content>
-                <v-list-item-title>Actions</v-list-item-title>
-              </v-list-item-content>
-            </template>
-
-            <v-list-item v-for="([title, icon], i) in cruds" :key="i" link>
-              <v-list-item-title v-text="title"></v-list-item-title>
-
-              <v-list-item-icon>
-                <v-icon v-text="icon"></v-icon>
-              </v-list-item-icon>
-            </v-list-item>
-          </v-list-group>
-        </v-list-group>
-      </v-list>
       <base-item
         :item="{
           title: 'ออกจากระบบ',
@@ -125,26 +81,28 @@ export default {
       {
         title: "ข้อมูลคุณวุฒิการศึกษา",
         icon: "mdi-account-multiple-check",
-        to: "/ducation_evel",
+        to: "/education",
       },
       {
         title: "ข้อมูลประสบการณ์",
         icon: "mdi-airplane",
-        to: "#",
+        to: "/experience",
+      },
+       {
+        title: "ข้อมูลประวัติการทำงาน",
+        icon: "mdi-airplane",
+        to: "/workhistory",
       },
       {
-        title: "ข้อมูลการเลื่อนขั้นเงินเดือน",
+        title: "ข้อมูลผลงาน รางวัล",
         icon: "mdi-more",
-        to: "#",
+        to: "/award",
       },
-    ],
-    admins: [
-      ["Management", "mdi-account-multiple-outline"],
-      ["Settings", "mdi-cog-outline"],
-    ],
-    cruds: [
-      ["Create", "mdi-plus-outline"],
-      ["Read", "mdi-file-outline"],      
+       {
+        title: "ข้อมูลโทษ วินัย",
+        icon: "mdi-more",
+        to: "/discipline",
+      },
     ],
   }),
 

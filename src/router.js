@@ -93,7 +93,8 @@ export default new Router({
                     path: '/test_member',
                     component: () =>
                         import ('@/views/dashboard/pages/administrator/test_member'),
-                },               
+                },             
+
             ]
         },
         {
@@ -115,10 +116,34 @@ export default new Router({
                 },               
                 {
                     name: 'ข้อมูลคุณวุฒิการศึกษา',
-                    path: '/ducation_evel',
+                    path: '/education',
                     component: () =>
-                        import ('@/views/dashboard/pages/user/ducation_evel'),
+                        import ('@/views/dashboard/pages/user/education'),
                 },
+                {
+                    name: 'ข้อมูลประสบการณ์',
+                    path: '/experience',
+                    component: () =>
+                        import ('@/views/dashboard/pages/user/experience'),
+                }, 
+                {
+                    name: 'ข้อมูลประวัติการทำงาน',
+                    path: '/workhistory',
+                    component: () =>
+                        import ('@/views/dashboard/pages/user/workhistory'),
+                }, 
+                {
+                    name: 'ข้อมูลผลงาน รางวัล',
+                    path: '/award',
+                    component: () =>
+                        import ('@/views/dashboard/pages/user/award'),
+                },  
+                {
+                    name: 'ข้อมูลวินัย โทษ',
+                    path: '/award',
+                    component: () =>
+                        import ('@/views/dashboard/pages/user/discipline'),
+                },                
             ]
         },
     ],

@@ -44,31 +44,7 @@
           :items="education"
           :search="search"
           :class="elevation - 3"
-        >
-          <!--  <template v-slot:item.p_img="{ item }">
-            <img
-              :src="require('./fileUpload/' + item.p_img) || ''"
-              width="50"
-              :elevation="hover ? 24 : 6"           
-            />
-          </template>
-          -->
-          <!--  <template v-slot:item.action="{ item }" width="10%">
-            <v-icon
-              color="yellow"
-              :elevation="hover ? 24 : 6"
-              @click.stop="educationEdit(item.cat_id)"
-            >
-              mdi-pencil
-            </v-icon>
-            <v-icon
-              color="red"
-              :elevation="hover ? 24 : 6"
-              @click.stop="educationDelete(item.cat_id)"
-            >
-              mdi-delete
-            </v-icon>
-          </template>-->
+        >        
           <v-alert
             slot="no-results"
             :value="true"
@@ -104,21 +80,44 @@
                           <v-combobox
                             v-model="addeducation.ed_level"
                             :items="items"
-                            label="วุฒิการศึกษา"
+                            label="ระดับการศึกษา"
                             dense
                             :rules="[(v) => !!v || '']"
                           ></v-combobox>
-                          <!--  <v-text-field
-                            v-model="addeducation.cat_name"
+                        
+                        </v-col>
+                        <v-col cols="12" lg="6">
+                          <v-text-field
+                            v-model="addeducation.ed_university"
                             dense
-                            filled
-                            label="วุฒิการศึกษา : "
+                            label="คณะวิชา : "
                             item-value="cat_name"
                             prepend-icon="mdi-barcode"
                             request
-                            rounded
                             :rules="[(v) => !!v || '']"
-                          ></v-text-field>-->
+                          ></v-text-field>
+                        </v-col>
+                         <v-col cols="12" lg="6">
+                          <v-text-field
+                            v-model="addeducation.ed_university"
+                            dense
+                            label="สาขาวิชา : "
+                            item-value="cat_name"
+                            prepend-icon="mdi-barcode"
+                            request
+                            :rules="[(v) => !!v || '']"
+                          ></v-text-field>
+                        </v-col>
+                        <v-col cols="12" lg="6">
+                          <v-text-field
+                            v-model="addeducation.ed_university"
+                            dense
+                            label="สถานศึกษาที่จบ : "
+                            item-value="cat_name"
+                            prepend-icon="mdi-barcode"
+                            request
+                            :rules="[(v) => !!v || '']"
+                          ></v-text-field>
                         </v-col>
                          <v-col cols="12" lg="6">
                           <v-menu
@@ -150,19 +149,9 @@
                             ></v-date-picker>
                           </v-menu>
                         </v-col>
-                        <v-col cols="12" lg="12">
-                          <v-text-field
-                            v-model="addeducation.ed_university"
-                            dense
-                            label="สถานศึกษา/มหาวิทยาลัย : "
-                            item-value="cat_name"
-                            prepend-icon="mdi-barcode"
-                            request
-                            :rules="[(v) => !!v || '']"
-                          ></v-text-field>
-                        </v-col>
+                        
                        
-                        <v-col cols="12" lg="12">
+                        <v-col cols="12" lg="6">
                           <v-text-field
                             v-model="addeducation.ed_gpa"
                             dense
@@ -443,9 +432,12 @@ export default {
       currentPK: null,
       headers: [
         { text: "ลำดับ", align: "center", value: "cat_id" },
-        { text: "หมวดหลัก", align: "left", value: "cat_name" },
-        { text: "หมวดย่อย", align: "left", value: "p_img" },
-        { text: "ดำเนินการแก้ไข", align: "center", value: "action" },
+        { text: "ระดับการศึกษา", align: "left", value: "cat_name" },
+        { text: "คณะวิชา", align: "left", value: "p_img" },
+        { text: "สาขาวิชา", align: "center", value: "action" },
+        { text: "จบจาก", align: "center", value: "action" },
+        { text: "ปีที่จบ", align: "center", value: "action" },
+        { text: "ผลการเรียน", align: "center", value: "action" },       
       ],
       rowsperpage: [
         25,
