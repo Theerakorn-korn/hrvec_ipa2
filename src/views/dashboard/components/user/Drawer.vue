@@ -37,9 +37,7 @@
 
       <template v-for="(item, i) in computedItems">
         <base-item-group v-if="item.children" :key="`group-${i}`" :item="item">
-          <!--  -->
         </base-item-group>
-
         <base-item v-else :key="`item-${i}`" :item="item" />
       </template>
 
@@ -51,6 +49,7 @@
           title: 'ออกจากระบบ',
           icon: 'mdi-package-up',         
         }"
+        @click="logout()"
       />
     </template>
   </v-navigation-drawer>
@@ -88,19 +87,19 @@ export default {
         icon: "mdi-airplane",
         to: "/experience",
       },
-       {
+      {
         title: "ข้อมูลประวัติการทำงาน",
-        icon: "mdi-airplane",
+        icon: "mdi-access-point-network",
         to: "/workhistory",
       },
       {
         title: "ข้อมูลผลงาน รางวัล",
-        icon: "mdi-more",
+        icon: "mdi-anchor",
         to: "/award",
       },
-       {
+      {
         title: "ข้อมูลโทษ วินัย",
-        icon: "mdi-more",
+        icon: "mdi-arrow-all",
         to: "/discipline",
       },
     ],
@@ -126,6 +125,11 @@ export default {
       };
     },
   },
+mounted() {
+      let user = JSON.parse(sessionStorage.getItem('user')) || 0
+      if (user.user_status != 'tech')
+        this.$router.push('/')
+    },
 
   methods: {
     mapItem(item) {
@@ -134,6 +138,10 @@ export default {
         children: item.children ? item.children.map(this.mapItem) : undefined,
         title: this.$t(item.title),
       };
+    },    
+     logout() {
+      sessionStorage.clear()
+        this.$router.push('/')   
     },
   },
 };

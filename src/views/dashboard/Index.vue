@@ -19,19 +19,6 @@ export default {
   data: () => ({    
     expandOnHover: false,
   }),
-   mounted() {
-    let user = JSON.parse(sessionStorage.getItem("user")) || 0;
-    if (user.user_status != "B") this.$router.push("/");   
-  },
-   methods: {
-    home() {
-      this.$router.push("/Home");
-    },
-    logout() {
-      sessionStorage.clear();
-      this.$router.push("/");
-    },
-  },
 
 };
 </script>

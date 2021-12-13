@@ -492,7 +492,8 @@ export default {
       showAlldatasedr:[],
     };
   },
-  async mounted() {
+  
+  mounted() {
     this.getAlldata();
     this.getAlldatatech();
     this.getAlldatadr();
@@ -518,7 +519,6 @@ export default {
       let result = await this.$http.post("show_dashboard_se_dr.php");
       this.showAlldatasedr = result.data;
     },    
-  },
-  
+  },  
 };
 </script>

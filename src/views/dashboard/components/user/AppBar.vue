@@ -1,62 +1,21 @@
 <template>
-  <v-app-bar
-    id="app-bar"
-    absolute
-    app
-    color="#ffffff"
-    flat
-    height="75"
-    class="text_google"
-  >
-    <v-btn
-      class="mr-3"
-      elevation="1"
-      fab
-      small
-      @click="setDrawer(!drawer)"
-    >
-      <v-icon v-if="value">
-        mdi-view-quilt
-      </v-icon>
+  <v-app-bar id="app-bar" absolute app color="#ffffff" flat height="75" class="text_google">
+    <v-btn class="mr-3" elevation="1" fab small @click="setDrawer(!drawer)">
+      <v-icon v-if="value">mdi-view-quilt</v-icon>
 
-      <v-icon v-else>
-        mdi-dots-vertical
-      </v-icon>
+      <v-icon v-else>mdi-dots-vertical</v-icon>
     </v-btn>
 
-    <v-toolbar-title
-      class="hidden-sm-and-down font-light"
-      v-text="$route.name"
-      color="white"
-    />
+    <v-toolbar-title class="hidden-sm-and-down font-light" v-text="$route.name" color="white" />
 
     <v-spacer />
 
-    
-
     <div class="mx-3" />
 
-
-    <v-menu
-      bottom
-      left
-      offset-y
-      origin="top right"
-      transition="scale-transition"
-    >
+    <v-menu bottom left offset-y origin="top right" transition="scale-transition">
       <template v-slot:activator="{ attrs, on }">
-        <v-btn
-          class="ml-2"
-          min-width="0"
-          text
-          v-bind="attrs"
-          v-on="on"
-        >
-          <v-badge
-            color="red"
-            overlap
-            bordered
-          >
+        <v-btn class="ml-2" min-width="0" text v-bind="attrs" v-on="on">
+          <v-badge color="red" overlap bordered>
             <template v-slot:badge>
               <span>5</span>
             </template>
@@ -66,97 +25,93 @@
         </v-btn>
       </template>
 
-      <v-list
-        :tile="false"
-        nav
-      >
+      <v-list :tile="false" nav>
         <div>
-          <app-bar-item
-            v-for="(n, i) in notifications"
-            :key="`item-${i}`"
-          >
+          <app-bar-item v-for="(n, i) in notifications" :key="`item-${i}`">
             <v-list-item-title v-text="n" />
           </app-bar-item>
         </div>
       </v-list>
-    </v-menu>
+    </v-menu>  
+    <v-btn class="ml-2" min-width="0" text to="/transference_personnel">
+      <v-icon>mdi-file-send</v-icon>การย้ายสายการสอน
+    </v-btn>
 
-    <v-btn
-      class="ml-2"
-      min-width="0"
-      text      
-       @click="logout()"
-    >
-      <v-icon>mdi-account-off</v-icon>
+    <v-btn class="ml-2" min-width="0" text @click="logout()">
+      <v-icon>mdi-exit-to-app</v-icon>ออกจากระบบ
     </v-btn>
   </v-app-bar>
 </template>
 
 <script>
-  // Components
-  import { VHover, VListItem } from 'vuetify/lib'
+// Components
+import { VHover, VListItem } from "vuetify/lib";
 
-  // Utilities
-  import { mapState, mapMutations } from 'vuex'
+// Utilities
+import { mapState, mapMutations } from "vuex";
 
-  export default {
-    name: 'DashboarduserAppBar',
+export default {
+  name: "DashboarduserAppBar",
 
-    components: {
-      AppBarItem: {
-        render (h) {
-          return h(VHover, {
-            scopedSlots: {
-              default: ({ hover }) => {
-                return h(VListItem, {
+  components: {
+    AppBarItem: {
+      render(h) {
+        return h(VHover, {
+          scopedSlots: {
+            default: ({ hover }) => {
+              return h(
+                VListItem,
+                {
                   attrs: this.$attrs,
                   class: {
-                    'black--text': !hover,
-                    'white--text secondary elevation-12': hover,
+                    "black--text": !hover,
+                    "white--text secondary elevation-12": hover,
                   },
                   props: {
-                    activeClass: '',
+                    activeClass: "",
                     dark: hover,
                     link: true,
                     ...this.$attrs,
                   },
-                }, this.$slots.default)
-              },
+                },
+                this.$slots.default
+              );
             },
-          })
-        },
+          },
+        });
       },
     },
+  },
 
-    props: {
-      value: {
-        type: Boolean,
-        default: false,
-      },
+  props: {
+    value: {
+      type: Boolean,
+      default: false,
     },
+  },
 
-    data: () => ({
-      notifications: [
-        'Mike John Responded to your email',
-        'You have 5 new tasks',
-        'You\'re now friends with Andrew',
-        'Another Notification',
-        'Another one',
-      ],
+  data: () => ({
+    notifications: [
+      "Mike John Responded to your email",
+      "You have 5 new tasks",
+      "You're now friends with Andrew",
+      "Another Notification",
+      "Another one",
+    ],
+  }),
+
+  computed: {
+    ...mapState(["drawer"]),
+  },
+
+  methods: {
+    ...mapMutations({
+      setDrawer: "SET_DRAWER",
     }),
-
-    computed: {
-      ...mapState(['drawer']),
+    logout() {
+      sessionStorage.clear();
+      this.$router.push("/");
     },
-
-    methods: {
-      ...mapMutations({
-        setDrawer: 'SET_DRAWER',
-      }),
-       logout() {
-        sessionStorage.clear()
-        this.$router.push('/')
-      },
-    },
-  }
+  },
+};
 </script>

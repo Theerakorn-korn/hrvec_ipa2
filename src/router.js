@@ -143,7 +143,13 @@ export default new Router({
                     path: '/award',
                     component: () =>
                         import ('@/views/dashboard/pages/user/discipline'),
-                },                
+                },  
+                {
+                    name: 'การย้ายสายการสอน',
+                    path: '/transference_personnel',
+                    component: () =>
+                        import ('@/views/dashboard/pages/user/transference_personnel'),
+                },                 
             ]
         },
     ],
