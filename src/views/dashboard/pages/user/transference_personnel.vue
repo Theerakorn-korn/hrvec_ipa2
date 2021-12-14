@@ -11,7 +11,7 @@
           <v-form ref="addtransference_personnelform" lazy-validation>
             <v-card class="pa-2 ma-2">
               <v-card-title>
-                <div class="font-weight-light v-size--x-large">ข้อมูลเบื้องต้น</div>
+                <div class="font-weight-light v-size--x-large"><v-icon large left>mdi-account-details</v-icon> ข้อมูลเบื้องต้น</div>
               </v-card-title>
               <v-row>
                 <v-col cols="12" sm="3">
@@ -19,7 +19,7 @@
                     v-model="addtransference_personnel.time_s"
                     dense
                     label="ครั้งที่ :"
-                    prepend-icon="mdi-account"
+                    prepend-icon="mdi-account-details"
                     request
                     disabled
                   ></v-text-field>
@@ -29,7 +29,7 @@
                     v-model="addtransference_personnel.year_s"
                     dense
                     label="ประจำปี :"
-                    prepend-icon="mdi-account"
+                    prepend-icon="mdi-account-details"
                     request
                     disabled
                   ></v-text-field>
@@ -39,7 +39,7 @@
                     v-model="addtransference_personnel.id_card"
                     dense
                     label="เขียนที่ : "
-                    prepend-icon="mdi-account"
+                    prepend-icon="mdi-account-details"
                     request
                     disabled
                   ></v-text-field>
@@ -49,7 +49,7 @@
                     v-model="addtransference_personnel.id_card"
                     dense
                     label="วันที่ยื่นคำร้อง : "
-                    prepend-icon="mdi-account"
+                    prepend-icon="mdi-account-details"
                     request
                     disabled
                   ></v-text-field>
@@ -59,7 +59,7 @@
                     v-model="addtransference_personnel.id_card"
                     dense
                     label="ชื่อ : "
-                    prepend-icon="mdi-account"
+                    prepend-icon="mdi-account-details"
                     request
                     disabled
                   ></v-text-field>
@@ -69,7 +69,7 @@
                     v-model="addtransference_personnel.id_card"
                     dense
                     label="นามสกุล : "
-                    prepend-icon="mdi-account"
+                    prepend-icon="mdi-account-details"
                     request
                     disabled
                   ></v-text-field>
@@ -79,7 +79,7 @@
                     v-model="addtransference_personnel.id_card"
                     dense
                     label="เลขที่ตำแหน่ง : "
-                    prepend-icon="mdi-account"
+                    prepend-icon="mdi-account-details"
                     request
                     disabled
                   ></v-text-field>
@@ -89,7 +89,7 @@
                     v-model="addtransference_personnel.id_card"
                     dense
                     label="วิทยฐานะ (กรณีข้าราชการครู) : "
-                    prepend-icon="mdi-account"
+                    prepend-icon="mdi-account-details"
                     request
                     disabled
                   ></v-text-field>
@@ -99,7 +99,7 @@
                     v-model="addtransference_personnel.id_card"
                     dense
                     label="สังกัด (สถานศึกษา) : "
-                    prepend-icon="mdi-account"
+                    prepend-icon="mdi-account-details"
                     request
                     disabled
                   ></v-text-field>
@@ -109,7 +109,7 @@
                     v-model="addtransference_personnel.id_card"
                     dense
                     label="รหัสบัตรประชาชน : "
-                    prepend-icon="mdi-account"
+                    prepend-icon="mdi-account-details"
                     request
                     disabled
                   ></v-text-field>
@@ -120,7 +120,7 @@
                     v-model="addtransference_personnel.date_appoinment"
                     dense
                     label="วันที่เริ่มบรรจุเข้ารับราชการ :"
-                    prepend-icon="mdi-account"
+                    prepend-icon="mdi-account-details"
                     request
                     disabled
                   ></v-text-field>
@@ -130,7 +130,7 @@
                     v-model="addtransference_personnel.date_appoinment_now"
                     dense
                     label="ระยะเวลาตั้งแต่บรรจุเข้ารับราชการ :"
-                    prepend-icon="mdi-account"
+                    prepend-icon="mdi-account-details"
                     request
                     disabled
                   ></v-text-field>
@@ -140,7 +140,7 @@
                     v-model="addtransference_personnel.time_s"
                     dense
                     label="วันที่เริ่มปฏิบัติหน้าที่ในสถานศึกษาปัจจุบัน :"
-                    prepend-icon="mdi-account"
+                    prepend-icon="mdi-account-details"
                     request
                     disabled
                   ></v-text-field>
@@ -150,7 +150,7 @@
                     v-model="addtransference_personnel.time_s"
                     dense
                     label="ปฏิบัติหน้าที่เป็นเวลา :"
-                    prepend-icon="mdi-account"
+                    prepend-icon="mdi-account-details"
                     request
                     disabled
                   ></v-text-field>
@@ -160,7 +160,7 @@
                     v-model="addtransference_personnel.time_s"
                     dense
                     label="สถานะภาพ :"
-                    prepend-icon="mdi-account"
+                    prepend-icon="mdi-account-details"
                     request
                     disabled
                   ></v-text-field>
@@ -199,12 +199,12 @@
 
             <v-card class="pa-2 ma-2">
               <v-card-title>
-                <div class="font-weight-light v-size--x-large">ปัจจุบันปฏิบัติการสอน</div>
+                <div class="font-weight-light v-size--x-large"><v-icon large left>mdi-electron-framework</v-icon> ปัจจุบันปฏิบัติการสอน</div>
               </v-card-title>
               <v-row>
                 <v-col cols="12" sm="12">
                   <v-row justify="center">
-                    <v-card class="mx-auto pa-2">
+                    <v-card class="mx-auto pa-2" color="#ECE4E2">
                       <v-radio-group v-model="radio_tech" row>
                         
                         <v-radio value="dtech" v-on:click="isHidden = true">
@@ -233,7 +233,7 @@
                           :counter="100"
                           outlined
                           label="วิชาที่สอน ที่ 1:"
-                          prepend-icon="mdi-account"
+                          prepend-icon="mdi-notebook"
                         ></v-text-field>
                       </v-col>
                       <v-col cols="12" sm="6">
@@ -242,7 +242,7 @@
                           :counter="100"
                           outlined
                           label="วิชาที่สอน ที่ 2:"
-                          prepend-icon="mdi-account"
+                         prepend-icon="mdi-notebook"
                           request
                           :rules="[(v) => !!v || '']"
                         ></v-text-field>
@@ -253,7 +253,7 @@
                           :counter="100"
                           outlined
                           label="วิชาที่สอน ที่ 3:"
-                          prepend-icon="mdi-account"
+                         prepend-icon="mdi-notebook"
                           request
                           :rules="[(v) => !!v || '']"
                         ></v-text-field>
@@ -264,7 +264,7 @@
                           :counter="100"
                           outlined
                           label="วิชาที่สอน ที่ 4:"
-                          prepend-icon="mdi-account"
+                          prepend-icon="mdi-notebook"
                           request
                           :rules="[(v) => !!v || '']"
                         ></v-text-field>
@@ -274,7 +274,7 @@
                           v-model="addtransference_personnel.perform_other_duties"
                           outlined
                           label="หน้าที่อื่นที่ได้รับมอบหมาย :"
-                          prepend-icon="mdi-account"
+                          prepend-icon="mdi-account-network"
                           request
                           :rules="[(v) => !!v || '']"
                         ></v-text-field>
@@ -287,22 +287,21 @@
 
             <v-card class="pa-2 ma-2">
               <v-card-title>
-                <div class="font-weight-light v-size--x-large">อยู่ระหว่างช่วยปฏิบัติราชการหรือไม่</div>
-              </v-card-title>
-              <hr />
+                <div class="font-weight-light v-size--x-large"><v-icon large left>mdi-office-building-marker</v-icon> อยู่ระหว่างช่วยปฏิบัติราชการหรือไม่</div>
+              </v-card-title>             
               <v-row>
                 <v-col cols="12" sm="12">
                   <v-row justify="center">
-                    <v-card class="mx-auto pa-2">
+                    <v-card class="mx-auto pa-2" color="#ECE4E2">
                        <v-radio-group row>                        
-                        <v-radio>
+                        <v-radio v-on:click="isHidden_service_gov = true">
                           <template v-slot:label>
                             <div>                            
                               <strong class="primary--text">ไม่อยู่</strong>
                             </div>
                           </template>
                         </v-radio>
-                        <v-radio>
+                        <v-radio v-on:click="isHidden_service_gov = !isHidden_service_gov">
                           <template v-slot:label>
                             <div>                             
                               <strong class="warning--text">ช่วยปฏิบัติราชการ</strong>
@@ -315,15 +314,16 @@
                   </v-row>
                 </v-col>
                 <v-col cols="12" sm="12">
-                  <v-card class="pa-2 ma-2">
+                  <v-card class="pa-2 ma-2" v-if="!isHidden_service_gov" hidden>
                     <v-row>
                       <v-col cols="12" sm="6">
-                        <v-text-field
+                        <v-text-field                       
                           v-model="addtransference_personnel.reason_1"
                           :counter="100"
                           outlined
                           label="ช่วยปฏิบัติราชการอยู่ที่ :"
-                          prepend-icon="mdi-account"
+                          prepend-icon="mdi-office-building-marker"
+
                         ></v-text-field>
                       </v-col>
                       <v-col cols="12" sm="6">
@@ -332,7 +332,7 @@
                           :counter="100"
                           outlined
                           label="เริ่มปฏิบัติราชการ คำสั่งที่ :"
-                          prepend-icon="mdi-account"
+                          prepend-icon="mdi-office-building-marker"
                         ></v-text-field>
                       </v-col>
                       <v-col cols="12" sm="6">
@@ -341,7 +341,7 @@
                           :counter="100"
                           outlined
                           label="เมื่อวันที่:"
-                          prepend-icon="mdi-account"
+                          prepend-icon="mdi-office-building-marker"
                           request
                           :rules="[(v) => !!v || '']"
                         ></v-text-field>
@@ -352,7 +352,7 @@
                           :counter="100"
                           outlined
                           label="ช่วยปฏิบัติราชการเป็นเวลา :"
-                          prepend-icon="mdi-account"
+                          prepend-icon="mdi-office-building-marker"
                           request
                           :rules="[(v) => !!v || '']"
                         ></v-text-field>
@@ -363,7 +363,7 @@
                           :counter="100"
                           outlined
                           label="เหตุผลที่ช่วยปฏิบัติราชการ :"
-                          prepend-icon="mdi-account"
+                         prepend-icon="mdi-office-building-marker"
                           request
                           :rules="[(v) => !!v || '']"
                         ></v-text-field>
@@ -378,13 +378,13 @@
               <v-card-title>
                 <div
                   class="font-weight-light v-size--x-large"
-                >อยู่ระหว่างทดลองปฏิบัติราชการหรือการเตรียมความพร้อมและพัฒนาอย่างเข็มหรือไม่</div>
+                ><v-icon large left>mdi-account-reactivate</v-icon> อยู่ระหว่างทดลองปฏิบัติราชการหรือการเตรียมความพร้อมและพัฒนาอย่างเข็มหรือไม่</div>
               </v-card-title>
-              <hr />
+              
               <v-row>
                 <v-col cols="12" sm="12">
                   <v-row justify="center">
-                    <v-card class="mx-auto pa-2">
+                    <v-card class="mx-auto pa-2" color="#ECE4E2">
                       <v-radio-group row>                        
                         <v-radio>
                           <template v-slot:label>
@@ -409,13 +409,13 @@
 
             <v-card class="pa-2 ma-2">
               <v-card-title>
-                <div class="font-weight-light v-size--x-large">อยู่ระหว่างลาศึกษาต่อเต็มเวลาหรือไม่</div>
+                <div class="font-weight-light v-size--x-large"> <v-icon large left>mdi-account-reactivate-outline</v-icon> อยู่ระหว่างลาศึกษาต่อเต็มเวลาหรือไม่</div>
               </v-card-title>
-              <hr />
+              
               <v-row>
                 <v-col cols="12" sm="12">
                   <v-row justify="center">
-                    <v-card class="mx-auto pa-2">
+                    <v-card class="mx-auto pa-2" color="#ECE4E2">
                       <v-radio-group row>                        
                         <v-radio>
                           <template v-slot:label>
@@ -442,9 +442,9 @@
               <v-card-title>
                 <div
                   class="font-weight-light v-size--x-large"
-                >ขอย้ายไปปฏิบัติหน้าที่ในตำแหน่งและหน่วยงานแห่งใหม่ เรียงลำดับดังนี้</div>
+                ><v-icon large left>mdi-flag-variant</v-icon> ขอย้ายไปปฏิบัติหน้าที่ในตำแหน่งและหน่วยงานแห่งใหม่ เรียงลำดับดังนี้</div>
               </v-card-title>
-              <hr />
+              
               <v-col cols="12" sm="12">
                 <v-card class="pa-2 ma-2">
                   <v-row>
@@ -454,7 +454,7 @@
                         :counter="100"
                         outlined
                         label="ตำแหน่ง : "
-                        prepend-icon="mdi-account"
+                        prepend-icon="mdi-account-star"
                         request
                         :rules="[(v) => !!v || '']"
                       ></v-text-field>
@@ -465,7 +465,7 @@
                         :counter="100"
                         outlined
                         label="สาขาวิชา :"
-                        prepend-icon="mdi-account"
+                        prepend-icon="mdi-account-details"
                         request
                         :rules="[(v) => !!v || '']"
                       ></v-text-field>
@@ -476,7 +476,7 @@
                         :counter="100"
                         outlined
                         label="สังกัด :"
-                        prepend-icon="mdi-account"
+                        prepend-icon="mdi-flag-variant"
                         request
                         :rules="[(v) => !!v || '']"
                       ></v-text-field>
@@ -487,7 +487,7 @@
                         :counter="100"
                         outlined
                         label="ตำแหน่ง : "
-                        prepend-icon="mdi-account"
+                        prepend-icon="mdi-account-star"
                         request
                         :rules="[(v) => !!v || '']"
                       ></v-text-field>
@@ -498,7 +498,7 @@
                         :counter="100"
                         outlined
                         label="สาขาวิชา :"
-                        prepend-icon="mdi-account"
+                        prepend-icon="mdi-account-details"
                         request
                         :rules="[(v) => !!v || '']"
                       ></v-text-field>
@@ -509,7 +509,7 @@
                         :counter="100"
                         outlined
                         label="สังกัด :"
-                        prepend-icon="mdi-account"
+                        prepend-icon="mdi-flag-variant"
                         request
                         :rules="[(v) => !!v || '']"
                       ></v-text-field>
@@ -520,7 +520,7 @@
                         :counter="100"
                         outlined
                         label="ตำแหน่ง : "
-                        prepend-icon="mdi-account"
+                        prepend-icon="mdi-account-star"
                         request
                         :rules="[(v) => !!v || '']"
                       ></v-text-field>
@@ -531,7 +531,7 @@
                         :counter="100"
                         outlined
                         label="สาขาวิชา :"
-                        prepend-icon="mdi-account"
+                        prepend-icon="mdi-account-details"
                         request
                         :rules="[(v) => !!v || '']"
                       ></v-text-field>
@@ -542,7 +542,7 @@
                         :counter="100"
                         outlined
                         label="สังกัด :"
-                        prepend-icon="mdi-account"
+                        prepend-icon="mdi-flag-variant"
                         request
                         :rules="[(v) => !!v || '']"
                       ></v-text-field>
@@ -553,7 +553,7 @@
                         :counter="100"
                         outlined
                         label="ขอย้ายสับเปลี่ยนตำแหน่งกับ (นาย/นาง/นางสาว) :"
-                        prepend-icon="mdi-account"
+                        prepend-icon="mdi-account-details"
                         request
                         :rules="[(v) => !!v || '']"
                       ></v-text-field>
@@ -564,7 +564,7 @@
                         :counter="100"
                         outlined
                         label="ตำแหน่ง :"
-                        prepend-icon="mdi-account"
+                        prepend-icon="mdi-account-star"
                         request
                         :rules="[(v) => !!v || '']"
                       ></v-text-field>
@@ -575,7 +575,7 @@
                         :counter="100"
                         outlined
                         label="วิทยฐานะ :"
-                        prepend-icon="mdi-account"
+                        prepend-icon="mdi-account-details"
                         request
                         :rules="[(v) => !!v || '']"
                       ></v-text-field>
@@ -586,7 +586,7 @@
                         :counter="100"
                         outlined
                         label="เลขที่ตำแหน่ง :"
-                        prepend-icon="mdi-account"
+                        prepend-icon="mdi-account-details"
                         request
                         :rules="[(v) => !!v || '']"
                       ></v-text-field>
@@ -597,7 +597,7 @@
                         :counter="100"
                         outlined
                         label="สังกัด :"
-                        prepend-icon="mdi-account"
+                        prepend-icon="mdi-flag-variant"
                         request
                         :rules="[(v) => !!v || '']"
                       ></v-text-field>
@@ -609,15 +609,15 @@
 
             <v-card class="pa-2 ma-2">
               <v-card-title>
-                <div class="font-weight-light v-size--x-large" color="pink darken-2">เหตุผลการขอย้าย</div>
+                <div class="font-weight-light v-size--x-large" color="pink darken-2"><v-icon large left>mdi-account-details</v-icon> เหตุผลการขอย้าย</div>
               </v-card-title>
-              <hr />
+              
               <v-col cols="12" sm="12">
                 <v-card>
                   <v-card-text>
                     <v-row align="center">
                       <v-card-title>
-                        <div class="font-weight-light v-size--x-large">ย้ายเพื่ออยู่ร่วมคู่สมรส</div>
+                        <div class="font-weight-light v-size--x-large"><v-icon></v-icon> ย้ายเพื่ออยู่ร่วมคู่สมรส</div>
                       </v-card-title>
                       <v-checkbox v-model="move_spouse" hide-details class="shrink mr-2 mt-0"></v-checkbox>
                       <v-text-field :disabled="!move_spouse" label="คู่สมรสชื่อ : "></v-text-field>
@@ -663,9 +663,9 @@
 
             <v-card class="pa-2 ma-2">
               <v-card-title>
-                <div class="font-weight-light v-size--x-large">เอกสารประกอบการพิจารณา</div>
+                <div class="font-weight-light v-size--x-large"><v-icon large left>mdi-details</v-icon> เอกสารประกอบการพิจารณา</div>
               </v-card-title>
-              <hr />
+              
               <v-row>
                 <v-col cols="12" sm="12">
                   <v-textarea
@@ -673,8 +673,7 @@
                     auto-grow
                     :counter="173"
                     dense
-                    filled
-                    prepend-icon="mdi-account"
+                    filled                    
                     request
                     :rules="[(v) => !!v || '']"
                     disabled
@@ -760,39 +759,21 @@
           </v-form>
         </base-material-card>
       </v-col>
-    </v-row>
-    <v-container fluid>
-      <v-snackbar
-        v-model="snackbar.show"
-        multi-line
-        vertical
-        top
-        auto-height
-        :timeout="snackbar.timeout"
-        :color="snackbar.color"
-      >
-        <v-icon large>{{ snackbar.icon }}</v-icon>
-        <br />
-        {{ snackbar.text }}
-        <v-btn dark flat @click="snackbar.show = false">Close</v-btn>
-      </v-snackbar>
-    </v-container>
+    </v-row>   
   </v-container>
 </template>
 
 <script>
-import Password from "vue-password-strength-meter";
 export default {
-  name: "DashboardDashboard",
-  addtransference_personneldialog: false,
-  components: { Password },
 
   data: () => ({
     isHidden: false,
+    isHidden_service_gov: false,
     move_spouse: false,
     move_parents: false,
     move_domicile: false,
     another_reason: false,
+    service_gov:false,
 
     selected: [],
     reason_transfer: [],
@@ -909,67 +890,9 @@ export default {
       this.name_m = "";
       this.email_m = "";
       this.tel_m = "";
-      this.add_m = "";
-      this.province_ID = null;
-      this.prefecture_ID = null;
-      this.district_ID = null;
-      this.district_post_s = null;
-      this.pic_s = "";
+      this.add_m = "";      
     },
-  },
-  computed: {
-    pages() {
-      if (
-        this.pagination.rowsPerPage == null ||
-        this.pagination.totalItems == null
-      )
-        return 0;
-
-      return Math.ceil(
-        this.pagination.totalItems / this.pagination.rowsPerPage
-      );
-    },
-
-    addtransference_personnelProvinceChange() {
-      return this.addtransference_personnel.province_ID;
-    },
-    addtransference_personnelprefectureChange() {
-      return this.addtransference_personnel.prefecture_ID;
-    },
-    addtransference_personneldistrictChange() {
-      return this.addtransference_personnel.district_ID;
-    },
-
-    editCtransference_personnelProvinceChange() {
-      return this.editctransference_personnel.province_ID;
-    },
-    editCtransference_personnelprefectureChange() {
-      return this.editctransference_personnel.prefecture_ID;
-    },
-    editCtransference_personneldistrictChange() {
-      return this.editctransference_personnel.district_ID;
-    },
-  },
-  watch: {
-    async addtransference_personnelProvinceChange() {
-      this.prefectureQueryAll(this.addtransference_personnel.province_ID);
-    },
-    async addtransference_personnelprefectureChange() {
-      this.districtQueryAll(this.addtransference_personnel.prefecture_ID);
-    },
-    async addtransference_personneldistrictChange() {
-      this.district_PostQueryAll(this.addtransference_personnel.district_ID);
-    },
-    async editCtransference_personnelProvinceChange() {
-      this.prefectureQueryAll(this.editctransference_personnel.province_ID);
-    },
-    async editCtransference_personnelprefectureChange() {
-      this.districtQueryAll(this.editctransference_personnel.prefecture_ID);
-    },
-    async editCtransference_personneldistrictChange() {
-      this.district_PostQueryAll(this.editctransference_personnel.district_ID);
-    },
-  },
+  }, 
 };
 </script>
 

@@ -11,7 +11,7 @@
       style="position: fixed; top: 115px; right: -35px; border-radius: 8px;"
     >
       <v-icon large>
-        mdi-settings
+        mdi-card-bulleted-settings
       </v-icon>
     </v-card>
 
@@ -133,6 +133,25 @@
         </v-card-text>
       </v-card>
     </v-menu>
+    <v-card      
+      class="py-2 px-4"
+      color="rgba(0, 0, 0, .3)"
+      dark
+      flat
+      link
+      min-width="100"
+      style="position: fixed; top: 600px; right: -35px; border-radius: 8px;"
+    >
+      <transition>
+      <div id="pagetop" v-show="scY > 300" @click="toTop">
+      
+      <v-icon large>
+        mdi-chevron-up-circle
+      </v-icon>
+   
+      </div>
+    </transition>
+    </v-card>   
   </div>
 </template>
 
@@ -167,6 +186,8 @@
       menu: false,
       saveImage: '',
       showImg: true,
+      scTimer: 0,
+      scY: 0,
     }),
 
     computed: {
@@ -192,8 +213,25 @@
         this.setBarImage(val)
       },
     },
+mounted(){
+   window.addEventListener("scroll", this.handleScroll);
+},
 
     methods: {
+      handleScroll: function () {
+      if (this.scTimer) return;
+      this.scTimer = setTimeout(() => {
+        this.scY = window.scrollY;
+        clearTimeout(this.scTimer);
+        this.scTimer = 0;
+      }, 100);
+    },
+    toTop: function () {
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
+    },
       ...mapMutations({
         setBarImage: 'SET_BAR_IMAGE',
       }),
@@ -213,4 +251,5 @@
 
       &--active
         border-color: #00cae3 !important
+  
 </style>

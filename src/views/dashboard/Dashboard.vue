@@ -1,23 +1,12 @@
 <template>
   <v-container id="dashboard" fluid tag="section">
     <v-row>
-      <v-col cols="12" sm="6" lg="3">        
-        <base-material-stats-card
-        v-model="showAlldata.count_id"
-          color="info"
-          icon="mdi-account-group"
-          title="ครูบุคลากรทั้งหมด"         
-          sub-icon="mdi-clock"
-          sub-text="Just Updated"        
-        />
-      </v-col>
-
       <v-col cols="12" sm="6" lg="3">
         <base-material-stats-card
-        v-model="showAlldatatech.count_id_tech"
+          v-model="showAlldata.count_id"
           color="info"
           icon="mdi-account-group"
-          title="ข้าราชการครู"         
+          title="ครูบุคลากรทั้งหมด"
           sub-icon="mdi-clock"
           sub-text="Just Updated"
         />
@@ -25,10 +14,10 @@
 
       <v-col cols="12" sm="6" lg="3">
         <base-material-stats-card
-        v-model="showAlldatadr.count_id_dr"
+          v-model="showAlldatatech.count_id_tech"
           color="info"
           icon="mdi-account-group"
-          title="ผู้อำนวยการวิทยาลัย"         
+          title="ข้าราชการครู"
           sub-icon="mdi-clock"
           sub-text="Just Updated"
         />
@@ -36,7 +25,18 @@
 
       <v-col cols="12" sm="6" lg="3">
         <base-material-stats-card
-        v-model="showAlldatasedr.count_id_se_dr"
+          v-model="showAlldatadr.count_id_dr"
+          color="info"
+          icon="mdi-account-group"
+          title="ผู้อำนวยการวิทยาลัย"
+          sub-icon="mdi-clock"
+          sub-text="Just Updated"
+        />
+      </v-col>
+
+      <v-col cols="12" sm="6" lg="3">
+        <base-material-stats-card
+          v-model="showAlldatasedr.count_id_se_dr"
           color="info"
           icon="mdi-account-group"
           title="รองผู้อำนวยการ"
@@ -275,7 +275,7 @@
         </base-material-card>
       </v-col>
     </v-row>
-  </v-container>
+     </v-container>
 </template>
 
 <script>
@@ -284,6 +284,7 @@ export default {
 
   data() {
     return {
+    
       dailySalesChart: {
         data: {
           labels: ["M", "T", "W", "T", "F", "S", "S"],
@@ -489,17 +490,19 @@ export default {
       showAlldata: [],
       showAlldatatech: [],
       showAlldatadr: [],
-      showAlldatasedr:[],
+      showAlldatasedr: [],
     };
   },
-  
+
   mounted() {
+    
     this.getAlldata();
     this.getAlldatatech();
     this.getAlldatadr();
     this.getAlldatasedr();
   },
   methods: {
+    
     complete(index) {
       this.list[index] = !this.list[index];
     },
@@ -507,18 +510,18 @@ export default {
       let result = await this.$http.post("show_dashboard_all.php");
       this.showAlldata = result.data;
     },
-     async getAlldatatech() {
+    async getAlldatatech() {
       let result = await this.$http.post("show_dashboard_tech.php");
       this.showAlldatatech = result.data;
     },
-     async getAlldatadr() {
+    async getAlldatadr() {
       let result = await this.$http.post("show_dashboard_dr.php");
       this.showAlldatadr = result.data;
     },
     async getAlldatasedr() {
       let result = await this.$http.post("show_dashboard_se_dr.php");
       this.showAlldatasedr = result.data;
-    },    
-  },  
+    },
+  },
 };
 </script>

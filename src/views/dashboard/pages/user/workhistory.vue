@@ -3,7 +3,7 @@
     <v-container class="text_google">
       <base-material-card
         icon="mdi-clipboard-text"
-        title="วุฒิการศึกษา"
+        title="ประวัติการทำงาน"
         class="px-5 py-3"
         :elevation="hover ? 24 : 6"
       >
@@ -431,13 +431,15 @@ export default {
       },
       currentPK: null,
       headers: [
-        { text: "ลำดับ", align: "center", value: "cat_id" },
-        { text: "ระดับการศึกษา", align: "left", value: "cat_name" },
-        { text: "คณะวิชา", align: "left", value: "p_img" },
-        { text: "สาขาวิชา", align: "center", value: "action" },
-        { text: "จบจาก", align: "center", value: "action" },
-        { text: "ปีที่จบ", align: "center", value: "action" },
-        { text: "ผลการเรียน", align: "center", value: "action" },       
+        { text: "ลำดับ", align: "center", value: "id_rh" },
+        { text: "ตำแหน่ง", align: "left", value: "id_position" },
+        { text: "สถานะ", align: "left", value: "government_status" },
+        { text: "วันที่เริ่มปฏิบัติงาน", align: "center", value: "date_begin" },
+        { text: "วิทยาลัย", align: "center", value: "college_id" },
+        { text: "วันที่สิ้นสุด", align: "center", value: "date_end" },
+        { text: "ตำแหน่ง", align: "center", value: "position_s" },       
+        { text: "หน้าที่อื่น", align: "center", value: "special_duty" },       
+        { text: "ดำเนินการ", align: "center", value: "action" },       
       ],
       rowsperpage: [
         25,
@@ -458,7 +460,7 @@ export default {
       updateImageData: {},
       updateImageValid: false,
       ed_level: "",
-      items: ["ปริญญาตรี", "ปริญญาโท", "ปริญญาเอก"],
+      items: ["ครูอัตราจ้าง", "ครูผู้ช่วย", "ครู"],
       picker: new Date().toISOString().substr(0, 7),
 
       activePicker: null,

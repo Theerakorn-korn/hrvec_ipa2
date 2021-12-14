@@ -140,7 +140,7 @@ export default new Router({
                 },  
                 {
                     name: 'ข้อมูลวินัย โทษ',
-                    path: '/award',
+                    path: '/discipline',
                     component: () =>
                         import ('@/views/dashboard/pages/user/discipline'),
                 },  

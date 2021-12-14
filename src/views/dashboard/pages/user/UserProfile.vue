@@ -1,4 +1,5 @@
 <template>
+ <div>
   <v-container id="user-profile" fluid tag="section">
     <v-row justify="center">
       <v-col cols="12" md="4">
@@ -7,8 +8,9 @@
           avatar="https://www.vec.go.th/portals/0/ovec.jpg"
         >
           <v-card-text class="text-center">
-            <h3 class="font-weight-light mb-1 grey--text">ชื่อ-นามสกุล</h3>
-            <h4 class="font-weight-light mb-3 black--text">ข้อมูลเบื้องต้น</h4>
+            <h3 class="font-weight-light mb-1 grey--text">{{ user.id_card }}</h3>
+            <h3 class="font-weight-light mb-1 grey--text">{{ user.title_s }}{{ user.frist_name }}  {{ user.last_name }}</h3>
+            <h4 class="font-weight-light mb-3 black--text">{{ user.college_s }}</h4>
             <p class="font-weight-light grey--text"></p>
             <!-- <v-btn color="success" rounded class="mr-0">แก้ไข</v-btn> -->
           </v-card-text>
@@ -27,93 +29,86 @@
             <v-container class="pa-1 ma-1">
               <v-row>
                 <v-col cols="12" md="6">
-                  <v-text-field label="วิทยาลัย" disabled />
+                  <h3 class="font-weight-light"><v-icon large left>mdi-chevron-double-right</v-icon> สังกัด : {{ user.college_s }} </h3> 
                 </v-col>
                 <v-col cols="12" md="6">
-                  <v-text-field class="purple-input" label="รหัสบัตรประชาชน" />              
-                </v-col>
-                <v-col cols="12" md="2">
-                  <v-text-field label="คำนำหน้าชื่อ" class="purple-input" />
-                </v-col>
-                <v-col cols="12" md="5">
-                  <v-text-field label="ชื่อ" class="purple-input" />
-                </v-col>
-                <v-col cols="12" md="5">
-                  <v-text-field label="นามสกุล" class="purple-input" />
-                </v-col>
-                <v-col cols="12" md="4">
-                  <v-text-field label="ตำแหน่ง" class="purple-input" />
-                </v-col>
-                <v-col cols="12" md="4">
-                  <v-text-field label="เลขที่ตำแหน่ง" class="purple-input" />
-                </v-col>
-                <v-col cols="12" md="4">
-                  <v-text-field label="วิทยฐานะ" class="purple-input" />
-                </v-col>
+                 <h3 class="font-weight-light"><v-icon large left>mdi-chevron-double-right</v-icon> รหัสบัตรประชาชน : {{ user.id_card }}</h3>               
+                </v-col>               
                 <v-col cols="12" md="6">
-                  <v-text-field class="purple-input" label="ระดับ" type="number" />
+                   <h3 class="font-weight-light"><v-icon large left>mdi-chevron-double-right</v-icon> ตำแหน่ง : {{ user.position_name }}</h3>   
                 </v-col>
-                <v-col cols="12" md="6">
-                  <v-text-field class="purple-input" label="เงินเดือน" type="number" />
+                <v-col cols="12" md="6">                 
+                   <h3 class="font-weight-light"><v-icon large left>mdi-chevron-double-right</v-icon> เลขที่ตำแหน่ง : {{ user.id_position }}</h3>   
                 </v-col>
-                <v-col cols="12" md="6">
-                  <v-text-field class="purple-input" label="คุณวุฒิ" type="number" />
+                <v-col cols="12" md="6">                 
+                   <h3 class="font-weight-light"><v-icon large left>mdi-chevron-double-right</v-icon> วิทยฐานะ : {{ user.rang_name }}</h3>   
                 </v-col>
-                <v-col cols="12" md="6">
-                  <v-text-field class="purple-input" label="สาขาวิชาเอก" type="number" />
+                <v-col cols="12" md="6">                 
+                   <h3 class="font-weight-light"><v-icon large left>mdi-chevron-double-right</v-icon> ระดับ : {{ user.rang_level }}</h3>   
+                </v-col>                
+                <v-col cols="12" md="6">                 
+                   <h3 class="font-weight-light"><v-icon large left>mdi-chevron-double-right</v-icon> คุณวุฒิ : {{ user.ed_abb }}</h3>   
                 </v-col>
-                <v-col cols="12" md="4">
-                  <v-text-field class="purple-input" label="วันเกิด" type="number" />
+                <v-col cols="12" md="6">                  
+                   <h3 class="font-weight-light"><v-icon large left>mdi-chevron-double-right</v-icon> สาขาวิชาเอก : {{ user.ed_name }}</h3>   
                 </v-col>
-                <v-col cols="12" md="4">
-                  <v-text-field class="purple-input" label="เดือนเกิด" type="number" />
+                <v-col cols="12" md="6">                  
+                   <h3 class="font-weight-light"><v-icon large left>mdi-chevron-double-right</v-icon> วันเดือนปี เกิด : {{ user.brith_day }}/{{ user.brith_month }}/{{ user.brith_year }} </h3>   
+                </v-col>               
+                <v-col cols="12" md="6">                 
+                   <h3 class="font-weight-light"><v-icon large left>mdi-chevron-double-right</v-icon> วันเดือนปี บรรจุ : {{ user.appoin_day }}/{{ user.appoin_month }}/{{ user.appoin_year }}</h3>   
+                </v-col>               
+                <v-col cols="12" md="6">                
+                   <h3 class="font-weight-light"><v-icon large left>mdi-chevron-double-right</v-icon> เกษียณ : {{ user.retrire_year }}</h3> 
                 </v-col>
-                <v-col cols="12" md="4">
-                  <v-text-field class="purple-input" label="ปีเกิด" type="number" />
+                 <v-col cols="12" md="6">                
+                   <h3 class="font-weight-light"><v-icon large left>mdi-chevron-double-right</v-icon> เบอร์โทรติดต่อ : {{ user.retrire_year }}</h3> 
                 </v-col>
-                <v-col cols="12" md="4">
-                  <v-text-field class="purple-input" label="วันบรรจุ" type="number" />
-                </v-col>
-                <v-col cols="12" md="4">
-                  <v-text-field class="purple-input" label="เดือนบรรจุ" type="number" />
-                </v-col>
-                <v-col cols="12" md="4">
-                  <v-text-field class="purple-input" label="ปีบรรจุ" type="number" />
-                </v-col>
-                <v-col cols="12" md="6">
-                  <v-text-field class="purple-input" label="เกษียณ" type="number" />
+                 <v-col cols="12" md="12">                
+                   <h3 class="font-weight-light"><v-icon large left>mdi-chevron-double-right</v-icon> E-mail : {{ user.retrire_year }}</h3> 
                 </v-col>
 
                 <v-col cols="12" class="text-right">
-                  <v-btn color="success" class="mr-0">Update Profile</v-btn>
+                  <v-btn color="success" class="mr-0"  @click.native="educationAdd()">Update Profile</v-btn>
                 </v-col>
-              </v-row>
+              </v-row>              
             </v-container>
           </v-form>
         </base-material-card>
       </v-col>
     </v-row>
+    
   </v-container>
+ 
+
+  </div>
 </template>
 
 <script>
 export default {
   data() {
     return {
+      addeducationdialog: false,
+      user: {},
       editmember: {},
       personnel: {},
     };
   },
   async mounted() {
-    let result = {};
-    let userSession = JSON.parse(sessionStorage.getItem("user")) || 0;
-    // this.system_lock = userSession.system_lock
-    console.log(userSession);
-    result = await this.$http.post("crud_personnel.php?crud=read", {
-      id_card: userSession.id_card,
-    });
-    this.personnel = result.data;
-  },
+      let result
+      let userSession = JSON.parse(sessionStorage.getItem('user')) || 0
+      result = await this.$http.post('user.php', {
+        id_card: userSession.id_card,
+        ApiKey: 'HRvec2021'
+      })
+      this.user = result.data
+      this.$store.commit('getLoginUser', userSession)
+    },
+ async educationAdd() {
+      this.addeducation = {};
+      this.updateImageData = {};
+      this.addeducationdialog = true;
+    },
 
   methods: {
     //Edit data

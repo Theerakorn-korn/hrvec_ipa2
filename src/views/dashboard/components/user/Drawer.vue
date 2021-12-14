@@ -25,7 +25,8 @@
         </v-list-item-avatar>
 
         <v-list-item-content>
-          <v-list-item-title class="display-1" v-text="profile.title" />
+          <v-list-item-title>{{ user.id_card }}</v-list-item-title>
+          <v-list-item-title>{{ user.title_s }}{{ user.frist_name }} {{ user.last_name }} </v-list-item-title>
         </v-list-item-content>
       </v-list-item>
     </v-list>
@@ -36,8 +37,7 @@
       <div />
 
       <template v-for="(item, i) in computedItems">
-        <base-item-group v-if="item.children" :key="`group-${i}`" :item="item">
-        </base-item-group>
+        <base-item-group v-if="item.children" :key="`group-${i}`" :item="item"></base-item-group>
         <base-item v-else :key="`item-${i}`" :item="item" />
       </template>
 
@@ -70,6 +70,8 @@ export default {
   },
 
   data: () => ({
+    user_data: {},
+    user: {},
     loginuser: JSON.parse(sessionStorage.getItem("user")) || 0,
     items: [
       {
@@ -121,27 +123,32 @@ export default {
     profile() {
       return {
         avatar: true,
-        title: "User",
+        title: "",
       };
     },
   },
-mounted() {
-      let user = JSON.parse(sessionStorage.getItem('user')) || 0
-      if (user.user_status != 'tech')
-        this.$router.push('/')
+  async mounted() {
+      let result
+      let userSession = JSON.parse(sessionStorage.getItem('user')) || 0
+      result = await this.$http.post('user.php', {
+        id_card: userSession.id_card,
+        ApiKey: 'HRvec2021'
+      })
+      this.user = result.data
+      this.$store.commit('getLoginUser', userSession)
     },
 
-  methods: {
+  methods: {    
     mapItem(item) {
       return {
         ...item,
         children: item.children ? item.children.map(this.mapItem) : undefined,
         title: this.$t(item.title),
       };
-    },    
-     logout() {
-      sessionStorage.clear()
-        this.$router.push('/')   
+    },
+    logout() {
+      sessionStorage.clear();
+      this.$router.push("/");
     },
   },
 };
