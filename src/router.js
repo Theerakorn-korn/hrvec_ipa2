@@ -47,10 +47,10 @@ export default new Router({
                         import ('@/views/dashboard/maps/GoogleMaps'),
                 },
                 {
-                    name: 'Register',
-                    path: 'Register',
+                    name: 'เข้าสู่ระบบสำหรับ วิทยาลัย อศจ. สถาบัน กจ2',
+                    path: 'pages/loginAdmin',
                     component: () =>
-                        import ('@/views/dashboard/Register'),
+                        import ('@/views/dashboard/pages/loginAdmin'),
                 },              
             ],
         },
@@ -71,10 +71,10 @@ export default new Router({
                         import ('@/views/dashboard/pages/administrator/Dashboard'),
                 },
                 {
-                    name: 'member',
-                    path: '/member',
+                    name: 'ข้อมูลบุคคล',
+                    path: '/personnel',
                     component: () =>
-                        import ('@/views/dashboard/pages/administrator/member'),
+                        import ('@/views/dashboard/pages/administrator/personnel'),
                 },
                 {
                     name: 'add_member',

@@ -40,74 +40,82 @@
 
       <v-col cols="12" md="4">
         <base-material-card
-        :elevation="hover ? 24 : 6"
+          :elevation="hover ? 24 : 6"
           class="v-card-profile"
           avatar="https://www.bloggang.com/data/b/bigstory/picture/1449748275.gif"
         >
           <v-card-text class="text-center">
             <h6 class="display-1 mb-1 grey--text">CEO / CO-FOUNDER</h6>
-            <h4 class="display-2 font-weight-light mb-3 black--text">
-              Name Personal
-            </h4>
-            <p class="font-weight-light grey--text">
-              I,m Teacher.
-            </p>
-            <v-btn color="success" rounded class="mr-0"> Follow </v-btn>
+            <h4 class="display-2 font-weight-light mb-3 black--text">Name Personal</h4>
+            <p class="font-weight-light grey--text">I,m Teacher.</p>
+            <v-btn color="success" rounded class="mr-0">Follow</v-btn>
           </v-card-text>
         </base-material-card>
       </v-col>
-    </v-row>
+    </v-row>    
+    <v-snackbar v-model="dialog" top :multi-line="multiLine">
+      <v-card-text>
+         {{ dialog_msg }}
+      </v-card-text>
+     
+      <template v-slot:action="{ attrs }">
+        <v-btn color="red" text v-bind="attrs" @click="dialog = false">Close</v-btn>
+      </template>
+    </v-snackbar>
   </v-container>
 </template>
 
 <script>
-  export default {   
-    data() {
-      return {
-        id_card: '',
-        p_word: '',
-        dialog: false,
-        dialog_msg: '',
-        snackbar_timeout: 5000,
-      }
-    },
-    mounted() {
-  //Null
-    },
-    methods: {
-      async userLogin() {
-        if (this.$refs.form.validate()) {
-          let result = await this.$http.post('login.php', {
-            id_card: this.id_card,
-            p_word: this.p_word,                 
-          })
-          if (result.data.user_status) {
-            let user = result.data
-           user.system_lock = false
-         this.$store.commit('getLoginUser', user)
-           sessionStorage.setItem('user', JSON.stringify(user))
-            if (user.user_status == "A"){
-                this.dialog = true
-                 this.dialog_msg = 'A'
-                  this.$router.push("/admin")           
-            }                  
-            else if (user.user_status == "tech"){
-                this.dialog = true
-                 this.dialog_msg = 'tech'
-           sessionStorage.setItem('user', JSON.stringify(user))
-             this.$router.push("/user")   
-            }           
-            else {
-              sessionStorage.clear()
-              this.dialog = true
-              this.dialog_msg = 'ชื่อผู้ใช้ หรือรหัสผ่าน ไม่ถูกต้อง'
-            }
+export default {
+  data() {
+    return {
+      id_card: "",
+      p_word: "",
+      dialog: false,
+      dialog_msg: "",
+      snackbar_timeout: 10000,
+    };
+  },
+  mounted() {
+    //Null
+  },
+  methods: {
+    async userLogin() {
+      if (this.$refs.form.validate()) {
+        let result = await this.$http.post("login.php?crud=user", {
+          id_card: this.id_card,
+          p_word: this.p_word,
+        });
+        if (result.data.user_status) {
+          let user = result.data;
+          user.system_lock = false;
+          this.$store.commit("getLoginUser", user);
+          sessionStorage.setItem("user", JSON.stringify(user));
+          if (user.user_status == "tech") {
+            this.dialog = true;
+            this.dialog_msg = "ครู (สายการสอน)";
+            sessionStorage.setItem("user", JSON.stringify(user));
+            this.$router.push("/user");
+          } else if (user.user_status == "se_director") {
+            this.dialog = true;
+            this.dialog_msg = "รองผู้อำนวยการ";
+            sessionStorage.setItem("user", JSON.stringify(user));
+            this.$router.push("/#");
+          } else if (user.user_status == "director") {
+            this.dialog = true;
+            this.dialog_msg = "ผู้อำนวยการ";
+            sessionStorage.setItem("user", JSON.stringify(user));
+            this.$router.push("/#");
+          } else {
+            sessionStorage.clear();
+            this.dialog = true;
+            this.dialog_msg = "ชื่อผู้ใช้ หรือรหัสผ่าน ไม่ถูกต้อง";
           }
         }
       }
-    }
-  }
-
+    },
+  },
+};
 </script>
 <style>
 @import url("https://fonts.googleapis.com/css2?family=Kanit:wght@300&display=swap");

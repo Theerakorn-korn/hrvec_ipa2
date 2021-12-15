@@ -4,7 +4,7 @@
       <v-col cols="12" sm="6" lg="3">
         <base-material-stats-card
           v-model="showAlldata.count_id"
-          color="info"
+          color="primary"
           icon="mdi-account-group"
           title="ครูบุคลากรทั้งหมด"
           sub-icon="mdi-clock"
@@ -15,7 +15,7 @@
       <v-col cols="12" sm="6" lg="3">
         <base-material-stats-card
           v-model="showAlldatatech.count_id_tech"
-          color="info"
+          color="primary"
           icon="mdi-account-group"
           title="ข้าราชการครู"
           sub-icon="mdi-clock"
@@ -26,7 +26,7 @@
       <v-col cols="12" sm="6" lg="3">
         <base-material-stats-card
           v-model="showAlldatadr.count_id_dr"
-          color="info"
+          color="primary"
           icon="mdi-account-group"
           title="ผู้อำนวยการวิทยาลัย"
           sub-icon="mdi-clock"
@@ -37,7 +37,7 @@
       <v-col cols="12" sm="6" lg="3">
         <base-material-stats-card
           v-model="showAlldatasedr.count_id_se_dr"
-          color="info"
+          color="primary"
           icon="mdi-account-group"
           title="รองผู้อำนวยการ"
           value="13,+++"
@@ -48,7 +48,7 @@
 
       <v-col cols="12" sm="6" lg="3">
         <base-material-stats-card
-          color="info"
+          color="primary"
           icon="mdi-account-group"
           title="ปฏิบัติการ"
           value="13,+++"
@@ -59,7 +59,7 @@
 
       <v-col cols="12" sm="6" lg="3">
         <base-material-stats-card
-          color="info"
+          color="primary"
           icon="mdi-account-group"
           title="ครูอัตราจ้าง"
           value="13,+++"
@@ -81,7 +81,7 @@
 
       <v-col cols="12" sm="6" lg="3">
         <base-material-stats-card
-          color="success"
+          color="primary"
           icon="mdi-account-box-multiple"
           title="Revenue"
           value="$ 34,245"

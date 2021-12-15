@@ -1,6 +1,7 @@
 <template>
   <v-footer
     id="dashboard-core-footer"
+    class="grey lighten-5"
   >
     <v-container>
       <v-row
@@ -67,4 +68,5 @@
       font-weight: 500
       text-decoration: none
       text-transform: uppercase
+      
 </style>

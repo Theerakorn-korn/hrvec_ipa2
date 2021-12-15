@@ -77,9 +77,9 @@
     <template v-slot:append>
       <base-item
         :item="{
-          title: 'Register Member',
+          title: 'เข้าสู่ระบบ Administrator',
           icon: 'mdi-package-up',
-          to: '/Register',
+          to: '/pages/loginAdmin',
         }"
       />
     </template>

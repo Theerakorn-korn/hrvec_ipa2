@@ -1,19 +1,19 @@
 <template>
   <v-app-bar
     id="app-bar"      
-    absolute
+    dark fixed
     app 
     elevation="4"      
     height="75"
     elevate-on-scroll
       scroll-target="#scrolling-techniques-7" 
-    class="text_google"    
+    class="text_google"     
+
   >
     <v-btn
       class="mr-3"
-      elevation="1"
-      fab
-      small
+      min-width="1"
+      text
       @click="setDrawer(!drawer)"
     >
       <v-icon v-if="value">
@@ -34,7 +34,11 @@
     <v-spacer />
 
     <div class="mx-3" />
-
+<v-toolbar-title><v-avatar
+          :tile="false"
+          :size="50"
+          color="grey lighten-4"
+        ><img src="https://www.bloggang.com/data/b/bigstory/picture/1449748275.gif"></v-avatar> ระบบบริหารงานบุคคล สอศ.</v-toolbar-title>
     <v-btn
       class="ml-2"
       min-width="0"
@@ -86,16 +90,7 @@
           </app-bar-item>
         </div>
       </v-list>
-    </v-menu>
-
-    <v-btn
-      class="ml-2"
-      min-width="0"
-      text
-      to="/pages/user"
-    >
-      <v-icon>mdi-account</v-icon>
-    </v-btn>   
+    </v-menu>    
   </v-app-bar> 
 </template>
 
@@ -164,3 +159,18 @@
     },
   }
 </script>
+<style>
+@import url('https://fonts.googleapis.com/css?family=Prompt');
+:root {
+  --sicc-orange: #F89C27;
+  --sicc-blue: #0054A6;
+  --vec_red: #850000;
+  --vec_orange: #EC8E00;
+}
+
+  #app-bar{
+    background-color: var(--vec_red);
+    border-bottom: 3px solid var(--vec_orange);
+  }
+ 
+</style>

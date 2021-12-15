@@ -5,7 +5,7 @@
       <v-col cols="12" md="4">
         <base-material-card
           class="v-card-profile"
-          avatar="https://www.vec.go.th/portals/0/ovec.jpg"
+          avatar="https://www.vec.go.th/portals/0/ovec.jpg"         
         >
           <v-card-text class="text-center">
             <h3 class="font-weight-light mb-1 grey--text">{{ user.id_card }}</h3>
@@ -29,47 +29,46 @@
             <v-container class="pa-1 ma-1">
               <v-row>
                 <v-col cols="12" md="6">
-                  <h3 class="font-weight-light"><v-icon large left>mdi-chevron-double-right</v-icon> สังกัด : {{ user.college_s }} </h3> 
+                  <h3 class="font-weight"><v-icon large>mdi-chevron-double-right</v-icon> สังกัด : {{ user.college_s }} </h3> 
                 </v-col>
                 <v-col cols="12" md="6">
-                 <h3 class="font-weight-light"><v-icon large left>mdi-chevron-double-right</v-icon> รหัสบัตรประชาชน : {{ user.id_card }}</h3>               
+                 <h3 class="font-weight"><v-icon large left>mdi-chevron-double-right</v-icon> รหัสบัตรประชาชน : {{ user.id_card }}</h3>               
                 </v-col>               
                 <v-col cols="12" md="6">
-                   <h3 class="font-weight-light"><v-icon large left>mdi-chevron-double-right</v-icon> ตำแหน่ง : {{ user.position_name }}</h3>   
+                   <h3 class="font-weight"><v-icon large left>mdi-chevron-double-right</v-icon> ตำแหน่ง : {{ user.position_name }}</h3>   
                 </v-col>
                 <v-col cols="12" md="6">                 
-                   <h3 class="font-weight-light"><v-icon large left>mdi-chevron-double-right</v-icon> เลขที่ตำแหน่ง : {{ user.id_position }}</h3>   
+                   <h3 class="font-weight"><v-icon large left>mdi-chevron-double-right</v-icon> เลขที่ตำแหน่ง : {{ user.id_position }}</h3>   
                 </v-col>
                 <v-col cols="12" md="6">                 
-                   <h3 class="font-weight-light"><v-icon large left>mdi-chevron-double-right</v-icon> วิทยฐานะ : {{ user.rang_name }}</h3>   
+                   <h3 class="font-weight"><v-icon large left>mdi-chevron-double-right</v-icon> วิทยฐานะ : {{ user.rang_name }}</h3>   
                 </v-col>
                 <v-col cols="12" md="6">                 
-                   <h3 class="font-weight-light"><v-icon large left>mdi-chevron-double-right</v-icon> ระดับ : {{ user.rang_level }}</h3>   
+                   <h3 class="font-weight"><v-icon large left>mdi-chevron-double-right</v-icon> ระดับ : {{ user.rang_level }}</h3>   
                 </v-col>                
                 <v-col cols="12" md="6">                 
-                   <h3 class="font-weight-light"><v-icon large left>mdi-chevron-double-right</v-icon> คุณวุฒิ : {{ user.ed_abb }}</h3>   
+                   <h3 class="font-weight"><v-icon large left>mdi-chevron-double-right</v-icon> คุณวุฒิ : {{ user.ed_abb }}</h3>   
                 </v-col>
                 <v-col cols="12" md="6">                  
-                   <h3 class="font-weight-light"><v-icon large left>mdi-chevron-double-right</v-icon> สาขาวิชาเอก : {{ user.ed_name }}</h3>   
+                   <h3 class="font-weight"><v-icon large left>mdi-chevron-double-right</v-icon> สาขาวิชาเอก : {{ user.ed_name }}</h3>   
                 </v-col>
                 <v-col cols="12" md="6">                  
-                   <h3 class="font-weight-light"><v-icon large left>mdi-chevron-double-right</v-icon> วันเดือนปี เกิด : {{ user.brith_day }}/{{ user.brith_month }}/{{ user.brith_year }} </h3>   
+                   <h3 class="font-weight"><v-icon large left>mdi-chevron-double-right</v-icon> วันเดือนปี เกิด : {{ user.brith_day }}/{{ user.brith_month }}/{{ user.brith_year }} </h3>   
                 </v-col>               
                 <v-col cols="12" md="6">                 
-                   <h3 class="font-weight-light"><v-icon large left>mdi-chevron-double-right</v-icon> วันเดือนปี บรรจุ : {{ user.appoin_day }}/{{ user.appoin_month }}/{{ user.appoin_year }}</h3>   
+                   <h3 class="font-weight"><v-icon large left>mdi-chevron-double-right</v-icon> วันเดือนปี บรรจุ : {{ user.appoin_day }}/{{ user.appoin_month }}/{{ user.appoin_year }}</h3>   
                 </v-col>               
                 <v-col cols="12" md="6">                
-                   <h3 class="font-weight-light"><v-icon large left>mdi-chevron-double-right</v-icon> เกษียณ : {{ user.retrire_year }}</h3> 
+                   <h3 class="font-weight"><v-icon large left>mdi-chevron-double-right</v-icon> เกษียณ : {{ user.retrire_year }}</h3> 
                 </v-col>
                  <v-col cols="12" md="6">                
-                   <h3 class="font-weight-light"><v-icon large left>mdi-chevron-double-right</v-icon> เบอร์โทรติดต่อ : {{ user.retrire_year }}</h3> 
+                   <h3 class="font-weight"><v-icon large left>mdi-chevron-double-right</v-icon> เบอร์โทรติดต่อ : {{ user.retrire_year }}</h3> 
                 </v-col>
                  <v-col cols="12" md="12">                
-                   <h3 class="font-weight-light"><v-icon large left>mdi-chevron-double-right</v-icon> E-mail : {{ user.retrire_year }}</h3> 
+                   <h3 class="font-weight"><v-icon large left>mdi-chevron-double-right</v-icon> E-mail : {{ user.retrire_year }}</h3> 
                 </v-col>
-
                 <v-col cols="12" class="text-right">
-                  <v-btn color="success" class="mr-0"  @click.native="educationAdd()">Update Profile</v-btn>
+                  <v-btn color="warning" class="mr-0"  @click.native="educationAdd()">Update Profile</v-btn>
                 </v-col>
               </v-row>              
             </v-container>

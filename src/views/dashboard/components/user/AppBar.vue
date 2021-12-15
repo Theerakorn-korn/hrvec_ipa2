@@ -1,8 +1,12 @@
 <template>
-  <v-app-bar id="app-bar" absolute app color="#ffffff" flat height="75" class="text_google">
-    <v-btn class="mr-3" elevation="1" fab small @click="setDrawer(!drawer)">
+  <v-app-bar id="app-bar"      
+    dark fixed
+    app 
+    elevation="4"      
+    height="75"  
+   >
+    <v-btn class="mr-3" elevation="1"  text fab small @click="setDrawer(!drawer)">
       <v-icon v-if="value">mdi-view-quilt</v-icon>
-
       <v-icon v-else>mdi-dots-vertical</v-icon>
     </v-btn>
 
@@ -19,7 +23,6 @@
             <template v-slot:badge>
               <span>5</span>
             </template>
-
             <v-icon>mdi-bell</v-icon>
           </v-badge>
         </v-btn>
