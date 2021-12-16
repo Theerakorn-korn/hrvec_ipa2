@@ -118,3 +118,18 @@ export default {
   },
 };
 </script>
+<style>
+@import url('https://fonts.googleapis.com/css?family=Prompt');
+:root {
+  --sicc-orange: #F89C27;
+  --sicc-blue: #0054A6;
+  --vec_red: #850000;
+  --vec_orange: #EC8E00;
+}
+
+  #app-bar{
+    background-color: var(--vec_red);
+    border-bottom: 3px solid var(--vec_orange);
+  }
+ 
+</style>

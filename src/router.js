@@ -59,41 +59,62 @@ export default new Router({
             component: () =>
                 import ('@/views/dashboard/admin'),
             children: [{
-                    name: 'Dashboard',
+                    name: 'รายงาน',
                     path: '',
                     component: () =>
                         import ('@/views/dashboard/pages/administrator/Dashboard'),
                 },
                 {
-                    name: 'Dashboard',
-                    path: '/Dashboard',
+                    name: 'รายงาน',
+                    path: '/admin/Dashboard',
                     component: () =>
                         import ('@/views/dashboard/pages/administrator/Dashboard'),
                 },
                 {
-                    name: 'ข้อมูลบุคคล',
-                    path: '/personnel',
+                    name: 'ข้อมูลเกี่ยวกับบุคคล',
+                    path: '/admin/personnel',
                     component: () =>
                         import ('@/views/dashboard/pages/administrator/personnel'),
                 },
                 {
-                    name: 'add_member',
-                    path: '/add_member',
+                    name: 'ข้อมูลคุณวุฒิการศึกษา',
+                    path: '/admin/personnel_education',
                     component: () =>
-                        import ('@/views/dashboard/pages/administrator/add_member'),
+                        import ('@/views/dashboard/pages/administrator/personnel_education'),
                 },
                 {
-                    name: 'product',
-                    path: '/product',
+                    name: 'ข้อมูลประสบการณ์',
+                    path: '/admin/personnel_experience',
                     component: () =>
-                        import ('@/views/dashboard/pages/administrator/product'),
+                        import ('@/views/dashboard/pages/administrator/personnel_experience'),
                 },
                 {
-                    name: 'test_member',
-                    path: '/test_member',
+                    name: 'ข้อมูลประวัติการทำงาน',
+                    path: '/admin/personnel_work_history',
                     component: () =>
-                        import ('@/views/dashboard/pages/administrator/test_member'),
-                },             
+                        import ('@/views/dashboard/pages/administrator/personnel_work_history'),
+                },
+                {
+                    name: 'ข้อมูลผลงาน รางวัล',
+                    path: '/admin/personnel_award',
+                    component: () =>
+                        import ('@/views/dashboard/pages/administrator/personnel_award'),
+                },
+                {
+                    name: 'ข้อมูลโทษ วินัย',
+                    path: '/admin/personnel_discipline',
+                    component: () =>
+                        import ('@/views/dashboard/pages/administrator/personnel_discipline'),
+                },
+                {
+                    name: 'ผู้ใช้งานระบบ',
+                    path: '/admin/user',
+                    component: () =>
+                        import ('@/views/dashboard/pages/administrator/user'),
+                },
+                
+                
+                
 
             ]
         },

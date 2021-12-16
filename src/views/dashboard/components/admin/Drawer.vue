@@ -26,19 +26,19 @@
 
         <v-list-item-content>
           <v-list-item-title>{{ user.user_name }}</v-list-item-title>
-          <v-list-item-title>{{ user.user_status }}{{ user.user_firstname }} {{ user.user_lastname }} </v-list-item-title>
+          <v-list-item-title>{{ user.user_status }}{{ user.user_firstname }} {{ user.user_lastname }}</v-list-item-title>
         </v-list-item-content>
       </v-list-item>
     </v-list>
 
     <v-divider class="mb-2" />
-  <v-list>
+    <v-list>
       <v-list-group
         v-for="item in items"
         :key="item.title"
         v-model="item.active"
         :prepend-icon="item.action"
-        no-action
+        
       >
         <template v-slot:activator>
           <v-list-item-content>
@@ -46,47 +46,20 @@
           </v-list-item-content>
         </template>
 
-        <v-list-item
-          v-for="child in item.items"
-          :key="child.title"
-          :item="item"
-          :to="child.to"               
-        >
+        <v-list-item v-for="child in item.items" :key="child.title" :to="child.to">
+           <v-list-item-icon>
+            <v-icon v-text="child.action"></v-icon>
+          </v-list-item-icon>
           <v-list-item-content>
-            <v-list-item-title v-text="child.title" :prepend-icon="item.icon"></v-list-item-title>
+            <v-list-item-title v-text="child.title"></v-list-item-title>
           </v-list-item-content>
+         
         </v-list-item>
       </v-list-group>
     </v-list>
- <v-list>
-     <!--  <v-list>    
-      <v-list-item-group
-        v-model="selectedItem"
-        color="primary"
-      >
-       <template v-for="(item, i) in computedItems">
-        <base-item-group v-if="item.children" :key="`group-${i}`" :item="item"></base-item-group>
-        <base-item v-else :key="`item-${i}`" :item="item" />
-      </template>
-      </v-list-item-group>
-    </v-list> -->
-<!-- 
-      <v-list-group       
-        prepend-icon="mdi-account-circle"
-      >
-        <template v-slot:activator>
-          <v-list-item-title>ข้อมูลบุคคล</v-list-item-title>
-        </template>  
-         <template v-for="(item, i) in computedPersonnels">
-        <base-item-group v-if="item.children" :key="`group-${i}`" :item="item"></base-item-group>
-        <base-item v-else :key="`item-${i}`" :item="item" />
-      </template>
-       
-          
-       
-      </v-list-group> -->
+    <v-list>     
     </v-list>
-   
+
     <template v-slot:append>
       <base-item
         :item="{
@@ -117,60 +90,70 @@ export default {
     user_data: {},
     user: {},
     loginuser: JSON.parse(sessionStorage.getItem("user")) || 0,
-    items: [
-        {
-          action: 'mdi-ticket',
-          items: [{ title: 'List Item', icon:'mdi-ticket', to: '/Dashboard' }],
-          title: 'Attractions',
-        },
-        {
-          action: 'mdi-silverware-fork-knife',
-          active: true,
-          items: [
-            { title: 'Breakfast & brunch' },
-            { title: 'New American' },
-            { title: 'Sushi' },
-          ],
-          title: 'Dining',
-        },
-        {
-          action: 'mdi-school',
-          items: [{ title: 'List Item' }],
-          title: 'Education',
-        },
-        {
-          action: 'mdi-human-male-female-child',
-          items: [{ title: 'List Item' }],
-          title: 'Family',
-        },
-        {
-          action: 'mdi-bottle-tonic-plus',
-          items: [{ title: 'List Item' }],
-          title: 'Health',
-        },
-        {
-          action: 'mdi-briefcase',
-          items: [{ title: 'List Item' }],
-          title: 'Office',
-        },
-        {
-          action: 'mdi-tag',
-          items: [{ title: 'List Item' }],
-          title: 'Promotions',
-        },
-      ],
-    /* personnels: [
-        { title:'ข้อมูลบุคคล', icon: 'mdi-account-multiple-outline', to: '/personnel'},
-        { title:'ข้อมูลประวัติการศึกษา', icon: 'mdi-account-multiple-outline', to: '/Dashboard'},
-        { title:'ข้อมูลประสบการณ์', icon: 'mdi-account-multiple-outline', to: '/Dashboard'},
-        { title:'ข้อมูลประวัติการทำงาน', icon: 'mdi-account-multiple-outline', to: '/Dashboard'},
-        { title:'ข้อมูลโทษวินัย', icon: 'mdi-account-multiple-outline', to: '/Dashboard'},       
-      ],
-     
-    items: [
-      { title: "Dashboard", icon: "mdi-account", to: "/Dashboard"},   
-    ], */
-    
+    items: [      
+      {
+        action: "mdi-chart-areaspline",
+        items: [
+          { title: "แผงควบคุม", action: "mdi-chart-multiple", to: "/admin/Dashboard",active: true },
+          { title: "การตั้งค่าระบบ", action: "mdi-ticket", to: "/admin/Dashboard" },
+        ],
+        title: "ข้อมูลระบบ",
+      },
+      {
+        action: "mdi-account-cog",
+        items: [ { title: "ข้อมูลผู้ใช้งานระบบ", action: "mdi-alarm-light", to: "/admin/user" },],
+        title: "จัดการผู้ใช้งานระบบ",
+      },
+      {
+        action: "mdi-account-reactivate",        
+        items: [
+          { title: "ข้อมูลเกี่ยวกับบุคคล", action: "mdi-account", to: "/admin/personnel" },
+          { title: "ข้อมูลคุณวุฒิการศึกษา", action: "mdi-school", to: "/admin/personnel_education" },
+          { title: "ข้อมูลประสบการณ์", action: "mdi-airplane", to: "/admin/personnel_experience" },
+          { title: "ข้อมูลประวัติการทำงาน", action: "mdi-access-point-network", to: "/admin/personnel_work_history" },
+          { title: "ข้อมูลผลงาน รางวัล", action: "mdi-trophy-award", to: "/admin/personnel_award" },
+          { title: "ข้อมูลโทษ วินัย", action: "mdi-alarm-light", to: "/admin/personnel_discipline" },
+        ],
+        title: "ระบบงานบุคคล",
+      },
+      
+      {
+        action: "mdi-bluetooth-transfer",
+        items: [
+          { title: "สายการสอนและสายสนับสนุน", action: "mdi-alarm-light", to: "/Dashboard" },
+          { title: "สายงานบริหารสถานศึกษา", action: "mdi-alarm-light", to: "/Dashboard" },
+          { title: "การย้ายกรณีพิเศษ", action: "mdi-alarm-light", to: "/Dashboard" },
+        
+        ],
+        title: "ระบบการย้าย",
+      },
+      {
+        action: "mdi-order-bool-descending-variant",
+        items: [
+          { title: "ข้อมูลเงือนไขสาขาวิชาเอก", action: "mdi-basket-plus", to: "/Dashboard" },        
+          { title: "สถิติเงือนไขสาขาวิชา", action: "mdi-chart-box-outline", to: "/Dashboard" },        
+        ],
+        title: "ระบบเงือนไขสาขาวิชาเอก",
+      },
+       {
+        action: "mdi-human",
+        items: [
+          { title: "ข้อมูลอัตรากำลังสถานศึกษา", action: "mdi-basket-plus", to: "/Dashboard" },        
+          { title: "ข้อมูลเชิงปริมาณ", action: "mdi-chart-box-outline", to: "/Dashboard" },        
+          { title: "ข้อมูลเชิงปริมาณ", action: "mdi-chart-box-outline", to: "/Dashboard" },        
+        ],
+        title: "ระบบอัตรากำลัง",
+      },
+      {
+        action: "mdi-account-supervisor-circle",
+        items: [
+          { title: "ข้อมูลครูผู้ช่วย", action: "mdi-basket-plus", to: "/Dashboard" },        
+          { title: "ประเมินครูผู้ช่วย", action: "mdi-chart-box-outline", to: "/Dashboard" },        
+          { title: "รายงาน", action: "mdi-chart-box-outline", to: "/Dashboard" },        
+        ],
+        title: "ระบบครูผู้ช่วย",
+      },
+    ],  
   }),
 
   computed: {
@@ -184,10 +167,10 @@ export default {
       },
     },
     computedItems() {
-      return this.items.map(this.mapItem);      
+      return this.items.map(this.mapItem);
     },
     computedPersonnels() {
-      return this.personnels.map(this.mapItem);      
+      return this.personnels.map(this.mapItem);
     },
     profile() {
       return {
@@ -197,17 +180,17 @@ export default {
     },
   },
   async mounted() {
-     let result
-      let userSession = JSON.parse(sessionStorage.getItem('user')) || 0
-      result = await this.$http.post('admin.php', {
-        user_name: userSession.user_name,
-        ApiKey: 'HRvec2021'
-      })
-      this.user = result.data
-      this.$store.commit('getLoginUser', userSession)
-    },
+    let result;
+    let userSession = JSON.parse(sessionStorage.getItem("user")) || 0;
+    result = await this.$http.post("admin.php", {
+      user_name: userSession.user_name,
+      ApiKey: "HRvec2021",
+    });
+    this.user = result.data;
+    this.$store.commit("getLoginUser", userSession);
+  },
 
-  methods: {    
+  methods: {
     mapItem(item) {
       return {
         ...item,

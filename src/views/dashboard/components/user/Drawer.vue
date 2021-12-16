@@ -81,7 +81,7 @@ export default {
       },
       {
         title: "ข้อมูลคุณวุฒิการศึกษา",
-        icon: "mdi-account-multiple-check",
+        icon: "mdi-school",
         to: "/education",
       },
       {
@@ -96,12 +96,12 @@ export default {
       },
       {
         title: "ข้อมูลผลงาน รางวัล",
-        icon: "mdi-anchor",
+        icon: "mdi-trophy-award",
         to: "/award",
       },
       {
         title: "ข้อมูลโทษ วินัย",
-        icon: "mdi-arrow-all",
+        icon: "mdi-alarm-light",
         to: "/discipline",
       },
     ],

@@ -1,0 +1,504 @@
+<template>
+  <div>
+      
+    <v-container>
+    <base-material-card
+        icon="mdi-clipboard-text"
+        title="ผู้ใช้งานระบบ"
+        class="px-5 py-3"
+        :elevation="hover ? 24 : 6"
+      >
+        <v-card class="mb-4 pa-2">
+          <v-row>
+            <v-col cols="12" lg="6" class="text-right">
+              <v-text-field
+                v-model="search"
+                append-icon="mdi-magnify"
+                label="ค้นหา ระบุคำ หรือ ส่วนข้อความเกี่ยวข้อง"
+                single-line
+                hide-details
+                :elevation="hover ? 24 : 6"
+                dense
+                filled
+                class="mb-2"
+              />
+            </v-col>
+            <v-col cols="12" lg="6" class="text-right">
+              <v-btn
+                :elevation="hover ? 24 : 6"
+                large
+                right
+                depressed
+                color="primary"
+                @click.native="adduserdialog = true"
+              >
+                <v-icon>mdi-plus-circle-outline</v-icon>เพื่อรายการ
+              </v-btn>
+            </v-col>
+          </v-row>
+        </v-card>
+
+        <v-data-table
+          color="success"
+          :loading="loading"
+          :headers="headers"
+          :items="users"
+          :search="search"
+          :class="elevation - 3"      
+        
+       >        
+         <template v-slot:[`item.actions`]="{ item }">
+            <v-icon
+              color="yellow"
+              :elevation="hover ? 24 : 6"
+              @click.stop="userEdit(user_ID)"
+            >
+              mdi-pencil
+            </v-icon>          
+          </template>
+            <template v-slot:[`item.action_s`]="{ item }">            
+            <v-icon
+              color="red"
+              :elevation="hover ? 24 : 6"
+              @click.stop="userDelete(user_ID)"
+            >
+              mdi-delete
+            </v-icon>
+          </template>
+          <v-alert
+            slot="no-results"
+            :value="true"
+            color="error"
+            icon="mdi-alert"
+          >ไม่พบผลลัพธ์ "{{ search }}" ที่คุณกำลังค้นหา.</v-alert>
+        </v-data-table>
+      </base-material-card>
+
+      <!--adduserdialog  -->
+      <v-layout row justify-center>
+        <v-dialog v-model="adduserdialog" persistent max-width="50%">
+          <v-card class="mx-auto pa-5" :elevation="hover ? 24 : 6">
+            <base-material-card
+              icon="mdi-account-multiple"
+              title="เพิ่มข้อมูลสมาชิก"
+              class="px-5 py-3 text_google"
+              :elevation="hover ? 24 : 6"
+            >
+            </base-material-card>
+
+            <v-card-text class="text_google">
+            <v-form ref="adduserform" lazy-validation>
+              <v-container grid-list-md>
+                <v-layout wrap>
+                  <v-flex md6>
+                    <v-select :items="userstatus" item-text="text" item-value="value" v-model="adduser.user_status" label="User Type" required
+                      :rules="[v => !!v || '']"></v-select>
+                  </v-flex>
+                  <v-flex md6>
+                    <v-select :items="regions" item-text="region_name" item-value="region_ID" v-model="adduser.region_ID" label="Region" v-if="adduser.user_status == 'C'" ></v-select>
+                  </v-flex>
+                  <v-flex md6>
+                    <v-text-field label="Username" v-model="adduser.user_name" required :rules="[v => !!v || '']"></v-text-field>
+                  </v-flex>
+                  <v-flex md6>
+
+                  </v-flex>
+                  <v-flex md6>
+                    <v-text-field label="Password" v-model="adduser.user_password" type="password" require :rules="[v => !!v || '']"></v-text-field>
+                  </v-flex>
+                  <v-flex md6>
+                    <v-text-field label="Confirm Password" v-model="adduser.user_confirmpassword" type="password" required :rules="[v => v==adduser.user_password]"></v-text-field>
+                  </v-flex>
+                  <v-flex xs12>
+                    <v-divider></v-divider>
+                  </v-flex>
+                  <v-flex md6>
+                    <v-text-field label="Firstname" v-model="adduser.user_firstname" require :rules="[v => !!v || '']"></v-text-field>
+                  </v-flex>
+                  <v-flex md6>
+                    <v-text-field label="Lastname" v-model="adduser.user_lastname" required :rules="[v => !!v || '']"></v-text-field>
+                  </v-flex>
+                  <v-flex xs12 v-if="adduser.user_status == 'B'">
+                    <v-select :items="colleges" item-text="college_name" item-value="college_ID" v-model="adduser.college_ID" label="College"
+                      required :rules="[v => !!v || '']"></v-select>
+                  </v-flex>
+                </v-layout>
+              </v-container>
+              <small>* จำเป็น</small>
+            </v-form>
+            </v-card-text>
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn
+                color="warning"
+                large
+                @click.stop="adduserdialog = false"
+                round
+                ><v-icon dark>mdi-close</v-icon> ยกเลิก</v-btn
+              >
+              <v-btn
+                large
+                color="success"
+                @click.stop="adduserSubmit()"
+                round
+              >
+                <v-icon dark>mdi-content-save</v-icon>&nbsp;&nbsp;บันทึก
+              </v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
+      </v-layout>
+
+      <!-- V-model deleteuserdialog -->
+      <v-layout>
+        <v-dialog v-model="deleteuserdialog" persistent max-width="40%">
+          <v-card class="mx-auto pa-5" :elevation="hover ? 24 : 6">                     
+             <base-material-card
+              color="error"
+              icon="mdi-delete"
+              title="ลบข้อมูล"
+              class="px-5 py-3 text_google"
+              :elevation="hover ? 24 : 6"
+             
+            >
+            </base-material-card>
+
+            <v-card-text class="text_google">
+               <v-dialog v-model="deleteuserdialog" persistent max-width="60%">
+        <v-card>
+          <v-card-title class="red--text headline">
+            <v-icon large color="red darken-3">fa-calendar-alt</v-icon>&nbsp;ลบข้อมูลผู้ใช้
+          </v-card-title>
+          <v-card-text>
+            <v-form ref="deleteuserform" lazy-validation>
+              <v-container grid-list-md>
+                <v-layout wrap>
+                  <v-flex xs12>
+                    ยืนยันการลบข้อมูลผู้ใช้ {{ edituser.user_name }} <span v-if="edituser.college_name">{{ edituser.college_name }}</span>
+                  </v-flex>
+                  <v-flex xs12 md6>
+                  </v-flex>
+                  <v-flex xs12 md6>
+                  </v-flex>
+                </v-layout>
+              </v-container>
+            </v-form>
+          </v-card-text>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn flat @click.stop="deleteuserdialog = false">ยกเลิก</v-btn>
+            <v-btn color="red darken-3" @click.stop="deleteuserSubmit()" dark>
+              <v-icon dark>fa-trash</v-icon>&nbsp;ลบ</v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+            </v-card-text>
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn large flat @click.stop="deleteuserdialog = false"
+                ><v-icon dark>mdi-close</v-icon>ยกเลิก</v-btn
+              >
+              <v-btn large
+                color="red darken-3"
+                @click.stop="deleteuserubmit()"
+                dark
+              >
+                <v-icon dark>mdi-delete</v-icon>&nbsp;ลบ
+              </v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
+      </v-layout>
+
+      <!-- V-model edituserdialog -->
+      <v-layout row justify-center>
+         <v-dialog v-model="edituserdialog" persistent max-width="80%">
+        <v-card>
+          <v-card-title class="orange--text headline">
+            <v-icon medium color="orange darken-2">fa-user-circle</v-icon>&nbsp;แก้ข้อมูลผู้ใช้
+          </v-card-title>
+          <v-card-text>
+            <v-form ref="edituserform" lazy-validation>
+              <v-container grid-list-md>
+                <v-layout wrap>
+                  <v-flex md6>
+                    <v-select :items="userstatus" item-text="text" item-value="value" v-model="edituser.user_status" label="User Type" required
+                      :rules="[v => !!v || '']"></v-select>
+                  </v-flex>
+                  <v-flex md6>
+                    <v-text-field label="Username" v-model="edituser.user_name" required :rules="[v => !!v || '']"></v-text-field>
+                  </v-flex>
+                  <v-flex md6>
+                    <v-text-field label="Password" v-model="edituser.user_password" type="password"></v-text-field>
+                  </v-flex>
+                  <v-flex md6>
+                    <v-text-field label="Confirm Password" v-model="edituser.user_confirmpassword" type="password"></v-text-field>
+                  </v-flex>
+                  <v-flex xs12>
+                    <v-divider></v-divider>
+                  </v-flex>
+                  <v-flex md6>
+                    <v-text-field label="Firstname" v-model="edituser.user_firstname" require :rules="[v => !!v || '']"></v-text-field>
+                  </v-flex>
+                  <v-flex md6>
+                    <v-text-field label="Lastname" v-model="edituser.user_lastname" required :rules="[v => !!v || '']"></v-text-field>
+                  </v-flex>
+                  <v-flex xs12 v-if="edituser.user_status == 'B'">
+                    <v-select :items="colleges" item-text="college_name" item-value="college_ID" v-model="edituser.college_ID" label="College"
+                      required :rules="[v => !!v || '']"></v-select>
+                  </v-flex>
+                </v-layout>
+              </v-container>
+              <small>* จำเป็น</small>
+            </v-form>
+          </v-card-text>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn flat @click.stop="edituserdialog = false" round>ยกเลิก</v-btn>
+            <v-btn color="success" @click.stop="edituserSubmit()" round>
+              <v-icon dark>save</v-icon>&nbsp;บันทึก</v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+      </v-layout>
+    </v-container>
+
+    
+    <v-container fluid>
+      <v-snackbar
+        v-model="snackbar.show"
+        multi-line
+        vertical
+        top
+        auto-height
+        :timeout="snackbar.timeout"
+        :color="snackbar.color"
+      >
+        <v-icon large>{{ snackbar.icon }}</v-icon>
+        <br />
+        {{ snackbar.text }}
+        <v-btn dark flat @click="snackbar.show = false"> Close </v-btn>
+      </v-snackbar>
+    </v-container>
+  </div>
+</template>
+<script>
+import Password from "vue-password-strength-meter";
+export default {
+  components: { Password },
+  data() {
+    return {
+     ApiKey: 'HRvec2021',
+      valid: true,
+      adduserdialog: false,
+      edituserdialog: false,
+      deleteuserdialog: false,
+      snackbar: {
+        show: false,
+        color: '',
+        timeout: 5000,
+        icon: '',
+        text: ''
+      },
+      users: [],
+      adduser: {},
+      edituser: {},
+      search: '',
+      pagination: {},
+      currentPK: null,
+      headers: [
+        { text: "ลำดับ", align: "center", value: "user_ID" },
+        { text: "ชื่อผู้ใช้งาน", align: "center", value: "user_name" },              
+        { text: "เบอร์โทร", align: "center", value: "tel_p" },
+        { text: "สถานะ", align: "center", value: "user_status" },
+        { text: "สถานศึกษา", align: "center", value: "user_firstname" },
+        { text: "สถานศึกษา", align: "center", value: "user_lastname" },
+        { text: "วิทยาลัย", align: "center", value: "college_ID" },
+        { text: "จังหวัด", align: "center", value: "province_ID" },
+        { text: "แก้ไข", align: "center", value: "actions", icon: "mdi-file-document-edit" },
+        { text: "ลบ", align: "center", value: "action_s" , icon: "mdi-delete-forever" },
+      ],
+      rowsperpage: [
+        25,
+        50,
+        100,
+        {
+          text: "All",
+          value: -1,
+        },
+      ],
+      errorMessage: "",
+      successMessage: "",
+      users: [],
+      adduser: {},
+      edituser: {},
+    college: {},
+      provinces: [],
+      prefectures: [],
+       userstatus: [{
+          text: 'สถานศึกษา',
+          value: 'B'
+        },
+        {
+          text: 'กรรมการผู้ตรวจ',
+          value: 'D'
+        },
+        {
+          text: 'อาชีวศึกษาจังหวัด',
+          value: 'G'
+        },
+        {
+          text: 'ภาค',
+          value: 'F'
+        },
+        {
+          text: 'ส่วนกลาง',
+          value: 'C'
+        },
+        {
+          text: 'สมศ.',
+          value: 'E'
+        },
+        {
+          text: 'ผู้ดูแลระบบ',
+          value: 'A'
+        },
+      ],
+     collgegs: [],
+      regions: [],
+      region_ena: true
+    };
+  },
+async mounted() {
+      let result
+      let userSession = JSON.parse(sessionStorage.getItem('user')) || 0
+
+      result = await this.$http.post('collegetype.php', {
+        ApiKey: this.ApiKey
+      })
+      this.collegetypes = result.data
+      result = await this.$http.post('college.php', {
+        ApiKey: this.ApiKey
+      })
+      this.colleges = result.data
+      result = await this.$http.post('province.php', {
+        ApiKey: this.ApiKey
+      })
+      this.provinces = result.data
+      
+      result = await this.$http.post('region.php', {
+        ApiKey: this.ApiKey
+      })
+      this.regions = result.data
+
+      this.userQueryAll()
+    },
+    methods: {
+      async userQueryAll() {
+        let result = await this.$http.post('user.php', {
+          ApiKey: this.ApiKey
+        })
+        this.users = result.data
+      },
+      async adduserSubmit() {
+        if (this.$refs.adduserform.validate()) {
+          this.adduser.ApiKey = this.ApiKey;
+          let result = await this.$http.post('user.insert.php', this.adduser)
+          if (result.data.status == true) {
+            this.user = result.data
+            this.snackbar.icon = 'check_circle'
+            this.snackbar.color = 'success'
+            this.snackbar.text = 'บันทึกข้อมูลเรียบร้อย'
+            this.snackbar.show = true
+            this.userQueryAll()
+          } else {
+            this.snackbar.icon = 'error'
+            this.snackbar.color = 'red'
+            this.snackbar.text = 'บันทึกข้อมูลผิดพลาด'
+            this.snackbar.show = true
+          }
+          this.adduserdialog = false
+        }
+      },
+      async userEdit(user_ID) {
+        let result = await this.$http.post('user.php', {
+          ApiKey: this.ApiKey,
+          user_ID: user_ID
+        })
+        this.edituser = result.data
+        this.edituser.user_password = ''
+        this.edituserdialog = true
+      },
+      async edituserSubmit() {
+        if (this.$refs.edituserform.validate()) {
+          this.edituser.ApiKey = this.ApiKey;
+          if(this.edituser.user_password == '')
+            delete this.edituser.user_password
+          let result = await this.$http.post('user.update.php', this.edituser)
+          if (result.data.status == true) {
+            this.user = result.data
+            this.snackbar.icon = 'check_circle'
+            this.snackbar.color = 'success'
+            this.snackbar.text = 'แก้ไขข้อมูลเรียบร้อย'
+            this.snackbar.show = true
+            this.userQueryAll()
+          } else {
+            this.snackbar.icon = 'error'
+            this.snackbar.color = 'red'
+            this.snackbar.text = 'แก้ไขข้อมูลผิดพลาด'
+            this.snackbar.show = true
+          }
+          this.edituserdialog = false
+        }
+      },
+      async userDelete(user_ID) {
+        let result = await this.$http.post('user.php', {
+          ApiKey: this.ApiKey,
+          user_ID: user_ID
+        })
+        this.edituser = result.data
+        this.deleteuserdialog = true
+      },
+      async deleteuserSubmit() {
+        if (this.$refs.deleteuserform.validate()) {
+          this.edituser.ApiKey = this.ApiKey;
+          if(this.edituser.user_status == 'D')
+            await this.$http.post('committee.delete.php', {
+              ApiKey: this.ApiKey,
+              user_ID: this.edituser.user_ID
+            })
+          let result = await this.$http.post('user.delete.php', this.edituser)
+          if (result.data.status == true) {
+            this.user = result.data
+            this.snackbar.icon = 'check_circle'
+            this.snackbar.color = 'success'
+            this.snackbar.text = 'ลบข้อมูลเรียบร้อย'
+            this.snackbar.show = true
+            this.userQueryAll()
+          } else {
+            this.snackbar.icon = 'error'
+            this.snackbar.color = 'red'
+            this.snackbar.text = 'ลบข้อมูลผิดพลาด'
+            this.snackbar.show = true
+          }
+          this.deleteuserdialog = false
+        }
+      },
+    },
+    computed: {
+      pages() {
+        if (this.pagination.rowsPerPage == null ||
+          this.pagination.totalItems == null
+        ) return 0
+
+        return Math.ceil(this.pagination.totalItems / this.pagination.rowsPerPage)
+      }
+    },
+ 
+  
+
+ 
+
+  
+}
+</script>
