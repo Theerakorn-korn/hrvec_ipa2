@@ -18,6 +18,7 @@
           @click.native="memberAdd()"
           ><v-icon>mdi-plus-circle-outline</v-icon>เพื่อรายการ</v-btn
         >
+        
           <v-text-field
             v-model="search"
             append-icon="mdi-magnify"

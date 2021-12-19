@@ -30,28 +30,27 @@
                 right
                 depressed
                 color="primary"
-                @click.native="adduserdialog = true"
+                @click.native="userAdd()"
               >
                 <v-icon>mdi-plus-circle-outline</v-icon>เพื่อรายการ
               </v-btn>
             </v-col>
           </v-row>
         </v-card>
-
         <v-data-table
           color="success"
           :loading="loading"
           :headers="headers"
           :items="users"
           :search="search"
-          :class="elevation - 3"      
-        
-       >        
+          :class="elevation - 3" 
+       > 
+
          <template v-slot:[`item.actions`]="{ item }">
             <v-icon
               color="yellow"
               :elevation="hover ? 24 : 6"
-              @click.stop="userEdit(user_ID)"
+              @click.stop="userEdit(item.user_ID)"
             >
               mdi-pencil
             </v-icon>          
@@ -60,7 +59,7 @@
             <v-icon
               color="red"
               :elevation="hover ? 24 : 6"
-              @click.stop="userDelete(user_ID)"
+              @click.stop="userDelete(item.user_ID)"
             >
               mdi-delete
             </v-icon>
@@ -86,7 +85,7 @@
             >
             </base-material-card>
 
-            <v-card-text class="text_google">
+            <v-card-text>
             <v-form ref="adduserform" lazy-validation>
               <v-container grid-list-md>
                 <v-layout wrap>
@@ -118,7 +117,7 @@
                   <v-flex md6>
                     <v-text-field label="Lastname" v-model="adduser.user_lastname" required :rules="[v => !!v || '']"></v-text-field>
                   </v-flex>
-                  <v-flex xs12 v-if="adduser.user_status == 'B'">
+                  <v-flex xs12 v-if="adduser.user_status == 'E'">
                     <v-select :items="colleges" item-text="college_name" item-value="college_ID" v-model="adduser.college_ID" label="College"
                       required :rules="[v => !!v || '']"></v-select>
                   </v-flex>
@@ -156,7 +155,7 @@
              <base-material-card
               color="error"
               icon="mdi-delete"
-              title="ลบข้อมูล"
+              title="ลบข้อมูลผู้ใช้"
               class="px-5 py-3 text_google"
               :elevation="hover ? 24 : 6"
              
@@ -164,34 +163,21 @@
             </base-material-card>
 
             <v-card-text class="text_google">
-               <v-dialog v-model="deleteuserdialog" persistent max-width="60%">
-        <v-card>
-          <v-card-title class="red--text headline">
-            <v-icon large color="red darken-3">fa-calendar-alt</v-icon>&nbsp;ลบข้อมูลผู้ใช้
-          </v-card-title>
+              
+        <v-card>        
           <v-card-text>
             <v-form ref="deleteuserform" lazy-validation>
               <v-container grid-list-md>
                 <v-layout wrap>
                   <v-flex xs12>
                     ยืนยันการลบข้อมูลผู้ใช้ {{ edituser.user_name }} <span v-if="edituser.college_name">{{ edituser.college_name }}</span>
-                  </v-flex>
-                  <v-flex xs12 md6>
-                  </v-flex>
-                  <v-flex xs12 md6>
-                  </v-flex>
+                  </v-flex>                                 
                 </v-layout>
               </v-container>
             </v-form>
-          </v-card-text>
-          <v-card-actions>
-            <v-spacer></v-spacer>
-            <v-btn flat @click.stop="deleteuserdialog = false">ยกเลิก</v-btn>
-            <v-btn color="red darken-3" @click.stop="deleteuserSubmit()" dark>
-              <v-icon dark>fa-trash</v-icon>&nbsp;ลบ</v-btn>
-          </v-card-actions>
+          </v-card-text>        
         </v-card>
-      </v-dialog>
+    
             </v-card-text>
             <v-card-actions>
               <v-spacer></v-spacer>
@@ -200,7 +186,7 @@
               >
               <v-btn large
                 color="red darken-3"
-                @click.stop="deleteuserubmit()"
+                @click.stop="deleteuserSubmit()"
                 dark
               >
                 <v-icon dark>mdi-delete</v-icon>&nbsp;ลบ
@@ -213,10 +199,14 @@
       <!-- V-model edituserdialog -->
       <v-layout row justify-center>
          <v-dialog v-model="edituserdialog" persistent max-width="80%">
-        <v-card>
-          <v-card-title class="orange--text headline">
-            <v-icon medium color="orange darken-2">fa-user-circle</v-icon>&nbsp;แก้ข้อมูลผู้ใช้
-          </v-card-title>
+        <v-card class="mx-auto pa-6" :elevation="hover ? 24 : 6">
+           <base-material-card
+              color="yellow"
+              icon="mdi-clipboard-text"
+              title="แก้ไขข้อมูลผู้ใช้งานระบบ"
+              class="px-5 py-3 text_google"
+              :elevation="hover ? 24 : 6"
+            ></base-material-card>
           <v-card-text>
             <v-form ref="edituserform" lazy-validation>
               <v-container grid-list-md>
@@ -254,9 +244,13 @@
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn flat @click.stop="edituserdialog = false" round>ยกเลิก</v-btn>
-            <v-btn color="success" @click.stop="edituserSubmit()" round>
-              <v-icon dark>save</v-icon>&nbsp;บันทึก</v-btn>
+            <v-btn large flat @click.stop="edituserdialog = false" round>
+                <v-icon dark>mdi-close</v-icon>ยกเลิก
+              </v-btn>
+              <v-btn large color="warning" @click.stop="edituserSubmit()" round>
+                <v-icon dark>mdi-pencil</v-icon>&nbsp;บันทึก
+              </v-btn>
+
           </v-card-actions>
         </v-card>
       </v-dialog>
@@ -264,30 +258,23 @@
     </v-container>
 
     
-    <v-container fluid>
-      <v-snackbar
-        v-model="snackbar.show"
-        multi-line
-        vertical
-        top
-        auto-height
-        :timeout="snackbar.timeout"
-        :color="snackbar.color"
-      >
-        <v-icon large>{{ snackbar.icon }}</v-icon>
-        <br />
-        {{ snackbar.text }}
-        <v-btn dark flat @click="snackbar.show = false"> Close </v-btn>
-      </v-snackbar>
+    <v-container fluid>  
+      <v-snackbar v-model="snackbar.show" multi-line vertical top auto-height :timeout="snackbar.timeout" :color="snackbar.color">
+        <v-icon large>{{snackbar.icon}}</v-icon>
+        <br> {{snackbar.text}}
+        <v-btn dark flat @click="snackbar.show = false">
+          Close
+        </v-btn>
+      </v-snackbar>  
     </v-container>
   </div>
 </template>
 <script>
-import Password from "vue-password-strength-meter";
-export default {
-  components: { Password },
+
+export default { 
   data() {
     return {
+       loading: true,
      ApiKey: 'HRvec2021',
       valid: true,
       adduserdialog: false,
@@ -304,17 +291,15 @@ export default {
       adduser: {},
       edituser: {},
       search: '',
-      pagination: {},
-      currentPK: null,
+      pagination: {},      
       headers: [
         { text: "ลำดับ", align: "center", value: "user_ID" },
         { text: "ชื่อผู้ใช้งาน", align: "center", value: "user_name" },              
         { text: "เบอร์โทร", align: "center", value: "tel_p" },
         { text: "สถานะ", align: "center", value: "user_status" },
         { text: "สถานศึกษา", align: "center", value: "user_firstname" },
-        { text: "สถานศึกษา", align: "center", value: "user_lastname" },
-        { text: "วิทยาลัย", align: "center", value: "college_ID" },
-        { text: "จังหวัด", align: "center", value: "province_ID" },
+        { text: "สถานศึกษา", align: "center", value: "user_lastname" },       
+        { text: "จังหวัด", align: "center", value: "province_name" },
         { text: "แก้ไข", align: "center", value: "actions", icon: "mdi-file-document-edit" },
         { text: "ลบ", align: "center", value: "action_s" , icon: "mdi-delete-forever" },
       ],
@@ -326,39 +311,31 @@ export default {
           text: "All",
           value: -1,
         },
-      ],
-      errorMessage: "",
-      successMessage: "",
-      users: [],
-      adduser: {},
-      edituser: {},
+      ],    
+     
     college: {},
       provinces: [],
       prefectures: [],
        userstatus: [{
-          text: 'สถานศึกษา',
-          value: 'B'
-        },
-        {
-          text: 'กรรมการผู้ตรวจ',
-          value: 'D'
-        },
-        {
-          text: 'อาชีวศึกษาจังหวัด',
-          value: 'G'
-        },
-        {
-          text: 'ภาค',
+          text: 'งานบุคคลากรสถานศึกษา',
           value: 'F'
         },
         {
-          text: 'ส่วนกลาง',
+          text: 'สถานศึกษา',
+          value: 'E'
+        },
+        {
+          text: 'อาชีวศึกษาจังหวัด',
+          value: 'D'
+        },
+        {
+          text: 'สถาบันอาชีวศึกษา',
           value: 'C'
         },
         {
-          text: 'สมศ.',
-          value: 'E'
-        },
+          text: 'ส่วนกลาง กจ2',
+          value: 'B'
+        },       
         {
           text: 'ผู้ดูแลระบบ',
           value: 'A'
@@ -395,24 +372,29 @@ async mounted() {
     },
     methods: {
       async userQueryAll() {
+          this.loading = true
         let result = await this.$http.post('user.php', {
           ApiKey: this.ApiKey
-        })
+        }).finally(() => this.loading = false)
         this.users = result.data
       },
+       async userAdd() {
+      this.adduser = {};
+      this.adduserdialog = true;
+    },
       async adduserSubmit() {
-        if (this.$refs.adduserform.validate()) {
+        if (this.$refs.adduserform.validate()) {         
           this.adduser.ApiKey = this.ApiKey;
           let result = await this.$http.post('user.insert.php', this.adduser)
           if (result.data.status == true) {
             this.user = result.data
-            this.snackbar.icon = 'check_circle'
+            this.snackbar.icon = 'mdi-font-awesome'
             this.snackbar.color = 'success'
             this.snackbar.text = 'บันทึกข้อมูลเรียบร้อย'
             this.snackbar.show = true
             this.userQueryAll()
           } else {
-            this.snackbar.icon = 'error'
+            this.snackbar.icon = 'mdi-close-network'
             this.snackbar.color = 'red'
             this.snackbar.text = 'บันทึกข้อมูลผิดพลาด'
             this.snackbar.show = true
@@ -437,13 +419,13 @@ async mounted() {
           let result = await this.$http.post('user.update.php', this.edituser)
           if (result.data.status == true) {
             this.user = result.data
-            this.snackbar.icon = 'check_circle'
+            this.snackbar.icon = 'mdi-font-awesome'
             this.snackbar.color = 'success'
             this.snackbar.text = 'แก้ไขข้อมูลเรียบร้อย'
             this.snackbar.show = true
             this.userQueryAll()
           } else {
-            this.snackbar.icon = 'error'
+            this.snackbar.icon = 'mdi-close-network'
             this.snackbar.color = 'red'
             this.snackbar.text = 'แก้ไขข้อมูลผิดพลาด'
             this.snackbar.show = true
@@ -470,13 +452,13 @@ async mounted() {
           let result = await this.$http.post('user.delete.php', this.edituser)
           if (result.data.status == true) {
             this.user = result.data
-            this.snackbar.icon = 'check_circle'
+            this.snackbar.icon = 'mdi-font-awesome'
             this.snackbar.color = 'success'
             this.snackbar.text = 'ลบข้อมูลเรียบร้อย'
             this.snackbar.show = true
             this.userQueryAll()
           } else {
-            this.snackbar.icon = 'error'
+            this.snackbar.icon = 'mdi-close-network'
             this.snackbar.color = 'red'
             this.snackbar.text = 'ลบข้อมูลผิดพลาด'
             this.snackbar.show = true
@@ -494,7 +476,7 @@ async mounted() {
         return Math.ceil(this.pagination.totalItems / this.pagination.rowsPerPage)
       }
     },
- 
+
   
 
  

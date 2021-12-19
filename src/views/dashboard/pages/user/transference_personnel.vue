@@ -346,12 +346,23 @@
                           :rules="[(v) => !!v || '']"
                         ></v-text-field>
                       </v-col>
-                      <v-col cols="12" sm="6">
+                      <v-col cols="12" sm="3">
                         <v-text-field
                           v-model="addtransference_personnel.reason_1"
                           :counter="100"
                           outlined
-                          label="ช่วยปฏิบัติราชการเป็นเวลา :"
+                          label="ช่วยปฏิบัติราชการเป็นเวลา ปี:"
+                          prepend-icon="mdi-office-building-marker"
+                          request
+                          :rules="[(v) => !!v || '']"
+                        ></v-text-field>
+                      </v-col>
+                      <v-col cols="12" sm="3">
+                        <v-text-field
+                          v-model="addtransference_personnel.reason_1"
+                          :counter="100"
+                          outlined
+                          label="ช่วยปฏิบัติราชการเป็นเวลา เดือน:"
                           prepend-icon="mdi-office-building-marker"
                           request
                           :rules="[(v) => !!v || '']"

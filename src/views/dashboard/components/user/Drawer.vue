@@ -130,12 +130,10 @@ export default {
   async mounted() {
       let result
       let userSession = JSON.parse(sessionStorage.getItem('user')) || 0
-      result = await this.$http.post('user.php', {
-        id_card: userSession.id_card,
-        ApiKey: 'HRvec2021'
+     result = await this.$http.post('crud_personnel.php?crud=read', {
+        id_card: userSession.id_card       
       })
-      this.user = result.data
-      this.$store.commit('getLoginUser', userSession)
+      this.user = result.data    
     },
 
   methods: {    
