@@ -47,12 +47,13 @@
         </template>
 
         <v-list-item v-for="child in item.items" :key="child.title" :to="child.to">
-           <v-list-item-icon>
-            <v-icon v-text="child.action"></v-icon>
-          </v-list-item-icon>
+           
           <v-list-item-content>
             <v-list-item-title v-text="child.title"></v-list-item-title>
           </v-list-item-content>
+          <v-list-item-icon>
+            <v-icon v-text="child.action"></v-icon>
+          </v-list-item-icon>
          
         </v-list-item>
       </v-list-group>
@@ -101,7 +102,12 @@ export default {
       },
       {
         action: "mdi-account-cog",
-        items: [ { title: "ข้อมูลผู้ใช้งานระบบ", action: "mdi-alarm-light", to: "/admin/user" },],
+        items: [ 
+          { title: "ข้อมูลผู้ใช้งานระบบ", action: "mdi-account-arrow-right", to: "/admin/user" },
+          { title: "สถานะผู้ใช้งานระบบ", action: "mdi-account-cog", to: "/admin/user_status" },
+          { title: "ข้อมูลประเภทสถานศึกษา", action: "mdi-office-building", to: "/admin/collegetype" },
+          { title: "ข้อมูลรอบปี", action: "mdi-calendar", to: "/admin/period" },
+        ],
         title: "จัดการผู้ใช้งานระบบ",
       },
       {

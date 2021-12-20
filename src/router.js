@@ -112,7 +112,24 @@ export default new Router({
                     component: () =>
                         import ('@/views/dashboard/pages/administrator/user'),
                 },
-                
+                {
+                    name: 'สถานะผู้ใช้งานระบบ',
+                    path: '/admin/user_status',
+                    component: () =>
+                        import ('@/views/dashboard/pages/administrator/user_status'),
+                },
+                {
+                    name: 'ข้อมูลประเภทสถานศึกษา',
+                    path: '/admin/collegetype',
+                    component: () =>
+                        import ('@/views/dashboard/pages/administrator/collegetype'),
+                },
+                {
+                    name: 'ข้อมูลรอบปี',
+                    path: '/admin/period',
+                    component: () =>
+                        import ('@/views/dashboard/pages/administrator/period'),
+                },
                 
                 
 

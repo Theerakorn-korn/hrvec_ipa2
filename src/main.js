@@ -11,6 +11,9 @@ import './plugins/chartist'
 import './plugins/vee-validate'
 import vuetify from './plugins/vuetify'
 import i18n from './i18n'
+import Multiselect from 'vue-multiselect'
+import VueMoment from 'vue-moment'
+import moment from 'moment-timezone'
 const request = axios.create({
     baseURL: 'http://localhost:8080/HRvec_api/',
 })
@@ -18,10 +21,14 @@ Vue.config.productionTip = false
 Vue.use(VueAxios, request)
 Vue.use(VueLazyLoad)
 Vue.use(VueNumeric)
+Vue.use(VueMoment, {
+    moment,
+})
 new Vue({
     router,
     store,
     vuetify,
     i18n,
+    Multiselect,  
     render: h => h(App),
 }).$mount('#app')
