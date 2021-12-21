@@ -107,7 +107,7 @@ export default new Router({
                         import ('@/views/dashboard/pages/administrator/personnel_discipline'),
                 },
                 {
-                    name: 'ผู้ใช้งานระบบ',
+                    name: 'กลุ่มผู้ใช้งานระบบ',
                     path: '/admin/user',
                     component: () =>
                         import ('@/views/dashboard/pages/administrator/user'),
@@ -129,6 +129,12 @@ export default new Router({
                     path: '/admin/period',
                     component: () =>
                         import ('@/views/dashboard/pages/administrator/period'),
+                },
+                {
+                    name: 'ข้อมูลบุคคลใช้งานระบบ',
+                    path: '/admin/personnel',
+                    component: () =>
+                        import ('@/views/dashboard/pages/administrator/personnel'),
                 },
                 
                 

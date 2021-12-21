@@ -103,7 +103,8 @@ export default {
       {
         action: "mdi-account-cog",
         items: [ 
-          { title: "ข้อมูลผู้ใช้งานระบบ", action: "mdi-account-arrow-right", to: "/admin/user" },
+          { title: "ข้อมูลผู้ใช้งานระบบ", action: "mdi-account-arrow-right", to: "/admin/personnel" },
+          { title: "ข้อมูลกลุ่มผู้ใช้งานงานระบบ", action: "mdi-account-arrow-right", to: "/admin/user" },
           { title: "สถานะผู้ใช้งานระบบ", action: "mdi-account-cog", to: "/admin/user_status" },
           { title: "ข้อมูลประเภทสถานศึกษา", action: "mdi-office-building", to: "/admin/collegetype" },
           { title: "ข้อมูลรอบปี", action: "mdi-calendar", to: "/admin/period" },
