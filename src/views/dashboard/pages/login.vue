@@ -92,18 +92,15 @@ export default {
           this.$store.commit("getLoginUser", user);
           sessionStorage.setItem("user", JSON.stringify(user));
           if (user.user_status == "tech") {
-            this.dialog = true;
-            this.dialog_msg = "ครู (สายการสอน)";
+            this.dialog = true;            
             sessionStorage.setItem("user", JSON.stringify(user));
             this.$router.push("/user");
           } else if (user.user_status == "se_director") {
-            this.dialog = true;
-            this.dialog_msg = "รองผู้อำนวยการ";
+            this.dialog = true;           
             sessionStorage.setItem("user", JSON.stringify(user));
             this.$router.push("/#");
           } else if (user.user_status == "director") {
-            this.dialog = true;
-            this.dialog_msg = "ผู้อำนวยการ";
+            this.dialog = true;           
             sessionStorage.setItem("user", JSON.stringify(user));
             this.$router.push("/#");
           } else {

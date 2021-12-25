@@ -114,7 +114,7 @@ export default {
       {
         action: "mdi-account-reactivate",        
         items: [
-          { title: "ข้อมูลเกี่ยวกับบุคคล", action: "mdi-account", to: "/admin/personnel" },
+          { title: "ข้อมูลเกี่ยวกับบุคคล", action: "mdi-account", to: "/admin/personnel_tem" },
           { title: "ข้อมูลคุณวุฒิการศึกษา", action: "mdi-school", to: "/admin/personnel_education" },
           { title: "ข้อมูลประสบการณ์", action: "mdi-airplane", to: "/admin/personnel_experience" },
           { title: "ข้อมูลประวัติการทำงาน", action: "mdi-access-point-network", to: "/admin/personnel_work_history" },

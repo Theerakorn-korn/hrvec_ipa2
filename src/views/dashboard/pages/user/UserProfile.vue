@@ -10,7 +10,7 @@
           <v-card-text class="text-center">
             <h3 class="font-weight-light mb-1 grey--text">{{ user.id_card }}</h3>
             <h3 class="font-weight-light mb-1 grey--text">{{ user.title_s }}{{ user.frist_name }}  {{ user.last_name }}</h3>
-            <h4 class="font-weight-light mb-3 black--text">{{ user.college_s }}</h4>
+            <h4 class="font-weight-light mb-3 black--text">{{ user.college_name }}</h4>
             <p class="font-weight-light grey--text"></p>
             <!-- <v-btn color="success" rounded class="mr-0">แก้ไข</v-btn> -->
           </v-card-text>
@@ -29,7 +29,7 @@
             <v-container class="pa-1 ma-1">
               <v-row>
                 <v-col cols="12" md="6">
-                  <h3 class="font-weight"><v-icon large>mdi-menu-right</v-icon> สังกัด : {{ user.college_s }} </h3> 
+                  <h3 class="font-weight"><v-icon large>mdi-menu-right</v-icon> สังกัด : {{ user.college_name }} </h3> 
                 </v-col>
                 <v-col cols="12" md="6">
                  <h3 class="font-weight"><v-icon large left>mdi-menu-right</v-icon> รหัสบัตรประชาชน : {{ user.id_card }}</h3>               
@@ -87,6 +87,7 @@
 export default {
   data() {
     return {
+       ApiKey: 'HRvec2021',
       addeducationdialog: false,
       user: {},
       editmember: {},
@@ -96,7 +97,8 @@ export default {
   async mounted() {
       let result
       let userSession = JSON.parse(sessionStorage.getItem('user')) || 0
-      result = await this.$http.post('crud_personnel.php?crud=read', {
+      result = await this.$http.post('personnel_temporary.php', {
+          ApiKey: this.ApiKey,     
         id_card: userSession.id_card       
       })
       this.user = result.data    
@@ -107,14 +109,7 @@ export default {
       this.addeducationdialog = true;
     },
 
-  methods: {
-    //Edit data
-    async memberEdit() {
-      let result = await this.$http.post("crud_personnel.php", {
-        id_card: id_card,
-      });
-      this.editmember = result.data;
-    },
+  methods: {    
   },
 };
 </script>

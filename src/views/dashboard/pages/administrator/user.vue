@@ -318,9 +318,7 @@ export default {
      
     college: {},
       provinces: [],
-      prefectures: [],
-      
-     collgegs: [],
+      prefectures: [],  
      userstatus:[],
       regions: [],
       region_ena: true

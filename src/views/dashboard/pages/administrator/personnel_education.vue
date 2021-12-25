@@ -29,7 +29,7 @@
                 right
                 depressed
                 color="primary"
-                @click.native="educationAdd()"
+                @click.native="personnel_educationAdd()"
               >
                 <v-icon>mdi-plus-circle-outline</v-icon>เพื่อรายการ
               </v-btn>
@@ -41,7 +41,7 @@
           color="success"
           :loading="loading"
           :headers="headers"
-          :items="education"
+          :items="personnel_education"
           :search="search"
           :class="elevation - 3"
         >        
@@ -54,9 +54,9 @@
         </v-data-table>
       </base-material-card>
 
-      <!--addeducationdialog  -->
+      <!--addpersonnel_educationdialog  -->
       <v-layout row justify-center>
-        <v-dialog v-model="addeducationdialog" persistent max-width="50%" overlay-opacity="0.6">
+        <v-dialog v-model="addpersonnel_educationdialog" persistent max-width="50%" overlay-opacity="0.6">
           <v-card class="mx-auto pa-5" :elevation="hover ? 24 : 6">
             <base-material-card
               icon="mdi-clipboard-text"
@@ -69,7 +69,7 @@
                 ref="updateImageform"
                 v-model="updateImageValid"
                 lazy-validation
-                @submit.prevent="addeducationSubmit()"
+                @submit.prevent="addpersonnel_educationSubmit()"
                 enctype="multipart/form-data"
               >
                 <v-container grid-list-md>
@@ -78,7 +78,7 @@
                       <v-row>
                         <v-col cols="12" lg="6">
                           <v-combobox
-                            v-model="addeducation.ed_level"
+                            v-model="addpersonnel_education.ed_level"
                             :items="items"
                             label="ระดับการศึกษา"
                             dense
@@ -88,7 +88,7 @@
                         </v-col>
                         <v-col cols="12" lg="6">
                           <v-text-field
-                            v-model="addeducation.ed_university"
+                            v-model="addpersonnel_education.ed_university"
                             dense
                             label="คณะวิชา : "
                             item-value="cat_name"
@@ -99,7 +99,7 @@
                         </v-col>
                          <v-col cols="12" lg="6">
                           <v-text-field
-                            v-model="addeducation.ed_university"
+                            v-model="addpersonnel_education.ed_university"
                             dense
                             label="สาขาวิชา : "
                             item-value="cat_name"
@@ -110,7 +110,7 @@
                         </v-col>
                         <v-col cols="12" lg="6">
                           <v-text-field
-                            v-model="addeducation.ed_university"
+                            v-model="addpersonnel_education.ed_university"
                             dense
                             label="สถานศึกษาที่จบ : "
                             item-value="cat_name"
@@ -153,7 +153,7 @@
                        
                         <v-col cols="12" lg="6">
                           <v-text-field
-                            v-model="addeducation.ed_gpa"
+                            v-model="addpersonnel_education.ed_gpa"
                             dense
                             label="ผลการเรียนเรียน : "
                             item-value="cat_name"
@@ -171,7 +171,7 @@
                       <v-btn  large color="success" type="submit">
                         <v-icon dark>mdi-content-save</v-icon>บันทึก
                       </v-btn>
-                      <v-btn  large color="warning" @click.stop="addeducationdialog = false" round>
+                      <v-btn  large color="warning" @click.stop="addpersonnel_educationdialog = false" round>
                         <v-icon dark>mdi-close</v-icon>ยกเลิก
                       </v-btn>
                     </v-col>
@@ -183,9 +183,9 @@
         </v-dialog>
       </v-layout>
 
-      <!-- V-model deleteeducationdialog -->
+      <!-- V-model deletepersonnel_educationdialog -->
       <v-layout>
-        <v-dialog v-model="deleteeducationdialog" persistent max-width="40%">
+        <v-dialog v-model="deletepersonnel_educationdialog" persistent max-width="40%">
           <v-card class="mx-auto pa-5" :elevation="hover ? 24 : 6">
             <base-material-card
               color="error"
@@ -195,12 +195,12 @@
               :elevation="hover ? 24 : 6"
             ></base-material-card>
             <v-card-text class="text_google">
-              <v-form ref="deleteeducationform" lazy-validation>
+              <v-form ref="deletepersonnel_educationform" lazy-validation>
                 <v-container grid-list-md>
                   <v-layout wrap>
                     <v-flex xs12>
                       ยืนยันการลบข้อมูล :
-                      <h3>{{ editeducation.cat_name }}</h3>
+                      <h3>{{ editpersonnel_education.cat_name }}</h3>
                     </v-flex>
                     <v-flex xs12 md6></v-flex>
                     <v-flex xs12 md6></v-flex>
@@ -210,10 +210,10 @@
             </v-card-text>
             <v-card-actions>
               <v-spacer></v-spacer>
-              <v-btn large flat @click.stop="deleteeducationdialog = false">
+              <v-btn large flat @click.stop="deletepersonnel_educationdialog = false">
                 <v-icon dark>mdi-close</v-icon>ยกเลิก
               </v-btn>
-              <v-btn large color="red darken-3" @click.stop="deleteeducationubmit()" dark>
+              <v-btn large color="red darken-3" @click.stop="deletepersonnel_educationubmit()" dark>
                 <v-icon dark>mdi-delete</v-icon>&nbsp;ลบ
               </v-btn>
             </v-card-actions>
@@ -221,9 +221,9 @@
         </v-dialog>
       </v-layout>
 
-      <!-- V-model editeducationdialog -->
+      <!-- V-model editpersonnel_educationdialog -->
       <v-layout row justify-center>
-        <v-dialog v-model="editeducationdialog" persistent max-width="50%">
+        <v-dialog v-model="editpersonnel_educationdialog" persistent max-width="50%">
           <v-card class="mx-auto pa-5" :elevation="hover ? 24 : 6">
             <base-material-card
               color="yellow"
@@ -233,13 +233,13 @@
               :elevation="hover ? 24 : 6"
             ></base-material-card>
             <v-card-text>
-              <v-form ref="editeducationform" lazy-validation>
+              <v-form ref="editpersonnel_educationform" lazy-validation>
                 <v-container grid-list-md>
                   <v-layout wrap>
                     <v-flex md12>
                       <v-autocomplete
-                        v-model="editeducation.cat_id"
-                        :items="educations"
+                        v-model="editpersonnel_education.cat_id"
+                        :items="personnel_educations"
                         dense
                         filled
                         item-text="cat_name"
@@ -250,8 +250,8 @@
                       ></v-autocomplete>
 
                       <v-autocomplete
-                        v-model="editeducation.cat_sub_id"
-                        :items="education_sub"
+                        v-model="editpersonnel_education.cat_sub_id"
+                        :items="personnel_education_sub"
                         item-text="name_sub"
                         item-value="cat_parent_id"
                         label="หมวดหมู่ย่อย :"
@@ -263,7 +263,7 @@
                       <hr />
                       <br />
                       <v-text-field
-                        v-model="editeducation.cat_name"
+                        v-model="editpersonnel_education.cat_name"
                         dense
                         filled
                         label="สินค้า : "
@@ -274,7 +274,7 @@
                       ></v-text-field>
 
                       <v-text-field
-                        v-model="editeducation.p_price"
+                        v-model="editpersonnel_education.p_price"
                         item-value="p_price"
                         dense
                         filled
@@ -285,7 +285,7 @@
                       ></v-text-field>
 
                       <v-text-field
-                        v-model="editeducation.unit_name"
+                        v-model="editpersonnel_education.unit_name"
                         item-value="unit_name"
                         dense
                         filled
@@ -295,7 +295,7 @@
                         :rules="[(v) => !!v || '']"
                       ></v-text-field>
                       <v-text-field
-                        v-model="editeducation.p_total"
+                        v-model="editpersonnel_education.p_total"
                         item-value="p_total"
                         dense
                         filled
@@ -306,7 +306,7 @@
                       ></v-text-field>
 
                       <v-textarea
-                        v-model="editeducation.p_desc"
+                        v-model="editpersonnel_education.p_desc"
                         item-value="p_desc"
                         filled
                         auto-grow
@@ -326,14 +326,14 @@
                         ref="menu"
                         v-model="menu"
                         :close-on-content-click="false"
-                        :return-value.sync="editeducation.date_time"
+                        :return-value.sync="editpersonnel_education.date_time"
                         transition="scale-transition"
                         offset-y
                         min-width="290px"
                       >
                         <template v-slot:activator="{ on, attrs }">
                           <v-text-field
-                            v-model="editeducation.date_time"
+                            v-model="editpersonnel_education.date_time"
                             item-value="date_time"
                             label="วันที่ข้อมูล : "
                             prepend-icon="mdi-calendar"
@@ -343,13 +343,13 @@
                             :rules="[(v) => !!v || '']"
                           ></v-text-field>
                         </template>
-                        <v-date-picker v-model="editeducation.date_time" no-title scrollable>
+                        <v-date-picker v-model="editpersonnel_education.date_time" no-title scrollable>
                           <v-spacer></v-spacer>
                           <v-btn text color="primary" @click="menu = false">Cancel</v-btn>
                           <v-btn
                             text
                             color="primary"
-                            @click="$refs.menu.save(editeducation.date_time)"
+                            @click="$refs.menu.save(editpersonnel_education.date_time)"
                           >OK</v-btn>
                         </v-date-picker>
                       </v-menu>
@@ -358,7 +358,7 @@
                       <br />
 
                       <v-select
-                        v-model="editeducation.status_s"
+                        v-model="editpersonnel_education.status_s"
                         item-value="status_s"
                         :items="items_list"
                         filled
@@ -374,10 +374,10 @@
             </v-card-text>
             <v-card-actions>
               <v-spacer></v-spacer>
-              <v-btn large flat @click.stop="editeducationdialog = false" round>
+              <v-btn large flat @click.stop="editpersonnel_educationdialog = false" round>
                 <v-icon dark>mdi-close</v-icon>ยกเลิก
               </v-btn>
-              <v-btn large color="warning" @click.stop="editeducationSubmit()" round>
+              <v-btn large color="warning" @click.stop="editpersonnel_educationSubmit()" round>
                 <v-icon dark>mdi-pencil</v-icon>&nbsp;แก้ไขข้อมูล
               </v-btn>
             </v-card-actions>
@@ -411,16 +411,16 @@ export default {
   data() {
     return {
       updateImageDialog: false,
-      educationImage: "",
+      personnel_educationImage: "",
       files: [],
       date: new Date().toISOString().substr(0, 10),
       menu: false,
       modal: false,
       menu2: false,
       search: "",
-      addeducationdialog: false,
-      editeducationdialog: false,
-      deleteeducationdialog: false,
+      addpersonnel_educationdialog: false,
+      editpersonnel_educationdialog: false,
+      deletepersonnel_educationdialog: false,
       showimagedialog: false,
       snackbar: {
         show: false,
@@ -438,7 +438,9 @@ export default {
         { text: "จบจาก", align: "center", value: "academy_name" },
         { text: "ปีที่จบ", align: "center", value: "year_finish" },
         { text: "ผลการเรียน", align: "center", value: "academic_results" },       
-        { text: "ดำเนินการ", align: "center", value: "action" },       
+        { text: "ดำเนินการ", align: "center", value: "action" },     
+        { text: "แก้ไข", align: "center", value: "actions", icon: "mdi-file-document-edit" },
+        { text: "ลบ", align: "center", value: "action_s" , icon: "mdi-delete-forever" },  
       ],
       rowsperpage: [
         25,
@@ -451,11 +453,11 @@ export default {
       ],
       errorMessage: "",
       successMessage: "",
-      education: [],
-      addeducation: {},
-      editeducation: {},
-      educations: [],
-      education_sub: [],
+      personnel_education: [],
+      addpersonnel_education: {},
+      editpersonnel_education: {},
+      personnel_educations: [],
+      personnel_education_sub: [],
       updateImageData: {},
       updateImageValid: false,
       ed_level: "",
@@ -474,38 +476,38 @@ export default {
   },
 
   async mounted() {
-    this.getAlleducation();
+    this.getAllpersonnel_education();
   },
   methods: {
     save(date) {
       this.$refs.menu.save(date);
     },
-    async getAlleducation() {
-      let result = await this.$http.post("crud_education.php");
-      this.education = result.data;
+    async getAllpersonnel_education() {
+      let result = await this.$http.post("crud_personnel_education.php");
+      this.personnel_education = result.data;
     },
     //Add data
     selectImage(file) {
       this.updateImageData.p_img = file;
     },
-    async educationAdd() {
-      this.addeducation = {};
+    async personnel_educationAdd() {
+      this.addpersonnel_education = {};
       this.updateImageData = {};
-      this.addeducationdialog = true;
+      this.addpersonnel_educationdialog = true;
     },
-    // addeducation{} import data in form text field
+    // addpersonnel_education{} import data in form text field
     // updateImageData{} import data in form file
-    // formData >> input updateImageData{ >>  input addeducation{} }
-    async addeducationSubmit() {
+    // formData >> input updateImageData{ >>  input addpersonnel_education{} }
+    async addpersonnel_educationSubmit() {
       this.$refs.updateImageform.validate();
-      this.updateImageData.cat_name = this.addeducation.cat_name;
+      this.updateImageData.cat_name = this.addpersonnel_education.cat_name;
       if (this.updateImageValid) {
         let formData = new FormData();
         formData.append("p_img", this.updateImageData.p_img);
         formData.append("cat_name", this.updateImageData.cat_name);
 
         let result = await this.$http.post(
-          "crud_education.php?crud=create",
+          "crud_personnel_education.php?crud=create",
           formData,
           {
             headers: {
@@ -518,62 +520,62 @@ export default {
           this.snackbar.color = "success";
           this.snackbar.text = "บันทึกข้อมูลเรียบร้อย";
           this.snackbar.show = true;
-          this.getAlleducation();
+          this.getAllpersonnel_education();
         } else {
           this.snackbar.icon = "mdi-alert";
           this.snackbar.color = "red";
           this.snackbar.text = "บันทึกข้อมูลผิดพลาด";
           this.snackbar.show = true;
         }
-        this.addeducationdialog = false;
+        this.addpersonnel_educationdialog = false;
       }
     },
 
     //Edit data
-    async educationEdit(cat_id) {
-      let result = await this.$http.post("crud_education.php", {
+    async personnel_educationEdit(cat_id) {
+      let result = await this.$http.post("crud_personnel_education.php", {
         cat_id: cat_id,
       });
-      this.editeducation = result.data;
-      this.editeducationdialog = true;
+      this.editpersonnel_education = result.data;
+      this.editpersonnel_educationdialog = true;
     },
-    async editeducationSubmit() {
-      if (this.$refs.editeducationform.validate()) {
+    async editpersonnel_educationSubmit() {
+      if (this.$refs.editpersonnel_educationform.validate()) {
         let result = await this.$http.post(
-          "crud_education.php?crud=update",
-          this.editeducation
+          "crud_personnel_education.php?crud=update",
+          this.editpersonnel_education
         );
         if (result.data.status == true) {
-          this.education = result.data;
+          this.personnel_education = result.data;
           this.snackbar.icon = "mdi-content-save";
           this.snackbar.color = "success";
           this.snackbar.text = "แก้ไขข้อมูลเรียบร้อย";
           this.snackbar.show = true;
-          this.getAlleducation();
+          this.getAllpersonnel_education();
         } else {
           this.snackbar.icon = "mdi-alert";
           this.snackbar.color = "red";
           this.snackbar.text = "แก้ไขข้อมูลผิดพลาด";
           this.snackbar.show = true;
-          this.getAlleducation();
+          this.getAllpersonnel_education();
         }
-        this.getAlleducation();
-        this.editeducationdialog = false;
+        this.getAllpersonnel_education();
+        this.editpersonnel_educationdialog = false;
       }
     },
-    async educationDelete(cat_id) {
-      let result = await this.$http.post("crud_education.php", {
+    async personnel_educationDelete(cat_id) {
+      let result = await this.$http.post("crud_personnel_education.php", {
         cat_id: cat_id,
       });
-      this.editeducation = result.data;
-      this.deleteeducationdialog = true;
+      this.editpersonnel_education = result.data;
+      this.deletepersonnel_educationdialog = true;
     },
 
-    async deleteeducationubmit() {
-      if (this.$refs.deleteeducationform.validate()) {
+    async deletepersonnel_educationubmit() {
+      if (this.$refs.deletepersonnel_educationform.validate()) {
         let result = await this.$http.post(
-          "crud_education.php?crud=delete",
-          this.editeducation
+          "crud_personnel_education.php?crud=delete",
+          this.editpersonnel_education
         );
         if (result.data.status == true) {
           this.snackbar.icon = "mdi-content-save";
@@ -586,8 +588,8 @@ export default {
           this.snackbar.text = "ลบข้อมูลผิดพลาด";
           this.snackbar.show = true;
         }
-        this.deleteeducationdialog = false;
-        this.getAlleducation();
+        this.deletepersonnel_educationdialog = false;
+        this.getAllpersonnel_education();
       }
     },
   },
@@ -603,20 +605,20 @@ export default {
         this.pagination.totalItems / this.pagination.rowsPerPage
       );
     },
-    addeducationeducationChange() {
-      return this.addeducation.cat_id;
+    addpersonnel_educationpersonnel_educationChange() {
+      return this.addpersonnel_education.cat_id;
     },
-    editeducationeducationChange() {
-      return this.editeducation.cat_id;
+    editpersonnel_educationpersonnel_educationChange() {
+      return this.editpersonnel_education.cat_id;
     },
   },
 
   watch: {
-    async addeducationeducationChange() {
-      this.prefectureQueryAll(this.addeducation.cat_id);
+    async addpersonnel_educationpersonnel_educationChange() {
+      this.prefectureQueryAll(this.addpersonnel_education.cat_id);
     },
-    async editeducationeducationChange() {
-      this.prefectureQueryAll(this.editeducation.cat_id);
+    async editpersonnel_educationpersonnel_educationChange() {
+      this.prefectureQueryAll(this.editpersonnel_education.cat_id);
     },
   },
 };

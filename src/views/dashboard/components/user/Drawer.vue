@@ -70,6 +70,7 @@ export default {
   },
 
   data: () => ({
+    ApiKey: 'HRvec2021',
     user_data: {},
     user: {},
     loginuser: JSON.parse(sessionStorage.getItem("user")) || 0,
@@ -130,7 +131,8 @@ export default {
   async mounted() {
       let result
       let userSession = JSON.parse(sessionStorage.getItem('user')) || 0
-     result = await this.$http.post('crud_personnel.php?crud=read', {
+     result = await this.$http.post('personnel_temporary.php', {
+         ApiKey: this.ApiKey, 
         id_card: userSession.id_card       
       })
       this.user = result.data    

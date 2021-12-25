@@ -7,36 +7,38 @@
             <h2 class="h1 font-weight-light text_google">
               <v-icon large left>mdi-file-send</v-icon>การย้ายสายการสอน
             </h2>
-          </template>
-          <v-form ref="addtransference_personnelform" lazy-validation>
+          </template>         
             <v-card class="pa-2 ma-2">
               <v-card-title>
-                <div class="font-weight-light v-size--x-large"><v-icon large left>mdi-account-details</v-icon> ข้อมูลเบื้องต้น</div>
+                <div class="font-weight-light v-size--x-large"><v-icon large left>mdi-account-details</v-icon> ข้อมูลเบื้องต้น รหัสรายการอ้างอิง {{ id_ref }}</div>
               </v-card-title>
               <v-row>
                 <v-col cols="12" sm="3">
-                  <v-text-field
-                    v-model="addtransference_personnel.time_s"
+                  <v-text-field                                    
                     dense
                     label="ครั้งที่ :"
+                    :value="time_s"
                     prepend-icon="mdi-account-details"
                     request
                     disabled
-                  ></v-text-field>
+                  >                 
+                  </v-text-field>
+                 
                 </v-col>
                 <v-col cols="12" sm="3">
                   <v-text-field
-                    v-model="addtransference_personnel.year_s"
+                    :value="y_now"
+                     color="cyan darken"
                     dense
                     label="ประจำปี :"
                     prepend-icon="mdi-account-details"
-                    request
+                    request                
                     disabled
                   ></v-text-field>
                 </v-col>
                 <v-col cols="12" sm="3">
                   <v-text-field
-                    v-model="addtransference_personnel.id_card"
+                    v-model="user.college_name"
                     dense
                     label="เขียนที่ : "
                     prepend-icon="mdi-account-details"
@@ -44,9 +46,9 @@
                     disabled
                   ></v-text-field>
                 </v-col>
-                <v-col cols="12" sm="3">
-                  <v-text-field
-                    v-model="addtransference_personnel.id_card"
+                <v-col cols="12" sm="3">                 
+                  <v-text-field                    
+                    :value="timestamp"
                     dense
                     label="วันที่ยื่นคำร้อง : "
                     prepend-icon="mdi-account-details"
@@ -54,11 +56,43 @@
                     disabled
                   ></v-text-field>
                 </v-col>
-                <v-col cols="12" sm="3">
+                 <v-col cols="12" sm="2">
                   <v-text-field
-                    v-model="addtransference_personnel.id_card"
-                    dense
-                    label="ชื่อ : "
+                  label="คำนำหน้าชื่อ"
+                    :value='user.title_s'
+                    dense               
+                    prepend-icon="mdi-account-details"
+                    request
+                    disabled
+                  >
+                  </v-text-field>
+                </v-col>
+                <v-col cols="12" sm="2">
+                  <v-text-field
+                  label="ชื่อ"
+                    :value='user.frist_name'
+                    dense               
+                    prepend-icon="mdi-account-details"
+                    request
+                    disabled
+                  >
+                  </v-text-field>
+                </v-col>
+                <v-col cols="12" sm="3">
+                  <v-text-field   
+                  label="นามสกุล"
+                   :value="user.last_name"            
+                    dense                   
+                    prepend-icon="mdi-account-details"
+                    request
+                    disabled
+                  ></v-text-field>
+                </v-col>
+                <v-col cols="12" sm="2">
+                  <v-text-field
+                  label="เลขที่ตำแหน่ง"
+                   :value='user.id_position'
+                    dense                   
                     prepend-icon="mdi-account-details"
                     request
                     disabled
@@ -66,29 +100,20 @@
                 </v-col>
                 <v-col cols="12" sm="3">
                   <v-text-field
-                    v-model="addtransference_personnel.id_card"
+                   
                     dense
-                    label="นามสกุล : "
+                    label="วิทยฐานะ"
+                    :value='user.rang_name'
                     prepend-icon="mdi-account-details"
                     request
                     disabled
                   ></v-text-field>
                 </v-col>
-                <v-col cols="12" sm="3">
-                  <v-text-field
-                    v-model="addtransference_personnel.id_card"
+                <v-col cols="12" sm="6">
+                  <v-text-field                   
                     dense
-                    label="เลขที่ตำแหน่ง : "
-                    prepend-icon="mdi-account-details"
-                    request
-                    disabled
-                  ></v-text-field>
-                </v-col>
-                <v-col cols="12" sm="3">
-                  <v-text-field
-                    v-model="addtransference_personnel.id_card"
-                    dense
-                    label="วิทยฐานะ (กรณีข้าราชการครู) : "
+                     label="สังกัด (สถานศึกษา) : "
+                    :value='user.college_name'                    
                     prepend-icon="mdi-account-details"
                     request
                     disabled
@@ -96,19 +121,10 @@
                 </v-col>
                 <v-col cols="12" sm="6">
                   <v-text-field
-                    v-model="addtransference_personnel.id_card"
-                    dense
-                    label="สังกัด (สถานศึกษา) : "
-                    prepend-icon="mdi-account-details"
-                    request
-                    disabled
-                  ></v-text-field>
-                </v-col>
-                <v-col cols="12" sm="6">
-                  <v-text-field
-                    v-model="addtransference_personnel.id_card"
-                    dense
+                   
+                    dense 
                     label="รหัสบัตรประชาชน : "
+                    :value='user.id_card'      
                     prepend-icon="mdi-account-details"
                     request
                     disabled
@@ -117,18 +133,19 @@
 
                 <v-col cols="12" sm="3">
                   <v-text-field
-                    v-model="addtransference_personnel.date_appoinment"
-                    dense
-                    label="วันที่เริ่มบรรจุเข้ารับราชการ :"
+                  
+                    dense                   
+                     label="วันที่เริ่มบรรจุเข้ารับราชการ : "
+                    :value="dmy_app"    
                     prepend-icon="mdi-account-details"
                     request
                     disabled
                   ></v-text-field>
                 </v-col>
                 <v-col cols="12" sm="3">
-                  <v-text-field
-                    v-model="addtransference_personnel.date_appoinment_now"
-                    dense
+                  <v-text-field    
+                       
+                    dense                    
                     label="ระยะเวลาตั้งแต่บรรจุเข้ารับราชการ :"
                     prepend-icon="mdi-account-details"
                     request
@@ -136,8 +153,14 @@
                   ></v-text-field>
                 </v-col>
                 <v-col cols="12" sm="3">
+                 <!--  เดือนปัจจุบัน {{ month_now }}
+                  เดือนบรรจุ {{ month_app }}
+                  ปีปัจจุบัน {{ y_now }}
+                  ปีบรรจุ {{ y_app }}  
+                  ปีบรรจุ {{ result }}   -->
+
                   <v-text-field
-                    v-model="addtransference_personnel.time_s"
+                  :value="user.date_app"                        
                     dense
                     label="วันที่เริ่มปฏิบัติหน้าที่ในสถานศึกษาปัจจุบัน :"
                     prepend-icon="mdi-account-details"
@@ -210,7 +233,7 @@
                         <v-radio value="dtech" v-on:click="isHidden = true">
                           <template v-slot:label>
                             <div>                            
-                              <strong class="warning--text">ไม่ได้ทำการสอน</strong>
+                              <strong class="warning--text" v-on="clear_tech()">ไม่ได้ทำการสอน</strong>
                             </div>
                           </template>
                         </v-radio>
@@ -230,6 +253,7 @@
                     <v-row>
                       <v-col cols="12" sm="6">
                         <v-text-field
+                        v-model="addtransference_personnel.subject_1"
                           :counter="100"
                           outlined
                           label="วิชาที่สอน ที่ 1:"
@@ -238,7 +262,7 @@
                       </v-col>
                       <v-col cols="12" sm="6">
                         <v-text-field
-                          v-model="addtransference_personnel.reason_1"
+                          v-model="addtransference_personnel.subject_2"
                           :counter="100"
                           outlined
                           label="วิชาที่สอน ที่ 2:"
@@ -249,7 +273,7 @@
                       </v-col>
                       <v-col cols="12" sm="6">
                         <v-text-field
-                          v-model="addtransference_personnel.reason_1"
+                          v-model="addtransference_personnel.subject_3"
                           :counter="100"
                           outlined
                           label="วิชาที่สอน ที่ 3:"
@@ -260,7 +284,7 @@
                       </v-col>
                       <v-col cols="12" sm="6">
                         <v-text-field
-                          v-model="addtransference_personnel.reason_1"
+                          v-model="addtransference_personnel.subject_4"
                           :counter="100"
                           outlined
                           label="วิชาที่สอน ที่ 4:"
@@ -297,7 +321,7 @@
                         <v-radio v-on:click="isHidden_service_gov = true">
                           <template v-slot:label>
                             <div>                            
-                              <strong class="primary--text">ไม่อยู่</strong>
+                              <strong class="primary--text" v-on="clear_gov_service()">ไม่อยู่</strong>
                             </div>
                           </template>
                         </v-radio>
@@ -315,20 +339,22 @@
                 </v-col>
                 <v-col cols="12" sm="12">
                   <v-card class="pa-2 ma-2" v-if="!isHidden_service_gov" hidden>
-                    <v-row>
-                      <v-col cols="12" sm="6">
-                        <v-text-field                       
-                          v-model="addtransference_personnel.reason_1"
-                          :counter="100"
-                          outlined
-                          label="ช่วยปฏิบัติราชการอยู่ที่ :"
-                          prepend-icon="mdi-office-building-marker"
+                    <v-row>                      
+                      <v-col cols="12" sm="6">                     
+                     <v-autocomplete 
+                     outlined :items="colleges" 
+                     item-text="college_name" 
+                     item-value="college_ID" 
+                     v-model="addtransference_personnel.college_ID" 
+                     label="College"
+                      prepend-icon="mdi-office-building-marker"
+                      required :rules="[v => !!v || '']">                      
+                      </v-autocomplete>   
 
-                        ></v-text-field>
                       </v-col>
                       <v-col cols="12" sm="6">
                         <v-text-field
-                          v-model="addtransference_personnel.reason_1"
+                          v-model="addtransference_personnel.ser_order"
                           :counter="100"
                           outlined
                           label="เริ่มปฏิบัติราชการ คำสั่งที่ :"
@@ -337,7 +363,7 @@
                       </v-col>
                       <v-col cols="12" sm="6">
                         <v-text-field
-                          v-model="addtransference_personnel.reason_1"
+                          v-model="addtransference_personnel.ser_date"
                           :counter="100"
                           outlined
                           label="เมื่อวันที่:"
@@ -348,7 +374,7 @@
                       </v-col>
                       <v-col cols="12" sm="3">
                         <v-text-field
-                          v-model="addtransference_personnel.reason_1"
+                          v-model="addtransference_personnel.ser_time_year"
                           :counter="100"
                           outlined
                           label="ช่วยปฏิบัติราชการเป็นเวลา ปี:"
@@ -359,7 +385,7 @@
                       </v-col>
                       <v-col cols="12" sm="3">
                         <v-text-field
-                          v-model="addtransference_personnel.reason_1"
+                          v-model="addtransference_personnel.ser_time_month"
                           :counter="100"
                           outlined
                           label="ช่วยปฏิบัติราชการเป็นเวลา เดือน:"
@@ -370,7 +396,7 @@
                       </v-col>
                       <v-col cols="12" sm="6">
                         <v-text-field
-                          v-model="addtransference_personnel.reason_1"
+                          v-model="addtransference_personnel.ser_reason_help"
                           :counter="100"
                           outlined
                           label="เหตุผลที่ช่วยปฏิบัติราชการ :"
@@ -454,110 +480,66 @@
                 <div
                   class="font-weight-light v-size--x-large"
                 ><v-icon large left>mdi-flag-variant</v-icon> ขอย้ายไปปฏิบัติหน้าที่ในตำแหน่งและหน่วยงานแห่งใหม่ เรียงลำดับดังนี้</div>
-              </v-card-title>
-              
-              <v-col cols="12" sm="12">
+              </v-card-title>              
+              <v-col cols="12" sm="12">                   
                 <v-card class="pa-2 ma-2">
-                  <v-row>
-                    <v-col cols="12" sm="4">
-                      <v-text-field
-                        v-model="addtransference_personnel.reason_1"
-                        :counter="100"
-                        outlined
-                        label="ตำแหน่ง : "
-                        prepend-icon="mdi-account-star"
-                        request
-                        :rules="[(v) => !!v || '']"
-                      ></v-text-field>
-                    </v-col>
-                    <v-col cols="12" sm="4">
-                      <v-text-field
-                        v-model="addtransference_personnel.reason_1"
-                        :counter="100"
-                        outlined
-                        label="สาขาวิชา :"
-                        prepend-icon="mdi-account-details"
-                        request
-                        :rules="[(v) => !!v || '']"
-                      ></v-text-field>
-                    </v-col>
-                    <v-col cols="12" sm="4">
-                      <v-text-field
-                        v-model="addtransference_personnel.reason_1"
-                        :counter="100"
-                        outlined
-                        label="สังกัด :"
-                        prepend-icon="mdi-flag-variant"
-                        request
-                        :rules="[(v) => !!v || '']"
-                      ></v-text-field>
-                    </v-col>
-                    <v-col cols="12" sm="4">
-                      <v-text-field
-                        v-model="addtransference_personnel.reason_1"
-                        :counter="100"
-                        outlined
-                        label="ตำแหน่ง : "
-                        prepend-icon="mdi-account-star"
-                        request
-                        :rules="[(v) => !!v || '']"
-                      ></v-text-field>
-                    </v-col>
-                    <v-col cols="12" sm="4">
-                      <v-text-field
-                        v-model="addtransference_personnel.reason_1"
-                        :counter="100"
-                        outlined
-                        label="สาขาวิชา :"
-                        prepend-icon="mdi-account-details"
-                        request
-                        :rules="[(v) => !!v || '']"
-                      ></v-text-field>
-                    </v-col>
-                    <v-col cols="12" sm="4">
-                      <v-text-field
-                        v-model="addtransference_personnel.reason_1"
-                        :counter="100"
-                        outlined
-                        label="สังกัด :"
-                        prepend-icon="mdi-flag-variant"
-                        request
-                        :rules="[(v) => !!v || '']"
-                      ></v-text-field>
-                    </v-col>
-                    <v-col cols="12" sm="4">
-                      <v-text-field
-                        v-model="addtransference_personnel.reason_1"
-                        :counter="100"
-                        outlined
-                        label="ตำแหน่ง : "
-                        prepend-icon="mdi-account-star"
-                        request
-                        :rules="[(v) => !!v || '']"
-                      ></v-text-field>
-                    </v-col>
-                    <v-col cols="12" sm="4">
-                      <v-text-field
-                        v-model="addtransference_personnel.reason_1"
-                        :counter="100"
-                        outlined
-                        label="สาขาวิชา :"
-                        prepend-icon="mdi-account-details"
-                        request
-                        :rules="[(v) => !!v || '']"
-                      ></v-text-field>
-                    </v-col>
-                    <v-col cols="12" sm="4">
-                      <v-text-field
-                        v-model="addtransference_personnel.reason_1"
-                        :counter="100"
-                        outlined
-                        label="สังกัด :"
-                        prepend-icon="mdi-flag-variant"
-                        request
-                        :rules="[(v) => !!v || '']"
-                      ></v-text-field>
-                    </v-col>
+                  <v-row>  
+
+<v-col cols="12" sm="12">
+  <v-card   
+        class="px-5 py-3"
+        :elevation="hover ? 24 : 6"
+      >     
+       <v-btn
+                      x-large
+                      color="success"
+                      dark
+                      class="ma-2"
+                      @click.stop="addtransference_location()"
+                      round
+                    >
+                      <v-icon>mdi-content-save</v-icon>
+                      <span>เลือกวิทยาลัยแห่งใหม่</span>
+                    </v-btn>   
+        <v-data-table
+          color="success"
+          :loading="loading"
+          :headers="header_transference_location"
+          :items="transference_locations"
+          :search="search"
+          :class="elevation - 3" 
+       > 
+
+         <template v-slot:[`item.actions`]="{ item }">
+            <v-icon
+              color="yellow"
+              :elevation="hover ? 24 : 6"
+              @click.stop="userEdit(item.id_tfl)"
+            >
+              mdi-pencil
+            </v-icon>          
+          </template>
+            <template v-slot:[`item.action_s`]="{ item }">            
+            <v-icon
+              color="red"
+              :elevation="hover ? 24 : 6"
+              @click.stop="userDelete(item.id_tfl)"
+            >
+              mdi-delete
+            </v-icon>
+          </template>
+          <v-alert
+            slot="no-results"
+            :value="true"
+            color="error"
+            icon="mdi-alert"
+          >ไม่พบผลลัพธ์ "{{ search }}" ที่คุณกำลังค้นหา.</v-alert>
+        </v-data-table>
+  </v-card>
+
+</v-col>
+
+
                     <v-col cols="12" sm="6">
                       <v-text-field
                         v-model="addtransference_personnel.reason_1"
@@ -617,6 +599,7 @@
                 </v-card>
               </v-col>
             </v-card>
+
 
             <v-card class="pa-2 ma-2">
               <v-card-title>
@@ -766,11 +749,85 @@
                   </div>
                 </v-row>
               </v-card-text>
-            </v-card>
-          </v-form>
+            </v-card>         
         </base-material-card>
+
+         <!--addtransference_locationdialog  -->
+      <v-layout row justify-center>
+        <v-dialog v-model="addtransference_locationdialog" persistent max-width="50%">
+          <v-card class="mx-auto pa-5" :elevation="hover ? 24 : 6">
+            <base-material-card
+              icon="mdi-account-multiple"
+              title="เลือกวิทยาลัย"
+              class="px-5 py-3 text_google"
+              :elevation="hover ? 24 : 6"
+            >
+            รหัสรายการอ้างอิง {{ id_ref }}
+            </base-material-card>
+            <v-card-text>
+            <v-form ref="addtransference_locationform" lazy-validation>
+              <v-container grid-list-md>
+                <v-layout wrap>
+                   <v-flex md2>
+<v-select v-model="addtransference_personnel.sequence_n" :items="order_need" outlined   label="ลำดับที่ :">  
+</v-select>
+                   </v-flex>                                
+                    <v-flex md5>                    
+                      <v-autocomplete                         
+                        :items="branch_s"
+                        item-text="name_branch"
+                        item-value="id_branch"
+                        outlined
+                        label="สาขาวิชา :"
+                        prepend-icon="mdi-account-details"
+                        request
+                         v-model="addtransference_personnel.id_branch"
+                        :rules="[(v) => !!v || '']"
+                      ></v-autocomplete>
+                    </v-flex>
+                     <v-flex md5>
+                      <v-autocomplete
+                        v-model="addtransference_personnel.college_code"
+                      :items="colleges"
+                      item-text="college_name"
+                      item-value="college_code"                      
+                        outlined
+                        label="สังกัด :"
+                        prepend-icon="mdi-flag-variant"
+                        request
+                        :rules="[(v) => !!v || '']"
+                      ></v-autocomplete>
+                               
+                  </v-flex>
+                </v-layout>
+              </v-container>
+              <small>* จำเป็น</small>
+            </v-form>
+            </v-card-text>
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn
+                color="warning"
+                large
+                @click.stop="addtransference_locationdialog = false"
+                round
+                ><v-icon dark>mdi-close</v-icon> ยกเลิก</v-btn
+              >
+              <v-btn
+                large
+                color="success"
+                @click.stop="addtransference_locationSubmit()"
+                round
+              >
+                <v-icon dark>mdi-content-save</v-icon>&nbsp;&nbsp;บันทึก
+              </v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
+      </v-layout>
       </v-col>
     </v-row>   
+    
   </v-container>
 </template>
 
@@ -778,6 +835,8 @@
 export default {
 
   data: () => ({
+ loading: true,    
+     ApiKey: 'HRvec2021',
     isHidden: false,
     isHidden_service_gov: false,
     move_spouse: false,
@@ -785,10 +844,12 @@ export default {
     move_domicile: false,
     another_reason: false,
     service_gov:false,
-
+     addtransference_locationdialog: false,
+ user: {},
     selected: [],
     reason_transfer: [],
     transference_personnel: [],
+    transference_locations:[],
     addtransference_personnel: {},
     provinces: [],
     prefectures: [],
@@ -802,6 +863,13 @@ export default {
       icon: "",
       text: "",
     },
+    order_need:[1,2,3],
+    header_transference_location:[
+    {text: "ลำดับ",align:"",value:"sequence_n"},
+    {text: "สาขาวิชา",align:"",value:"id_branch"},
+    {text: "วิทยาลัย",align:"",value:"college_code"},
+
+    ],
     education_s: [
       {
         title: "ต่ำกว่าปริญญาตรี",
@@ -836,47 +904,64 @@ export default {
     isEditing: null,
     model: null,
     show1: false,
+    
   }),
 
   async mounted() {
-    this.provinceQueryAll();
+    let result_branch
+        result_branch = await this.$http.post('branch.php', {
+        ApiKey: this.ApiKey       
+      })
+      this.branch_s = result_branch.data      
+      
+      let result
+      result = await this.$http.post('collegetype.php', {
+        ApiKey: this.ApiKey
+      })
+      this.collegetypes = result.data
+      result = await this.$http.post('college.php', {
+        ApiKey: this.ApiKey
+      })      
+      this.colleges = result.data
+      result = await this.$http.post('province.php', {
+        ApiKey: this.ApiKey
+      })
+      this.provinces = result.data      
+      result = await this.$http.post('region.php', {
+        ApiKey: this.ApiKey
+      })
+      this.regions = result.data  
+       let result_user
+      let userSession = JSON.parse(sessionStorage.getItem('user')) || 0
+      result_user = await this.$http.post('personnel_temporary.php', {
+        ApiKey: this.ApiKey,    
+         id_card: userSession.id_card     
+      })
+      this.user = result_user.data              
+       this.transference_locationQueryAll()
   },
 
-  methods: {
-    async provinceQueryAll() {
-      let result = await this.$http.post("province.php");
-      this.provinces = result.data;
-    },
+  methods: {  
+     async transference_locationQueryAll() {
+          this.loading = true
+        let result = await this.$http.post('transference_location.php', {
+          ApiKey: this.ApiKey,id_ref: this.id_ref       
+        }).finally(() => this.loading = false)
+        this.transference_locations = result.data      
+      },
 
-    async prefectureQueryAll(province_ID) {
-      let result = await this.$http.post("prefecture.php", {
-        province_ID: province_ID,
-      });
-      this.prefectures = result.data;
-    },
+    async addtransference_location() {     
+      this.addtransference_locationdialog = true;
+    },   
 
-    async districtQueryAll(prefecture_ID) {
-      let result = await this.$http.post("districts.php", {
-        prefecture_ID: prefecture_ID,
-      });
-      this.district = result.data;
-    },
-
-    async transference_personnelAdd() {
-      this.addtransference_personnel = {};
-      //this.addtransference_personneldialog = true
-    },
-
-    async getAlltransference_personnel() {
-      let result = await this.$http.post("crud_transference_personnel.php");
-      this.transference_personnel = result.data;
-    },
-
-    async addtransference_personnelSubmit() {
-      if (this.$refs.addtransference_personnelform.validate()) {
+    async addtransference_locationSubmit() {
+      if (this.$refs.addtransference_locationform.validate()) {
+        this.addtransference_personnel.ApiKey = this.ApiKey;
+        this.addtransference_personnel.id_ref = this.id_ref;
+        this.addtransference_personnel.id_card = this.user.id_card;
         let result = await this.$http.post(
-          "crud_transference_personnel.php?crud=create",
-          this.addtransference_personnel
+          "transference_location.insert.php",
+          this.addtransference_personnel          
         );
         if (result.data.status == true) {
           this.transference_personnel = result.data;
@@ -884,26 +969,76 @@ export default {
           this.snackbar.color = "success";
           this.snackbar.text = "บันทึกข้อมูลเรียบร้อย";
           this.snackbar.show = true;
+            this.transference_locationQueryAll()
         } else {
           this.snackbar.icon = "error";
           this.snackbar.color = "red";
           this.snackbar.text = "บันทึกข้อมูลผิดพลาด รหัสบัตรประชาชนซ้ำ";
           this.snackbar.show = true;
         }
+        this.addtransference_locationdialog = false
       }
     },
 
-    async clear() {
-      this.$v.$reset();
-      this.id_card = "";
-      this.u_name = "";
-      this.p_word = "";
-      this.name_m = "";
-      this.email_m = "";
-      this.tel_m = "";
-      this.add_m = "";      
-    },
-  }, 
+    async clear_tech() {
+      //this.$v.$reset();
+      this.addtransference_personnel.subject_1 = "";
+      this.addtransference_personnel.subject_2 = "";
+      this.addtransference_personnel.subject_3 = "";
+      this.addtransference_personnel.subject_4 = "";    
+    }, 
+     async clear_gov_service() {
+      //this.$v.$reset();
+      this.addtransference_personnel.ser_college_code = "";
+      this.addtransference_personnel.ser_order = "";
+      this.addtransference_personnel.ser_date = "";
+      this.addtransference_personnel.ser_time_year = "";    
+      this.addtransference_personnel.ser_time_month = "";    
+      this.addtransference_personnel.ser_reason_help = "";    
+    }, 
+},   
+
+  computed: {         
+            dmy_app: function () {               
+                return this.user.appoin_day+'/'+this.user.appoin_month+'/'+this.user.appoin_year
+            },
+            y_app: function(){                      
+            return this.user.appoin_year
+            },
+            y_now: function(){
+              const d = new Date();
+              let year = d.getFullYear()+543     
+              return year
+            },
+            month_app: function(){
+              let month_a = this.user.appoin_month
+              return month_a
+            },
+            day_now: function(){
+             const d = new Date()
+              let day = d.getDate()
+              return day
+            },
+             month_now: function(){
+             const d = new Date()
+              let month  = d.getMonth()+1
+              return month 
+            },            
+           time_s: function(){
+             let time_m              
+             if(this.month_now > 2)
+             {time_m = 2}else{
+               time_m = 1
+             }
+              return time_m
+           },
+           id_ref: function(){
+             let id_ref_cr
+             id_ref_cr = this.time_s +''+this.y_now+''+this.user.id_card
+             return id_ref_cr
+           }
+
+        }
 };
 </script>
 

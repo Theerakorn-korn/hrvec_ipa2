@@ -136,6 +136,12 @@ export default new Router({
                     component: () =>
                         import ('@/views/dashboard/pages/administrator/personnel'),
                 },
+                {
+                    name: 'ข้อมูลข้าราชการครูและบุคลการทางการศึกษา',
+                    path: '/admin/personnel_tem',
+                    component: () =>
+                        import ('@/views/dashboard/pages/administrator/personnel_temporary'),
+                },
                 
                 
 
