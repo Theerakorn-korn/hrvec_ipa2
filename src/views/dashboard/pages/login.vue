@@ -39,8 +39,7 @@
       </v-col>
 
       <v-col cols="12" md="4">
-        <base-material-card
-          :elevation="hover ? 24 : 6"
+        <base-material-card          
           class="v-card-profile"
           avatar="https://www.bloggang.com/data/b/bigstory/picture/1449748275.gif"
         >
@@ -53,7 +52,7 @@
         </base-material-card>
       </v-col>
     </v-row>    
-    <v-snackbar v-model="dialog" top :multi-line="multiLine">
+    <v-snackbar v-model="dialog" top>
       <v-card-text>
          {{ dialog_msg }}
       </v-card-text>
@@ -89,7 +88,6 @@ export default {
         if (result.data.user_status) {
           let user = result.data;
           user.system_lock = false;
-          this.$store.commit("getLoginUser", user);
           sessionStorage.setItem("user", JSON.stringify(user));
           if (user.user_status == "tech") {
             this.dialog = true;            

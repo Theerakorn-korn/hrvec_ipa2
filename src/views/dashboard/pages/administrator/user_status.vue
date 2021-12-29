@@ -286,7 +286,7 @@ async mounted() {
         if (this.$refs.adduser_statusform.validate()) {         
           this.adduser_status.ApiKey = this.ApiKey;
           let result = await this.$http.post('crud_user_status.php?crud=create', this.adduser_status)
-          console.log(result)
+        
          if (result.data.status == true) {           
             this.user_status = result.data
             this.snackbar.icon = 'mdi-font-awesome'

@@ -166,33 +166,33 @@ export default new Router({
                 },               
                 {
                     name: 'ข้อมูลคุณวุฒิการศึกษา',
-                    path: '/education',
+                    path: '/personnel_education',
                     component: () =>
-                        import ('@/views/dashboard/pages/user/education'),
+                        import ('@/views/dashboard/pages/user/personnel_education'),
                 },
                 {
                     name: 'ข้อมูลประสบการณ์',
-                    path: '/experience',
+                    path: '/personnel_experience',
                     component: () =>
-                        import ('@/views/dashboard/pages/user/experience'),
+                        import ('@/views/dashboard/pages/user/personnel_experience'),
                 }, 
                 {
                     name: 'ข้อมูลประวัติการทำงาน',
-                    path: '/workhistory',
+                    path: '/personnel_work_history',
                     component: () =>
-                        import ('@/views/dashboard/pages/user/workhistory'),
+                        import ('@/views/dashboard/pages/user/personnel_work_history'),
                 }, 
                 {
                     name: 'ข้อมูลผลงาน รางวัล',
-                    path: '/award',
+                    path: '/personnel_award',
                     component: () =>
-                        import ('@/views/dashboard/pages/user/award'),
+                        import ('@/views/dashboard/pages/user/personnel_award'),
                 },  
                 {
                     name: 'ข้อมูลวินัย โทษ',
-                    path: '/discipline',
+                    path: '/personnel_discipline',
                     component: () =>
-                        import ('@/views/dashboard/pages/user/discipline'),
+                        import ('@/views/dashboard/pages/user/personnel_discipline'),
                 },  
                 {
                     name: 'การย้ายสายการสอน',

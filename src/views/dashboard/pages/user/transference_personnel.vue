@@ -8,188 +8,44 @@
               <v-icon large left>mdi-file-send</v-icon>การย้ายสายการสอน
             </h2>
           </template>         
-            <v-card class="pa-2 ma-2">
+            <v-card class="pa-2 ma-6">
               <v-card-title>
                 <div class="font-weight-light v-size--x-large"><v-icon large left>mdi-account-details</v-icon> ข้อมูลเบื้องต้น รหัสรายการอ้างอิง {{ id_ref }}</div>
               </v-card-title>
               <v-row>
-                <v-col cols="12" sm="3">
-                  <v-text-field                                    
-                    dense
-                    label="ครั้งที่ :"
-                    :value="time_s"
-                    prepend-icon="mdi-account-details"
-                    request
-                    disabled
-                  >                 
-                  </v-text-field>
-                 
-                </v-col>
-                <v-col cols="12" sm="3">
-                  <v-text-field
-                    :value="y_now"
-                     color="cyan darken"
-                    dense
-                    label="ประจำปี :"
-                    prepend-icon="mdi-account-details"
-                    request                
-                    disabled
-                  ></v-text-field>
-                </v-col>
-                <v-col cols="12" sm="3">
-                  <v-text-field
-                    v-model="user.college_name"
-                    dense
-                    label="เขียนที่ : "
-                    prepend-icon="mdi-account-details"
-                    request
-                    disabled
-                  ></v-text-field>
-                </v-col>
-                <v-col cols="12" sm="3">                 
-                  <v-text-field                    
-                    :value="timestamp"
-                    dense
-                    label="วันที่ยื่นคำร้อง : "
-                    prepend-icon="mdi-account-details"
-                    request
-                    disabled
-                  ></v-text-field>
-                </v-col>
-                 <v-col cols="12" sm="2">
-                  <v-text-field
-                  label="คำนำหน้าชื่อ"
-                    :value='user.title_s'
-                    dense               
-                    prepend-icon="mdi-account-details"
-                    request
-                    disabled
-                  >
-                  </v-text-field>
-                </v-col>
-                <v-col cols="12" sm="2">
-                  <v-text-field
-                  label="ชื่อ"
-                    :value='user.frist_name'
-                    dense               
-                    prepend-icon="mdi-account-details"
-                    request
-                    disabled
-                  >
-                  </v-text-field>
-                </v-col>
-                <v-col cols="12" sm="3">
-                  <v-text-field   
-                  label="นามสกุล"
-                   :value="user.last_name"            
-                    dense                   
-                    prepend-icon="mdi-account-details"
-                    request
-                    disabled
-                  ></v-text-field>
-                </v-col>
-                <v-col cols="12" sm="2">
-                  <v-text-field
-                  label="เลขที่ตำแหน่ง"
-                   :value='user.id_position'
-                    dense                   
-                    prepend-icon="mdi-account-details"
-                    request
-                    disabled
-                  ></v-text-field>
-                </v-col>
-                <v-col cols="12" sm="3">
-                  <v-text-field
-                   
-                    dense
-                    label="วิทยฐานะ"
-                    :value='user.rang_name'
-                    prepend-icon="mdi-account-details"
-                    request
-                    disabled
-                  ></v-text-field>
-                </v-col>
-                <v-col cols="12" sm="6">
-                  <v-text-field                   
-                    dense
-                     label="สังกัด (สถานศึกษา) : "
-                    :value='user.college_name'                    
-                    prepend-icon="mdi-account-details"
-                    request
-                    disabled
-                  ></v-text-field>
-                </v-col>
-                <v-col cols="12" sm="6">
-                  <v-text-field
-                   
-                    dense 
-                    label="รหัสบัตรประชาชน : "
-                    :value='user.id_card'      
-                    prepend-icon="mdi-account-details"
-                    request
-                    disabled
-                  ></v-text-field>
-                </v-col>
-
-                <v-col cols="12" sm="3">
-                  <v-text-field
-                  
-                    dense                   
-                     label="วันที่เริ่มบรรจุเข้ารับราชการ : "
-                    :value="dmy_app"    
-                    prepend-icon="mdi-account-details"
-                    request
-                    disabled
-                  ></v-text-field>
-                </v-col>
-                <v-col cols="12" sm="3">
-                  <v-text-field    
-                       
-                    dense                    
-                    label="ระยะเวลาตั้งแต่บรรจุเข้ารับราชการ :"
-                    prepend-icon="mdi-account-details"
-                    request
-                    disabled
-                  ></v-text-field>
-                </v-col>
-                <v-col cols="12" sm="3">
-                 <!--  เดือนปัจจุบัน {{ month_now }}
+                 <v-col cols="12" sm="6">
+                     <v-alert border="left" colored-border color="green darken-1" elevation="2"  type="info">
+                   <h2> ชื่อ-นามสกุล : {{ user.title_s }}{{ user.frist_name }} {{ user.last_name }}  </h2>
+                   <h3> รหัสบัตรประชาชน : {{ user.id_card }} </h3>
+                  <h3> เลขที่ตำแหน่ง : {{ user.id_position }} </h3>
+                  <h3> วิทยฐานะ : {{ user.rang_name }}</h3>
+                   <h3> สังกัด (สถานศึกษา) : {{ user.college_name }} </h3>
+                   <hr>
+                   <h3> วันที่เริ่มบรรจุเข้ารับราชการ : {{ dmy_app }} </h3>
+                   <h3> ระยะเวลาตั้งแต่บรรจุเข้ารับราชการ :  </h3>
+                   <h3> สถานะภาพ : {{ marital_status }}</h3>
+                  </v-alert>  
+                </v-col>         
+   <!--  เดือนปัจจุบัน {{ month_now }}
                   เดือนบรรจุ {{ month_app }}
                   ปีปัจจุบัน {{ y_now }}
                   ปีบรรจุ {{ y_app }}  
                   ปีบรรจุ {{ result }}   -->
 
-                  <v-text-field
-                  :value="user.date_app"                        
-                    dense
-                    label="วันที่เริ่มปฏิบัติหน้าที่ในสถานศึกษาปัจจุบัน :"
-                    prepend-icon="mdi-account-details"
-                    request
-                    disabled
-                  ></v-text-field>
-                </v-col>
-                <v-col cols="12" sm="3">
-                  <v-text-field
-                    v-model="addtransference_personnel.time_s"
-                    dense
-                    label="ปฏิบัติหน้าที่เป็นเวลา :"
-                    prepend-icon="mdi-account-details"
-                    request
-                    disabled
-                  ></v-text-field>
-                </v-col>
-                <v-col cols="12" sm="12">
-                  <v-text-field
-                    v-model="addtransference_personnel.time_s"
-                    dense
-                    label="สถานะภาพ :"
-                    prepend-icon="mdi-account-details"
-                    request
-                    disabled
-                  ></v-text-field>
-                </v-col>
-                <v-col cols="12" sm="12">                 
-                    <v-card width="600">
+                <v-col cols="12" sm="6">
+                  <v-alert border="left" colored-border color="green darken-1" elevation="2"  type="info">
+                   <h2> ครั้งที่ : {{ time_s }} ประจำปี : {{ y_now }}  </h2>
+                    <h3> เขียนที่ : {{ user.college_name }}</h3>
+                    <h3> วันที่ยื่นคำร้อง : {{ timestamp }}  </h3>
+                    <hr>
+                      <h3> วันที่เริ่มปฏิบัติหน้าที่ในสถานศึกษาปัจจุบัน :   </h3>
+                      <h3> ปฏิบัติหน้าที่เป็นเวลา :   </h3>
+                  </v-alert>
+                </v-col>              
+                                  
+                <v-col cols="12" sm="12">  
+                     <v-alert border="left" colored-border color="green darken-1" elevation="2"  type="info">
+                     <v-card>
                       <v-card-title class="mt-8">
                         <v-avatar size="56">
                           <v-icon large left>mdi-cast-education</v-icon>
@@ -200,20 +56,21 @@
                       <v-card-text>
                         <v-timeline align-top dense>
                           <v-timeline-item
-                            v-for="item in education_s"
-                            :key="item.time"
-                            :color="item.color"
+                            v-for="item in personnel_educations"
+                            :key="item.id_red"                           
                             small
                           >
                             <div>
                               <div
                                 class="font-weight-normal"
-                              >{{ item.title }} : {{ item.faculty }} : {{ item.branch }}</div>
+                              >{{ item.education_level }} คณะวิชา : {{ item.faculty_name }} สาขาวิชา : {{ item.branch_name }} สำเร็จปีการศึกษา : {{ item.year_finish }}</div>
                             </div>
                           </v-timeline-item>
                         </v-timeline>
                       </v-card-text>
                     </v-card>
+                     </v-alert>               
+                    
                  
                 </v-col>
               </v-row>
@@ -226,8 +83,8 @@
               <v-row>
                 <v-col cols="12" sm="12">
                   <v-row>
-                    <v-card class="mx-auto justify-center pa-2 ma-2" color="#ECE4E2">
-                      <v-radio-group>                        
+                   <v-alert class="mx-auto justify-center pa-2 ma-2" border="bottom" colored-border type="warning" elevation="2">
+                      <v-radio-group row v-model="radios_tech">                        
                         <v-radio value="dtech" v-on:click="isHidden = true">
                           <template v-slot:label>
                             <div>                            
@@ -243,7 +100,7 @@
                           </template>
                         </v-radio>
                       </v-radio-group>                     
-                    </v-card>
+                   </v-alert>
                   </v-row>
                 </v-col>
                 <v-col cols="12" sm="12">
@@ -312,17 +169,18 @@
                 <div class="font-weight-light v-size--x-large"><v-icon large left>mdi-office-building-marker</v-icon> อยู่ระหว่างช่วยปฏิบัติราชการหรือไม่</div>
               </v-card-title>             
               <v-row>
-                <v-col cols="12" sm="12">                 
-                    <v-card class="justify-center pa-2 row" color="#ECE4E2">
-                       <v-radio-group>                        
-                        <v-radio v-on:click="isHidden_service_gov = true">
+                <v-col cols="12" sm="12"> 
+                   <v-row>
+                  <v-alert class="mx-auto justify-center pa-2 ma-2" border="bottom" colored-border type="warning" elevation="2">
+                         <v-radio-group row v-model="gov_service">                        
+                        <v-radio value="not_service" v-on:click="isHidden_service_gov = !isHidden_service_gov">
                           <template v-slot:label>
                             <div>                            
                               <strong class="primary--text" v-on:click="clear_gov_service()">ไม่อยู่</strong>
                             </div>
                           </template>
                         </v-radio>
-                        <v-radio v-on:click="isHidden_service_gov = !isHidden_service_gov">
+                        <v-radio value="gov_service" v-on:click="isHidden_service_gov = true">
                           <template v-slot:label>
                             <div>                             
                               <strong class="warning--text">ช่วยปฏิบัติราชการ</strong>
@@ -330,10 +188,11 @@
                           </template>
                         </v-radio>
                       </v-radio-group>                        
-                    </v-card>                
+                  </v-alert>
+                    </v-row>                   
                 </v-col>
                 <v-col cols="12" sm="12">
-                  <v-card class="pa-2 ma-2" v-if="!isHidden_service_gov" hidden>
+                  <v-card class="pa-2 ma-2" v-if="isHidden_service_gov" hidden>
                     <v-row>                      
                       <v-col cols="12" sm="6">                     
                      <v-autocomplete 
@@ -415,17 +274,17 @@
               
               <v-row>
                 <v-col cols="12" sm="12">
-                  <v-row >
-                    <v-card class="justify-center pa-2 row" color="#ECE4E2">
-                      <v-radio-group>                        
-                        <v-radio>
+                   <v-row>
+                    <v-alert class="mx-auto justify-center pa-2 ma-2" border="bottom" colored-border type="warning" elevation="2">
+                      <v-radio-group row v-model="preparation_s">                        
+                        <v-radio value="no_prepare">
                           <template v-slot:label>
                             <div>                            
                               <strong class="primary--text">ไม่อยู่</strong>
                             </div>
                           </template>
                         </v-radio>
-                        <v-radio>
+                        <v-radio value="prepare">
                           <template v-slot:label>
                             <div>                             
                               <strong class="warning--text">อยู่</strong>
@@ -433,7 +292,7 @@
                           </template>
                         </v-radio>
                       </v-radio-group>   
-                    </v-card>
+                    </v-alert>
                   </v-row>
                 </v-col>
               </v-row>
@@ -446,17 +305,17 @@
               
               <v-row>
                 <v-col cols="12" sm="12">
-                  <v-row >
-                    <v-card class="justify-center pa-2 row" color="#ECE4E2">
-                      <v-radio-group>                        
-                        <v-radio>
+                  <v-row>
+                   <v-alert class="mx-auto justify-center pa-2 ma-2" border="bottom" colored-border type="warning" elevation="2">
+                      <v-radio-group row v-model="leave_s">                        
+                        <v-radio value="no_leave">
                           <template v-slot:label>
                             <div>                            
                               <strong class="primary--text">ไม่อยู่</strong>
                             </div>
                           </template>
                         </v-radio>
-                        <v-radio>
+                        <v-radio value="leave">
                           <template v-slot:label>
                             <div>                             
                               <strong class="warning--text">อยู่</strong>
@@ -464,7 +323,7 @@
                           </template>
                         </v-radio>
                       </v-radio-group>   
-                    </v-card>
+                   </v-alert>
                   </v-row>
                 </v-col>
               </v-row>
@@ -594,7 +453,7 @@
                         <div class="font-weight-light v-size--x-large"><v-icon></v-icon> ย้ายเพื่ออยู่ร่วมคู่สมรส</div>
                       </v-card-title>
                       <v-checkbox v-model="move_spouse" hide-details class="shrink mr-2 mt-0"></v-checkbox>
-                      <v-text-field :disabled="!move_spouse" label="คู่สมรสชื่อ : "></v-text-field>
+                      <v-text-field :disabled="!move_spouse" label="คู่สมรสชื่อ : "></v-text-field>                      
                       <v-text-field :disabled="!move_spouse" label="คู่สมรสประกอบอาชีพ : "></v-text-field>
                       <v-text-field
                         :disabled="!move_spouse"
@@ -932,6 +791,10 @@ export default {
   data: () => ({
  loading: true,    
      ApiKey: 'HRvec2021',
+     radios_tech: 'tech',
+     gov_service: 'not_service',
+     preparation_s: 'no_prepare',
+    leave_s: 'no_leave',
     isHidden: false,
     timestamp: '',
     colleges: {},
@@ -957,6 +820,7 @@ export default {
     provinces: [],
     provices_sh: [],
     prefectures: [],
+    personnel_educations: [],
     district: [],
     district_post_s: [], 
     snackbar: {
@@ -974,7 +838,7 @@ export default {
     { text: "สาขาวิชา", align: "center", value: "name_branch" },
     { text: "วิทยาลัย", align: "center", value: "college_name" },
     { text: "ยกเลิก", align: "center", value: "action" },
-    ],
+    ], 
     education_s: [
       {
         title: "ต่ำกว่าปริญญาตรี",
@@ -1006,6 +870,7 @@ export default {
     model: null,
     show1: false,
     pagination: {}, 
+    personnel_marriages: [],
     rowsperpage: [
         25,
         50,
@@ -1061,9 +926,20 @@ export default {
       this.user = result_user.data
 
       this.transference_locationQueryAll()
+      this.personnel_educationsQueryAll()
   },
 
   methods: {  
+ async personnel_educationsQueryAll() {     
+         this.loading = true
+          let userSession = JSON.parse(sessionStorage.getItem('user')) || 0   
+        let result = await this.$http.post('personnel_education.php', {
+          ApiKey: this.ApiKey,
+            id_card: userSession.id_card  
+
+        }).finally(() => this.loading = false)
+        this.personnel_educations = result.data            
+      }, 
 
     async OnEnter() {
         let result = await this.$http.post('personnel_temporary.php', {
@@ -1072,7 +948,7 @@ export default {
          
         }).finally(() => this.loading = false)
         this.personnel_temporarys = result.data  
-    },
+    }, 
      async transference_locationQueryAll() {
           this.loading = true
         let result = await this.$http.post('transference_location.php', {
@@ -1081,17 +957,18 @@ export default {
         }).finally(() => this.loading = false)
         this.transference_locations = result.data        
       },
-
+    
+    //First >> Insert transference Location 
     async addtransference_location() {
-           this.addtransference_personnel = {};
-      this.addtransference_locationdialog = true;
+    this.addtransference_personnel = {};
+    this.addtransference_locationdialog = true;
     },   
 
     async Search_Personnel(){
         this.personnel_select = {};
         this.Search_Personneldialog = true
     },
-   
+
     async addtransference_locationSubmit() {
       if (this.$refs.addtransference_locationform.validate()) {
         this.addtransference_personnel.ApiKey = this.ApiKey;
@@ -1100,7 +977,7 @@ export default {
         let result = await this.$http.post(
           "transference_location.insert.php",
           this.addtransference_personnel          
-        );
+        );      
         if (result.data.status == true) {
           this.transference_personnel = result.data;
           this.snackbar.icon = "mdi-checkbox-marked-circle";
@@ -1117,18 +994,15 @@ export default {
         this.addtransference_locationdialog = false
       }
     },
-
- async transference_locationDelete(id_tfl) {
+      //Delete transference Location
+      async transference_locationDelete(id_tfl) {
         let result = await this.$http.post('transference_location.php', {
           ApiKey: this.ApiKey,
           id_tfl: id_tfl
         })
         this.edittransference_location = result.data        
         this.Search_Personneldialog = true
-      },
-
-
-      
+      },      
       async deletetransference_locationSubmit() {
         if (this.$refs.deletetransference_locationform.validate()) {
           this.edittransference_location.ApiKey = this.ApiKey;         
@@ -1168,7 +1042,7 @@ export default {
     }, 
 },   
 
-  computed: {   
+  computed: {     
     pages() {
         if (this.pagination.rowsPerPage == null ||
           this.pagination.totalItems == null
@@ -1213,8 +1087,28 @@ export default {
              let id_ref_cr
              id_ref_cr = this.time_s +''+this.y_now+''+this.user.id_card
              return id_ref_cr
-           }
-
+           },
+         
+          marital_status: function(){
+            let marital_status = this.user.marital_status
+            let marital_result
+            if(marital_status =='single'){
+                marital_result = 'โสด'
+            }
+            else if(marital_status =='married'){
+                marital_result = 'สมรส'
+            }
+             else if(marital_status =='widow'){
+                marital_result = 'หม้าย'
+            }
+            else if(marital_status =='divorce'){
+                marital_result = 'หย่า'
+            }
+            else if(marital_status =='separate'){
+                marital_result = 'แยกกันอยู่'
+            }
+             return marital_result
+          }         
         }
 };
 </script>
@@ -1224,13 +1118,4 @@ export default {
   .v-data-table
     th, td
       border: none !important
-</style>
-<style>
-@import url("https://fonts.googleapis.com/css2?family=Kanit:wght@300&display=swap");
-</style>
-
-<style>
-.text_google {
-  font-family: "Kanit", sans-serif;
-}
 </style>

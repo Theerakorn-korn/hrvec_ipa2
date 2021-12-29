@@ -83,27 +83,27 @@ export default {
       {
         title: "ข้อมูลคุณวุฒิการศึกษา",
         icon: "mdi-school",
-        to: "/education",
+        to: "/personnel_education",
       },
       {
         title: "ข้อมูลประสบการณ์",
         icon: "mdi-airplane",
-        to: "/experience",
+        to: "/personnel_experience",
       },
       {
         title: "ข้อมูลประวัติการทำงาน",
         icon: "mdi-access-point-network",
-        to: "/workhistory",
+        to: "/personnel_work_history",
       },
       {
         title: "ข้อมูลผลงาน รางวัล",
         icon: "mdi-trophy-award",
-        to: "/award",
+        to: "/personnel_award",
       },
       {
         title: "ข้อมูลโทษ วินัย",
         icon: "mdi-alarm-light",
-        to: "/discipline",
+        to: "/personnel_discipline",
       },
     ],
   }),

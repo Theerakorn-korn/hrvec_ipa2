@@ -1,6 +1,7 @@
 <template>
   <v-footer
     id="dashboard-core-footer"
+  
   >
     <v-container>
       <v-row

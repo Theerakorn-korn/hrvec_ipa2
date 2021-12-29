@@ -1,7 +1,8 @@
 <template>
   <v-footer
+  inset width="auto"
     id="dashboard-core-footer"
-    class="grey lighten-5"
+    
   >
     <v-container>
       <v-row
@@ -34,7 +35,7 @@
             <v-icon size="18">
               mdi-heart
             </v-icon>
-            by <a href="#">Digital IT2021</a>
+            by <a href="#">Team DIGITAL VEC</a>
           </div>
         </v-col>
       </v-row>
