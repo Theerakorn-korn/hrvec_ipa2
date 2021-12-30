@@ -52,6 +52,9 @@
           <template v-slot:[`item.period_stop`]="{ item }">
                  {{ item.period_stop| moment("add","543 years") | moment("D MMMM YYYY") }}
           </template>
+          <template v-slot:[`item.period_cal_end`]="{ item }">
+                 {{ item.period_cal_end| moment("add","543 years") | moment("D MMMM YYYY") }}
+          </template>
  <template v-slot:[`item.period_enable`]="{ item }">
                 <v-icon color="green darken-2" v-if="item.period_enable === '1'">mdi-alarm-light</v-icon> 
                 <v-icon v-if="item.period_enable === '0'">mdi-alarm-light-outline</v-icon> 
@@ -114,6 +117,9 @@
                     <v-text-field type="date" label="วันที่สิ้นสุด" v-model="addperiod.period_stop" required :rules="[v => !!v || '']"></v-text-field>
                   </v-flex>
                   <v-flex xs12 md6>
+                    <v-text-field type="date" label="วันที่สิ้นสุดการนับถึง" v-model="addperiod.period_cal_end" required :rules="[v => !!v || '']"></v-text-field>
+                  </v-flex>
+                  <v-flex xs12 md6>
                     <v-switch
                       v-model="addperiod.period_enable_sw"
                       label="เปิดใช้งาน"
@@ -130,14 +136,14 @@
                 color="warning"
                 large
                 @click.stop="addperioddialog = false"
-                round
+                rounded
                 ><v-icon dark>mdi-close</v-icon> ยกเลิก</v-btn
               >
               <v-btn
                 large
                 color="success"
                 @click.stop="addperiodSubmit()"
-                round
+                rounded
               >
                 <v-icon dark>mdi-content-save</v-icon>&nbsp;&nbsp;บันทึก
               </v-btn>
@@ -224,6 +230,9 @@
                     <v-text-field type="date" label="วันที่สิ้นสุด" v-model="editperiod.period_stop" required :rules="[v => !!v || '']"></v-text-field>
                   </v-flex>
                   <v-flex xs12 md6>
+                    <v-text-field type="date" label="วันที่สิ้นสุดการนับถึง" v-model="editperiod.period_cal_end" required :rules="[v => !!v || '']"></v-text-field>
+                  </v-flex>
+                  <v-flex xs12 md6>
                     <v-switch
                       v-model="editperiod.period_enable_sw"
                       label="เปิดใช้งาน"
@@ -236,10 +245,10 @@
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn large  @click.stop="editperioddialog = false" round>
+            <v-btn large  @click.stop="editperioddialog = false" rounded>
                 <v-icon dark>mdi-close</v-icon>ยกเลิก
               </v-btn>
-              <v-btn large color="warning" @click.stop="editperiodSubmit()" round>
+              <v-btn large color="warning" @click.stop="editperiodSubmit()" rounded>
                 <v-icon dark>mdi-pencil</v-icon>&nbsp;บันทึก
               </v-btn>
 
@@ -291,6 +300,7 @@ export default {
         { text: "ปี", align: "center", value: "period_times" },              
         { text: "เริ่มวันที่", align: "center", value: "period_start" },        
         { text: "สิ้นสุดวันที่", align: "center", value: "period_stop" },        
+        { text: "วันที่นับถึง", align: "center", value: "period_cal_end" },        
         { text: "สถานะ", align: "center", value: "period_enable" },        
         { text: "แก้ไข", align: "center", value: "actions", icon: "mdi-file-document-edit" },
         { text: "ลบ", align: "center", value: "action_s" , icon: "mdi-delete-forever" },

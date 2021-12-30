@@ -68,7 +68,7 @@
                    <v-icon large left>mdi-menu-right</v-icon> E-mail : {{ user.e_mail }}
                 </v-col>
                  <v-col cols="12" md="12">                
-                   <v-icon large left>mdi-menu-right</v-icon> สถานภาพสมรส : {{ user.marital_status }}
+                   <v-icon large left>mdi-menu-right</v-icon> สถานภาพสมรส : {{ marital_status }}
                 </v-col>
                  <v-col cols="12" md="12">                
                     * ข้อมูลข้าราชการครูและบุคลากรทางการศึกษา บางส่วนหากประสงค์แก้ไขให้ติดต่องานบุคลกรของสถานศึกษา
@@ -102,6 +102,46 @@
                     <v-flex md12>
                    {{ user.id_card }} {{ user.title_s }}{{ user.frist_name }} {{ user.last_name }} 
                   </v-flex>
+                    <v-flex md6>    
+                       <v-dialog
+        ref="dialog"
+        v-model="modal"
+        :return-value.sync="date"
+        persistent
+        width="290px"
+      >
+        <template v-slot:activator="{ on, attrs }">
+          <v-text-field
+           v-model="user.date_app_now"
+            label="เริ่มปฏิบัติหน้าที่ในสถานศึกษาปัจจุบันเมื่อวันที่ :"
+            prepend-icon="mdi-calendar"
+            readonly
+            v-bind="attrs"
+            v-on="on"
+          ></v-text-field>
+        </template>
+        <v-date-picker
+         v-model="user.date_app_now"
+          scrollable
+        >
+          <v-spacer></v-spacer>
+          <v-btn
+            text
+            color="primary"
+            @click="modal = false"
+          >
+            Cancel
+          </v-btn>
+          <v-btn
+            text
+            color="primary"
+            @click="$refs.dialog.save(date)"
+          >
+            OK
+          </v-btn>
+        </v-date-picker>
+      </v-dialog>         
+                  </v-flex> 
                    <v-flex md6>                    
                     <v-select outlined label="สถานภาพสมรส" :items="user_marital_status" item-text="title" item-value="value" v-model="user.marital_status"></v-select>
                   </v-flex>
@@ -136,7 +176,7 @@
                     <v-text-field outlined label="Password" v-model="user.p_word" type="password"></v-text-field>
                   </v-flex>
                   <v-flex md6>
-                 <v-text-field outlined ref=""label="Confirm Password" v-model="user.user_confirmpassword" type="password"  required :rules="[v => v==user.p_word]"></v-text-field>             
+                 <v-text-field outlined label="Confirm Password" v-model="user.user_confirmpassword" type="password"  required :rules="[v => v==user.p_word]"></v-text-field>             
                   </v-flex>
                   <v-flex xs12>
                     <v-divider></v-divider>
@@ -194,9 +234,9 @@ export default {
         color: '',
         timeout: 5000,
         icon: '',
-        text: ''
+        text: '',        
       },
-      provices_sh: [],
+      provices_sh: [],     
       user_marital_status: [
         { title: "โสด", value: "single" },
         { title: "สมรส", value: "married" },
@@ -204,7 +244,10 @@ export default {
         { title: "หย่า", value: "divorce" },
         { title: "แยกกันอยู่", value: "separate" },
         ],
-
+ date: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
+      menu: false,
+      modal: false,
+      menu2: false,
     };
   },
   async mounted() {
@@ -259,5 +302,27 @@ if (this.$refs.personnelform.validate()) {
         }
       },
   },
+  computed: {
+     marital_status() {
+            let marital_status = this.user.marital_status
+            let marital_result
+            if(marital_status =='single'){
+                marital_result = 'โสด'
+            }
+            else if(marital_status =='married'){
+                marital_result = 'สมรส'
+            }
+             else if(marital_status =='widow'){
+                marital_result = 'หม้าย'
+            }
+            else if(marital_status =='divorce'){
+                marital_result = 'หย่า'
+            }
+            else if(marital_status =='separate'){
+                marital_result = 'แยกกันอยู่'
+            }
+             return marital_result
+          },
+  }
 };
 </script>
