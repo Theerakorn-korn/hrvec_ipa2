@@ -1,5 +1,4 @@
 import Vue from 'vue'
-import VueNumeric from 'vue-numeric'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 import VueLazyLoad from 'vue-lazyload'
@@ -11,7 +10,6 @@ import './plugins/chartist'
 import './plugins/vee-validate'
 import vuetify from './plugins/vuetify'
 import i18n from './i18n'
-import Multiselect from 'vue-multiselect'
 import VueMoment from 'vue-moment'
 import moment from 'moment-timezone'
 const request = axios.create({
@@ -20,7 +18,6 @@ const request = axios.create({
 Vue.config.productionTip = false
 Vue.use(VueAxios, request)
 Vue.use(VueLazyLoad)
-Vue.use(VueNumeric)
 Vue.use(VueMoment, {
     moment,
 })
@@ -28,7 +25,6 @@ new Vue({
     router,
     store,
     vuetify,
-    i18n,
-    Multiselect,  
+    i18n,   
     render: h => h(App),
 }).$mount('#app')

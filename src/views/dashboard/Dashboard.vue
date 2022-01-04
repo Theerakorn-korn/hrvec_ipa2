@@ -1,9 +1,9 @@
 <template>
   <v-container id="dashboard" fluid tag="section">
     <v-row>
-      <v-col cols="12" sm="6" lg="3">
-        <base-material-stats-card
-          v-model="showAlldata.count_id"
+      <v-col cols="12" sm="6" lg="4">
+        <base-material-stats-card          
+          :value="Number(showAlldata.count_id).toLocaleString()"
           color="primary"
           icon="mdi-account-group"
           title="ครูบุคลากรทั้งหมด"
@@ -12,9 +12,9 @@
         />
       </v-col>
 
-      <v-col cols="12" sm="6" lg="3">
+      <v-col cols="12" sm="6" lg="4">
         <base-material-stats-card
-          v-model="showAlldatatech.count_id_tech"
+         :value="Number(showAlldatatech.count_id).toLocaleString()"
           color="primary"
           icon="mdi-account-group"
           title="ข้าราชการครู"
@@ -23,9 +23,9 @@
         />
       </v-col>
 
-      <v-col cols="12" sm="6" lg="3">
+      <v-col cols="12" sm="6" lg="4">
         <base-material-stats-card
-          v-model="showAlldatadr.count_id_dr"
+        :value="Number(showAlldatadr.count_id).toLocaleString()"
           color="primary"
           icon="mdi-account-group"
           title="ผู้อำนวยการวิทยาลัย"
@@ -34,59 +34,37 @@
         />
       </v-col>
 
-      <v-col cols="12" sm="6" lg="3">
+      <v-col cols="12" sm="6" lg="4">
         <base-material-stats-card
-          v-model="showAlldatasedr.count_id_se_dr"
+         :value="Number(showAlldatasedr.count_id).toLocaleString()"
           color="primary"
           icon="mdi-account-group"
-          title="รองผู้อำนวยการ"
-          value="13,+++"
+          title="รองผู้อำนวยการ"          
           sub-icon="mdi-clock"
           sub-text="Just Updated"
         />
       </v-col>
 
-      <v-col cols="12" sm="6" lg="3">
+      <v-col cols="12" sm="6" lg="4">
         <base-material-stats-card
+        :value="Number(showAlldatasupervision.count_id).toLocaleString()"
           color="primary"
           icon="mdi-account-group"
-          title="ปฏิบัติการ"
-          value="13,+++"
+          title="ศึกษานิเทศก์"
+        
           sub-icon="mdi-clock"
           sub-text="Just Updated"
         />
       </v-col>
 
-      <v-col cols="12" sm="6" lg="3">
+      <v-col cols="12" sm="6" lg="4">
         <base-material-stats-card
+        :value="Number(showAlldatatechprepare.count_id).toLocaleString()"
           color="primary"
           icon="mdi-account-group"
-          title="ครูอัตราจ้าง"
-          value="13,+++"
+          title="ครูผู้ช่วย"         
           sub-icon="mdi-clock"
           sub-text="Just Updated"
-        />
-      </v-col>
-
-      <v-col cols="12" sm="6" lg="3">
-        <base-material-stats-card
-          color="primary"
-          icon="mdi-poll"
-          title="Website Visits"
-          value="75.521"
-          sub-icon="mdi-tag"
-          sub-text="Tracked from Google Analytics"
-        />
-      </v-col>
-
-      <v-col cols="12" sm="6" lg="3">
-        <base-material-stats-card
-          color="primary"
-          icon="mdi-account-box-multiple"
-          title="Revenue"
-          value="$ 34,245"
-          sub-icon="mdi-calendar"
-          sub-text="Last 24 Hours"
         />
       </v-col>
 
@@ -487,25 +465,24 @@ export default {
         1: false,
         2: false,
       },
-      showAlldata: [],
-      showAlldatatech: [],
-      showAlldatadr: [],
-      showAlldatasedr: [],
+      showAlldata: {},
+      showAlldatatech: {},
+      showAlldatadr: {},
+      showAlldatasedr: {},
+      showAlldatasupervision: {},
+      showAlldatatechprepare: {},
     };
   },
 
-  mounted() {
-    
+  mounted() {    
     this.getAlldata();
     this.getAlldatatech();
     this.getAlldatadr();
     this.getAlldatasedr();
+    this.getAlldataSupervision();
+    this.getAlldatatechprepare();
   },
-  methods: {
-    
-    complete(index) {
-      this.list[index] = !this.list[index];
-    },
+  methods: {  
     async getAlldata() {
       let result = await this.$http.post("show_dashboard_all.php");
       this.showAlldata = result.data;
@@ -521,6 +498,14 @@ export default {
     async getAlldatasedr() {
       let result = await this.$http.post("show_dashboard_se_dr.php");
       this.showAlldatasedr = result.data;
+    },
+     async getAlldataSupervision() {
+      let result = await this.$http.post("show_dashboard_supervision.php");
+      this.showAlldatasupervision = result.data;
+    }, 
+    async getAlldatatechprepare() {
+      let result = await this.$http.post("show_dashboard_tech_prepare.php");
+      this.showAlldatatechprepare = result.data;
     },
   },
 };

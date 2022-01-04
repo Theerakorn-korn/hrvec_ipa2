@@ -8,6 +8,7 @@ export default new Router({
             path: '/',
             component: () =>
                 import ('@/views/dashboard/Index'),
+               
             children: [
                  // Dashboard
         {
@@ -200,6 +201,95 @@ export default new Router({
                     component: () =>
                         import ('@/views/dashboard/pages/user/transference_personnel'),
                 },                 
+               
+                /*  {
+                    name: 'พิมพ์แบบแสดงความประสงค์ขอย้าย',
+                    path: '/user/infotransferenceprint',
+                    component: () =>
+                    import ('@/views/dashboard/pages/user/infotransferenceprint'),
+                },       */        
+            ] 
+        },
+        {
+            name: 'พิมพ์แบบแสดงความประสงค์ขอย้าย',
+            path: '/user/infotransferenceprint/:id_ref',
+            component: () =>
+            import ('@/print_info'),
+        },     
+        {
+            path: "/college",
+            component: () =>
+                import ('@/views/dashboard/college'),
+            children: [{
+                    name: 'รายงาน',
+                    path: '',
+                    component: () =>
+                        import ('@/views/dashboard/pages/college/Dashboard'),
+                },
+                {
+                    name: 'รายงาน',
+                    path: '/college/Dashboard',
+                    component: () =>
+                        import ('@/views/dashboard/pages/college/Dashboard'),
+                },
+                {
+                    name: 'ข้อมูลเกี่ยวกับบุคคล',
+                    path: '/college/personnel',
+                    component: () =>
+                        import ('@/views/dashboard/pages/college/personnel'),
+                },
+                {
+                    name: 'ข้อมูลคุณวุฒิการศึกษา',
+                    path: '/college/personnel_education',
+                    component: () =>
+                        import ('@/views/dashboard/pages/college/personnel_education'),
+                },
+                {
+                    name: 'ข้อมูลประสบการณ์',
+                    path: '/college/personnel_experience',
+                    component: () =>
+                        import ('@/views/dashboard/pages/college/personnel_experience'),
+                },
+                {
+                    name: 'ข้อมูลประวัติการทำงาน',
+                    path: '/college/personnel_work_history',
+                    component: () =>
+                        import ('@/views/dashboard/pages/college/personnel_work_history'),
+                },
+                {
+                    name: 'ข้อมูลผลงาน รางวัล',
+                    path: '/college/personnel_award',
+                    component: () =>
+                        import ('@/views/dashboard/pages/college/personnel_award'),
+                },
+                {
+                    name: 'ข้อมูลโทษ วินัย',
+                    path: '/college/personnel_discipline',
+                    component: () =>
+                        import ('@/views/dashboard/pages/college/personnel_discipline'),
+                },                     
+                        
+                {
+                    name: 'ข้อมูลบุคคลใช้งานระบบ',
+                    path: '/college/personnel',
+                    component: () =>
+                        import ('@/views/dashboard/pages/college/personnel'),
+                },
+                {
+                    name: 'ข้อมูลข้าราชการครูและบุคลการทางการศึกษา',
+                    path: '/college/personnel_tem',
+                    component: () =>
+                        import ('@/views/dashboard/pages/college/personnel_temporary'),
+                },
+                {
+                    name: 'เงือนไขการย้าย',
+                    path: '/college/conditions_branch',
+                    component: () =>
+                        import ('@/views/dashboard/pages/college/conditions_branch'),
+                },
+                
+                
+
             ]
         },
     ],
