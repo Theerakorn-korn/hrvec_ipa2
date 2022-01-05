@@ -16,7 +16,7 @@
             <v-form ref="addmemberform" lazy-validation>
           <v-card
             class="mx-auto pa-1"
-            :elevation="hover ? 24 : 6"
+            
             max-width="500"
          
           >
@@ -210,7 +210,7 @@
               rounded
               class="mr-0"
                 :disabled="!isEditing"
-                :elevation="hover ? 24 : 6"
+                
                 @click.stop="addmemberSubmit()"
                 round
               >
@@ -224,7 +224,7 @@
               class="mr-0"
                 outline                
                 :disabled="!isEditing"
-                :elevation="hover ? 24 : 6"
+                
                 @click.stop="isEditing = !isEditing"
                 round
               >

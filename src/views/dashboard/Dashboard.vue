@@ -8,7 +8,7 @@
           icon="mdi-account-group"
           title="ครูบุคลากรทั้งหมด"
           sub-icon="mdi-clock"
-          sub-text="Just Updated"
+          sub-text="ALL Personnel"
         />
       </v-col>
 
@@ -19,7 +19,7 @@
           icon="mdi-account-group"
           title="ข้าราชการครู"
           sub-icon="mdi-clock"
-          sub-text="Just Updated"
+          sub-text="Teacher"
         />
       </v-col>
 
@@ -30,7 +30,7 @@
           icon="mdi-account-group"
           title="ผู้อำนวยการวิทยาลัย"
           sub-icon="mdi-clock"
-          sub-text="Just Updated"
+          sub-text="Director"
         />
       </v-col>
 
@@ -41,7 +41,7 @@
           icon="mdi-account-group"
           title="รองผู้อำนวยการ"          
           sub-icon="mdi-clock"
-          sub-text="Just Updated"
+          sub-text="Deputy Director"
         />
       </v-col>
 
@@ -53,7 +53,7 @@
           title="ศึกษานิเทศก์"
         
           sub-icon="mdi-clock"
-          sub-text="Just Updated"
+          sub-text="Study supervision"
         />
       </v-col>
 
@@ -64,15 +64,14 @@
           icon="mdi-account-group"
           title="ครูผู้ช่วย"         
           sub-icon="mdi-clock"
-          sub-text="Just Updated"
+          sub-text="Intense Preparation"
         />
       </v-col>
-
-      <v-col cols="12" lg="4">
+      <v-col cols="12" lg="6">
         <base-material-chart-card
-          :data="emailsSubscriptionChart.data"
-          :options="emailsSubscriptionChart.options"
-          :responsive-options="emailsSubscriptionChart.responsiveOptions"
+          :data="Personnel_chart.data"
+          :options="Personnel_chart.options"
+          :responsive-options="Personnel_chart.responsiveOptions"         
           color="#E91E63"
           hover-reveal
           type="Bar"
@@ -84,7 +83,6 @@
                   <v-icon color="info">mdi-refresh</v-icon>
                 </v-btn>
               </template>
-
               <span>Refresh</span>
             </v-tooltip>
 
@@ -99,9 +97,7 @@
             </v-tooltip>
           </template>
 
-          <h4 class="card-title font-weight-light mt-2 ml-2">Personal</h4>
-
-          <p class="d-inline-flex font-weight-light ml-2 mt-1">Last Campaign Performance</p>
+          <h4 class="card-title font-weight-light mt-2 ml-2">ข้าราชการครูและบุคลากรทางการศึกษา</h4>
 
           <template v-slot:actions>
             <v-icon class="mr-1" small>mdi-clock-outline</v-icon>
@@ -110,7 +106,7 @@
         </base-material-chart-card>
       </v-col>
 
-      <v-col cols="12" lg="4">
+      <v-col cols="12" lg="6">
         <base-material-chart-card
           :data="dailySalesChart.data"
           :options="dailySalesChart.options"
@@ -155,7 +151,7 @@
         </base-material-chart-card>
       </v-col>
 
-      <v-col cols="12" lg="4">
+     <!--  <v-col cols="12" lg="4">
         <base-material-chart-card
           :data="dataCompletedTasksChart.data"
           :options="dataCompletedTasksChart.options"
@@ -195,16 +191,24 @@
           </template>
         </base-material-chart-card>
       </v-col>
-
+ -->
       <v-col cols="12" md="12">
         <base-material-card color="warning" class="px-5 py-3">
           <template v-slot:heading>
-            <div class="display-2 font-weight-light">Employees Stats</div>
+            <div class="font-weight-light">สถานศึกษา</div>
 
-            <div class="subtitle-1 font-weight-light">New employees on 15th September, 2016</div>
+            <div class="font-weight-light">ข้อมูลสถานศึกษาที่อยู่ในระบบ</div>
           </template>
           <v-card-text>
-            <v-data-table :headers="headers" :items="items" />
+            <v-data-table :headers="headers" :items="colleges"  :search="search">
+              <template v-slot:top>
+        <v-text-field
+          v-model="search"
+          label="ค้นหา :"
+          class="mx-4"
+        ></v-text-field>
+      </template>
+            </v-data-table>
           </v-card-text>
         </base-material-card>
       </v-col>
@@ -263,10 +267,30 @@ export default {
   data() {
     return {
     
+     headers: [      
+        { text: "รหัสสถานศึกษา", align: "center", value: "college_code" },              
+        { text: "ชื่อสถานศึกษา", align: "left", value: "college_name" },
+        { text: "อำเภอ", align: "left", value: "prefecture_name" },
+        { text: "จังหวัด", align: "left", value: "province_name" },
+        { text: "ประเภทสถานศึกษา", align: "left", value: "collegetype_name" }, 
+        { text: "เบอร์โทร", align: "left", value: "collegeinfo_phone" }, 
+      ],
+search: '',
+pagination: {},
+ ApiKey: 'HRvec2021',
+  rowsperpage: [
+        25,
+        50,
+        100,
+        {
+          text: "All",
+          value: -1,
+        },
+      ],    
       dailySalesChart: {
         data: {
           labels: ["M", "T", "W", "T", "F", "S", "S"],
-          series: [[12, 17, 7, 17, 23, 18, 38]],
+          series: [[this.num_tech, 17, 7, 17, 23, 18, 38]],
         },
         options: {
           lineSmooth: this.$chartist.Interpolation.cardinal({
@@ -285,7 +309,7 @@ export default {
       dataCompletedTasksChart: {
         data: {
           labels: ["12am", "3pm", "6pm", "9pm", "12pm", "3am", "6am", "9am"],
-          series: [[230, 750, 450, 300, 280, 240, 200, 190]],
+          series: [[this.num_tech, 750, 450, 300, 280, 240, 200, 190]],
         },
         options: {
           lineSmooth: this.$chartist.Interpolation.cardinal({
@@ -302,17 +326,17 @@ export default {
         },
       },
      
-      emailsSubscriptionChart: {
+      Personnel_chart: {
         data: {
           labels: [
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
+            "ผู้อำนวยการ",
+            "รองผู้อำนวยการ",
+            "ครู",
+            "ครูผู้ช่วย",
+            "ศึกษานิเทศก์",
           ],
           series: [
-            [600, 500, 600, 800, 1200],
+            [ 0, 0, 0, 0, 0]
           ],
         },
         options: {
@@ -320,17 +344,17 @@ export default {
             showGrid: false,
           },
           low: 0,
-          high: 1000,
+          high: 12000,
           chartPadding: {
             top: 0,
             right: 5,
             bottom: 0,
-            left: 0,
+            left: 10,
           },
         },
         responsiveOptions: [
           [
-            "screen and (max-width: 640px)",
+            "screen and (max-width: 100%)",
             {
               seriesBarDistance: 5,
               axisX: {
@@ -343,77 +367,7 @@ export default {
           ],
         ],
       },
-
-
-
-
-      headers: [
-        {
-          sortable: false,
-          text: "ID",
-          value: "id",
-        },
-        {
-          sortable: false,
-          text: "Name",
-          value: "name",
-        },
-        {
-          sortable: false,
-          text: "Salary",
-          value: "salary",
-          align: "right",
-        },
-        {
-          sortable: false,
-          text: "Country",
-          value: "country",
-          align: "right",
-        },
-        {
-          sortable: false,
-          text: "City",
-          value: "city",
-          align: "right",
-        },
-      ],
-      items: [
-        {
-          id: 1,
-          name: "Dakota Rice",
-          country: "Niger",
-          city: "Oud-Tunrhout",
-          salary: "$35,738",
-        },
-        {
-          id: 2,
-          name: "Minerva Hooper",
-          country: "Curaçao",
-          city: "Sinaai-Waas",
-          salary: "$23,738",
-        },
-        {
-          id: 3,
-          name: "Sage Rodriguez",
-          country: "Netherlands",
-          city: "Overland Park",
-          salary: "$56,142",
-        },
-        {
-          id: 4,
-          name: "Philip Chanley",
-          country: "Korea, South",
-          city: "Gloucester",
-          salary: "$38,735",
-        },
-        {
-          id: 5,
-          name: "Doris Greene",
-          country: "Malawi",
-          city: "Feldkirchen in Kārnten",
-          salary: "$63,542",
-        },
-      ],
+           
       tabs: 0,
       tasks: {
         0: [
@@ -464,24 +418,54 @@ export default {
         1: false,
         2: false,
       },
+      colleges: [],
+      provinces: [],
+      prefectures: [],        
+      regions: [],
+      region_ena: true,
       showAlldata: {},
       showAlldatatech: {},
       showAlldatadr: {},
       showAlldatasedr: {},
       showAlldatasupervision: {},
       showAlldatatechprepare: {},
+      showcollegedata: {},
     };
   },
 
-  mounted() {    
-    this.getAlldata();
-    this.getAlldatatech();
-    this.getAlldatadr();
-    this.getAlldatasedr();
-    this.getAlldataSupervision();
-    this.getAlldatatechprepare();
-  },
-  methods: {  
+ async mounted() {
+      
+    let result
+      result = await this.$http.post('collegetype.php', {
+        ApiKey: this.ApiKey
+      })
+      this.collegetypes = result.data
+      result = await this.$http.post('college.php', {
+        ApiKey: this.ApiKey
+      })
+      
+      this.colleges = result.data
+      result = await this.$http.post('province.php', {
+        ApiKey: this.ApiKey
+      })
+      this.provinces = result.data
+      
+      result = await this.$http.post('region.php', {
+        ApiKey: this.ApiKey
+      })
+      this.regions = result.data 
+    
+  await this.getAlldata();
+  await this.getAlldatatech();
+  await this.getAlldatadr();
+  await this.getAlldatasedr();
+  await this.getAlldataSupervision();
+  await this.getAlldatatechprepare();
+  await this.getPersonnelChart();
+   },
+
+
+  methods: { 
     async getAlldata() {
       let result = await this.$http.post("show_dashboard_all.php");
       this.showAlldata = result.data;
@@ -506,13 +490,32 @@ export default {
       let result = await this.$http.post("show_dashboard_tech_prepare.php");
       this.showAlldatatechprepare = result.data;
     },
+    async getPersonnelChart(){ 
+   this.Personnel_chart.data.series=[[this.num_dr,this.num_se_dr,this.num_se_tech,this.num_se_techprepare,this.num_se_supervision]] 
+    },
   },
   computed:{
-    num_tech(){
-      let result = this.showAlldatatech.count_id      
+    num_dr(){
+      let result = parseInt(this.showAlldatadr.count_id)           
       return result
-      
     },
+    num_se_dr(){
+      let result = parseInt(this.showAlldatasedr.count_id)           
+      return result
+    },
+     num_se_tech(){
+      let result = parseInt(this.showAlldatatech.count_id)           
+      return result
+    },
+     num_se_techprepare(){
+      let result = parseInt(this.showAlldatatechprepare.count_id)           
+      return result
+    },
+     num_se_supervision(){
+      let result = parseInt(this.showAlldatasupervision.count_id)           
+      return result
+    },
+
   },
 };
 </script>

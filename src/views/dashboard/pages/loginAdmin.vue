@@ -94,8 +94,7 @@
           })
           if (result.data.user_status) {
             let user = result.data
-            user.system_lock = false
-            this.$store.commit('getLoginUser', user)
+            user.system_lock = false         
             sessionStorage.setItem('user', JSON.stringify(user))
             if (user.user_status == "A"){
             sessionStorage.setItem('user', JSON.stringify(user))

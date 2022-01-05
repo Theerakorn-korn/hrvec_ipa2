@@ -13,30 +13,90 @@
      <div id="exportContent" style="mso-page-orientation: landscape;">
     <div class="page">
       <div align="center">
-          <div class="head"><v-img max-height="300" max-width="250" src="https://github.com/Theerakorn-korn/hrvec/blob/master/src/assets/krud.jpg"></v-img></div>
+          <v-img max-height="30mm" max-width="25mm" src="~../src/assets/krud.jpg"></v-img>
        <div class="head"> แบบรายงานข้อมูลเงือนไขสาขาวิชาเอก ประกอบการพิจารณาย้ายข้าราชการ ประจำปี  ครั้งที่  </div>
-       <div class="head"> ส่งมาพร้อมกับหนังสือ วิทยาลัย.... ที่ ........ ลงวันที่ ...........</div>
-      <hr>
+       <div class="head"> ส่งมาพร้อมกับหนังสือ {{ colleges_user.college_name }} ที่ ................................ ลงวันที่ ..............................</div>
+     <div>___________________________</div>
       </div>
- 
+    <table border="0" width="100%" align="center">
+        <tr>
+            <td width="10%" class="regular16">เรียน</td>
+            <td width="90%" class="regular16">เลขาธิการคณะกรรมการการอาชีวศึกษา</td>
+        </tr>
+    </table>
+     <table border="0" width="100%" align="center">
+        <tr>
+            <td width="20%" class="regular16"></td>
+            <td width="80%" class="regular16">ตามที่สำนักงานคณะกรรมการการอาชีวศึกษา ขอทราบข้อมูลเงือนไขสาขาวิชาเอก</td>
+        </tr>
+    </table>
+      <table border="0" width="100%" align="center">
+        <tr>
+            <td width="100%" class="regular16">เพื่อใช้ประกอบการพิจารณาย้ายข้าราชการครู ประจำปี.. ครั้งที่..นั้น วิทยาลัย.. ได้จัดประชุมคณะกรรมการบริหารสถานศึกษาแล้ว มีมติให้จัดความต้องการครูในสาขาวิชา เรียงลำดับดังต่อไปนี้  </td>
+        </tr>
+    </table>
+     <table width="100%" align="center" class="table">
+        <tr>
+            <th width="7%" class="regular16 th" align="center">อันดับ</th>
+            <th width="10%" class="regular16 th" align="center">คุณวุฒิ</th>
+            <th width="25%" class="regular16 th" align="center">สาขาวิชา</th>
+            <th width="15%" class="regular16 th" align="center">จำนวนข้าราชการครู</th>
+            <th width="15%" class="regular16 th" align="center">จำนวนพนักงานราชการ</th>
+            <th width="15%" class="regular16 th" align="center">จำนวนครูจ้างสอน </th>
+            <th width="15%" class="regular16 th" align="center">จำนวนนักเรียน</th>
+        </tr>
+     </table>
+         <table width="100%" align="center" class="table"
+          v-for="item in conditions_branchs"
+                            :key="item.id_ref"                           
+                            small
+         >
+          <tr>
+            <td width="7%" class="regular12 th" align="center"> {{item.sequence_n}} </td>
+            <td width="10%" class="regular12 th" align="center"> {{item.educational_level}} </td>
+            <td width="25%" class="regular12 th"> {{item.id_branch}} {{item.name_branch}} </td>
+            <td width="15%" class="regular12 th" align="center"> {{item.sequence_n}} </td>
+            <td width="15%" class="regular12 th" align="center"> {{item.sequence_n}} </td>
+            <td width="15%" class="regular12 th" align="center"> {{item.sequence_n}} </td>
+            <td width="15%" class="regular12 th" align="center"> {{item.sequence_n}} </td>
+        </tr>
+    </table>
+
+     <table border="0" width="100%" align="center">
+        <tr>            
+             <td width="10%"></td>             
+             <td width="40%"><div class="regular16"><span class="regular16">ข้อมูล ณ วันที่ </span></div></td>             
+         </tr> 
+     </table>
            <br>
            <table border="0" width="100%" align="center">
         <tr>            
              <td width="60%"></td>             
-             <td width="40%"><div class="regular16"><span class="regular16">ลงชื่อ.........................................................</span></div></td>             
+             <td width="40%"><div class="regular16">ลงชื่อ.............................................................</div></td>             
          </tr> 
           <tr>            
              <td width="60%"></td>             
-             <td width="40%" align="center"><div class="regular16"><span class="regular16">(..........................................................)</span></div></td>             
+             <td width="40%" align="center"><div class="regular16">(..........................................................)</div></td>             
          </tr> 
           <tr>            
              <td width="60%"></td>             
-             <td width="40%"><div class="regular16"><span class="regular16">ตำแหน่ง.................................................</span></div></td>             
+             <td width="40%" align="center"><div class="regular16">ผู้รายงาน</div></td>             
+         </tr> 
+           </table>
+                <br><br>
+          <table border="0" width="100%" align="center">        
+                  <tr>            
+             <td width="60%"></td>             
+             <td width="40%"><div class="regular16">ลงชื่อ.............................................................</div></td>             
          </tr> 
           <tr>            
              <td width="60%"></td>             
-             <td width="40%"><div class="regular16"><span class="regular16">วันที่.............../...................../...................</span></div></td>             
-         </tr>            
+             <td width="40%" align="center"><div class="regular16">(..........................................................)</div></td>             
+         </tr> 
+          <tr>            
+             <td width="60%"></td>             
+             <td width="40%" align="center"><div class="regular16">ผู้อำนวยการ{{ colleges_user.college_name }}</div></td>             
+         </tr> 
           </table>
     </div>
   </div>
@@ -52,10 +112,13 @@
            transference_personnels: [],
            personnel_educations: [],
            transference_locations: [],
+           conditions_transfers: [],
+           conditions_branchs: [],
            personnel_temporarys_switch: [],
            province_sh_s: [],
            province_sh_fm: [],
            province_sh_m: [],
+           colleges_user: [],
                        valid: true, 
               loginuser: JSON.parse(sessionStorage.getItem('user')) || 0,              
       user: {},    
@@ -63,14 +126,43 @@
     }),
 
     async mounted() {   
-    await this.personnel_temporarysQueryAll()
-    /* await this.transference_personnelsQueryAll()
-    await this.province_sh_spQueryAll()
-    await this.province_sh_fmQueryAll() 
-    await this.province_sh_mQueryAll()       
-    await this.personnel_educationsQueryAll()
-    await this.transference_locationsQueryAll()
-    await this.personnel_temporarys_switchQueryAll() */
+   let result_branch
+        result_branch = await this.$http.post('branch.php', {
+        ApiKey: this.ApiKey       
+      })
+      this.branch_s = result_branch.data      
+      
+    let result_provice
+    result_provice = await this.$http.post('province_sh.php', {
+      ApiKey: this.ApiKey
+    })
+    this.provices_sh = result_provice.data
+
+
+      let result
+      result = await this.$http.post('collegetype.php', {
+        ApiKey: this.ApiKey
+      })
+      this.collegetypes = result.data
+
+      result = await this.$http.post('college.php', {
+        ApiKey: this.ApiKey
+      })      
+      this.colleges = result.data
+
+      result = await this.$http.post('province.php', {
+        ApiKey: this.ApiKey
+      })
+      this.provinces = result.data      
+      result = await this.$http.post('region.php', {
+        ApiKey: this.ApiKey
+      })
+      this.regions = result.data 
+   
+    
+  await this.personnel_temporaryQueryAll()
+  await this.conditions_transferQueryAll()   
+  await this.conditions_branchQueryAll()
     
     },
 
@@ -83,7 +175,7 @@
     return split_s[6]
     },
 
-    id_card_s(){
+    id_ref_url(){
         let result = this.url_result.slice(5);
 return result
     },
@@ -98,252 +190,80 @@ return result
         }
         return result
     },
-     marital_status() {
-            let marital_status = this.personnel_temporarys.marital_status
-            let marital_result
-            if(marital_status =='single'){
-                marital_result = 'โสด'
-            }
-            else if(marital_status =='married'){
-                marital_result = 'สมรส'
-            }
-             else if(marital_status =='widow'){
-                marital_result = 'หม้าย'
-            }
-            else if(marital_status =='divorce'){
-                marital_result = 'หย่า'
-            }
-            else if(marital_status =='separate'){
-                marital_result = 'แยกกันอยู่'
-            }
-             return marital_result
-          },
-
-      date_today_cal() {
+   
+         month_now() {
+             const d = new Date()
+              let month  = d.getMonth()+1
+              return month 
+            }, 
+            year_s() {
+              const d = new Date();
+              let year = d.getFullYear()+543     
+              return year
+            },
+            time_s() {
+             let time_m              
+             if(this.month_now > 2)
+             {time_m = 2}else{
+               time_m = 1
+             }
+              return time_m
+           },
+           id_ref() {
+             let id_ref_cr
+             id_ref_cr = this.time_s +''+this.year_s+''+this.colleges_user.user_name
+             return id_ref_cr
+           },
+           
+          date_today() {
+             let monthNames = [
+        "","มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน",
+        "พฤษภาคม", "มิถุนายน", "กรกฎาคม", "สิงหาคม",
+        "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"
+    ];
             let today = new Date();
             let dd = String(today.getDate()).padStart(2, '0');
             let mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-            let yyyy = today.getFullYear();
+            let yyyy = today.getFullYear()+543;
 
-            today = yyyy + '-' + mm + '-' + dd;
+            today = dd + ' ' + monthNames[parseInt(mm)] + ' ' + yyyy;
             return today
           },
-
-           date_tims_ch(){
-            let monthNames = [
-        "","มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน",
-        "พฤษภาคม", "มิถุนายน", "กรกฎาคม", "สิงหาคม",
-        "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"
-    ];
-            let day = this.transference_personnels.date_time.slice(0,2);
-            let month = monthNames[parseInt(this.transference_personnels.date_time.slice(3,5))];
-            let year = this.transference_personnels.date_time.slice(6);
-            let years = parseInt(year);
-            let today = day + ' ' + month + ' ' + years;
-            return today
-          },
-
-          date_appoin_ch(){
-            let monthNames = [
-        "","มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน",
-        "พฤษภาคม", "มิถุนายน", "กรกฎาคม", "สิงหาคม",
-        "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"
-    ];
-            let day = this.personnel_temporarys.date_appoin.slice(8);
-            let month = monthNames[parseInt(this.personnel_temporarys.date_appoin.slice(5,7))];
-            let year = this.personnel_temporarys.date_appoin.slice(0,4);
-            let years = parseInt(year) + 543;
-            let today = day + ' ' + month + ' ' + years;
-            return today
-          },
-
-           date_appoin_ch_app(){
-            let monthNames = [
-        "","มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน",
-        "พฤษภาคม", "มิถุนายน", "กรกฎาคม", "สิงหาคม",
-        "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"
-    ];
-            let day = parseInt(this.personnel_temporarys.date_app_now.slice(8));
-            let month = monthNames[parseInt(this.personnel_temporarys.date_app_now.slice(5,7))];
-            let year = this.personnel_temporarys.date_app_now.slice(0,4);
-            let years = parseInt(year) + 543;
-            let today = day + ' ' + month + ' ' + years;
-            return today
-          },
-
-
-          get_Appoint_Age() {
-                let today = new Date(this.date_today_cal);
-                let DOB = new Date(this.personnel_temporarys.date_app_now);
-                let totalMonths = (today.getFullYear() - DOB.getFullYear()) * 12 + today.getMonth() - DOB.getMonth();
-                totalMonths += today.getDay() < DOB.getDay() ? -1 : 0;
-                let years = today.getFullYear() - DOB.getFullYear();
-                if (DOB.getMonth() > today.getMonth())
-                    years = years - 1;
-                else if (DOB.getMonth() === today.getMonth())
-                    if (DOB.getDate() > today.getDate())
-                        years = years - 1;
-
-                let days;
-                let months;
-
-                if (DOB.getDate() > today.getDate()) {
-                    months = (totalMonths % 12);
-                    if (months == 0)
-                        months = 11;
-                    let x = today.getMonth();
-                    switch (x) {
-                        case 1:
-                        case 3:
-                        case 5:
-                        case 7:
-                        case 8:
-                        case 10:
-                        case 12: {
-                            let a = DOB.getDate() - today.getDate();
-                            days = 31 - a;
-                            break;
-                        }
-                        default: {
-                            let a = DOB.getDate() - today.getDate();
-                            days = 30 - a;
-                            break;
-                        }
-                    }
-
-                }
-                else {
-                    days = today.getDate() - DOB.getDate();
-                    if (DOB.getMonth() === today.getMonth())
-                        months = (totalMonths % 12);
-                    else
-                        months = (totalMonths % 12);
-                }
-                let age = years + ' ปี ' + months + ' เดือน ' + days + ' วัน';
-              return age;
-             },
-
-    get_gov_Age() {
-                let today = new Date(this.date_today_cal);
-                let DOB = new Date(this.personnel_temporarys.date_appoin);
-                let totalMonths = (today.getFullYear() - DOB.getFullYear()) * 12 + today.getMonth() - DOB.getMonth();
-                totalMonths += today.getDay() < DOB.getDay() ? -1 : 0;
-                let years = today.getFullYear() - DOB.getFullYear();
-                if (DOB.getMonth() > today.getMonth())
-                    years = years - 1;
-                else if (DOB.getMonth() === today.getMonth())
-                    if (DOB.getDate() > today.getDate())
-                        years = years - 1;
-
-                let days;
-                let months;
-
-                if (DOB.getDate() > today.getDate()) {
-                    months = (totalMonths % 12);
-                    if (months == 0)
-                        months = 11;
-                    let x = today.getMonth();
-                    switch (x) {
-                        case 1:
-                        case 3:
-                        case 5:
-                        case 7:
-                        case 8:
-                        case 10:
-                        case 12: {
-                            let a = DOB.getDate() - today.getDate();
-                            days = 31 - a;
-                            break;
-                        }
-                        default: {
-                            let a = DOB.getDate() - today.getDate();
-                            days = 30 - a;
-                            break;
-                        }
-                    }
-
-                }
-                else {
-                    days = today.getDate() - DOB.getDate();
-                    if (DOB.getMonth() === today.getMonth())
-                        months = (totalMonths % 12);
-                    else
-                        months = (totalMonths % 12);
-                }
-                let age = years + ' ปี ' + months + ' เดือน ' + days + ' วัน';
-          return age;
-          },
-
     },
 
 
     methods: {     
-
-  async personnel_temporarysQueryAll() {     
-         this.loading = true        
-        let result = await this.$http.post('personnel_temporary.php', {
+            async personnel_temporaryQueryAll() {
+          this.loading = true
+        let result = await this.$http.post('admin.php', {
           ApiKey: this.ApiKey,
-            id_card: this.id_card_s 
-        }).finally(() => this.loading = false)
-        this.personnel_temporarys = result.data       
-      }, 
-
- async personnel_temporarys_switchQueryAll() {     
-         this.loading = true        
-        let result = await this.$http.post('personnel_temporary.php', {
-          ApiKey: this.ApiKey,
-            id_card: this.transference_personnels.switch_position  
-        }).finally(() => this.loading = false)
-        this.personnel_temporarys_switch = result.data     
-      },      
-
- async transference_personnelsQueryAll() {     
-         this.loading = true        
-        let result = await this.$http.post('transference_personnel.php', {
-          ApiKey: this.ApiKey,
-          id_ref: this.url_result 
-        }).finally(() => this.loading = false)
-        this.transference_personnels = result.data 
-      }, 
-
-  async personnel_educationsQueryAll() {     
-         this.loading = true
-        let result = await this.$http.post('personnel_education.php', {
-          ApiKey: this.ApiKey,
-            id_card: this.id_card_s  
-        }).finally(() => this.loading = false)
-        this.personnel_educations = result.data            
-      }, 
-
-       async transference_locationsQueryAll() {     
-         this.loading = true
-        let result = await this.$http.post('transference_location.php', {
-          ApiKey: this.ApiKey,
-            id_ref: this.url_result  
-        }).finally(() => this.loading = false)
-        this.transference_locations = result.data 
-      }, 
-
-        async province_sh_spQueryAll() { 
-        let result = await this.$http.post('province_sp.php', {
-          province_ID: this.transference_personnels.reason_1_domicile  
+          user_name: this.id_ref_url  
         })
-        this.province_sh_s = result.data 
-      }, 
+        this.colleges_user = result.data  
+      },
 
-      async province_sh_mQueryAll() { 
-        let result = await this.$http.post('province_sp.php', {
-          province_ID: this.transference_personnels.reason_3_domicile  
-        })
-        this.province_sh_m = result.data 
-      }, 
-
-      async province_sh_fmQueryAll() { 
-        let result = await this.$http.post('province_sp.php', {
-          province_ID: this.transference_personnels.reason_2_domicile  
-        })
-        this.province_sh_fm = result.data 
-      }, 
+    
+   
+     async conditions_branchQueryAll() {
+          this.loading = true
+        let result = await this.$http.post('conditions_branch.php', {
+          ApiKey: this.ApiKey,
+          id_ref: this.id_ref_url       
+        }).finally(() => this.loading = false)
+        this.conditions_branchs = result.data        
+      },
+    
+   async conditions_transferQueryAll() {
+          this.loading = true
+        let result = await this.$http.post('conditions_transfer.php', {
+          ApiKey: this.ApiKey,
+          id_ref: this.id_ref_url       
+        }).finally(() => this.loading = false)
+        this.conditions_transfers = result.data    
+        console.log(result.data)          
+      },
+    
+  
 
 
 
@@ -380,19 +300,8 @@ return result
           //triggering the function
           downloadLink.click()
         }
-
         document.body.removeChild(downloadLink)
-      },
-       async personnel_educationsQueryAll() {     
-         this.loading = true
-          let userSession = JSON.parse(sessionStorage.getItem('user')) || 0   
-        let result = await this.$http.post('personnel_education.php', {
-          ApiKey: this.ApiKey,
-            id_card: userSession.id_card  
-
-        }).finally(() => this.loading = false)
-        this.personnel_educations = result.data            
-      }, 
+      },     
     },
     props: {
       source: String
@@ -420,16 +329,13 @@ return result
     -moz-box-sizing: border-box;
   }
 
-  /* table {
-    border-top-width: 1px;
-    border-right-width: 1px;
-    border-bottom-width: 1px;
-    border-left-width: 1px;
-    border-top-style: solid;
-    border-right-style: solid;
-    border-bottom-style: solid;
-    border-left-style: solid;
-  } */
+  .table, .th, .td {
+    border-bottom: 0.5px solid black;
+    border-top: 1px solid black;
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+  border-collapse: collapse;
+  }
 
   tfoot tr:hover {
     background-color: initial;
@@ -441,10 +347,7 @@ return result
 
   td,
   th {
-    font-family: "TH SarabunIT๙", "TH SarabunPSK", "Angsana New", AngsanaUPC;
-    padding: 1px;
-    height: initial;
-   
+    font-family: "TH SarabunIT๙", "TH SarabunPSK", "Angsana New", AngsanaUPC;   
   }
 
   tfoot td {
@@ -479,12 +382,12 @@ return result
     padding-top: 0.5cm;
     padding-right: 1cm;
     padding-bottom: 1cm;
-    padding-left: 2cm;
+    padding-left: 1cm;
   }
 
   .head {
     font-family: "TH SarabunIT๙", "TH SarabunPSK", "Angsana New", AngsanaUPC;
-    font-size: 20pt;
+    font-size: 16pt;
     font-weight: bold;
   }
 
@@ -495,7 +398,7 @@ return result
 
   .regular16 {
     font-family: "TH SarabunIT๙", "TH SarabunPSK", "Angsana New", AngsanaUPC;
-    font-size: 18pt;
+    font-size: 16pt;
   }
 
   .bold16 {
@@ -580,12 +483,12 @@ return result
 
   .regular16 {
     font-family: "TH SarabunIT๙", "TH SarabunPSK", "Angsana New", AngsanaUPC;
-    font-size: 20pt;
+    font-size: 16pt;
   }
 
   .bold16 {
     font-family: "TH SarabunIT๙", "TH SarabunPSK", "Angsana New", AngsanaUPC;
-    font-size: 20pt;
+    font-size: 16pt;
     font-weight: bold;
   }
 

@@ -194,7 +194,6 @@ export default {
       ApiKey: "HRvec2021",
     });
     this.user = result.data;
-    this.$store.commit("getLoginUser", userSession);
   },
 
   methods: {

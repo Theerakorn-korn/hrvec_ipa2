@@ -17,18 +17,19 @@
                      <v-alert border="left" colored-border color="green darken-1" elevation="2"  type="info">
                    <h2> วิทยาลัย : {{ colleges_user.college_name }}{{ user.frist_name }} {{ user.last_name }}  </h2>
                    <h3> รหัสวิทยาลัย : {{ colleges_user.college_code }} </h3>  
-                    <v-btn 
-                     v-if="conditions_transfers.id_ref === id_ref"                    
-                      x-large
+                   <div align="right">
+                      <v-btn 
+                     v-if="conditions_transfers.id_ref === id_ref"  
                       color="info"
-                      dark
-                      class="ma-2"
+                      dark                     
                      :href="'#/college/print_condition/'+id_ref" target="_blank"
                       
                     >
                       <v-icon>mdi-printer</v-icon>
                       <span>พิมพ์แบบรายงานเงือนไขสาขาวิชาเอก</span>
                     </v-btn>
+                   </div>
+                   
                                
                   </v-alert>  
                 </v-col>     
@@ -106,7 +107,7 @@
           
       </v-row>                             
 <v-row>  
-   <v-col align="center">
+   <v-col cols="12" align="center">
    
       <v-btn 
                      v-if="conditions_transfers.id_ref === id_ref"                    
@@ -457,8 +458,7 @@ async personnel_temporaryQueryAll() {
           ApiKey: this.ApiKey,
           id_ref: this.id_ref       
         }).finally(() => this.loading = false)
-        this.conditions_transfers = result.data    
-        console.log(result.data)          
+        this.conditions_transfers = result.data                  
       },
     
     //First >> Insert transference Location 

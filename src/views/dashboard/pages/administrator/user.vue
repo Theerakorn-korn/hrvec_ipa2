@@ -6,7 +6,7 @@
         icon="mdi-clipboard-text"
         title="ผู้ใช้งานระบบ"
         class="px-5 py-3"
-        :elevation="hover ? 24 : 6"
+        
       >
         <v-card class="mb-4 pa-2">
           <v-row>
@@ -17,7 +17,7 @@
                 label="ค้นหา ระบุคำ หรือ ส่วนข้อความเกี่ยวข้อง"
                 single-line
                 hide-details
-                :elevation="hover ? 24 : 6"
+                
                 dense
                 filled
                 class="mb-2"
@@ -25,7 +25,7 @@
             </v-col>
             <v-col cols="12" lg="6" class="text-right">
               <v-btn
-                :elevation="hover ? 24 : 6"
+                
                 large
                 right
                 depressed
@@ -43,13 +43,12 @@
           :headers="headers"
           :items="users"
           :search="search"
-          :class="elevation - 3" 
        > 
 
          <template v-slot:[`item.actions`]="{ item }">
             <v-icon
               color="yellow"
-              :elevation="hover ? 24 : 6"
+              
               @click.stop="userEdit(item.user_ID)"
             >
               mdi-pencil
@@ -58,7 +57,7 @@
             <template v-slot:[`item.action_s`]="{ item }">            
             <v-icon
               color="red"
-              :elevation="hover ? 24 : 6"
+              
               @click.stop="userDelete(item.user_ID)"
             >
               mdi-delete
@@ -76,12 +75,12 @@
       <!--adduserdialog  -->
       <v-layout row justify-center>
         <v-dialog v-model="adduserdialog" persistent max-width="50%">
-          <v-card class="mx-auto pa-5" :elevation="hover ? 24 : 6">
+          <v-card class="mx-auto pa-5" >
             <base-material-card
               icon="mdi-account-multiple"
               title="เพิ่มข้อมูลสมาชิก"
               class="px-5 py-3 text_google"
-              :elevation="hover ? 24 : 6"
+              
             >
             </base-material-card>
 
@@ -149,13 +148,13 @@
       <!-- V-model deleteuserdialog -->
       <v-layout>
         <v-dialog v-model="deleteuserdialog" persistent max-width="40%">
-          <v-card class="mx-auto pa-5" :elevation="hover ? 24 : 6">                     
+          <v-card class="mx-auto pa-5" >                     
              <base-material-card
               color="error"
               icon="mdi-delete"
               title="ลบข้อมูลผู้ใช้"
               class="px-5 py-3 text_google"
-              :elevation="hover ? 24 : 6"
+              
              
             >
             </base-material-card>
@@ -197,13 +196,13 @@
       <!-- V-model edituserdialog -->
       <v-layout row justify-center>
          <v-dialog v-model="edituserdialog" persistent max-width="80%">
-        <v-card class="mx-auto pa-6" :elevation="hover ? 24 : 6">
+        <v-card class="mx-auto pa-6" >
            <base-material-card
               color="yellow"
               icon="mdi-clipboard-text"
               title="แก้ไขข้อมูลผู้ใช้งานระบบ"
               class="px-5 py-3 text_google"
-              :elevation="hover ? 24 : 6"
+              
             ></base-material-card>
           <v-card-text>
             <v-form ref="edituserform" lazy-validation>
@@ -258,7 +257,7 @@
     
     <v-container fluid>      
 
- <v-snackbar v-model="snackbar.show" top :multi-line="multiLine" :timeout="snackbar.timeout" :color="snackbar.color">
+ <v-snackbar v-model="snackbar.show" top :timeout="snackbar.timeout" :color="snackbar.color">
       <v-icon large>{{snackbar.icon}}</v-icon>
       <v-card-text>
         {{snackbar.text}}
@@ -316,10 +315,10 @@ export default {
         },
       ],    
      
-    college: {},
+      college: {},
       provinces: [],
       prefectures: [],  
-     userstatus:[],
+       userstatus:[],
       regions: [],
       region_ena: true
     };

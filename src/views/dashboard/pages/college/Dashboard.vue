@@ -1,7 +1,7 @@
 <template>
   <v-container id="dashboard" fluid tag="section">
     <v-row>
-      <v-col cols="12" sm="6" lg="4">
+      <v-col cols="12" sm="6" lg="4">        
         <base-material-stats-card          
           :value="Number(showAlldata.count_id).toLocaleString()"
           color="primary"
@@ -262,7 +262,7 @@ export default {
 
   data() {
     return {
-    
+      user: {},
       dailySalesChart: {
         data: {
           labels: ["M", "T", "W", "T", "F", "S", "S"],
@@ -431,7 +431,7 @@ export default {
             value: false,
           },
           {
-            text: "Create 4 Invisible User Experiences you Never Knew About",
+            text: "Create 4 Invisible college Experiences you Never Knew About",
             value: true,
           },
         ],
@@ -474,37 +474,60 @@ export default {
     };
   },
 
-  mounted() {    
-    this.getAlldata();
-    this.getAlldatatech();
-    this.getAlldatadr();
-    this.getAlldatasedr();
-    this.getAlldataSupervision();
-    this.getAlldatatechprepare();
+ async mounted() { 
+   await this.getuser();
+   await this.getAlldata();
+   await this.getAlldatatech();
+   await this.getAlldatadr();
+   await this.getAlldatasedr();
+   await this.getAlldataSupervision();
+   await this.getAlldatatechprepare();
   },
   methods: {  
+    async getuser(){
+      let result;
+       let userSession = JSON.parse(sessionStorage.getItem("user")) || 0;
+    result = await this.$http.post("admin.php", {
+      user_name: userSession.user_name,
+      ApiKey: "HRvec2021",
+    });
+    this.user = result.data; 
+    },
+
     async getAlldata() {
-      let result = await this.$http.post("show_dashboard_all.php");
-      this.showAlldata = result.data;
+      let result = await this.$http.post("show_dashboard_all.php", {
+          college_code : this.user.college_code         
+        });
+      this.showAlldata = result.data;     
     },
     async getAlldatatech() {
-      let result = await this.$http.post("show_dashboard_tech.php");
+      let result = await this.$http.post("show_dashboard_tech.php", {
+          college_code : this.user.college_code         
+        });
       this.showAlldatatech = result.data;
     },
     async getAlldatadr() {
-      let result = await this.$http.post("show_dashboard_dr.php");
+      let result = await this.$http.post("show_dashboard_dr.php", {
+          college_code : this.user.college_code         
+        });
       this.showAlldatadr = result.data;
     },
     async getAlldatasedr() {
-      let result = await this.$http.post("show_dashboard_se_dr.php");
+      let result = await this.$http.post("show_dashboard_se_dr.php", {
+          college_code : this.user.college_code         
+        });
       this.showAlldatasedr = result.data;
     },
      async getAlldataSupervision() {
-      let result = await this.$http.post("show_dashboard_supervision.php");
+      let result = await this.$http.post("show_dashboard_supervision.php", {
+          college_code : this.user.college_code         
+        });
       this.showAlldatasupervision = result.data;
     }, 
     async getAlldatatechprepare() {
-      let result = await this.$http.post("show_dashboard_tech_prepare.php");
+      let result = await this.$http.post("show_dashboard_tech_prepare.php", {
+          college_code : this.user.college_code         
+        });
       this.showAlldatatechprepare = result.data;
     },
   },
