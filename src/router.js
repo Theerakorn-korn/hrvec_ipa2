@@ -200,22 +200,21 @@ export default new Router({
                     path: '/transference_personnel',
                     component: () =>
                         import ('@/views/dashboard/pages/user/transference_personnel'),
-                },                 
-               
-                /*  {
-                    name: 'พิมพ์แบบแสดงความประสงค์ขอย้าย',
-                    path: '/user/infotransferenceprint',
-                    component: () =>
-                    import ('@/views/dashboard/pages/user/infotransferenceprint'),
-                },       */        
+                }, 
             ] 
         },
         {
             name: 'พิมพ์แบบแสดงความประสงค์ขอย้าย',
-            path: '/user/infotransferenceprint/:id_ref',
+            path: '/user/print_info/:id_ref',
             component: () =>
             import ('@/print_info'),
-        },     
+        },    
+        {
+            name: 'พิมพ์แบบรายงานเงือนไขสาขาวิชา',
+            path: '/college/print_condition/:id_ref',
+            component: () =>
+            import ('@/print_condition'),
+        },    
         {
             path: "/college",
             component: () =>

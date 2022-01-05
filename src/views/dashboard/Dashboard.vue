@@ -301,6 +301,7 @@ export default {
           },
         },
       },
+     
       emailsSubscriptionChart: {
         data: {
           labels: [
@@ -309,16 +310,9 @@ export default {
             "3",
             "4",
             "5",
-            "6",
-            "7",
-            "8",
-            "9",
-            "10",
-            "11",
-            "12",
           ],
           series: [
-            [542, 443, 320, 780, 553, 453, 326, 434, 568, 610, 756, 895],
+            [600, 500, 600, 800, 1200],
           ],
         },
         options: {
@@ -343,11 +337,16 @@ export default {
                 labelInterpolationFnc: function (value) {
                   return value[0];
                 },
+
               },
             },
           ],
         ],
       },
+
+
+
+
       headers: [
         {
           sortable: false,
@@ -506,6 +505,13 @@ export default {
     async getAlldatatechprepare() {
       let result = await this.$http.post("show_dashboard_tech_prepare.php");
       this.showAlldatatechprepare = result.data;
+    },
+  },
+  computed:{
+    num_tech(){
+      let result = this.showAlldatatech.count_id      
+      return result
+      
     },
   },
 };

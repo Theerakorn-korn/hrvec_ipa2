@@ -16,7 +16,20 @@
                  <v-col cols="12" sm="6">
                      <v-alert border="left" colored-border color="green darken-1" elevation="2"  type="info">
                    <h2> วิทยาลัย : {{ colleges_user.college_name }}{{ user.frist_name }} {{ user.last_name }}  </h2>
-                   <h3> รหัสวิทยาลัย : {{ colleges_user.college_code }} </h3>                                 
+                   <h3> รหัสวิทยาลัย : {{ colleges_user.college_code }} </h3>  
+                    <v-btn 
+                     v-if="conditions_transfers.id_ref === id_ref"                    
+                      x-large
+                      color="info"
+                      dark
+                      class="ma-2"
+                     :href="'#/college/print_condition/'+id_ref" target="_blank"
+                      
+                    >
+                      <v-icon>mdi-printer</v-icon>
+                      <span>พิมพ์แบบรายงานเงือนไขสาขาวิชาเอก</span>
+                    </v-btn>
+                               
                   </v-alert>  
                 </v-col>     
                 <v-col cols="12" sm="6">
@@ -24,6 +37,7 @@
                    <h2> ครั้งที่ : {{ time_s }} ประจำปี : {{ year_s }}  </h2>
                     <h3> เขียนที่ : {{ colleges_user.college_name  }}</h3>
                     <h3> วันที่ยื่นคำร้อง : {{ date_today }}  </h3>      
+                    
                   </v-alert>
                 </v-col>    
               </v-row>
@@ -87,16 +101,28 @@
  </v-form>           
             <v-card class="pa-1 d-flex justify-center" >            
                   <div> 
-                     <v-row justify="end">                     
- * เมื่อกดปุ่มบันทึกแล้ว ท่านจะไม่สามารถแก้ไขข้อมูลใดๆ ได้ กรุณาตรวจสอบข้อมูลให้ถูกต้องการกดปุ่ม บันทึก
+                     <v-row align="center">                     
+ <h2>* เมื่อกดปุ่มบันทึกแล้ว ท่านจะไม่สามารถแก้ไขข้อมูลใดๆ ได้ กรุณาตรวจสอบข้อมูลให้ถูกต้องการกดปุ่ม บันทึก</h2>
           
       </v-row>                             
 <v-row>  
-   <v-col>
+   <v-col align="center">
    
-    
+      <v-btn 
+                     v-if="conditions_transfers.id_ref === id_ref"                    
+                      x-large
+                      color="info"
+                      dark
+                      class="ma-2"
+                     :href="'#/college/print_condition/'+id_ref" target="_blank"
+                      
+                    >
+                      <v-icon>mdi-printer</v-icon>
+                      <span>พิมพ์แบบรายงานเงือนไขสาขาวิชาเอก</span>
+                    </v-btn>
 
-                    <v-btn                 
+                    <v-btn  
+                     v-else               
                       x-large
                       color="success"
                       dark
@@ -108,28 +134,7 @@
                       <span>บันทึก</span>
                     </v-btn>
 
-                    <v-btn
-                      x-large
-                      color="warning"
-                      dark
-                      class="mr-0"
-                      @click.stop="isEditing = !isEditing"
-                      
-                    >
-                      <v-icon>mdi-close</v-icon>
-                      <span>ยกเลิก</span>
-                    </v-btn> 
-                     <v-btn                     
-                      x-large
-                      color="info"
-                      dark
-                      class="ma-2"
-                     :href="'/print'" target="_blank"
-                      
-                    >
-                      <v-icon>mdi-content-save</v-icon>
-                      <span>พิมพิ์</span>
-                    </v-btn>
+                   
    </v-col>
 
 </v-row>
@@ -417,9 +422,10 @@ export default {
       })
       this.regions = result.data 
    
-   this.conditions_transferQueryAll()
-   this.personnel_temporaryQueryAll()   
-         this.conditions_branchQueryAll()
+    
+  await this.personnel_temporaryQueryAll()
+  await this.conditions_transferQueryAll()   
+  await this.conditions_branchQueryAll()
   },
 
   methods: {
@@ -452,7 +458,7 @@ async personnel_temporaryQueryAll() {
           id_ref: this.id_ref       
         }).finally(() => this.loading = false)
         this.conditions_transfers = result.data    
-        console.log(this.conditions_transfers.college_code)          
+        console.log(result.data)          
       },
     
     //First >> Insert transference Location 
@@ -575,12 +581,17 @@ if (this.$refs.addconditions_transferform.validate()) {
            },
            
           date_today() {
+             let monthNames = [
+        "","มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน",
+        "พฤษภาคม", "มิถุนายน", "กรกฎาคม", "สิงหาคม",
+        "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"
+    ];
             let today = new Date();
             let dd = String(today.getDate()).padStart(2, '0');
             let mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
             let yyyy = today.getFullYear()+543;
 
-            today = dd + '/' + mm + '/' + yyyy;
+            today = dd + ' ' + monthNames[parseInt(mm)] + ' ' + yyyy;
             return today
           },
     },

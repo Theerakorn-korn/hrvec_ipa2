@@ -32,7 +32,7 @@
                   ปีบรรจุ {{ y_app }}  
                   ปีบรรจุ {{ result }}   -->
 
-                <v-col cols="12" sm="6">
+                <v-col cols="12" sm="6" align="center">
                   <v-alert border="left" colored-border color="green darken-1" elevation="2"  type="info">
                    <h2> ครั้งที่ : {{ time_s }} ประจำปี : {{ year_s }}  </h2>
                     <h3> เขียนที่ : {{ user.college_name }}</h3>
@@ -46,7 +46,7 @@
                       color="info"
                       dark
                       class="ma-2"
-                     :href="'#/user/infotransferenceprint/'+id_ref" target="_blank"
+                     :href="'#/user/print_info/'+id_ref" target="_blank"
                       
                     >
                       <v-icon>mdi-printer</v-icon>
@@ -95,9 +95,9 @@
    <h1> ตามนัยหนังสือสำนักงาน ก.ค.ศ. ที่ ศธ 0206.4/1025 ลงวันที่ 11 กรกฎาคม 2556 คุณสมบัติของผู้ขอย้าย จะต้องดำรงตำแหน่งในหน่วยงานการศึกษาปัจจุบันไม่น้อยกว่า 12 เดือน</h1>
          </v-alert>
 
-<v-form ref="addtransference_personnelform" lazy-validation>
-  
-            <v-card class="pa-2 ma-2" v-if="get_gov_Age_year > 0">
+<v-form ref="addtransference_personnelform" lazy-validation v-if="transference_personnels.id_ref ===''">
+  {{ transference_personnels.id_ref }}
+            <v-card class="pa-2 ma-2" v-if="get_gov_Age_year > 0 || user.position_name ==='ครู'">
               <v-card-title>
                 <div class="font-weight-light v-size--x-large"><v-icon large left>mdi-electron-framework</v-icon> ปัจจุบันปฏิบัติการสอน</div>
               </v-card-title>
@@ -134,7 +134,7 @@
                           outlined
                           label="วิชาที่สอน ที่ 1:"
                           prepend-icon="mdi-notebook"
-                          require :rules="[v => !!v || '']"
+                          :rules="[v => !!v || '']"
                         ></v-text-field>
                       </v-col>
                       <v-col cols="12" sm="6">
@@ -144,7 +144,7 @@
                           outlined
                           label="วิชาที่สอน ที่ 2:"
                          prepend-icon="mdi-notebook"
-                          require :rules="[v => !!v || '']"                       
+                          :rules="[v => !!v || '']"                       
                         ></v-text-field>
                       </v-col>
                       <v-col cols="12" sm="6">
@@ -154,7 +154,7 @@
                           outlined
                           label="วิชาที่สอน ที่ 3:"
                          prepend-icon="mdi-notebook"
-                          require :rules="[v => !!v || '']"                         
+                          :rules="[v => !!v || '']"                         
                         ></v-text-field>
                       </v-col>
                       <v-col cols="12" sm="6">
@@ -164,7 +164,7 @@
                           outlined
                           label="วิชาที่สอน ที่ 4:"
                           prepend-icon="mdi-notebook"
-                          require :rules="[v => !!v || '']"                         
+                          :rules="[v => !!v || '']"                         
                         ></v-text-field>
                       </v-col>
                       <v-col cols="12" sm="12">
@@ -173,7 +173,7 @@
                           outlined
                           label="หน้าที่อื่นที่ได้รับมอบหมาย :"
                           prepend-icon="mdi-account-network"
-                          require :rules="[v => !!v || '']"                          
+                          :rules="[v => !!v || '']"                          
                         ></v-text-field>
                       </v-col>
                     </v-row>
@@ -221,7 +221,7 @@
                      v-model="addtransference_personnel.ser_college_code" 
                      label="College"
                       prepend-icon="mdi-office-building-marker"        
-                      value="-"                             
+                      :rules="[v => !!v || '']"                             
                      />   
 
                       </v-col>
@@ -232,7 +232,7 @@
                           outlined
                           label="เริ่มปฏิบัติราชการ คำสั่งที่ :"
                           prepend-icon="mdi-office-building-marker"
-                          value="-"  
+                          :rules="[v => !!v || '']"  
                         ></v-text-field>
                       </v-col>
                       <v-col cols="12" sm="6">
@@ -242,7 +242,7 @@
                           outlined
                           label="เมื่อวันที่:"
                           prepend-icon="mdi-office-building-marker"
-                          value="-"  
+                         :rules="[v => !!v || '']" 
                          
                         ></v-text-field>
                       </v-col>
@@ -253,7 +253,7 @@
                           outlined
                           label="ช่วยปฏิบัติราชการเป็นเวลา ปี:"
                           prepend-icon="mdi-office-building-marker"
-                          value="-"  
+                        :rules="[v => !!v || '']"
                         
                         ></v-text-field>
                       </v-col>
@@ -264,7 +264,7 @@
                           outlined
                           label="ช่วยปฏิบัติราชการเป็นเวลา เดือน:"
                           prepend-icon="mdi-office-building-marker"
-                          value="-"  
+                          :rules="[v => !!v || '']"
                          
                         ></v-text-field>
                       </v-col>
@@ -275,7 +275,7 @@
                           outlined
                           label="เหตุผลที่ช่วยปฏิบัติราชการ :"
                          prepend-icon="mdi-office-building-marker"
-                          value="-"                            
+                         :rules="[v => !!v || '']"                           
                         ></v-text-field>
                       </v-col>
                     </v-row>
@@ -366,7 +366,7 @@
                       x-large
                       color="success"
                       dark                    
-                      @click.stop="addtransference_location()"
+                      @click.stop="addtransference_locationdialogsubmit()"
                       
                     >
                       <v-icon>mdi-selection-multiple-marker</v-icon>
@@ -403,7 +403,8 @@
                         label="บัตรประชาชน"
                         prepend-icon="mdi-account-details"
                         request
-                        v-on:keyup.enter="OnEnter()"                        
+                        v-on:keyup.enter="OnEnter()"   
+                        :rules="[v => !!v || '']"                     
                       ></v-text-field>
                       
                     </v-col> 
@@ -476,15 +477,15 @@
                       {{ addtransference_personnel.reason_1 }}
 
                       <v-checkbox v-model="addtransference_personnel.reason_1" value="1" hide-details class="shrink mr-2 mt-0"></v-checkbox>
-                      <v-text-field v-model="addtransference_personnel.reason_1_spouse" :disabled="!addtransference_personnel.reason_1" label="คู่สมรสชื่อ : " require :rules="[v => !!v || '']"></v-text-field>                      
-                      <v-text-field v-model="addtransference_personnel.reason_1_occupation" :disabled="!addtransference_personnel.reason_1" label="คู่สมรสประกอบอาชีพ : " require :rules="[v => !!v || '']"></v-text-field>
+                      <v-text-field v-model="addtransference_personnel.reason_1_spouse" :disabled="!addtransference_personnel.reason_1" label="คู่สมรสชื่อ : " :rules="[v => !!v || '']"></v-text-field>                      
+                      <v-text-field v-model="addtransference_personnel.reason_1_occupation" :disabled="!addtransference_personnel.reason_1" label="คู่สมรสประกอบอาชีพ : " :rules="[v => !!v || '']"></v-text-field>
                       <v-text-field
                       v-model="addtransference_personnel.reason_1_location"
                         :disabled="!addtransference_personnel.reason_1"
                         label="สถานที่ประกอบอาชีพของคู่สมรส : "
-                        require :rules="[v => !!v || '']"
+                        :rules="[v => !!v || '']"
                       ></v-text-field>
-                      <v-autocomplete v-model="addtransference_personnel.reason_1_domicile" :items="provices_sh" item-text="province_name" item-value="province_ID" :disabled="!addtransference_personnel.reason_1" label="ภูมิลำเนาของคู่สมรส จังหวัด : " require :rules="[v => !!v || '']"></v-autocomplete>
+                      <v-autocomplete v-model="addtransference_personnel.reason_1_domicile" :items="provices_sh" item-text="province_name" item-value="province_ID" :disabled="!addtransference_personnel.reason_1" label="ภูมิลำเนาของคู่สมรส จังหวัด : " :rules="[v => !!v || '']"></v-autocomplete>
                       
                     </v-row>
                     <v-row align="center">
@@ -494,9 +495,9 @@
                       {{ addtransference_personnel.reason_2 }}
 
                       <v-checkbox v-model="addtransference_personnel.reason_2" value="1" hide-details class="shrink mr-2 mt-0"></v-checkbox>
-                      <v-text-field v-model="addtransference_personnel.reason_2_fyear" :disabled="!addtransference_personnel.reason_2" label="อายุของบิดาปี" require :rules="[v => !!v || '']"></v-text-field>
-                      <v-text-field v-model="addtransference_personnel.reason_2_myear" :disabled="!addtransference_personnel.reason_2" label="อายุของมารดาปี" require :rules="[v => !!v || '']"></v-text-field>
-                      <v-autocomplete v-model="addtransference_personnel.reason_2_domicile" :items="provices_sh" item-text="province_name" item-value="province_ID" :disabled="!addtransference_personnel.reason_2" label="ภูมิลำเนาของคู่สมรส จังหวัด : " require :rules="[v => !!v || '']"></v-autocomplete>
+                      <v-text-field v-model="addtransference_personnel.reason_2_fyear" :disabled="!addtransference_personnel.reason_2" label="อายุของบิดาปี" :rules="[v => !!v || '']"></v-text-field>
+                      <v-text-field v-model="addtransference_personnel.reason_2_myear" :disabled="!addtransference_personnel.reason_2" label="อายุของมารดาปี" :rules="[v => !!v || '']"></v-text-field>
+                      <v-autocomplete v-model="addtransference_personnel.reason_2_domicile" :items="provices_sh" item-text="province_name" item-value="province_ID" :disabled="!addtransference_personnel.reason_2" label="ภูมิลำเนาของคู่สมรส จังหวัด : " :rules="[v => !!v || '']"></v-autocomplete>
                       
                     </v-row>
                     <v-row align="center">
@@ -507,7 +508,7 @@
                       </v-card-title>
                       {{ addtransference_personnel.reason_3 }}
                       <v-checkbox v-model="addtransference_personnel.reason_3" value="1" hide-details class="shrink mr-2 mt-0"></v-checkbox>
-                      <v-autocomplete v-model="addtransference_personnel.reason_3_domicile" :items="provices_sh" item-text="province_name" item-value="province_ID" :disabled="!addtransference_personnel.reason_3" label="ภูมิลำเนาของคู่สมรส จังหวัด : " require :rules="[v => !!v || '']"></v-autocomplete>
+                      <v-autocomplete v-model="addtransference_personnel.reason_3_domicile" :items="provices_sh" item-text="province_name" item-value="province_ID" :disabled="!addtransference_personnel.reason_3" label="ภูมิลำเนาของคู่สมรส จังหวัด : "  :rules="[v => !!v || '']"></v-autocomplete>
                       
                     </v-row>
                     <v-row align="center">
@@ -516,7 +517,7 @@
                       </v-card-title>
                       {{ addtransference_personnel.reason_4 }}
                       <v-checkbox v-model="addtransference_personnel.reason_4" value="1" hide-details class="shrink mr-2 mt-0"></v-checkbox>
-                      <v-textarea v-model="addtransference_personnel.reason_4_detail" :disabled="!addtransference_personnel.reason_4" label="(ระบุ) : " require :rules="[v => !!v || '']"></v-textarea>
+                      <v-textarea v-model="addtransference_personnel.reason_4_detail" :disabled="!addtransference_personnel.reason_4" label="(ระบุ) : "  :rules="[v => !!v || '']"></v-textarea>
                     </v-row>
                   </v-card-text>
                 </v-card>
@@ -532,7 +533,6 @@
                 <v-col cols="12" sm="12">   
                   <v-row class="pa-4 mt-0">
                     <v-col cols="12" sm="4">
-                      {{ addtransference_personnel.evidence_info_1 }}
                       <v-checkbox
                         v-model="addtransference_personnel.evidence_info_1"
                         label="สำเนา กพ.7/ก.ค.ศ.16 ที่เป็นปัจจุบัน"                      
@@ -581,7 +581,7 @@
           
       </v-row>                             
 <v-row>   
-   <v-col>
+   <v-col align="center">
     
      <v-btn
                       v-if="transference_personnels.id_ref === id_ref"
@@ -589,7 +589,7 @@
                       color="info"
                       dark
                       class="ma-2"
-                     :href="'#/user/infotransferenceprint/'+id_ref" target="_blank"
+                     :href="'#/user/print_info/'+id_ref" target="_blank"
                       
                     >
                       <v-icon>mdi-printer</v-icon>
@@ -608,18 +608,7 @@
                       <v-icon>mdi-content-save</v-icon>
                       <span>บันทึก</span>
                     </v-btn>
-
-                    <v-btn
-                      x-large
-                      color="warning"
-                      dark
-                      class="mr-0"
-                      @click.stop="isEditing = !isEditing"
-                      
-                    >
-                      <v-icon>mdi-close</v-icon>
-                      <span>ยกเลิก</span>
-                    </v-btn> 
+                   
    </v-col>
 
 </v-row>
@@ -648,7 +637,7 @@
               <v-container grid-list-md>
                 <v-layout wrap>
                    <v-flex md2>
-<v-select v-model="addtransference_personnel.sequence_n" :items="order_need" outlined   label="ลำดับที่ :">  
+<v-select v-model="addtransference_location.sequence_n" :items="order_need" outlined   label="ลำดับที่ :">  
 </v-select>
                    </v-flex>                                
                     <v-flex md5>                    
@@ -660,13 +649,13 @@
                         label="สาขาวิชา :"
                         prepend-icon="mdi-account-details"
                         request
-                         v-model="addtransference_personnel.id_branch"
+                         v-model="addtransference_location.id_branch"
                         :rules="[(v) => !!v || '']"
                       ></v-autocomplete>
                     </v-flex>
                      <v-flex md5>
                       <v-autocomplete
-                        v-model="addtransference_personnel.college_code"
+                        v-model="addtransference_location.college_code"
                       :items="colleges"
                       item-text="college_name"
                       item-value="college_code"                      
@@ -807,6 +796,7 @@ export default {
     transference_personnel: [],   
     transference_personnels: [],  
     addtransference_personnel: {teaching_status: 'tech', service_status: 'not_service', in_preparation: 'no_prepare', on_study_leave: 'no_leave'},
+    addtransference_location: {},
     edittransference_location: [],
     provinces: [],
     provices_sh: [],
@@ -919,8 +909,8 @@ export default {
       })
       this.user = result_user.data
    
-   this.transference_personnelAll()
-         this.transference_locationQueryAll()
+      this.transference_personnelAll()
+      this.transference_locationQueryAll()
       this.personnel_educationsQueryAll()
 
   },
@@ -954,17 +944,16 @@ export default {
         this.transference_personnels = result.data        
       },
      async transference_locationQueryAll() {
-          this.loading = true
         let result = await this.$http.post('transference_location.php', {
           ApiKey: this.ApiKey,
           id_ref: this.id_ref       
-        }).finally(() => this.loading = false)
+        })
         this.transference_locations = result.data        
       },
     
     //First >> Insert transference Location 
-    async addtransference_location() {
-    this.addtransference_personnel = {};
+    async addtransference_locationdialogsubmit() {
+    this.addtransference_location = {};
     this.addtransference_locationdialog = true;
     },   
 
@@ -975,15 +964,14 @@ export default {
 
     async addtransference_locationSubmit() {
       if (this.$refs.addtransference_locationform.validate()) {
-        this.addtransference_personnel.ApiKey = this.ApiKey;
-        this.addtransference_personnel.id_ref = this.id_ref;
-        this.addtransference_personnel.id_card = this.user.id_card;
+        this.addtransference_location.ApiKey = this.ApiKey;
+        this.addtransference_location.id_ref = this.id_ref;
+        this.addtransference_location.id_card = this.user.id_card;
         let result = await this.$http.post(
           "transference_location.insert.php",
-          this.addtransference_personnel          
+          this.addtransference_location          
         );      
         if (result.data.status == true) {
-          this.transference_personnel = result.data;
           this.snackbar.icon = "mdi-checkbox-marked-circle";
           this.snackbar.color = "success";
           this.snackbar.text = "บันทึกข้อมูลเรียบร้อย";
@@ -1037,20 +1025,22 @@ if (this.$refs.addtransference_personnelform.validate()) {
         this.addtransference_personnel.id_card = this.user.id_card;
         this.addtransference_personnel.date_time = this.date_today;
         this.addtransference_personnel.age_app_time = this.get_Appoint_Age;
-        let result = await this.$http.post("transference_personnel.insert.php", this.addtransference_personnel)              
-        if (result.data.status == true) {    
-          this.transference_personnels = result.data;    
+        let result = await this.$http.post("transference_personnel.insert.php", this.addtransference_personnel)     
+        console.log(result.status)         
+        if (result.data.status == true) { 
           this.snackbar.icon = "mdi-checkbox-marked-circle";
           this.snackbar.color = "success";
           this.snackbar.text = "บันทึกข้อมูลเรียบร้อย";
           this.snackbar.show = true;   
           this.transference_personnelAll()
+         
         } else {
           this.snackbar.icon = "mdi-close-network";
           this.snackbar.color = "red";
           this.snackbar.text = "บันทึกข้อมูลผิดพลาด";
           this.snackbar.show = true;
-        }
+        } 
+        this.loadOnce()
         this.addtransference_locationdialog = false
       }
       },
@@ -1071,6 +1061,9 @@ if (this.$refs.addtransference_personnelform.validate()) {
       this.addtransference_personnel.ser_time_month = "-";    
       this.addtransference_personnel.ser_reason_help = "-";    
     }, 
+    loadOnce(){
+      location.reload();
+    },
   },  
     computed: {     
       
@@ -1214,6 +1207,7 @@ if (this.$refs.addtransference_personnelform.validate()) {
           get_Appoint_Age() {
                 let today = new Date(this.date_month_cal);
                 let DOB = new Date(this.user.date_app_now);
+              
                 let totalMonths = (today.getFullYear() - DOB.getFullYear()) * 12 + today.getMonth() - DOB.getMonth();
                 totalMonths += today.getDay() < DOB.getDay() ? -1 : 0;
                 let years = today.getFullYear() - DOB.getFullYear();
@@ -1258,8 +1252,8 @@ if (this.$refs.addtransference_personnelform.validate()) {
                     else
                         months = (totalMonths % 12);
                 }
-                let age = years + ' ปี ' + months + ' เดือน ' + days + ' วัน';
-              return age;
+                let age = years + ' ปี ' + months + ' เดือน ' + days + ' วัน'; 
+                   return age;     
              },
             
             get_gov_Age() {

@@ -27,7 +27,7 @@
           <tr>
              <td></td>
              <td><div class="regular16">วันที่ยื่นคำร้อง</div></td>
-             <td><div class="regular16 td_line">{{ transference_personnels.date_time }}</div></td>
+             <td><div class="regular16 td_line">{{ date_tims_ch }} </div></td>
          </tr>
      </table>     
        <table border="0" width="100%">
@@ -67,7 +67,7 @@
          <table border="0" width="100%" align="center"> 
            <tr>            
              <td width="35%"><div class="regular16"><span class="bold16">1. เริ่มบรรจุเข้ารับราชการ</span>  เมื่อวันที่ </div></td>
-             <td width="65%"><div class="regular16 td_line" align="center">{{ personnel_temporarys.date_appoin }} </div></td>
+             <td width="65%"><div class="regular16 td_line" align="center">{{ date_appoin_ch }}</div></td>
          </tr>
          </table>
           <table border="0" width="100%" align="center"> 
@@ -80,9 +80,9 @@
           <table border="0" width="100%" align="center"> 
           <tr>            
             <td width="50%"><div class="regular16"><span class="bold16">2.เริ่มปฏิบัติหน้าที่ในสถานศึกษาปัจจุบัน</span>  คำสั่งที่ </div></td>
-            <td width="20%"><div class="regular16 td_line" align="center">{{ personnel_temporarys.order_app_now || '-' }}</div></td>
+            <td width="15%"><div class="regular16 td_line" align="center">{{ personnel_temporarys.order_app_now || '-' }}</div></td>
             <td width="10%"><div class="regular16">เมื่อวันที่ </div></td>
-            <td width="20%"><div class="regular16 td_line" align="center">{{ personnel_temporarys.date_app_now }} </div></td>
+            <td width="25%"><div class="regular16 td_line" align="center">{{ date_appoin_ch_app }} </div></td>
          </tr>
           </table>
 
@@ -673,6 +673,49 @@ return result
             today = yyyy + '-' + mm + '-' + dd;
             return today
           },
+
+           date_tims_ch(){
+            let monthNames = [
+        "","มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน",
+        "พฤษภาคม", "มิถุนายน", "กรกฎาคม", "สิงหาคม",
+        "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"
+    ];
+            let day = this.transference_personnels.date_time.slice(0,2);
+            let month = monthNames[parseInt(this.transference_personnels.date_time.slice(3,5))];
+            let year = this.transference_personnels.date_time.slice(6);
+            let years = parseInt(year);
+            let today = day + ' ' + month + ' ' + years;
+            return today
+          },
+
+          date_appoin_ch(){
+            let monthNames = [
+        "","มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน",
+        "พฤษภาคม", "มิถุนายน", "กรกฎาคม", "สิงหาคม",
+        "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"
+    ];
+            let day = this.personnel_temporarys.date_appoin.slice(8);
+            let month = monthNames[parseInt(this.personnel_temporarys.date_appoin.slice(5,7))];
+            let year = this.personnel_temporarys.date_appoin.slice(0,4);
+            let years = parseInt(year) + 543;
+            let today = day + ' ' + month + ' ' + years;
+            return today
+          },
+
+           date_appoin_ch_app(){
+            let monthNames = [
+        "","มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน",
+        "พฤษภาคม", "มิถุนายน", "กรกฎาคม", "สิงหาคม",
+        "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"
+    ];
+            let day = parseInt(this.personnel_temporarys.date_app_now.slice(8));
+            let month = monthNames[parseInt(this.personnel_temporarys.date_app_now.slice(5,7))];
+            let year = this.personnel_temporarys.date_app_now.slice(0,4);
+            let years = parseInt(year) + 543;
+            let today = day + ' ' + month + ' ' + years;
+            return today
+          },
+
 
           get_Appoint_Age() {
                 let today = new Date(this.date_today_cal);
