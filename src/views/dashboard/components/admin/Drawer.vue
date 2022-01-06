@@ -26,7 +26,7 @@
 
         <v-list-item-content>
           <v-list-item-title>{{ user.user_name }}</v-list-item-title>
-          <v-list-item-title>{{ user.user_status }}{{ user.user_firstname }} {{ user.user_lastname }}</v-list-item-title>
+          <v-list-item-title>{{ user.user_status }} : {{ user.user_firstname }} {{ user.user_lastname }}</v-list-item-title>
         </v-list-item-content>
       </v-list-item>
     </v-list>
@@ -98,7 +98,7 @@ export default {
           { title: "แผงควบคุม", action: "mdi-chart-multiple", to: "/admin/Dashboard",active: true },
           { title: "การตั้งค่าระบบ", action: "mdi-ticket", to: "/admin/Dashboard" },
         ],
-        title: "ข้อมูลระบบ",
+        title: "ข้อมูลระบบ"
       },
       {
         action: "mdi-account-cog",
@@ -137,6 +137,7 @@ export default {
       {
         action: "mdi-order-bool-descending-variant",
         items: [
+          { title: "สาขาวิชาเอก", action: "mdi-basket-plus", to: "/admin/branch" },        
           { title: "ข้อมูลเงือนไขสาขาวิชาเอก", action: "mdi-basket-plus", to: "/Dashboard" },        
           { title: "สถิติเงือนไขสาขาวิชา", action: "mdi-chart-box-outline", to: "/Dashboard" },        
         ],

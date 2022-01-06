@@ -95,7 +95,7 @@
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn large flat @click.stop="editpersonneldialog = false" round>
+            <v-btn large  @click.stop="editpersonneldialog = false" round>
                 <v-icon dark>mdi-close</v-icon>ยกเลิก
               </v-btn>
               <v-btn large color="warning" @click.stop="editpersonnelSubmit()" round>

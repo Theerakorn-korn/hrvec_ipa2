@@ -94,10 +94,10 @@
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn large flat @click.stop="editpersonneldialog = false" round>
+            <v-btn large @click.stop="editpersonneldialog = false" rounded>
                 <v-icon dark>mdi-close</v-icon>ยกเลิก
               </v-btn>
-              <v-btn large color="warning" @click.stop="editpersonnelSubmit()" round>
+              <v-btn large color="warning" @click.stop="editpersonnelSubmit()" rounded>
                 <v-icon dark>mdi-pencil</v-icon>&nbsp;บันทึก
               </v-btn>
 
@@ -161,34 +161,13 @@ export default {
           text: "All",
           value: -1,
         },
-      ],       
-    
+      ],    
   personnelstatus:[],   
    userstatus:{},     
     };
   },
-async mounted() {
-      let result
-      result = await this.$http.post('collegetype.php', {
-        ApiKey: this.ApiKey
-      })
-      this.collegetypes = result.data
-      result = await this.$http.post('college.php', {
-        ApiKey: this.ApiKey
-      })
-      
-      this.colleges = result.data
-      result = await this.$http.post('province.php', {
-        ApiKey: this.ApiKey
-      })
-      this.provinces = result.data
-      
-      result = await this.$http.post('region.php', {
-        ApiKey: this.ApiKey
-      })
-      this.regions = result.data       
-    this.personnelQueryAll()
-      
+async mounted() {      
+     await this.personnelQueryAll()      
     },
     methods: {
       async personnelQueryAll() {
@@ -204,15 +183,12 @@ async mounted() {
           ApiKey: this.ApiKey,
           id_rc: id_rc
         })
-        this.editpersonnel = result.data
-        this.editpersonnel.p_word = ''
+        this.editpersonnel = result.data      
         this.editpersonneldialog = true
       },
       async editpersonnelSubmit() {
         if (this.$refs.editpersonnelform.validate()) {
-          this.editpersonnel.ApiKey = this.ApiKey;
-          if(this.editpersonnel.p_word == '')
-            delete this.editpersonnel.p_word
+          this.editpersonnel.ApiKey = this.ApiKey;        
           let result = await this.$http.post('personnel.update.php', this.editpersonnel)
           if (result.data.status == true) {
             this.personnel = result.data

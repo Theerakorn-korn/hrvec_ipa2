@@ -132,7 +132,7 @@
                     color="warning"
                     large
                     @click.stop="addcatagorydialog = false"
-                    round
+                    rounded
                     ><v-icon dark>mdi-close</v-icon> ยกเลิก</v-btn
                   >
                 </v-container>
@@ -172,7 +172,7 @@
             </v-card-text>
             <v-card-actions>
               <v-spacer></v-spacer>
-              <v-btn large flat @click.stop="deletecatagorydialog = false"
+              <v-btn large  @click.stop="deletecatagorydialog = false"
                 ><v-icon dark>mdi-close</v-icon>ยกเลิก</v-btn
               >
               <v-btn
@@ -350,7 +350,7 @@
             </v-card-text>
             <v-card-actions>
               <v-spacer></v-spacer>
-              <v-btn large flat @click.stop="editcatagorydialog = false" round
+              <v-btn large  @click.stop="editcatagorydialog = false" round
                 ><v-icon dark>mdi-close</v-icon>ยกเลิก</v-btn
               >
               <v-btn
@@ -379,7 +379,7 @@
         <v-icon large>{{ snackbar.icon }}</v-icon>
         <br />
         {{ snackbar.text }}
-        <v-btn dark flat @click="snackbar.show = false"> Close </v-btn>
+        <v-btn dark  @click="snackbar.show = false"> Close </v-btn>
       </v-snackbar>
     </v-container>
   </div>

@@ -20,7 +20,7 @@
             max-width="500"
          
           >
-            <v-toolbar flat color>
+            <v-toolbar  color>
               <v-icon>mdi-account</v-icon>
               <v-toolbar-title class="font-weight-light"
                 >ลงทะเบียนสมัคสมาชิก</v-toolbar-title
@@ -212,7 +212,7 @@
                 :disabled="!isEditing"
                 
                 @click.stop="addmemberSubmit()"
-                round
+                rounded
               >
                 <v-icon>mdi-content-save</v-icon>
                 <span>บันทึก</span>
@@ -253,7 +253,7 @@
         <v-icon large>{{ snackbar.icon }}</v-icon>
         <br />
         {{ snackbar.text }}
-        <v-btn dark flat @click="snackbar.show = false"> Close </v-btn>
+        <v-btn dark  @click="snackbar.show = false"> Close </v-btn>
       </v-snackbar>
     </v-container>
   </v-container>

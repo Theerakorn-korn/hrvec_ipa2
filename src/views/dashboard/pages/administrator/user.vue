@@ -129,14 +129,14 @@
                 color="warning"
                 large
                 @click.stop="adduserdialog = false"
-                round
+                rounded
                 ><v-icon dark>mdi-close</v-icon> ยกเลิก</v-btn
               >
               <v-btn
                 large
                 color="success"
                 @click.stop="adduserSubmit()"
-                round
+                rounded
               >
                 <v-icon dark>mdi-content-save</v-icon>&nbsp;&nbsp;บันทึก
               </v-btn>
@@ -178,7 +178,7 @@
             </v-card-text>
             <v-card-actions>
               <v-spacer></v-spacer>
-              <v-btn large flat @click.stop="deleteuserdialog = false"
+              <v-btn large  @click.stop="deleteuserdialog = false"
                 ><v-icon dark>mdi-close</v-icon>ยกเลิก</v-btn
               >
               <v-btn large
@@ -241,10 +241,10 @@
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn large flat @click.stop="edituserdialog = false" round>
+            <v-btn large  @click.stop="edituserdialog = false" rounded>
                 <v-icon dark>mdi-close</v-icon>ยกเลิก
               </v-btn>
-              <v-btn large color="warning" @click.stop="edituserSubmit()" round>
+              <v-btn large color="warning" @click.stop="edituserSubmit()" rounded>
                 <v-icon dark>mdi-pencil</v-icon>&nbsp;บันทึก
               </v-btn>
 

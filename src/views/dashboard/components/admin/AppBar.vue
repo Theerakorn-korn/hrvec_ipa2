@@ -25,7 +25,13 @@
           </app-bar-item>
         </div>
       </v-list>
-    </v-menu>     
+    </v-menu>    
+    <v-btn class="ml-2" min-width="0" text to="/admin/Dashboard">
+      <v-icon>mdi-chart-multiple</v-icon>Dashboard
+    </v-btn>
+ <v-btn class="ml-2" min-width="0" text to="/admin/home_menu">
+      <v-icon>mdi-home</v-icon>เมนูระบบ
+    </v-btn>
 
     <v-btn class="ml-2" min-width="0" text @click="logout()">
       <v-icon>mdi-exit-to-app</v-icon>ออกจากระบบ

@@ -72,6 +72,12 @@ export default new Router({
                         import ('@/views/dashboard/pages/administrator/Dashboard'),
                 },
                 {
+                    name: 'เมนูรายการ',
+                    path: '/admin/home_menu',
+                    component: () =>
+                        import ('@/views/dashboard/pages/administrator/home_menu'),
+                },
+                {
                     name: 'ข้อมูลเกี่ยวกับบุคคล',
                     path: '/admin/personnel',
                     component: () =>
@@ -142,6 +148,12 @@ export default new Router({
                     path: '/admin/personnel_tem',
                     component: () =>
                         import ('@/views/dashboard/pages/administrator/personnel_temporary'),
+                },
+                {
+                    name: 'สาขาวิชา',
+                    path: '/admin/branch',
+                    component: () =>
+                        import ('@/views/dashboard/pages/administrator/branch'),
                 },
                 
                 

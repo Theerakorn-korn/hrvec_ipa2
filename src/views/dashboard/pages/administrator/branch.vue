@@ -4,7 +4,7 @@
     <v-container>
     <base-material-card
         icon="mdi-clipboard-text"
-        title="ข้อมูลประเภทสถานศึกษา"
+        title="สาขาวิชา"
         class="px-5 py-3"
         
       >
@@ -30,7 +30,7 @@
                 right
                 depressed
                 color="primary"
-                @click.native="collegetypeAdd()"
+                @click.native="branchAdd()"
               >
                 <v-icon>mdi-plus-circle-outline</v-icon>เพื่อรายการ
               </v-btn>
@@ -41,15 +41,15 @@
           color="success"
           :loading="loading"
           :headers="headers"
-          :items="collegetypes"
-          :search="search"          
+          :items="branchs"
+          :search="search"
        > 
 
          <template v-slot:[`item.actions`]="{ item }">
             <v-icon
               color="yellow"
               
-              @click.stop="collegetypeEdit(item.collegetype_ID)"
+              @click.stop="branchEdit(item.id_rp)"
             >
               mdi-pencil
             </v-icon>          
@@ -58,7 +58,7 @@
             <v-icon
               color="red"
               
-              @click.stop="collegetypeDelete(item.collegetype_ID)"
+              @click.stop="branchDelete(item.id_rp)"
             >
               mdi-delete
             </v-icon>
@@ -72,28 +72,33 @@
         </v-data-table>
       </base-material-card>
 
-      <!--addcollegetypedialog  -->
+      <!--addbranchdialog  -->
       <v-layout row justify-center>
-        <v-dialog v-model="addcollegetypedialog" persistent max-width="50%">
+        <v-dialog v-model="addbranchdialog" persistent max-width="50%">
           <v-card class="mx-auto pa-5" >
             <base-material-card
               icon="mdi-account-multiple"
-              title="เพิ่มข้อมูลประเภทสถานศึกษา"
+              title="เพิ่มข้อมูลสาขาวิชาเอก"
               class="px-5 py-3 text_google"
               
             >
             </base-material-card>
 
             <v-card-text>
-             <v-form ref="addcollegetypeform" lazy-validation>
+            <v-form ref="addbranchform" lazy-validation>
               <v-container grid-list-md>
-                <v-layout wrap>
+                <v-layout wrap>   
+                      <v-flex md6>
+                    <v-text-field label="รหัส" v-model="addbranch.id_branch" require :rules="[v => !!v || '']"></v-text-field>
+                  </v-flex>                                 
+                  <v-flex md6>
+                    <v-text-field label="สาขาวิชาเอก" v-model="addbranch.name_branch" required :rules="[v => !!v || '']"></v-text-field>
+                  </v-flex>                 
                   <v-flex md12>
-                    <v-text-field label="ชื่อประเภทสถานศึกษา" v-model="addcollegetype.collegetype_name" required :rules="[v => !!v || '']"></v-text-field>
-                  </v-flex>
+                    <v-textarea label="รายละเอียด" v-model="addbranch.detail_branch" require :rules="[v => !!v || '']"></v-textarea>
+                  </v-flex>                
                 </v-layout>
-              </v-container>
-              <small>* จำเป็น</small>
+              </v-container>           
             </v-form>
             </v-card-text>
             <v-card-actions>
@@ -101,14 +106,14 @@
               <v-btn
                 color="warning"
                 large
-                @click.stop="addcollegetypedialog = false"
+                @click.stop="addbranchdialog = false"
                 rounded
                 ><v-icon dark>mdi-close</v-icon> ยกเลิก</v-btn
               >
               <v-btn
                 large
                 color="success"
-                @click.stop="addcollegetypeSubmit()"
+                @click.stop="addbranchSubmit()"
                 rounded
               >
                 <v-icon dark>mdi-content-save</v-icon>&nbsp;&nbsp;บันทึก
@@ -118,14 +123,14 @@
         </v-dialog>
       </v-layout>
 
-      <!-- V-model deletecollegetypedialog -->
+      <!-- V-model deletebranchdialog -->
       <v-layout>
-        <v-dialog v-model="deletecollegetypedialog" persistent max-width="40%">
+        <v-dialog v-model="deletebranchdialog" persistent max-width="80%">
           <v-card class="mx-auto pa-5" >                     
              <base-material-card
               color="error"
               icon="mdi-delete"
-              title="ลบข้อมูลประเภทสถานศึกษา"
+              title="ลบข้อมูลสาขาวิชาเอก"
               class="px-5 py-3 text_google"
               
              
@@ -136,12 +141,12 @@
               
         <v-card>        
           <v-card-text>
-            <v-form ref="deletecollegetypeform" lazy-validation>
+            <v-form ref="deletebranchform" lazy-validation>
               <v-container grid-list-md>
                 <v-layout wrap>
                   <v-flex xs12>
-                    ยืนยันการลบข้อมูลประเภทสถานศึกษา {{ editcollegetype.collegetype_name }}
-                  </v-flex>                                
+                    ยืนยันการลบข้อมูลสาขาวิชาเอก {{ editbranch.name_branch }} 
+                  </v-flex>                                 
                 </v-layout>
               </v-container>
             </v-form>
@@ -151,12 +156,12 @@
             </v-card-text>
             <v-card-actions>
               <v-spacer></v-spacer>
-              <v-btn large  @click.stop="deletecollegetypedialog = false"
+              <v-btn large  @click.stop="deletebranchdialog = false"
                 ><v-icon dark>mdi-close</v-icon>ยกเลิก</v-btn
               >
               <v-btn large
                 color="red darken-3"
-                @click.stop="deletecollegetypeSubmit()"
+                @click.stop="deletebranchSubmit()"
                 dark
               >
                 <v-icon dark>mdi-delete</v-icon>&nbsp;ลบ
@@ -166,35 +171,41 @@
         </v-dialog>
       </v-layout>
 
-      <!-- V-model editcollegetypedialog -->
+      <!-- V-model editbranchdialog -->
       <v-layout row justify-center>
-         <v-dialog v-model="editcollegetypedialog" persistent max-width="80%">
+         <v-dialog v-model="editbranchdialog" persistent max-width="80%">
         <v-card class="mx-auto pa-6" >
            <base-material-card
               color="yellow"
               icon="mdi-clipboard-text"
-              title="แก้ไขข้อมูลผู้ใช้งานระบบ"
+              title="แก้ไขข้อมูลสาขาวิชา"
               class="px-5 py-3 text_google"
               
             ></base-material-card>
           <v-card-text>
-            <v-form ref="editcollegetypeform" lazy-validation>
+            <v-form ref="editbranchform" lazy-validation>
               <v-container grid-list-md>
-                <v-layout wrap>
+                <v-layout wrap>                
+                   <v-flex md6>
+                    <v-text-field label="รหัส" v-model="editbranch.id_branch" require :rules="[v => !!v || '']"></v-text-field>
+                  </v-flex>                                 
+                  <v-flex md6>
+                    <v-text-field label="สาขาวิชาเอก" v-model="editbranch.name_branch" required :rules="[v => !!v || '']"></v-text-field>
+                  </v-flex>                 
                   <v-flex md12>
-                    <v-text-field label="ชื่อประเภทสถานศึกษา" v-model="editcollegetype.collegetype_name" required :rules="[v => !!v || '']"></v-text-field>
-                  </v-flex>
+                    <v-textarea label="รายละเอียด" v-model="editbranch.detail_branch" require :rules="[v => !!v || '']"></v-textarea>
+                  </v-flex>           
+
                 </v-layout>
-              </v-container>
-              <small>* จำเป็น</small>
+              </v-container>            
             </v-form>
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn large  @click.stop="editcollegetypedialog = false" rounded>
+            <v-btn large  @click.stop="editbranchdialog = false" rounded>
                 <v-icon dark>mdi-close</v-icon>ยกเลิก
               </v-btn>
-              <v-btn large color="warning" @click.stop="editcollegetypeSubmit()" rounded>
+              <v-btn large color="warning" @click.stop="editbranchSubmit()" rounded>
                 <v-icon dark>mdi-pencil</v-icon>&nbsp;บันทึก
               </v-btn>
 
@@ -229,9 +240,9 @@ export default {
        loading: true,       
      ApiKey: 'HRvec2021',
       valid: true,
-      addcollegetypedialog: false,
-      editcollegetypedialog: false,
-      deletecollegetypedialog: false,
+      addbranchdialog: false,
+      editbranchdialog: false,
+      deletebranchdialog: false,
       snackbar: {
         show: false,
         color: '',
@@ -239,13 +250,16 @@ export default {
         icon: '',
         text: ''
       },
-      collegetypes: [],
-      addcollegetype: {},
-      editcollegetype: {},
+      branchs: [],
+      addbranch: {},
+      editbranch: {},
       search: '',
       pagination: {},      
-      headers: [       
-        { text: "ชื่อประเภท", align: "left", value: "collegetype_name" }, 
+      headers: [
+        { text: "รหัสรายการ", align: "center", value: "id_rp" },
+        { text: "รหัสสาขา", align: "center", value: "id_branch" },              
+        { text: "ชื่อสาขาวิชา", align: "left", value: "name_branch" },
+        { text: "รายละเอียด", align: "left", value: "detail_branch" },     
         { text: "แก้ไข", align: "center", value: "actions", icon: "mdi-file-document-edit" },
         { text: "ลบ", align: "center", value: "action_s" , icon: "mdi-delete-forever" },
       ],
@@ -259,12 +273,10 @@ export default {
         },
       ],    
      
-    college: {},
+      college: {},
       provinces: [],
-      prefectures: [],
-      
-     collgegs: [],
-     collegetypestatus:[],
+      prefectures: [],  
+       branchstatus:[],
       regions: [],
       region_ena: true
     };
@@ -290,103 +302,96 @@ async mounted() {
       })
       this.regions = result.data  
 
-      this.collegetypeQueryAll()      
-    },
+      this.branchQueryAll()
+      
+          },
     methods: {
-      async collegetypeQueryAll() {
+      async branchQueryAll() {
           this.loading = true
-        let result = await this.$http.post('collegetype.php', {
+        let result = await this.$http.post('branch.php', {
           ApiKey: this.ApiKey
         }).finally(() => this.loading = false)
-        this.collegetypes = result.data
+        this.branchs = result.data
       },
-       async collegetypeAdd() {
-      this.addcollegetype = {};
-      this.addcollegetypedialog = true;
+       async branchAdd() {
+      this.addbranch = {};
+      this.addbranchdialog = true;
     },
-      async addcollegetypeSubmit() {
-        if (this.$refs.addcollegetypeform.validate()) {         
-          this.addcollegetype.ApiKey = this.ApiKey;
-          let result = await this.$http.post('collegetype.insert.php', this.addcollegetype)        
+      async addbranchSubmit() {
+        if (this.$refs.addbranchform.validate()) {         
+          this.addbranch.ApiKey = this.ApiKey;
+          let result = await this.$http.post('branch.insert.php', this.addbranch)        
           if (result.data.status == true) {
-            this.collegetype = result.data
+            this.branch = result.data
             this.snackbar.icon = 'mdi-font-awesome'
             this.snackbar.color = 'success'
             this.snackbar.text = 'บันทึกข้อมูลเรียบร้อย'
             this.snackbar.show = true
-            this.collegetypeQueryAll()
+            this.branchQueryAll()
           } else {
             this.snackbar.icon = 'mdi-close-network'
             this.snackbar.color = 'red'
             this.snackbar.text = 'บันทึกข้อมูลผิดพลาด'
             this.snackbar.show = true
-             this.collegetypeQueryAll()
+             this.branchQueryAll()
           }
-          this.addcollegetypedialog = false
+          this.addbranchdialog = false
         }
       },
-      async collegetypeEdit(collegetype_ID) {
-        let result = await this.$http.post('collegetype.php', {
+      async branchEdit(id_rp) {
+        let result = await this.$http.post('branch.php', {
           ApiKey: this.ApiKey,
-          collegetype_ID: collegetype_ID
+          id_rp: id_rp
         })
-        this.editcollegetype = result.data
-        this.editcollegetype.collegetype_password = ''
-        this.editcollegetypedialog = true
+        this.editbranch = result.data      
+        this.editbranchdialog = true
       },
-      async editcollegetypeSubmit() {
-        if (this.$refs.editcollegetypeform.validate()) {
-          this.editcollegetype.ApiKey = this.ApiKey;
-          if(this.editcollegetype.collegetype_password == '')
-            delete this.editcollegetype.collegetype_password
-          let result = await this.$http.post('collegetype.update.php', this.editcollegetype)
+      async editbranchSubmit() {
+        if (this.$refs.editbranchform.validate()) {
+          this.editbranch.ApiKey = this.ApiKey;         
+          let result = await this.$http.post('branch.update.php', this.editbranch)
           if (result.data.status == true) {
-            this.collegetype = result.data
+            this.branch = result.data
             this.snackbar.icon = 'mdi-font-awesome'
             this.snackbar.color = 'success'
             this.snackbar.text = 'แก้ไขข้อมูลเรียบร้อย'
             this.snackbar.show = true
-            this.collegetypeQueryAll()
+            this.branchQueryAll()
           } else {
             this.snackbar.icon = 'mdi-close-network'
             this.snackbar.color = 'red'
             this.snackbar.text = 'แก้ไขข้อมูลผิดพลาด'
             this.snackbar.show = true
           }
-          this.editcollegetypedialog = false
+          this.editbranchdialog = false
         }
       },
-      async collegetypeDelete(collegetype_ID) {
-        let result = await this.$http.post('collegetype.php', {
+      async branchDelete(id_rp) {
+        let result = await this.$http.post('branch.php', {
           ApiKey: this.ApiKey,
-          collegetype_ID: collegetype_ID
+          id_rp: id_rp
         })
-        this.editcollegetype = result.data
-        this.deletecollegetypedialog = true
+        this.editbranch = result.data
+        this.deletebranchdialog = true
       },
-      async deletecollegetypeSubmit() {
-        if (this.$refs.deletecollegetypeform.validate()) {
-          this.editcollegetype.ApiKey = this.ApiKey;
-          if(this.editcollegetype.collegetype_status == 'D')
-            await this.$http.post('committee.delete.php', {
-              ApiKey: this.ApiKey,
-              collegetype_ID: this.editcollegetype.collegetype_ID
-            })
-          let result = await this.$http.post('collegetype.delete.php', this.editcollegetype)
+      async deletebranchSubmit() {
+        if (this.$refs.deletebranchform.validate()) {
+          this.editbranch.ApiKey = this.ApiKey;
+          let result = await this.$http.post('branch.delete.php', this.editbranch)
           if (result.data.status == true) {
-            this.collegetype = result.data
+            this.branch = result.data
             this.snackbar.icon = 'mdi-font-awesome'
             this.snackbar.color = 'success'
             this.snackbar.text = 'ลบข้อมูลเรียบร้อย'
             this.snackbar.show = true
-            this.collegetypeQueryAll()
+            this.branchQueryAll()
           } else {
             this.snackbar.icon = 'mdi-close-network'
             this.snackbar.color = 'red'
             this.snackbar.text = 'ลบข้อมูลผิดพลาด'
             this.snackbar.show = true
           }
-          this.deletecollegetypedialog = false
+          this.deletebranchdialog = false
         }
       },     
     },

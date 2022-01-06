@@ -234,14 +234,14 @@
                 color="warning"
                 large
                 @click.stop="addmemberdialog = false"
-                round
+                rounded
                 ><v-icon dark>mdi-close</v-icon> ยกเลิก</v-btn
               >
               <v-btn
                 large
                 color="success"
                 @click.stop="addmemberSubmit()"
-                round
+                rounded
               >
                 <v-icon dark>mdi-content-save</v-icon>&nbsp;&nbsp;บันทึก
               </v-btn>
@@ -282,7 +282,7 @@
             </v-card-text>
             <v-card-actions>
               <v-spacer></v-spacer>
-              <v-btn large flat @click.stop="deletememberdialog = false"
+              <v-btn large  @click.stop="deletememberdialog = false"
                 ><v-icon dark>mdi-close</v-icon>ยกเลิก</v-btn
               >
               <v-btn large
@@ -462,10 +462,10 @@
             </v-card-text>
             <v-card-actions>
               <v-spacer></v-spacer>
-              <v-btn large flat @click.stop="editmemberdialog = false" round
+              <v-btn large  @click.stop="editmemberdialog = false" rounded
                 ><v-icon dark>mdi-close</v-icon>ยกเลิก</v-btn
               >
-              <v-btn large color="warning" @click.stop="editmemberSubmit()" round>
+              <v-btn large color="warning" @click.stop="editmemberSubmit()" rounded>
                 <v-icon dark>mdi-pencil</v-icon>&nbsp;แก้ไขข้อมูล</v-btn
               >
             </v-card-actions>
@@ -486,7 +486,7 @@
         <v-icon large>{{ snackbar.icon }}</v-icon>
         <br />
         {{ snackbar.text }}
-        <v-btn dark flat @click="snackbar.show = false"> Close </v-btn>
+        <v-btn dark  @click="snackbar.show = false"> Close </v-btn>
       </v-snackbar>
     </v-container>
   </div>

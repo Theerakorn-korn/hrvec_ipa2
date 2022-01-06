@@ -31,7 +31,7 @@
 
               <v-tab-item>
                 <v-card
-                  flat
+                  
                   class="my-0"
                 >
                   <v-card-text>
@@ -50,7 +50,7 @@
 
               <v-tab-item>
                 <v-card
-                  flat
+                  
                   class="my-0"
                 >
                   <v-card-text>
@@ -67,7 +67,7 @@
 
               <v-tab-item>
                 <v-card
-                  flat
+                  
                   class="my-0"
                 >
                   <v-card-text>
@@ -111,7 +111,7 @@
 
               <v-tab-item>
                 <v-card
-                  flat
+                  
                   class="my-0"
                 >
                   <v-card-text class="pt-0">
@@ -130,7 +130,7 @@
 
               <v-tab-item>
                 <v-card
-                  flat
+                  
                   class="my-0"
                 >
                   <v-card-text class="pt-0">
@@ -147,7 +147,7 @@
 
               <v-tab-item>
                 <v-card
-                  flat
+                  
                   class="my-0"
                 >
                   <v-card-text class="pt-0">
@@ -220,7 +220,7 @@
 
               <v-tab-item>
                 <v-card
-                  flat
+                  
                   class="my-0"
                 >
                   <v-card-text class="pt-0">
@@ -241,7 +241,7 @@
 
               <v-tab-item>
                 <v-card
-                  flat
+                  
                   class="my-0"
                 >
                   <v-card-text class="pt-0">

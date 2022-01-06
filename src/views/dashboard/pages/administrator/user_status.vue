@@ -106,14 +106,14 @@
                 color="warning"
                 large
                 @click.stop="adduser_statusdialog = false"
-                round
+                rounded
                 ><v-icon dark>mdi-close</v-icon> ยกเลิก</v-btn
               >
               <v-btn
                 large
                 color="success"
                 @click.stop="adduser_statusSubmit()"
-                round
+                rounded
               >
                 <v-icon dark>mdi-content-save</v-icon>&nbsp;&nbsp;บันทึก
               </v-btn>
@@ -199,10 +199,10 @@
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn large  @click.stop="edituser_statusdialog = false" round>
+            <v-btn large  @click.stop="edituser_statusdialog = false" rounded>
                 <v-icon dark>mdi-close</v-icon>ยกเลิก
               </v-btn>
-              <v-btn large color="warning" @click.stop="edituser_statusSubmit()" round>
+              <v-btn large color="warning" @click.stop="edituser_statusSubmit()" rounded>
                 <v-icon dark>mdi-pencil</v-icon>&nbsp;บันทึก
               </v-btn>
 
@@ -248,9 +248,8 @@ export default {
       edituser_status: {},
       search: '',
       pagination: {},      
-      headers: [
-        { text: "ลำดับ", align: "center", value: "id_us" },
-        { text: "สถานะ", align: "center", value: "user_status_name" },              
+      headers: [       
+        { text: "สถานะ", align: "left", value: "user_status_name" },              
         { text: "อักษรย่อ", align: "center", value: "user_status_sub" },        
         { text: "แก้ไข", align: "center", value: "actions", icon: "mdi-file-document-edit" },
         { text: "ลบ", align: "center", value: "action_s" , icon: "mdi-delete-forever" },

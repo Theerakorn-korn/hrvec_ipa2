@@ -210,7 +210,7 @@
             </v-card-text>
             <v-card-actions>
               <v-spacer></v-spacer>
-              <v-btn large flat @click.stop="deleteeducationdialog = false">
+              <v-btn large  @click.stop="deleteeducationdialog = false">
                 <v-icon dark>mdi-close</v-icon>ยกเลิก
               </v-btn>
               <v-btn large color="red darken-3" @click.stop="deleteeducationubmit()" dark>
@@ -374,7 +374,7 @@
             </v-card-text>
             <v-card-actions>
               <v-spacer></v-spacer>
-              <v-btn large flat @click.stop="editeducationdialog = false" round>
+              <v-btn large  @click.stop="editeducationdialog = false" round>
                 <v-icon dark>mdi-close</v-icon>ยกเลิก
               </v-btn>
               <v-btn large color="warning" @click.stop="editeducationSubmit()" round>
@@ -398,7 +398,7 @@
         <v-icon large>{{ snackbar.icon }}</v-icon>
         <br />
         {{ snackbar.text }}
-        <v-btn dark flat @click="snackbar.show = false">Close</v-btn>
+        <v-btn dark  @click="snackbar.show = false">Close</v-btn>
       </v-snackbar>
     </v-container>
   </div>

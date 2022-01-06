@@ -5,7 +5,7 @@
       class="py-2 px-4"
       color="rgba(0, 0, 0, .3)"
       dark
-      flat
+      
       link
       min-width="100"
       style="position: fixed; top: 115px; right: -35px; border-radius: 8px;"
@@ -137,7 +137,7 @@
       class="py-2 px-4"
       color="rgba(0, 0, 0, .3)"
       dark
-      flat
+      
       link
       min-width="100"
       style="position: fixed; top: 600px; right: -35px; border-radius: 8px;"

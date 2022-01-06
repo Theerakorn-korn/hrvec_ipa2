@@ -200,14 +200,14 @@
                 color="warning"
                 large
                 @click.stop="addpersonnel_temporarydialog = false"
-                round
+                rounded
                 ><v-icon dark>mdi-close</v-icon> ยกเลิก</v-btn
               >
               <v-btn
                 large
                 color="success"
                 @click.stop="addpersonnel_temporarySubmit()"
-                round
+                rounded
               >
                 <v-icon dark>mdi-content-save</v-icon>&nbsp;&nbsp;บันทึก
               </v-btn>
@@ -249,7 +249,7 @@
             </v-card-text>
             <v-card-actions>
               <v-spacer></v-spacer>
-              <v-btn large flat @click.stop="deletepersonnel_temporarydialog = false"
+              <v-btn large  @click.stop="deletepersonnel_temporarydialog = false"
                 ><v-icon dark>mdi-close</v-icon>ยกเลิก</v-btn
               >
               <v-btn large
@@ -312,10 +312,10 @@
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn large flat @click.stop="editpersonnel_temporarydialog = false" round>
+            <v-btn large  @click.stop="editpersonnel_temporarydialog = false" rounded>
                 <v-icon dark>mdi-close</v-icon>ยกเลิก
               </v-btn>
-              <v-btn large color="warning" @click.stop="editpersonnel_temporarySubmit()" round>
+              <v-btn large color="warning" @click.stop="editpersonnel_temporarySubmit()" rounded>
                 <v-icon dark>mdi-pencil</v-icon>&nbsp;บันทึก
               </v-btn>
 

@@ -12,7 +12,7 @@
           class="mx-auto pa-1"
           :elevation="hover ? 24 : 6"   
         >
-          <v-toolbar flat color>  
+          <v-toolbar  color>  
             <v-spacer></v-spacer>
             <v-btn
               color="darken-3"
@@ -199,7 +199,7 @@
                 :disabled="!isEditing"
                 :elevation="hover ? 24 : 6"
                 @click.stop="addmemberSubmit()"
-                round
+                rounded
               >
                 <v-icon>mdi-content-save</v-icon>
                 <span>บันทึก</span>
@@ -211,7 +211,7 @@
                 :disabled="!isEditing"
                 :elevation="hover ? 24 : 6"
                 @click.stop="isEditing = !isEditing"
-                round
+                rounded
               >
                 <span>ยกเลิก</span>
                 <v-icon>mdi-window-close</v-icon>
@@ -236,7 +236,7 @@
         <v-icon large>{{ snackbar.icon }}</v-icon>
         <br />
         {{ snackbar.text }}
-        <v-btn dark flat @click="snackbar.show = false"> Close </v-btn>
+        <v-btn dark  @click="snackbar.show = false"> Close </v-btn>
       </v-snackbar>
     </v-container>
 
@@ -256,7 +256,7 @@
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn flat @click="addmemberdialog = false" round
+            <v-btn  @click="addmemberdialog = false" round
               >ดำเนินการกรอกข้อมูล</v-btn
             >
           </v-card-actions>

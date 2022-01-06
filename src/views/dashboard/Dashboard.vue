@@ -136,14 +136,8 @@
             </v-tooltip>
           </template>
 
-          <h4 class="card-title font-weight-light mt-2 ml-2">Daily Sales</h4>
-
-          <p class="d-inline-flex font-weight-light ml-2 mt-1">
-            <v-icon color="green" small>mdi-arrow-up</v-icon>
-            <span class="green--text">55%</span>&nbsp;
-            increase in today's sales
-          </p>
-
+          <h4 class="card-title font-weight-light mt-2 ml-2">ข้อมูลวิทยฐานะข้าราชการครู</h4>
+         
           <template v-slot:actions>
             <v-icon class="mr-1" small>mdi-clock-outline</v-icon>
             <span class="caption grey--text font-weight-light">updated 4 minutes ago</span>
@@ -213,49 +207,29 @@
         </base-material-card>
       </v-col>
 
-      <v-col cols="12" md="12">
-        <base-material-card class="px-5 py-3">
+
+
+       <v-col cols="12" md="12">
+        <base-material-card color="success" class="px-5 py-3">
           <template v-slot:heading>
-            <v-tabs v-model="tabs" background-color="transparent" slider-color="white">
-              <span class="subheading font-weight-light mx-3" style="align-self: center">Tasks:</span>
-              <v-tab class="mr-3">
-                <v-icon class="mr-2">mdi-bug</v-icon>Bugs
-              </v-tab>
-              <v-tab class="mr-3">
-                <v-icon class="mr-2">mdi-code-tags</v-icon>Website
-              </v-tab>
-              <v-tab>
-                <v-icon class="mr-2">mdi-cloud</v-icon>Server
-              </v-tab>
-            </v-tabs>
+            <div class="font-weight-light">สาขาวิชาเอก</div>
+
+            <div class="font-weight-light">ข้อมูลสาขาวิชาในระบบ</div>
           </template>
-
-          <v-tabs-items v-model="tabs" class="transparent">
-            <v-tab-item v-for="n in 3" :key="n">
-              <v-card-text>
-                <template v-for="(task, i) in tasks[tabs]">
-                  <v-row :key="i" align="center">
-                    <v-col cols="1">
-                      <v-list-item-action>
-                        <v-checkbox v-model="task.value" color="secondary" />
-                      </v-list-item-action>
-                    </v-col>
-
-                    <v-col cols="9">
-                      <div class="font-weight-light" v-text="task.text" />
-                    </v-col>
-
-                    <v-col cols="2" class="text-right">
-                      <v-icon class="mx-1">mdi-pencil</v-icon>
-                      <v-icon color="error" class="mx-1">mdi-close</v-icon>
-                    </v-col>
-                  </v-row>
-                </template>
-              </v-card-text>
-            </v-tab-item>
-          </v-tabs-items>
+          <v-card-text>
+            <v-data-table :headers="header_branchs" :items="showbranchdata"  :search="search_branch">
+              <template v-slot:top>
+        <v-text-field
+          v-model="search_branch"
+          label="ค้นหา :"
+          class="mx-4"
+        ></v-text-field>
+      </template>
+            </v-data-table>
+          </v-card-text>
         </base-material-card>
       </v-col>
+     
     </v-row>
      </v-container>
 </template>
@@ -275,10 +249,17 @@ export default {
         { text: "ประเภทสถานศึกษา", align: "left", value: "collegetype_name" }, 
         { text: "เบอร์โทร", align: "left", value: "collegeinfo_phone" }, 
       ],
-search: '',
-pagination: {},
- ApiKey: 'HRvec2021',
-  rowsperpage: [
+      header_branchs: [      
+        { text: "รหัสสาขา", align: "center", value: "id_branch" },              
+        { text: "สาขาวิชา", align: "left", value: "name_branch" },
+        { text: "รายละเอียด", align: "left", value: "detail_branch" },
+      ],
+      search: '',
+      search_branch: '',
+      pagination: {},
+      ApiKey: 'HRvec2021',
+      
+      rowsperpage: [
         25,
         50,
         100,
@@ -368,60 +349,11 @@ pagination: {},
         ],
       },
            
-      tabs: 0,
-      tasks: {
-        0: [
-          {
-            text: 'Sign contract for "What are conference organizers afraid of?"',
-            value: true,
-          },
-          {
-            text: "Lines From Great Russian Literature? Or E-mails From My Boss?",
-            value: false,
-          },
-          {
-            text: "Flooded: One year later, assessing what was lost and what was found when a ravaging rain swept through metro Detroit",
-            value: false,
-          },
-          {
-            text: "Create 4 Invisible User Experiences you Never Knew About",
-            value: true,
-          },
-        ],
-        1: [
-          {
-            text: "Flooded: One year later, assessing what was lost and what was found when a ravaging rain swept through metro Detroit",
-            value: true,
-          },
-          {
-            text: 'Sign contract for "What are conference organizers afraid of?"',
-            value: false,
-          },
-        ],
-        2: [
-          {
-            text: "Lines From Great Russian Literature? Or E-mails From My Boss?",
-            value: false,
-          },
-          {
-            text: "Flooded: One year later, assessing what was lost and what was found when a ravaging rain swept through metro Detroit",
-            value: true,
-          },
-          {
-            text: 'Sign contract for "What are conference organizers afraid of?"',
-            value: true,
-          },
-        ],
-      },
-      list: {
-        0: false,
-        1: false,
-        2: false,
-      },
+    
       colleges: [],
       provinces: [],
       prefectures: [],        
-      regions: [],
+      regions: [],     
       region_ena: true,
       showAlldata: {},
       showAlldatatech: {},
@@ -429,7 +361,8 @@ pagination: {},
       showAlldatasedr: {},
       showAlldatasupervision: {},
       showAlldatatechprepare: {},
-      showcollegedata: {},
+      showcollegedata: {},   
+       showbranchdata: [],  
     };
   },
 
@@ -462,6 +395,8 @@ pagination: {},
   await this.getAlldataSupervision();
   await this.getAlldatatechprepare();
   await this.getPersonnelChart();
+  await this.getAllbranchdata();
+  
    },
 
 
@@ -492,6 +427,13 @@ pagination: {},
     },
     async getPersonnelChart(){ 
    this.Personnel_chart.data.series=[[this.num_dr,this.num_se_dr,this.num_se_tech,this.num_se_techprepare,this.num_se_supervision]] 
+    },
+
+     async getAllbranchdata() {
+      let result = await this.$http.post("branch.php",{
+        ApiKey: this.ApiKey
+      });
+      this.showbranchdata = result.data;
     },
   },
   computed:{
