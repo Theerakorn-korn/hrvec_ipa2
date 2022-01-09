@@ -1141,10 +1141,10 @@ if (this.$refs.addtransference_personnelform.validate()) {
         "พฤษภาคม", "มิถุนายน", "กรกฎาคม", "สิงหาคม",
         "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"
     ];
-            let day = this.user.date_appoin.slice(8);
-            let month = monthNames[parseInt(this.user.date_appoin.slice(5,7))];
-            let year = this.user.date_appoin.slice(0,4);
-            let years = parseInt(year) + 543;
+            let day = this.user.appoin_day;
+            let month = monthNames[parseInt(this.user.appoin_month)];
+            let year = this.user.appoin_year;
+            let years = parseInt(year);
             let today = day + ' ' + month + ' ' + years;
             return today
           },
@@ -1256,9 +1256,10 @@ if (this.$refs.addtransference_personnelform.validate()) {
                    return age;     
              },
             
+
             get_gov_Age() {
                 let today = new Date(this.date_today_cal);
-                let DOB = new Date(this.user.date_appoin);
+                let DOB = new Date(parseInt(this.user.appoin_year)-543 + '-' + this.user.appoin_month + '-' + this.user.appoin_day);
                 let totalMonths = (today.getFullYear() - DOB.getFullYear()) * 12 + today.getMonth() - DOB.getMonth();
                 totalMonths += today.getDay() < DOB.getDay() ? -1 : 0;
                 let years = today.getFullYear() - DOB.getFullYear();

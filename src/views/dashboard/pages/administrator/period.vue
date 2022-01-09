@@ -271,11 +271,14 @@
   </div>
 </template>
 <script>
-
+import VueMoment from 'vue-moment'
+import moment from 'moment-timezone'
 export default { 
   name: "period",
   data() {
     return {
+      VueMoment,
+      moment,
        loading: true,
      ApiKey: 'HRvec2021',
       valid: true,

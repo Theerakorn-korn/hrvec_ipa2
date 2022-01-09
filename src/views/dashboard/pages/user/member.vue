@@ -5,12 +5,12 @@
         icon="mdi-account-multiple"
         title="ข้อมูลสมาชิก"
         class="px-5 py-3"
-        :elevation="hover ? 24 : 6"
+        
       >     
         
         <v-card>
           <v-btn
-          :elevation="hover ? 24 : 6"
+          
           large
           right
           depressed
@@ -25,7 +25,7 @@
             label="ค้นหา ระบุคำ หรือ ส่วนข้อความเกี่ยวข้อง"
             single-line
             hide-details
-            :elevation="hover ? 24 : 6"
+            
             dense
             filled
           />
@@ -42,14 +42,14 @@
          <!--  <template v-slot:item.action="{ item }" width="10%">
             <v-icon
               color="yellow"
-              :elevation="hover ? 24 : 6"
+              
               @click.stop="memberEdit(item.ID_m)"
             >
               mdi-pencil
             </v-icon>
             <v-icon
               color="red"
-              :elevation="hover ? 24 : 6"
+              
               @click.stop="memberDelete(item.ID_m)"
             >
               mdi-delete
@@ -68,12 +68,12 @@
       <!--addmemberdialog  -->
       <v-layout row justify-center>
         <v-dialog v-model="addmemberdialog" persistent max-width="50%">
-          <v-card class="mx-auto pa-5" :elevation="hover ? 24 : 6">
+          <v-card class="mx-auto pa-5" >
             <base-material-card
               icon="mdi-account-multiple"
               title="เพิ่มข้อมูลสมาชิก"
               class="px-5 py-3 text_google"
-              :elevation="hover ? 24 : 6"
+              
             >
             </base-material-card>
 
@@ -254,13 +254,13 @@
       <!-- V-model deletememberdialog -->
       <v-layout>
         <v-dialog v-model="deletememberdialog" persistent max-width="40%">
-          <v-card class="mx-auto pa-5" :elevation="hover ? 24 : 6">                     
+          <v-card class="mx-auto pa-5" >                     
              <base-material-card
               color="error"
               icon="mdi-delete"
               title="ลบข้อมูล"
               class="px-5 py-3 text_google"
-              :elevation="hover ? 24 : 6"
+              
              
             >
             </base-material-card>
@@ -301,13 +301,13 @@
       <!-- V-model editmemberdialog -->
       <v-layout row justify-center>
         <v-dialog v-model="editmemberdialog" persistent max-width="50%">
-          <v-card class="mx-auto pa-5" :elevation="hover ? 24 : 6">
+          <v-card class="mx-auto pa-5" >
             <base-material-card
               color="yellow"
               icon="mdi-account-multiple"
               title="แก้ไขข้อมูลสมาชิก"
               class="px-5 py-3 text_google"
-              :elevation="hover ? 24 : 6"
+              
             >
             </base-material-card>
             <v-card-text>

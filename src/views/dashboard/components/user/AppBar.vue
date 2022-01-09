@@ -35,11 +35,7 @@
           </app-bar-item>
         </div>
       </v-list>
-    </v-menu>  
-    <v-btn class="ml-2" min-width="0" text to="/transference_personnel">
-      <v-icon>mdi-file-send</v-icon>การย้ายสายการสอน
-    </v-btn>
-
+    </v-menu> 
     <v-btn class="ml-2" min-width="0" text @click="logout()">
       <v-icon>mdi-exit-to-app</v-icon>ออกจากระบบ
     </v-btn>

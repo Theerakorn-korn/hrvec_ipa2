@@ -29,7 +29,7 @@
           color="success"
           :loading="loading"
           :headers="headers"
-          :items="personnels"
+          :items="personnel_temporary_admins"
           :search="search"
        > 
  <template v-slot:[`item.user_status`]="{ item }">
@@ -44,7 +44,7 @@
             <v-icon
               color="yellow"
               
-              @click.stop="personnelEdit(item.id_rc)"
+              @click.stop="personnel_temporary_adminEdit(item.id_rc)"
             >
               mdi-pencil
             </v-icon>          
@@ -60,9 +60,9 @@
 
    
 
-      <!-- V-model editpersonneldialog -->
+      <!-- V-model editpersonnel_temporary_admindialog -->
       <v-layout row justify-center>
-         <v-dialog v-model="editpersonneldialog" persistent max-width="80%">
+         <v-dialog v-model="editpersonnel_temporary_admindialog" persistent max-width="80%">
         <v-card class="mx-auto pa-6" >
            <base-material-card
               color="yellow"
@@ -72,17 +72,17 @@
               
             ></base-material-card>
           <v-card-text>
-            <v-form ref="editpersonnelform" lazy-validation>
+            <v-form ref="editpersonnel_temporary_adminform" lazy-validation>
               <v-container grid-list-md>
                 <v-layout wrap> 
                     <v-flex md6>
-                   {{ editpersonnel.id_card }}
+                   {{ editpersonnel_temporary_admin.id_card }}
                   </v-flex>                                
                   <v-flex md6>
-                    <v-text-field label="Password" v-model="editpersonnel.p_word" type="password"></v-text-field>
+                    <v-text-field label="Password" v-model="editpersonnel_temporary_admin.p_word" type="password"></v-text-field>
                   </v-flex>
                   <v-flex md6>
-                    <v-text-field label="Confirm Password" v-model="editpersonnel.personnel_confirmpassword" type="password"></v-text-field>
+                    <v-text-field label="Confirm Password" v-model="editpersonnel_temporary_admin.personnel_temporary_admin_confirmpassword" type="password"></v-text-field>
                   </v-flex>
                   <v-flex xs12>
                     <v-divider></v-divider>
@@ -94,10 +94,10 @@
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn large @click.stop="editpersonneldialog = false" rounded>
+            <v-btn large @click.stop="editpersonnel_temporary_admindialog = false" rounded>
                 <v-icon dark>mdi-close</v-icon>ยกเลิก
               </v-btn>
-              <v-btn large color="warning" @click.stop="editpersonnelSubmit()" rounded>
+              <v-btn large color="warning" @click.stop="editpersonnel_temporary_adminSubmit()" rounded>
                 <v-icon dark>mdi-pencil</v-icon>&nbsp;บันทึก
               </v-btn>
 
@@ -132,7 +132,7 @@ export default {
     loading: true,       
      ApiKey: 'HRvec2021',
       valid: true,     
-      editpersonneldialog: false,      
+      editpersonnel_temporary_admindialog: false,      
       snackbar: {
         show: false,
         color: '',
@@ -140,14 +140,13 @@ export default {
         icon: '',
         text: ''
       },
-      personnels: [],    
-      editpersonnel: {},
+      personnel_temporary_admins: [],    
+      editpersonnel_temporary_admin: {},
       search: '',
       pagination: {},      
       headers: [
         { text: "ลำดับ", align: "center", value: "id_rc" },                
-        { text: "รหัสสถานศึกษา", align: "center", value: "college_code" },    
-        { text: "ชื่อสถานศึกษา", align: "center", value: "college_name" },    
+        { text: "รหัสสถานศึกษา", align: "center", value: "college_code" }, 
         { text: "ชื่อ", align: "center", value: "frist_name" },         
         { text: "นามสกุล", align: "center", value: "last_name" },         
         { text: "สถานะ", align: "center", value: "user_status" },  
@@ -162,48 +161,48 @@ export default {
           value: -1,
         },
       ],    
-  personnelstatus:[],   
+  personnel_temporary_adminstatus:[],   
    userstatus:{},     
     };
   },
 async mounted() {      
-     await this.personnelQueryAll()      
+     await this.personnel_temporary_adminQueryAll()      
     },
     methods: {
-      async personnelQueryAll() {
+      async personnel_temporary_adminQueryAll() {
           this.loading = true
-        let result = await this.$http.post('personnel.php', {
+        let result = await this.$http.post('personnel_temporary_admin.php', {
           ApiKey: this.ApiKey
         }).finally(() => this.loading = false)
-        this.personnels = result.data
+        this.personnel_temporary_admins = result.data
       },
     
-      async personnelEdit(id_rc) {
-        let result = await this.$http.post('personnel.php', {
+      async personnel_temporary_adminEdit(id_rc) {
+        let result = await this.$http.post('personnel_temporary_admin.php', {
           ApiKey: this.ApiKey,
           id_rc: id_rc
         })
-        this.editpersonnel = result.data      
-        this.editpersonneldialog = true
+        this.editpersonnel_temporary_admin = result.data      
+        this.editpersonnel_temporary_admindialog = true
       },
-      async editpersonnelSubmit() {
-        if (this.$refs.editpersonnelform.validate()) {
-          this.editpersonnel.ApiKey = this.ApiKey;        
-          let result = await this.$http.post('personnel.update.php', this.editpersonnel)
+      async editpersonnel_temporary_adminSubmit() {
+        if (this.$refs.editpersonnel_temporary_adminform.validate()) {
+          this.editpersonnel_temporary_admin.ApiKey = this.ApiKey;        
+          let result = await this.$http.post('personnel_temporary.update.php', this.editpersonnel_temporary_admin)
           if (result.data.status == true) {
-            this.personnel = result.data
+            this.personnel_temporary_admin = result.data
             this.snackbar.icon = 'mdi-font-awesome'
             this.snackbar.color = 'success'
             this.snackbar.text = 'แก้ไขข้อมูลเรียบร้อย'
             this.snackbar.show = true
-            this.personnelQueryAll()
+            this.personnel_temporary_adminQueryAll()
           } else {
             this.snackbar.icon = 'mdi-close-network'
             this.snackbar.color = 'red'
             this.snackbar.text = 'แก้ไขข้อมูลผิดพลาด'
             this.snackbar.show = true
           }
-          this.editpersonneldialog = false
+          this.editpersonnel_temporary_admindialog = false
         }
       },             
     },

@@ -9,7 +9,7 @@
       icon="mdi-clipboard-text"
       title="ข้อมูลสมาชิก"
       class="px-5 py-3"    
-      :elevation="hover ? 24 : 6"      
+            
     >
     <v-spacer />
           <v-text-field
@@ -18,7 +18,7 @@
             label="ค้นหา ระบุคำ หรือ ส่วนข้อความเกี่ยวข้อง"
             single-line
             hide-details
-            :elevation="hover ? 24 : 6"  
+              
              dense
               filled
           />

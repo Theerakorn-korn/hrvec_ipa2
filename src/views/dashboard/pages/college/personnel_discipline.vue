@@ -5,7 +5,7 @@
         icon="mdi-clipboard-text"
         title="ประวัติการได้รับโทษ กระทำผิดวินัย"
         class="px-5 py-3"
-        :elevation="hover ? 24 : 6"
+        
       >
         <v-card class="mb-4 pa-2">
           <v-row>
@@ -16,7 +16,7 @@
                 label="ค้นหา ระบุคำ หรือ ส่วนข้อความเกี่ยวข้อง"
                 single-line
                 hide-details
-                :elevation="hover ? 24 : 6"
+                
                 dense
                 filled
                 class="mb-2"
@@ -24,7 +24,7 @@
             </v-col>
             <v-col cols="12" lg="6" class="text-right">
               <v-btn
-                :elevation="hover ? 24 : 6"
+                
                 large
                 right
                 depressed
@@ -57,12 +57,12 @@
       <!--addpersonnel_experiencedialog  -->
       <v-layout row justify-center>
         <v-dialog v-model="addpersonnel_experiencedialog" persistent max-width="50%" overlay-opacity="0.6">
-          <v-card class="mx-auto pa-5" :elevation="hover ? 24 : 6">
+          <v-card class="mx-auto pa-5" >
             <base-material-card
               icon="mdi-clipboard-text"
               title="เพิ่มประสบการณ์"
               class="px-5 py-3 text_google"
-              :elevation="hover ? 24 : 6"
+              
             ></base-material-card>
             <v-card-text class="text_google">
               <v-form
@@ -206,13 +206,13 @@
       <!-- V-model deletepersonnel_experiencedialog -->
       <v-layout>
         <v-dialog v-model="deletepersonnel_experiencedialog" persistent max-width="40%">
-          <v-card class="mx-auto pa-5" :elevation="hover ? 24 : 6">
+          <v-card class="mx-auto pa-5" >
             <base-material-card
               color="error"
               icon="mdi-delete"
               title="ลบข้อมูล"
               class="px-5 py-3 text_google"
-              :elevation="hover ? 24 : 6"
+              
             ></base-material-card>
             <v-card-text class="text_google">
               <v-form ref="deletepersonnel_experienceform" lazy-validation>
@@ -244,13 +244,13 @@
       <!-- V-model editpersonnel_experiencedialog -->
       <v-layout row justify-center>
         <v-dialog v-model="editpersonnel_experiencedialog" persistent max-width="50%">
-          <v-card class="mx-auto pa-5" :elevation="hover ? 24 : 6">
+          <v-card class="mx-auto pa-5" >
             <base-material-card
               color="yellow"
               icon="mdi-clipboard-text"
               title="แก้ไขข้อมูลสินค้า"
               class="px-5 py-3 text_google"
-              :elevation="hover ? 24 : 6"
+              
             ></base-material-card>
             <v-card-text>
               <v-form ref="editpersonnel_experienceform" lazy-validation>

@@ -241,8 +241,7 @@ export default {
   data() {
     return {
     
-     headers: [      
-        { text: "รหัสสถานศึกษา", align: "center", value: "college_code" },              
+     headers: [  
         { text: "ชื่อสถานศึกษา", align: "left", value: "college_name" },
         { text: "อำเภอ", align: "left", value: "prefecture_name" },
         { text: "จังหวัด", align: "left", value: "province_name" },

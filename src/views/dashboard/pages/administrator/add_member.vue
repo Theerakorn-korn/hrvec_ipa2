@@ -5,12 +5,12 @@
       icon="mdi-account"
       title="ข้อมูลสมาชิก"
       class="px-5 py-3"    
-      :elevation="hover ? 24 : 6"      
+            
     >    
       <v-form ref="addmemberform" lazy-validation>
         <v-card
           class="mx-auto pa-1"
-          :elevation="hover ? 24 : 6"   
+             
         >
           <v-toolbar  color>  
             <v-spacer></v-spacer>
@@ -197,7 +197,7 @@
                 outline
                 class="success mr-5"
                 :disabled="!isEditing"
-                :elevation="hover ? 24 : 6"
+                
                 @click.stop="addmemberSubmit()"
                 rounded
               >
@@ -209,7 +209,7 @@
                 outline
                 class="warning mr-5"
                 :disabled="!isEditing"
-                :elevation="hover ? 24 : 6"
+                
                 @click.stop="isEditing = !isEditing"
                 rounded
               >

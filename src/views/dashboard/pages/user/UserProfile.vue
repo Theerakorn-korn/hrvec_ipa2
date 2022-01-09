@@ -6,13 +6,36 @@
         <base-material-card
           class="v-card-profile"
           avatar="https://www.vec.go.th/portals/0/ovec.jpg"         
-        >
-          <v-card-text class="text-center">
+        >      
+          <v-card-text class="text-center"> 
+            <div align="center">
+               <v-img   v-if="user.personnel_temporary_pic" 
+                    max-height="300"
+                    max-width="500"
+                    aspect-ratio="2"
+                    contain
+                    :src="'http://localhost:8080/HRvecfiles/' + user.personnel_temporary_pic" 
+                  ></v-img>                    
+              </div>                 
             <h3 class="font-weight-light mb-1 grey--text">{{ user.id_card }}</h3>
             <h3 class="font-weight-light mb-1 grey--text">{{ user.title_s }}{{ user.frist_name }}  {{ user.last_name }}</h3>
             <h4 class="font-weight-light mb-3 black--text">{{ user.college_name }}</h4>
             <p class="font-weight-light grey--text"></p>
-            <!-- <v-btn color="success" rounded class="mr-0">แก้ไข</v-btn> -->
+            <div class="text-center">
+            <v-btn elevation="2" x-large  roundeded color="warning" class="mr-0"  @click.native="personnelUpdate()"> <v-icon>mdi-pencil</v-icon> แก้ไขข้อมูลเบื้องต้น</v-btn>
+            </div>  
+             <div class="text-center">
+            <v-btn elevation="2" x-large  roundeded color="warning" class="mr-0"  @click.native="personnelPicUpdate()"> <v-icon>mdi-pencil</v-icon> แก้ไขรูปโปรไฟล์</v-btn>
+         </div>  
+            <div class="text-center">
+                <v-btn @click.native="personnelPicDelete()" 
+                      color="red darken-3" v-if="user.personnel_temporary_pic" dark icon outlined>
+                      <v-icon x-large>mdi-delete-circle-outline</v-icon>
+                    </v-btn> 
+            </div>         
+              <div class="text-center" v-if="periods.period_enable === '1'">              
+              <v-btn roundeded color="primary" x-large dark to="/transference_personnel"> การย้ายสายการสอน</v-btn>
+             </div>
           </v-card-text>
         </base-material-card>
       </v-col>
@@ -74,8 +97,7 @@
                     * ข้อมูลข้าราชการครูและบุคลากรทางการศึกษา บางส่วนหากประสงค์แก้ไขให้ติดต่องานบุคลกรของสถานศึกษา
                 </v-col>
                 <v-col cols="12" class="text-right">
-                  <v-btn elevation="2" x-large color="warning" class="mr-0"  @click.native="personnelUpdate()"> <v-icon>mdi-pencil</v-icon> แก้ไขข้อมูลเบื้องต้น</v-btn>
-                </v-col>
+                  </v-col>
               </v-row>              
             </v-container>
           </v-form>
@@ -143,40 +165,43 @@
       </v-dialog>         
                   </v-flex> 
                    <v-flex md6>                    
-                    <v-select outlined label="สถานภาพสมรส" :items="user_marital_status" item-text="title" item-value="value" v-model="user.marital_status"></v-select>
+                    <v-select outlinedd label="สถานภาพสมรส" :items="user_marital_status" item-text="title" item-value="value" v-model="user.marital_status"></v-select>
                   </v-flex>
                     <v-flex md6 v-if="user.marital_status == 'married' || user.marital_status =='separate'">
-                  <v-text-field outlined label="รหัสบัตรประชาชนคู่สมรส :" v-model="user.id_card_m" required :rules="[v => !!v || '']"></v-text-field>                            
+                  <v-text-field outlinedd label="รหัสบัตรประชาชนคู่สมรส :" v-model="user.id_card_m" required :rules="[v => !!v || '']"></v-text-field>                            
                   </v-flex> 
                    <v-flex md2 v-if="user.marital_status == 'married' || user.marital_status =='separate'">
-                  <v-text-field outlined label="คำนำหน้าชื่อ :" v-model="user.title_sm" required :rules="[v => !!v || '']"></v-text-field>                            
+                  <v-text-field outlinedd label="คำนำหน้าชื่อ :" v-model="user.title_sm" required :rules="[v => !!v || '']"></v-text-field>                            
                   </v-flex> 
                     <v-flex md5 v-if="user.marital_status == 'married' || user.marital_status =='separate'">
-                  <v-text-field outlined label="ชื่อ :" v-model="user.frist_namem" required :rules="[v => !!v || '']"></v-text-field>                            
+                  <v-text-field outlinedd label="ชื่อ :" v-model="user.frist_namem" required :rules="[v => !!v || '']"></v-text-field>                            
                   </v-flex> 
                    <v-flex md5 v-if="user.marital_status == 'married' || user.marital_status =='separate'">
-                  <v-text-field outlined label="นามสกุล :" v-model="user.last_namem" required :rules="[v => !!v || '']"></v-text-field>                            
+                  <v-text-field outlinedd label="นามสกุล :" v-model="user.last_namem" required :rules="[v => !!v || '']"></v-text-field>                            
                   </v-flex>  
                    <v-flex md6 v-if="user.marital_status == 'married' || user.marital_status =='separate'">
-                  <v-text-field outlined label="อาชีพ :" v-model="user.occupation_sm" required :rules="[v => !!v || '']"></v-text-field>                            
+                  <v-text-field outlinedd label="อาชีพ :" v-model="user.occupation_sm" required :rules="[v => !!v || '']"></v-text-field>                            
                   </v-flex>  
                    <v-flex md6 v-if="user.marital_status == 'married' || user.marital_status =='separate'">
-                  <v-text-field outlined label="สถานที่ทำงาน :" v-model="user.work_placem" required :rules="[v => !!v || '']"></v-text-field>                            
+                  <v-text-field outlinedd label="สถานที่ทำงาน :" v-model="user.work_placem" required :rules="[v => !!v || '']"></v-text-field>                            
                   </v-flex>   
                    <v-flex md6 v-if="user.marital_status == 'married' || user.marital_status =='separate'">
                    <v-autocomplete :items="provices_sh" item-text="province_name" item-value="province_ID" label="ภูมิลำเนาของคู่สมรส จังหวัด : " required :rules="[v => !!v || '']" v-model="user.province_IDm"></v-autocomplete>
                    </v-flex> 
                   <v-flex md6>
-                    <v-text-field outlined label="เบอร์โทรติดต่อ :" v-model="user.tel_p"></v-text-field>
+                    <v-text-field outlinedd label="เบอร์โทรติดต่อ :" v-model="user.tel_p"></v-text-field>
                   </v-flex>
                   <v-flex md6>
-                    <v-text-field outlined label="E-mail :" v-model="user.e_mail"></v-text-field>
+                    <v-text-field outlinedd label="E-mail :" v-model="user.e_mail"></v-text-field>
                   </v-flex>                             
                   <v-flex md6>
-                    <v-text-field outlined label="Password" v-model="user.p_word" type="password"></v-text-field>
+                    <v-text-field outlinedd label="Password" v-model="user.p_word" type="password"></v-text-field>
                   </v-flex>
                   <v-flex md6>
-                 <v-text-field outlined label="Confirm Password" v-model="user.user_confirmpassword" type="password"  required :rules="[v => v==user.p_word]"></v-text-field>             
+                 <v-text-field outlinedd label="Confirm Password" v-model="user.user_confirmpassword" type="password"  required :rules="[v => v==user.p_word]"></v-text-field>             
+                  </v-flex>
+                  <v-flex md6>
+                   <input type="file" ref="file2" id="file2">
                   </v-flex>
                   <v-flex xs12>
                     <v-divider></v-divider>
@@ -188,10 +213,10 @@
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn large @click.stop="addpersonneldialog = false" rounded>
+            <v-btn large @click.stop="addpersonneldialog = false" roundeded>
                 <v-icon dark>mdi-close</v-icon>ยกเลิก
               </v-btn>
-              <v-btn large color="warning" @click.stop="personnelSubmit()" rounded>
+              <v-btn large color="warning" @click.stop="personnelSubmit()" roundeded>
                 <v-icon dark>mdi-pencil</v-icon>&nbsp;แก้ไข
               </v-btn>
 
@@ -199,7 +224,58 @@
         </v-card>
       </v-dialog>
       </v-layout>
+ <v-layout>
+      <v-dialog v-model="personnel_temporary_pic_dialog" persistent max-width="80%">
+        <v-card>
+          <v-card-title class="orange--text">
+            <v-icon medium color="orange">mdi-pencil</v-icon>&nbsp;แก้ไขข้อมูล
+          </v-card-title>
+          <v-card-text>
+            <v-form ref="form5" lazy-validation>
+              <v-container grid-list-md>
+                <v-layout wrap>
+                  <v-flex xs12>                   
+                    เลือกไฟล์ภาพของท่าน
+                    <input type="file" ref="file2" id="file2">
+                  </v-flex>                 
+                </v-layout>
+              </v-container>
+            </v-form>
+          </v-card-text>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn @click.stop="personnel_temporary_pic_dialog = false" rounded>ยกเลิก</v-btn>
+            <v-btn color="success" @click.stop="editpersonnel_temporaryinfoSubmit(true)" rounded>
+              <v-icon dark>mdi-content-save</v-icon>&nbsp; บันทึก</v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
 
+       <v-dialog v-model="deletefiledialog" persistent max-width="50%">
+        <v-card>
+          <v-card-title class="red darken-3 white--text elevation-2">
+            <v-icon medium dark>fa-school</v-icon>&nbsp;ลบข้อมูลไฟล์รูป
+          </v-card-title>
+          <v-card-text>
+            <v-form ref="deletestandardtopicform2" lazy-validation>
+              <v-container grid-list-md>
+                <v-layout wrap>
+                  <v-flex xs12 class="text-xs-center red--text">
+                    ยืนยันการลบไฟล์รูป {{ this.user.personnel_temporary_pic }}
+                  </v-flex>
+                </v-layout>
+              </v-container>
+            </v-form>
+          </v-card-text>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn @click.native="deletefiledialog = false" rounded> <v-icon dark>mdi-close</v-icon>ยกเลิก</v-btn>
+            <v-btn color="red darken-3" @click.native="deletefileSubmit2()" rounded dark>
+               <v-icon dark>mdi-delete</v-icon>&nbsp;ลบ</v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+ </v-layout>
   </v-container>
  
  <v-container fluid>      
@@ -225,10 +301,15 @@ export default {
   data() {
     return {
        ApiKey: 'HRvec2021',
+       period_enable: '1',
       addpersonneldialog: false,
+      personnel_temporary_pic_dialog: false,     
+      deletefiledialog: false,
       valid: true,
       user: {},    
-      personnel: {},      
+      updateuser:{},
+      personnel: {},  
+      periods: [],    
         snackbar: {
         show: false,
         color: '',
@@ -264,6 +345,13 @@ export default {
       ApiKey: this.ApiKey
     })
     this.provices_sh = result_provice.data
+
+     let result_period
+    result_period = await this.$http.post('period.php', {
+      ApiKey: this.ApiKey,
+      period_enable: this.period_enable,
+    })
+    this.periods = result_period.data
     },    
 
   methods: { 
@@ -280,12 +368,23 @@ export default {
         this.addpersonneldialog = true
       }, 
 
+      async personnelPicUpdate() { 
+        this.updateuser.id_card = this.user.id_card  
+        this.personnel_temporary_pic_dialog = true
+      }, 
+
+       async personnelPicDelete() { 
+         this.updateuser.personnel_temporary_pic = this.user.personnel_temporary_pic
+        this.updateuser.id_card = this.user.id_card  
+        this.deletefiledialog = true
+      }, 
+
       async personnelSubmit(){
-if (this.$refs.personnelform.validate()) {
+      if (this.$refs.personnelform.validate()) {
           this.user.ApiKey = this.ApiKey;              
           let result = await this.$http.post('personnel_temporary.update.php', this.user)
           let result_m = await this.$http.post("personnel_marriage.insert.php",this.user)
-          if (result.data.status == true && result_m.data.status == true) {
+          if (result.data.status == true || result_m.data.status == true) {
             this.user = result.data
             this.snackbar.icon = 'mdi-font-awesome'
             this.snackbar.color = 'success'
@@ -300,6 +399,83 @@ if (this.$refs.personnelform.validate()) {
           }
           this.addpersonneldialog = false
         }
+      },
+      async editpersonnel_temporaryinfoSubmit(upload){
+           let result = ''
+        let uploaded = null
+      if (this.$refs.file2.files[0]) {
+          if (this.$refs.file2.files[0].type == 'image/jpeg') {
+            let formData = new FormData()
+            let filename = this.updateuser.id_card + '.' + 'user.jpg'
+            formData.append('file', this.$refs.file2.files[0])
+            formData.append('filename', '../HRvecfiles/'+filename)
+            formData.append('ApiKey', this.ApiKey)
+            result = await this.$http.post('uploadfile.php', formData, {
+              headers: {
+                'Content-Type': 'multipart/form-data'
+              }
+            })
+            if (result.data.status == true){              
+              this.updateuser.personnel_temporary_pic = ''
+              this.updateuser.personnel_temporary_pic = filename
+            }
+            uploaded = true
+          } else {
+            uploaded = false
+          }
+        } else {
+          upload = false
+        }
+     
+         this.updateuser.ApiKey = this.ApiKey;
+        result = await this.$http.post('personnel_temporary.update.php', this.updateuser)
+        if (result.data.status || uploaded) {
+          await this.personnelQuery()
+          this.snackbar.icon = 'check_circle'
+          this.snackbar.color = 'success'
+          this.snackbar.text = 'บันทึกข้อมูลเรียบร้อย'
+          this.snackbar.show = true
+        } else {
+          if (!uploaded && upload) {
+            this.snackbar.icon = 'error'
+            this.snackbar.color = 'red'
+            this.snackbar.text = 'ไฟล์ที่แนบไม่ถูกต้อง กรุณาแนบไฟล์เป็น jpg หรือ jpeg เท่านั้น'
+            this.snackbar.show = true
+          } else {
+            this.snackbar.icon = 'error'
+            this.snackbar.color = 'red'
+            this.snackbar.text = 'บันทึกข้อมูลผิดพลาด'
+            this.snackbar.show = true
+          }
+        }
+        this.personnel_temporary_pic_dialog = false
+
+      },
+       async deletefileSubmit2(){
+        let result = await this.$http.post('deletefile.php', {
+          ApiKey: this.ApiKey,
+          filename: '../HRvecfiles/'+this.updateuser.personnel_temporary_pic
+        })
+        if (result.data.status) {
+          result = await this.$http.post('personnel_temporary.update.php', {
+            ApiKey: this.ApiKey,
+            personnel_temporary_pic: '',         
+            id_card: this.updateuser.id_card            
+          })        
+          if (result.data.status) {
+            this.personnelQuery()
+            this.snackbar.icon = 'check_circle'
+            this.snackbar.color = 'success'
+            this.snackbar.text = 'ลบข้อมูลเรียบร้อย'
+            this.snackbar.show = true
+          } else {
+            this.snackbar.icon = 'error'
+            this.snackbar.color = 'red'
+            this.snackbar.text = 'ลบข้อมูลผิดพลาด'
+            this.snackbar.show = true
+          }
+        }
+        this.deletefiledialog = false
       },
   },
   computed: {
@@ -323,6 +499,11 @@ if (this.$refs.personnelform.validate()) {
             }
              return marital_result
           },
-  }
+  },
+   watch: {
+      async period_year(newVal, oldVal) {       
+        await this.personnelQuery()
+      }
+    }
 };
 </script>

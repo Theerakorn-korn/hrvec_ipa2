@@ -17,7 +17,7 @@
        <div class="head"> สายการสอนและสายสนับสนุนการสอน สำกัดสำนักงานคณะกรรมการการอาชีวศึกษา</div>
        <div class="head"> ยื่นครั้งที่ {{ transference_personnels.time_s }} ระหว่างวันที่ {{ day_tims }} {{ transference_personnels.year_s }}</div>
       <hr>
-      </div>
+     </div>
      <table border="0" width="100%">
          <tr>
              <td width="50%"></td>
@@ -694,10 +694,10 @@ return result
         "พฤษภาคม", "มิถุนายน", "กรกฎาคม", "สิงหาคม",
         "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"
     ];
-            let day = this.personnel_temporarys.date_appoin.slice(8);
-            let month = monthNames[parseInt(this.personnel_temporarys.date_appoin.slice(5,7))];
-            let year = this.personnel_temporarys.date_appoin.slice(0,4);
-            let years = parseInt(year) + 543;
+            let day = this.personnel_temporarys.appoin_day;
+            let month = monthNames[parseInt(this.personnel_temporarys.appoin_month)];
+            let year = this.personnel_temporarys.appoin_year;
+            let years = parseInt(year);
             let today = day + ' ' + month + ' ' + years;
             return today
           },
@@ -770,7 +770,7 @@ return result
 
     get_gov_Age() {
                 let today = new Date(this.date_today_cal);
-                let DOB = new Date(this.personnel_temporarys.date_appoin);
+                let DOB = new Date(parseInt(this.personnel_temporarys.appoin_year)-543 + '-' + this.personnel_temporarys.appoin_month + '-' + this.personnel_temporarys.appoin_day);
                 let totalMonths = (today.getFullYear() - DOB.getFullYear()) * 12 + today.getMonth() - DOB.getMonth();
                 totalMonths += today.getDay() < DOB.getDay() ? -1 : 0;
                 let years = today.getFullYear() - DOB.getFullYear();

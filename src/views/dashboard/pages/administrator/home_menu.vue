@@ -6,18 +6,18 @@
        elevation="2"
     >     
     <v-row>
-      <v-col cols="12" md="3">
-        
+      <v-col cols="12" md="3">        
       </v-col>
        <v-col cols="12" md="3">
-        <div> ผู้ใช้งานระบบ : {{ user.user_ID }}  </div>
-       <div> ชื่อผู้ใช้งาน : {{ user.user_firstname }}  {{ user.user_lastname || '' }}</div>
-         สถานะ : {{ user.user_status_name }}
+        <div> <h2> ผู้ใช้งานระบบ : {{ user.user_ID }}</h2>  </div>
+       <div> <h3> ชื่อผู้ใช้งาน : {{ user.user_firstname }}  {{ user.user_lastname || '' }}</h3></div>
+        <h3> สถานะ : {{ user.user_status_name }}</h3>
       </v-col>
         <v-col cols="12" md="3">
        <v-btn rounded
       color="primary"
       dark
+      x-large
       @click.native="userUpdate()"
       >
          Update Password
@@ -29,17 +29,14 @@
         
          </v-alert>
     <v-row>
-      <v-col cols="12" md="6">
-        <v-card class="pa-2">
-          <v-card-title>ผู้ใช้งานระบบ</v-card-title>
+      <v-col cols="12" md="12"> 
           <v-alert
             border="left"
             colored-border
             type="error"
             elevation="2"
-            icon="mdi-account-cog"
-            class="ma-4"
-          >
+            icon="mdi-account-cog"            
+          > <v-card-title>ผู้ใช้งานระบบ</v-card-title>
             <v-list>
               <v-list-item-group>
                 <v-list-item v-for="(item, i) in user_system_items" :key="i" :to="item.to">
@@ -53,19 +50,42 @@
               </v-list-item-group>
             </v-list>
           </v-alert>
-        </v-card>
+      
       </v-col>
-      <v-col cols="12" md="6">
-        <v-card class="pa-2">
-          <v-card-title>ข้อมูลงานบุคคล</v-card-title>
+       <v-col cols="12" md="12">           
+          <v-alert
+            border="left"
+            colored-border
+            type="error"
+            elevation="2"
+            icon="mdi-account-cog"        
+          >   
+          <v-card-title>ข้อมูลสถานศึกษา</v-card-title>
+            <v-list>
+              <v-list-item-group>
+                <v-list-item v-for="(item, i) in college_items" :key="i" :to="item.to">
+                  <v-list-item-icon>
+                    <v-icon v-text="item.icon"></v-icon>
+                  </v-list-item-icon>
+                  <v-list-item-content>
+                    <v-list-item-title v-text="item.text"></v-list-item-title>
+                  </v-list-item-content>
+                </v-list-item>
+              </v-list-item-group>
+            </v-list>
+          </v-alert>
+      
+      </v-col>
+      <v-col cols="12" md="12">
+              
           <v-alert
             border="left"
             colored-border
             color="deep-purple accent-4"
             elevation="2"
-            icon="mdi-account-details"
-            class="ma-4"
-          >
+            icon="mdi-account-details"          
+          > 
+          <v-card-title>ข้อมูลงานบุคคล</v-card-title>
             <v-list>
               <v-list-item-group >
                 <v-list-item v-for="(item, i) in user_items" :key="i" :to="item.to">
@@ -78,20 +98,17 @@
                 </v-list-item>
               </v-list-item-group>
             </v-list>
-          </v-alert>
-        </v-card>
+          </v-alert>      
       </v-col>
-      <v-col cols="12" md="6">
-        <v-card class="pa-2">
-          <v-card-title>ระบบการย้าย</v-card-title>
-          <v-alert
+      <v-col cols="12" md="12">
+               <v-alert
             border="left"
             colored-border
             type="info"
             elevation="2"
-            icon="mdi-account-convert"
-            class="ma-4"
-          >
+            icon="mdi-account-convert"           
+          > 
+           <v-card-title>ระบบการย้าย</v-card-title>
             <v-list>
               <v-list-item-group >
                 <v-list-item v-for="(item, i) in movement_items" :key="i" :to="item.to">
@@ -104,20 +121,17 @@
                 </v-list-item>
               </v-list-item-group>
             </v-list>
-          </v-alert>
-        </v-card>
+          </v-alert>      
       </v-col>
-      <v-col cols="12" md="6">
-        <v-card class="pa-2">
-          <v-card-title>เงือนไขสาขาวิชา</v-card-title>
+      <v-col cols="12" md="12">    
           <v-alert
             border="left"
             colored-border
             color="green darken-4"
             elevation="2"
-            icon="mdi-source-branch"
-            class="ma-4"
-          >
+            icon="mdi-source-branch"          
+          >  
+          <v-card-title>เงือนไขสาขาวิชา</v-card-title>
             <v-list>
               <v-list-item-group >
                 <v-list-item v-for="(item, i) in condition_items" :key="i" :to="item.to">
@@ -130,20 +144,16 @@
                 </v-list-item>
               </v-list-item-group>
             </v-list>
-          </v-alert>
-        </v-card>
+          </v-alert>      
       </v-col>
-      <v-col cols="12" md="6">
-        <v-card class="pa-2">
-          <v-card-title>ระบบอัตรากำลัง</v-card-title>
+      <v-col cols="12" md="12"> 
           <v-alert
             border="left"
             colored-border
              color="orange darken-4"
             elevation="2"
-            icon="mdi-human"
-            class="ma-4"
-          >
+            icon="mdi-human"          
+          ><v-card-title>ระบบอัตรากำลัง</v-card-title>
             <v-list>
               <v-list-item-group >
                 <v-list-item v-for="(item, i) in human_items" :key="i" :to="item.to">
@@ -157,19 +167,16 @@
               </v-list-item-group>
             </v-list>
           </v-alert>
-        </v-card>
+       
       </v-col>
-      <v-col cols="12" md="6">
-        <v-card class="pa-2">
-          <v-card-title>ระบบครูผู้ช่วย</v-card-title>
+      <v-col cols="12" md="12">      
           <v-alert
             border="left"
             colored-border
            color="yellow accent-4"
             elevation="2"
-            icon="mdi-human-male-male"
-            class="ma-4"
-          >
+            icon="mdi-human-male-male"         
+          >   <v-card-title>ระบบครูผู้ช่วย</v-card-title>
             <v-list>
               <v-list-item-group >
                 <v-list-item v-for="(item, i) in prepare_items" :key="i" :to="item.to">
@@ -182,8 +189,7 @@
                 </v-list-item>
               </v-list-item-group>
             </v-list>
-          </v-alert>
-        </v-card>
+          </v-alert>      
       </v-col>
     </v-row>
      <!-- V-model userdialog -->
@@ -266,21 +272,26 @@ export default {
         text: ''
       },
         user_system_items: [ 
-          { text: "ข้อมูลผู้ใช้งานระบบ ข้าราชการครูและบุคลาการทางการศึกษา", icon: "mdi-account-arrow-right", to: "/admin/user" },
+          { text: "ข้อมูลผู้ใช้งานระบบ ข้าราชการครูและบุคลาการทางการศึกษา", icon: "mdi-account-arrow-right", to: "/admin/personnel" },
           { text: "ข้อมูลผู้ใช้งานระบบ วิทยาลัย อศจ สถานบัน กจ2 Admin", icon: "mdi-account-arrow-right", to: "/admin/user" },
-          { text: "สถานะผู้ใช้งานระบบ", icon: "mdi-account-cog", to: "/admin/user_status" },
+          { text: "สถานะผู้ใช้งานระบบ", icon: "mdi-account-cog", to: "/admin/user_status" },         
+          { text: "ข้อมูลรอบปี", icon: "mdi-calendar", to: "/admin/period" },              
+        ],
+
+         college_items: [           
+          { text: "ข้อมูลสถานศึกษา", icon: "mdi-calendar", to: "/admin/college" }, 
           { text: "ข้อมูลประเภทสถานศึกษา", icon: "mdi-office-building", to: "/admin/collegetype" },
-          { text: "ข้อมูลรอบปี", icon: "mdi-calendar", to: "/admin/period" },
+          { text: "ข้อมูลรายละเอียดสถานศึกษา", icon: "mdi-calendar", to: "/admin/collegeinfo" },        
         ],
 
           user_items: [ 
-         { text: "ข้อมูลเกี่ยวกับบุคคล", icon: "mdi-account", to: "/admin/user_tem" },
-          { text: "ข้อมูลคุณวุฒิการศึกษา", icon: "mdi-school", to: "/admin/user_education" },
-          { text: "ข้อมูลประสบการณ์", icon: "mdi-bag-carry-on", to: "/admin/user_experience" },
-          { text: "ข้อมูลประวัติการทำงาน", icon: "mdi-access-point-network", to: "/admin/user_work_history" },
-          { text: "ข้อมูลผลงาน รางวัล", icon: "mdi-trophy-award", to: "/admin/user_award" },
-          { text: "ข้อมูลโทษ วินัย", icon: "mdi-alarm-light", to: "/admin/user_discipline" },
-        ],
+        { text: "ข้อมูลเกี่ยวกับบุคคล", icon: "mdi-account", to: "/admin/personnel_tem" },
+        /*   { text: "ข้อมูลคุณวุฒิการศึกษา", icon: "mdi-school", to: "/admin/personnel_education" },
+          { text: "ข้อมูลประสบการณ์", icon: "mdi-airplane", to: "/admin/personnel_experience" },
+          { text: "ข้อมูลประวัติการทำงาน", icon: "mdi-access-point-network", to: "/admin/personnel_work_history" },
+          { text: "ข้อมูลผลงาน รางวัล", icon: "mdi-trophy-award", to: "/admin/personnel_award" },
+          { text: "ข้อมูลโทษ วินัย", icon: "mdi-alarm-light", to: "/admin/personnel_discipline" },   */
+          ],
       movement_items: [
           { text: "สายการสอนและสายสนับสนุน", icon: "mdi-alarm-light", to: "/Dashboard" },
           { text: "สายงานบริหารสถานศึกษา", icon: "mdi-alarm-light", to: "/Dashboard" },
@@ -294,10 +305,10 @@ export default {
           { text: "สถิติเงือนไขสาขาวิชา", icon: "mdi-chart-box-outline", to: "/Dashboard" },        
         ],
 
-          human_items: [
-          { text: "ข้อมูลอัตรากำลังสถานศึกษา", icon: "mdi-basket-plus", to: "/Dashboard" },        
-          { text: "ข้อมูลเชิงปริมาณ", icon: "mdi-chart-box-outline", to: "/Dashboard" },        
-          { text: "ข้อมูลเชิงปริมาณ", icon: "mdi-chart-box-outline", to: "/Dashboard" },        
+          human_items: [           
+          { text: "ข้อมูลอัตรากำลังสถานศึกษา", icon: "mdi-basket-plus", to: "/admin/man_power" },        
+         /*  { text: "ข้อมูลเชิงปริมาณ", icon: "mdi-chart-box-outline", to: "/Dashboard" },        
+          { text: "ข้อมูลเชิงปริมาณ", icon: "mdi-chart-box-outline", to: "/Dashboard" },   */      
         ],
 
          prepare_items: [

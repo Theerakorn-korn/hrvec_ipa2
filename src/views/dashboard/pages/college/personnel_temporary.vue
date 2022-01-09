@@ -6,7 +6,7 @@
         icon="mdi-clipboard-text"
         title="ข้าราชการครูและบุคลากรทางการศึกษา"
         class="px-5 py-3"
-        :elevation="hover ? 24 : 6"
+        
       >
         <v-card class="mb-4 pa-2">
           <v-row>
@@ -17,7 +17,7 @@
                 label="ค้นหา ระบุคำ หรือ ส่วนข้อความเกี่ยวข้อง"
                 single-line
                 hide-details
-                :elevation="hover ? 24 : 6"
+                
                 dense
                 filled
                 class="mb-2"
@@ -51,12 +51,12 @@
       <!--addpersonnel_temporarydialog  -->
       <v-layout row justify-center>
         <v-dialog v-model="addpersonnel_temporarydialog" persistent max-width="50%">
-          <v-card class="mx-auto pa-5" :elevation="hover ? 24 : 6">
+          <v-card class="mx-auto pa-5" >
             <base-material-card
               icon="mdi-account-multiple"
               title="เพิ่มข้อมูลข้าราชการครูและบุคลากรทางการศึกษา"
               class="px-5 py-3 text_google"
-              :elevation="hover ? 24 : 6"
+              
             >
             </base-material-card>
 
@@ -219,13 +219,13 @@
       <!-- V-model deletepersonnel_temporarydialog -->
       <v-layout>
         <v-dialog v-model="deletepersonnel_temporarydialog" persistent max-width="40%">
-          <v-card class="mx-auto pa-5" :elevation="hover ? 24 : 6">                     
+          <v-card class="mx-auto pa-5" >                     
              <base-material-card
               color="error"
               icon="mdi-delete"
               title="ลบข้อมูลผู้ใช้"
               class="px-5 py-3 text_google"
-              :elevation="hover ? 24 : 6"
+              
              
             >
             </base-material-card>
@@ -267,13 +267,13 @@
       <!-- V-model editpersonnel_temporarydialog -->
       <v-layout row justify-center>
          <v-dialog v-model="editpersonnel_temporarydialog" persistent max-width="80%">
-        <v-card class="mx-auto pa-6" :elevation="hover ? 24 : 6">
+        <v-card class="mx-auto pa-6" >
            <base-material-card
               color="yellow"
               icon="mdi-clipboard-text"
               title="แก้ไขข้อมูลผู้ใช้งานระบบ"
               class="px-5 py-3 text_google"
-              :elevation="hover ? 24 : 6"
+              
             ></base-material-card>
           <v-card-text>
             <v-form ref="editpersonnel_temporaryform" lazy-validation>
@@ -328,7 +328,7 @@
     
     <v-container fluid>      
 
- <v-snackbar v-model="snackbar.show" top :multi-line="multiLine" :timeout="snackbar.timeout" :color="snackbar.color">
+ <v-snackbar v-model="snackbar.show" top  :timeout="snackbar.timeout" :color="snackbar.color">
       <v-icon large>{{snackbar.icon}}</v-icon>
       <v-card-text>
         {{snackbar.text}}

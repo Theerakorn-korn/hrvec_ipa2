@@ -155,6 +155,24 @@ export default new Router({
                     component: () =>
                         import ('@/views/dashboard/pages/administrator/branch'),
                 },
+                {
+                    name: 'อัตรากำลัง',
+                    path: '/admin/man_power',
+                    component: () =>
+                        import ('@/views/dashboard/pages/administrator/man_power'),
+                },
+                {
+                    name: 'สถานศึกษา',
+                    path: '/admin/college',
+                    component: () =>
+                        import ('@/views/dashboard/pages/administrator/college'),
+                },
+                 {
+                    name: 'รายละเอียดสถานศึกษา',
+                    path: '/admin/collegeinfo',
+                    component: () =>
+                        import ('@/views/dashboard/pages/administrator/collegeinfo'),
+                },
                 
                 
 

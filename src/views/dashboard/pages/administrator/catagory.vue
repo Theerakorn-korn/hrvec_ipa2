@@ -5,11 +5,11 @@
         icon="mdi-clipboard-text"
         title="หมวดหมู่สินค้า"
         class="px-5 py-3"
-        :elevation="hover ? 24 : 6"
+        
       >
         <v-card>
           <v-btn
-            :elevation="hover ? 24 : 6"
+            
             large
             right
             depressed
@@ -23,7 +23,7 @@
             label="ค้นหา ระบุคำ หรือ ส่วนข้อความเกี่ยวข้อง"
             single-line
             hide-details
-            :elevation="hover ? 24 : 6"
+            
             dense
             filled
           />
@@ -41,21 +41,21 @@
             <img
               :src="require('./fileUpload/' + item.p_img) || ''"
               width="50"
-              :elevation="hover ? 24 : 6"           
+                         
             />
           </template>
  -->
           <template v-slot:item.action="{ item }" width="10%">
             <v-icon
               color="yellow"
-              :elevation="hover ? 24 : 6"
+              
               @click.stop="catagoryEdit(item.cat_id)"
             >
               mdi-pencil
             </v-icon>
             <v-icon
               color="red"
-              :elevation="hover ? 24 : 6"
+              
               @click.stop="catagoryDelete(item.cat_id)"
             >
               mdi-delete
@@ -74,12 +74,12 @@
       <!--addcatagorydialog  -->
       <v-layout row justify-center>
         <v-dialog v-model="addcatagorydialog" persistent max-width="50%" overlay-opacity="0.6">
-          <v-card class="mx-auto pa-5" :elevation="hover ? 24 : 6" >
+          <v-card class="mx-auto pa-5"  >
             <base-material-card
               icon="mdi-clipboard-text"
               title="เพิ่มหมวดหมู่สินค้า"
               class="px-5 py-3 text_google"
-              :elevation="hover ? 24 : 6"
+              
               
             >
             </base-material-card>
@@ -145,13 +145,13 @@
       <!-- V-model deletecatagorydialog -->
       <v-layout>
         <v-dialog v-model="deletecatagorydialog" persistent max-width="40%">
-          <v-card class="mx-auto pa-5" :elevation="hover ? 24 : 6">
+          <v-card class="mx-auto pa-5" >
             <base-material-card
               color="error"
               icon="mdi-delete"
               title="ลบข้อมูล"
               class="px-5 py-3 text_google"
-              :elevation="hover ? 24 : 6"
+              
             >
             </base-material-card>
             <v-card-text class="text_google">
@@ -191,13 +191,13 @@
       <!-- V-model editcatagorydialog -->
       <v-layout row justify-center>
         <v-dialog v-model="editcatagorydialog" persistent max-width="50%">
-          <v-card class="mx-auto pa-5" :elevation="hover ? 24 : 6">
+          <v-card class="mx-auto pa-5" >
             <base-material-card
               color="yellow"
               icon="mdi-clipboard-text"
               title="แก้ไขข้อมูลสินค้า"
               class="px-5 py-3 text_google"
-              :elevation="hover ? 24 : 6"
+              
             >
             </base-material-card>
             <v-card-text>

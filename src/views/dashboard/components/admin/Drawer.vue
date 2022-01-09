@@ -108,6 +108,8 @@ export default {
           { title: "สถานะผู้ใช้งานระบบ", action: "mdi-account-cog", to: "/admin/user_status" },
           { title: "ข้อมูลประเภทสถานศึกษา", action: "mdi-office-building", to: "/admin/collegetype" },
           { title: "ข้อมูลรอบปี", action: "mdi-calendar", to: "/admin/period" },
+          { title: "ข้อมูลสถานศึกษา", action: "mdi-calendar", to: "/admin/college" },
+          
         ],
         title: "จัดการผู้ใช้งานระบบ",
       },
@@ -115,11 +117,11 @@ export default {
         action: "mdi-account-reactivate",        
         items: [
           { title: "ข้อมูลเกี่ยวกับบุคคล", action: "mdi-account", to: "/admin/personnel_tem" },
-          { title: "ข้อมูลคุณวุฒิการศึกษา", action: "mdi-school", to: "/admin/personnel_education" },
+         /*  { title: "ข้อมูลคุณวุฒิการศึกษา", action: "mdi-school", to: "/admin/personnel_education" },
           { title: "ข้อมูลประสบการณ์", action: "mdi-airplane", to: "/admin/personnel_experience" },
           { title: "ข้อมูลประวัติการทำงาน", action: "mdi-access-point-network", to: "/admin/personnel_work_history" },
           { title: "ข้อมูลผลงาน รางวัล", action: "mdi-trophy-award", to: "/admin/personnel_award" },
-          { title: "ข้อมูลโทษ วินัย", action: "mdi-alarm-light", to: "/admin/personnel_discipline" },
+          { title: "ข้อมูลโทษ วินัย", action: "mdi-alarm-light", to: "/admin/personnel_discipline" }, */
         ],
         title: "ระบบงานบุคคล",
       },
@@ -146,7 +148,7 @@ export default {
        {
         action: "mdi-human",
         items: [
-          { title: "ข้อมูลอัตรากำลังสถานศึกษา", action: "mdi-basket-plus", to: "/Dashboard" },        
+          { title: "ข้อมูลอัตรากำลังสถานศึกษา", action: "mdi-basket-plus", to: "/admin/man_power" },        
           { title: "ข้อมูลเชิงปริมาณ", action: "mdi-chart-box-outline", to: "/Dashboard" },        
           { title: "ข้อมูลเชิงปริมาณ", action: "mdi-chart-box-outline", to: "/Dashboard" },        
         ],

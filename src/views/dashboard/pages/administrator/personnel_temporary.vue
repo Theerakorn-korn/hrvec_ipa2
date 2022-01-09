@@ -6,7 +6,7 @@
         icon="mdi-clipboard-text"
         title="ข้าราชการครูและบุคลากรทางการศึกษา"
         class="px-5 py-3"
-        :elevation="hover ? 24 : 6"
+        
       >
         <v-card class="mb-4 pa-2">
           <v-row>
@@ -17,7 +17,7 @@
                 label="ค้นหา ระบุคำ หรือ ส่วนข้อความเกี่ยวข้อง"
                 single-line
                 hide-details
-                :elevation="hover ? 24 : 6"
+                 v-on:keyup.enter="OnEnter()"   
                 dense
                 filled
                 class="mb-2"
@@ -25,7 +25,7 @@
             </v-col>
             <v-col cols="12" lg="6" class="text-right">
               <v-btn
-                :elevation="hover ? 24 : 6"
+                
                 large
                 right
                 depressed
@@ -37,27 +37,17 @@
             </v-col>
           </v-row>
         </v-card>
-       <v-data-table :headers="headers" :items="personnel_temporarys" :search="search" :rows-per-page-items="rowsperpage" :pagination.sync="pagination"
-              class="elevation-1">
-              <template v-slot:[`item.id_rc`]="{ item }">  
-         {{ item.id_rc }}
-          </template>       
-               <template v-slot:[`item.college_code`]="{ item }">  
-         {{ item.college_name }}
-          </template>
-          <template v-slot:[`item.title_s`]="{ item }">  
-         {{ item.title_s }} {{ item.frist_name }} {{ item.last_name }}
-          </template>
-          <template v-slot:[`item.brith_day`]="{ item }">  
-         {{ item.brith_day }}/{{ item.brith_month }}/{{ item.brith_year }}
-          </template>
-            <template v-slot:[`item.appoin_day`]="{ item }">  
-         {{ item.appoin_day }}/{{ item.appoin_month }}/{{ item.appoin_year }}
-          </template>
+       <v-data-table 
+       :headers="headers" 
+       :items="personnel_temporarys"      
+        class="elevation-1"
+        :loading="loading"
+         :search="search"
+              >            
                <template v-slot:[`item.actions`]="{ item }">
             <v-icon
               color="yellow"
-              :elevation="hover ? 24 : 6"
+              
               @click.stop="personnel_temporaryEdit(item.id_rc)"
             >
               mdi-pencil
@@ -66,7 +56,7 @@
             <template v-slot:[`item.action_s`]="{ item }">            
             <v-icon
               color="red"
-              :elevation="hover ? 24 : 6"
+              
               @click.stop="personnel_temporaryDelete(item.id_rc)"
             >
               mdi-delete
@@ -80,13 +70,13 @@
 
       <!--addpersonnel_temporarydialog  -->
       <v-layout row justify-center>
-        <v-dialog v-model="addpersonnel_temporarydialog" persistent max-width="50%">
-          <v-card class="mx-auto pa-5" :elevation="hover ? 24 : 6">
+        <v-dialog v-model="addpersonnel_temporarydialog" persistent max-width="80%">
+          <v-card class="mx-auto pa-5" >
             <base-material-card
               icon="mdi-account-multiple"
               title="เพิ่มข้อมูลข้าราชการครูและบุคลากรทางการศึกษา"
               class="px-5 py-3 text_google"
-              :elevation="hover ? 24 : 6"
+              
             >
             </base-material-card>
 
@@ -95,123 +85,153 @@
               <v-container grid-list-md>
                 <v-layout wrap>
                   <v-flex md6>
-                    <v-select :items="userstatus"  item-text="user_status_name" item-value="user_status_sub" v-model="addpersonnel_temporary.personnel_temporary_status" label="Type" required
+                    <v-select :items="userstatus"  item-text="user_status_name" item-value="user_status_sub" v-model="addpersonnel_temporary.user_status" label="Type" required
                       :rules="[v => !!v || '']"></v-select>
-                  </v-flex>         
-                   <v-flex xs12 v-if="addpersonnel_temporary.personnel_temporary_status == 'E' || addpersonnel_temporary.personnel_temporary_status == 'T'">
-                    <v-autocomplete :items="colleges" item-text="college_name" item-value="college_code" v-model="addpersonnel_temporary.college_code" label="สถานศึกษา"
+                  </v-flex>        
+                  <v-flex xs12 v-if="addpersonnel_temporary.user_status == 'tech' || addpersonnel_temporary.user_status == 'se_director' || addpersonnel_temporary.user_status == 'director'">
+                    <v-autocomplete :items="colleges" item-text="college_name" item-value="college_code" v-model="addpersonnel_temporary.college_code" label="วิทยาลัย" @change="man_powerQuery()"
                       required :rules="[v => !!v || '']">                      
                       </v-autocomplete>                    
-                  </v-flex>         
+                  </v-flex>                   
+                    <v-flex xs12>
+                    <v-divider></v-divider>
+                  </v-flex>  
+                   <v-flex md12>
+                    <v-text-field label="คำสั่งที่" v-model="addpersonnel_temporary.order_app_now" required :rules="[v => !!v || '']"></v-text-field>
+                  </v-flex>       
                   <v-flex md6>
                     <v-text-field label="รหัสบัตรประชาชน" v-model="addpersonnel_temporary.id_card" required :rules="[v => !!v || '']"></v-text-field>
                   </v-flex>
                   <v-flex md6>
-
                   </v-flex>
-                  <v-flex md6>
+                  <v-flex md4>
                     <v-text-field label="คำนำหน้าชื่อ" v-model="addpersonnel_temporary.title_s" require :rules="[v => !!v || '']"></v-text-field>
-                  </v-flex>                 
-                  <v-flex xs12>
-                    <v-divider></v-divider>
-                  </v-flex>
-                  <v-flex md6>
+                  </v-flex> 
+                  <v-flex md4>
                     <v-text-field label="ชื่อ" v-model="addpersonnel_temporary.frist_name" require :rules="[v => !!v || '']"></v-text-field>
                   </v-flex>
-                  <v-flex md6>
+                  <v-flex md4>
                     <v-text-field label="นามสกุล" v-model="addpersonnel_temporary.last_name" required :rules="[v => !!v || '']"></v-text-field>
                   </v-flex>
-                              <v-flex md6>
-                    <v-autocomplete :items="position_names" item-text="text" item-value="value" label="ตำแหน่ง" v-model="addpersonnel_temporary.position_name" required :rules="[v => !!v || '']"></v-autocomplete>
+                  <v-flex md6>
+                    <v-autocomplete :items="userstatus" item-text="user_status_name" item-value="user_status_name" label="ตำแหน่ง" v-model="addpersonnel_temporary.position_name" required :rules="[v => !!v || '']"></v-autocomplete>
                   </v-flex>
-                               <v-flex md6>
-                    <v-autocomplete :items="man_powers" item-text="id_position" item-value="id_position" label="เลขที่ตำแหน่ง" v-model="addpersonnel_temporary.id_position" required :rules="[v => !!v || '']"></v-autocomplete>
+                   <v-flex md6>
+                    <v-autocomplete :items="man_powers" item-text="college_position" item-value="id_position" label="เลขที่ตำแหน่ง" v-model="addpersonnel_temporary.id_position" required :rules="[v => !!v || '']"></v-autocomplete>
                   </v-flex>
-                               <v-flex md6>
+                  <v-flex md6>
                     <v-autocomplete :items="rang_names" item-text="text" item-value="value" label="วิทยฐานะ" v-model="addpersonnel_temporary.rang_name" required :rules="[v => !!v || '']"></v-autocomplete>
                   </v-flex>
-                               <v-flex md6>
+                   <v-flex md6>
                     <v-select :items="rang_levels" label="ระดับ" v-model="addpersonnel_temporary.rang_level" required :rules="[v => !!v || '']"></v-select>
                   </v-flex>
-                               <v-flex md6>
+                   <v-flex md6>
                     <v-text-field label="คุณวิฒิ" v-model="addpersonnel_temporary.ed_abb" required :rules="[v => !!v || '']"></v-text-field>
                   </v-flex>
-                             <v-flex md6>
+                   <v-flex md6>
                     <v-text-field label="สาขาวิชา" v-model="addpersonnel_temporary.ed_name" required :rules="[v => !!v || '']"></v-text-field>
                   </v-flex>
                      <v-flex md6>
-        <v-menu
-          ref="menu1"
-          v-model="menu1"
-          :close-on-content-click="false"
-          transition="scale-transition"
-          offset-y
-          max-width="290px"
-          min-width="auto"
-        >
-          <template v-slot:activator="{ on, attrs }">
-            <v-text-field
-              v-model="addpersonnel_temporary.birthday"
-              label="วันเดือนปีเกิด"
-              hint="MM/DD/YYYY format"
-              persistent-hint
-              prepend-icon="mdi-calendar"
-              v-bind="attrs"
-              @blur="date = parseDate(addpersonnel_temporary.birthday)"
-              v-on="on"
-              required :rules="[v => !!v || '']"
-            ></v-text-field>
-          </template>
-          <v-date-picker
-            v-model="date"
-            locale="th"
-            no-title
-            @input="menu1 = false"
-          ></v-date-picker>
-        </v-menu>        
-                  <span>ปีเกิด : {{ parseInt(reversedYearbrith)+543 }} เดือนเกิด {{ parseInt(reversedMonthbrith) }} </span>
-                   
-                  </v-flex>
-                     <v-flex md6>
-                     <v-menu
-          ref="menu1"
-          v-model="menu1"
-          :close-on-content-click="false"
-          transition="scale-transition"
-          offset-y
-          max-width="290px"
-          min-width="auto"
-        >
-          <template v-slot:activator="{ on, attrs }">
-            <v-text-field
-              v-model="addpersonnel_temporary.date_appoinment"
-              label="วันเดือนปีบรรจุ"
-              hint="MM/DD/YYYY format"
-              persistent-hint
-              prepend-icon="mdi-calendar"
-              v-bind="attrs"
-              @blur="date_t = parseDate_t(addpersonnel_temporary.date_appoinment)"
-              v-on="on"
-              required :rules="[v => !!v || '']"
-            ></v-text-field>
-          </template>
-          <v-date-picker
-            v-model="date_t"
-            locale="th"
-            no-title
-            @input="menu1 = false"
-          ></v-date-picker>
-        </v-menu>        
-                   ปีที่บรรจุ : {{ parseInt(reversedYearadd)+543  }} 
-                  </v-flex>
-                     <v-flex md6>
-                    <v-text-field label="ปีที่เกษียณ" v-model="addpersonnel_temporary.retrire_year" required :rules="[v => !!v || '']">  
-                     
-                    </v-text-field>
-                   <span>ปีเกษียณ : </span>  
-                   <span v-if="parseInt(reversedMonthbrith) >= 10"> {{ parseInt(parseInt(reversedYearbrith)+543)+61 }} </span>                 
-                   <span v-if="parseInt(reversedMonthbrith) < 10"> {{ parseInt(parseInt(reversedYearbrith)+543)+60 }} </span>         
-                  </v-flex>                
+                <v-menu
+                        ref="menu"
+                        v-model="menu"
+                        :close-on-content-click="false"
+                        :return-value.sync="date"
+                        transition="scale-transition"
+                        offset-y
+                        min-width="auto"
+                      >
+                        <template v-slot:activator="{ on, attrs }">
+                          <v-text-field
+                            v-model="addpersonnel_temporary.birthday"
+                            label="วันเดือนปีเกิด"
+                            prepend-icon="mdi-calendar"
+                            readonly
+                            v-bind="attrs"
+                            v-on="on"
+                            locale="th"
+                            required :rules="[v => !!v || '']"
+                          ></v-text-field>
+                        </template>
+                        <v-date-picker
+                          v-model="addpersonnel_temporary.birthday"
+                          no-title
+                          scrollable
+                          locale="th"
+                        >
+                          <v-spacer></v-spacer>
+                          <v-btn
+                            text
+                            color="primary"
+                            @click="menu = false"
+                          >
+                            Cancel
+                          </v-btn>
+                          <v-btn
+                            text
+                            color="primary"
+                            @click="$refs.menu.save(date)"
+                          >
+                            OK
+                          </v-btn>
+                        </v-date-picker>
+                      </v-menu>    
+                      {{ brith_day }}                  
+                              <!--     <span>อายุปี : {{ cal_date_age }} </span><br>
+                                  <span>เดือน :{{ birth_month }}</span><br>
+                                  <span>ปี :{{ birth_year }}</span><br>
+                                  <span>ปี :{{ retrire_year }}</span>
+                                   -->
+                                   <span>ปีเกษียณ :{{ retrire_year }}</span>   
+                                  </v-flex>
+                                    <v-flex md6>
+
+
+                <v-menu
+                        ref="menu2"
+                        v-model="menu2"
+                        :close-on-content-click="false"
+                        :return-value.sync="date"
+                        transition="scale-transition"
+                        offset-y
+                        min-width="auto"
+                      >
+                        <template v-slot:activator="{ on, attrs }">
+                          <v-text-field
+                            v-model="addpersonnel_temporary.date_app_now"
+                            label="วันเดือนปีที่บรรจุ"
+                            prepend-icon="mdi-calendar"
+                            readonly
+                            v-bind="attrs"
+                            v-on="on"
+                            locale="th"
+                            required :rules="[v => !!v || '']"
+                          ></v-text-field>
+                        </template>
+                        <v-date-picker
+                          v-model="addpersonnel_temporary.date_app_now"
+                          no-title
+                          scrollable
+                          locale="th"
+                        >
+                          <v-spacer></v-spacer>
+                          <v-btn
+                            text
+                            color="primary"
+                            @click="menu2 = false"
+                          >
+                            Cancel
+                          </v-btn>
+                          <v-btn
+                            text
+                            color="primary"
+                            @click="$refs.menu2.save(date)"
+                          >
+                            OK
+                          </v-btn>
+                        </v-date-picker>
+                      </v-menu>
+                  </v-flex>                            
                   <v-flex md6>
                     <v-text-field label="เบอร์โทร" v-model="addpersonnel_temporary.tel_p" required :rules="[v => !!v || '']"></v-text-field>
                   </v-flex>
@@ -249,20 +269,21 @@
       <!-- V-model deletepersonnel_temporarydialog -->
       <v-layout>
         <v-dialog v-model="deletepersonnel_temporarydialog" persistent max-width="40%">
-          <v-card class="mx-auto pa-5" :elevation="hover ? 24 : 6">                     
+          <v-card class="mx-auto pa-5" >                     
              <base-material-card
               color="error"
               icon="mdi-delete"
               title="ลบข้อมูลผู้ใช้"
               class="px-5 py-3 text_google"
-              :elevation="hover ? 24 : 6"
+              
              
             >
             </base-material-card>
 
             <v-card-text class="text_google">
               
-        <v-card>        
+        <v-card>  
+          
           <v-card-text>
             <v-form ref="deletepersonnel_temporaryform" lazy-validation>
               <v-container grid-list-md>
@@ -297,52 +318,183 @@
       <!-- V-model editpersonnel_temporarydialog -->
       <v-layout row justify-center>
          <v-dialog v-model="editpersonnel_temporarydialog" persistent max-width="80%">
-        <v-card class="mx-auto pa-6" :elevation="hover ? 24 : 6">
+        <v-card class="mx-auto pa-6" >
            <base-material-card
               color="yellow"
               icon="mdi-clipboard-text"
               title="แก้ไขข้อมูลผู้ใช้งานระบบ"
               class="px-5 py-3 text_google"
-              :elevation="hover ? 24 : 6"
+              
             ></base-material-card>
           <v-card-text>
             <v-form ref="editpersonnel_temporaryform" lazy-validation>
               <v-container grid-list-md>
-                <v-layout wrap>
+                 <v-layout wrap>
                   <v-flex md6>
-                    <v-select :items="personnel_temporarystatus" item-text="text" item-value="value" v-model="editpersonnel_temporary.personnel_temporary_status" label="personnel_temporary Type" required
+                    <v-select v-model="editpersonnel_temporary.user_status" :items="userstatus" item-text="user_status_name" item-value="user_status_sub" label="Type" required
                       :rules="[v => !!v || '']"></v-select>
-                  </v-flex>
-                  <v-flex md6>
-                    <v-text-field label="personnel_temporaryname" v-model="editpersonnel_temporary.college_code" required :rules="[v => !!v || '']"></v-text-field>
-                  </v-flex>
-                  <v-flex md6>
-                    <v-text-field label="Password" v-model="editpersonnel_temporary.personnel_temporary_password" type="password"></v-text-field>
-                  </v-flex>
-                  <v-flex md6>
-                    <v-text-field label="Confirm Password" v-model="editpersonnel_temporary.personnel_temporary_confirmpassword" type="password"></v-text-field>
-                  </v-flex>
-                  <v-flex xs12>
+                  </v-flex>        
+                  <v-flex xs12 v-if="editpersonnel_temporary.user_status == 'tech' || editpersonnel_temporary.user_status == 'se_director' || editpersonnel_temporary.user_status == 'director'">
+                    <v-autocomplete v-model="editpersonnel_temporary.college_code" :items="colleges" item-text="college_name" item-value="college_code"  label="วิทยาลัย" @change="man_powerQuery()"
+                      required :rules="[v => !!v || '']">                      
+                      </v-autocomplete>                    
+                  </v-flex>                   
+                    <v-flex xs12>
                     <v-divider></v-divider>
+                  </v-flex>  
+                   <v-flex md12>
+                    <v-text-field label="คำสั่งที่" v-model="editpersonnel_temporary.order_app_now" required :rules="[v => !!v || '']"></v-text-field>
+                  </v-flex>       
+                  <v-flex md6>
+                    <v-text-field label="รหัสบัตรประชาชน" v-model="editpersonnel_temporary.id_card" required :rules="[v => !!v || '']"></v-text-field>
                   </v-flex>
                   <v-flex md6>
-                    <v-text-field label="Firstname" v-model="editpersonnel_temporary.personnel_temporary_firstname" require :rules="[v => !!v || '']"></v-text-field>
+                  </v-flex>
+                  <v-flex md4>
+                    <v-text-field label="คำนำหน้าชื่อ" v-model="editpersonnel_temporary.title_s" require :rules="[v => !!v || '']"></v-text-field>
+                  </v-flex> 
+                  <v-flex md4>
+                    <v-text-field label="ชื่อ" v-model="editpersonnel_temporary.frist_name" require :rules="[v => !!v || '']"></v-text-field>
+                  </v-flex>
+                  <v-flex md4>
+                    <v-text-field label="นามสกุล" v-model="editpersonnel_temporary.last_name" required :rules="[v => !!v || '']"></v-text-field>
                   </v-flex>
                   <v-flex md6>
-                    <v-text-field label="Lastname" v-model="editpersonnel_temporary.personnel_temporary_lastname" required :rules="[v => !!v || '']"></v-text-field>
+                    <v-autocomplete v-model="editpersonnel_temporary.position_name" :items="userstatus" item-text="user_status_name" item-value="user_status_name" label="ตำแหน่ง"  required :rules="[v => !!v || '']"></v-autocomplete>
                   </v-flex>
-                  <v-flex xs12 v-if="editpersonnel_temporary.personnel_temporary_status == 'B'">
-                    <v-select :items="colleges" item-text="college_name" item-value="college_ID" v-model="editpersonnel_temporary.college_ID" label="College"
-                      required :rules="[v => !!v || '']"></v-select>
+                   <v-flex md6>
+                    <v-autocomplete v-model="editpersonnel_temporary.id_position" :items="man_powers" item-text="college_position" item-value="id_position" label="เลขที่ตำแหน่ง"  required :rules="[v => !!v || '']"></v-autocomplete>
                   </v-flex>
+                  <v-flex md6>
+                    <v-autocomplete v-model="editpersonnel_temporary.rang_name" :items="rang_names" item-text="text" item-value="value" label="วิทยฐานะ"  required :rules="[v => !!v || '']"></v-autocomplete>
+                  </v-flex>
+                   <v-flex md6>
+                    <v-select v-model="editpersonnel_temporary.rang_level" :items="rang_levels" label="ระดับ"  required :rules="[v => !!v || '']"></v-select>
+                  </v-flex>
+                   <v-flex md6>
+                    <v-text-field label="คุณวิฒิ" v-model="editpersonnel_temporary.ed_abb" required :rules="[v => !!v || '']"></v-text-field>
+                  </v-flex>
+                   <v-flex md6>
+                    <v-text-field label="สาขาวิชา" v-model="editpersonnel_temporary.ed_name" required :rules="[v => !!v || '']"></v-text-field>
+                  </v-flex>
+                     <v-flex md6>
+                <v-menu
+                        ref="menu3"
+                        v-model="menu3"
+                        :close-on-content-click="false"
+                        :return-value.sync="date"
+                        transition="scale-transition"
+                        offset-y
+                        min-width="auto"
+                      >
+                        <template v-slot:activator="{ on, attrs }">
+                          <v-text-field
+                            v-model="editpersonnel_temporary.birthday"
+                            label="วันเดือนปีเกิด"
+                            prepend-icon="mdi-calendar"
+                            readonly
+                            v-bind="attrs"
+                            v-on="on"
+                            locale="th"
+                            required :rules="[v => !!v || '']"
+                          ></v-text-field>
+                        </template>
+                        <v-date-picker
+                          v-model="editpersonnel_temporary.birthday"
+                          no-title
+                          scrollable
+                          locale="th"
+                        >
+                          <v-spacer></v-spacer>
+                          <v-btn
+                            text
+                            color="primary"
+                            @click="menu3 = false"
+                          >
+                            Cancel
+                          </v-btn>
+                          <v-btn
+                            text
+                            color="primary"
+                            @click="$refs.menu3.save(date)"
+                          >
+                            OK
+                          </v-btn>
+                        </v-date-picker>
+                      </v-menu>    
+                      {{ brith_day }}                  
+                              <!--     <span>อายุปี : {{ cal_date_age }} </span><br>
+                                  <span>เดือน :{{ birth_month }}</span><br>
+                                  <span>ปี :{{ birth_year }}</span><br>
+                                  <span>ปี :{{ retrire_year }}</span>
+                                   -->
+                                   <span>ปีเกษียณ :{{ retrire_year }}</span>   
+                                  </v-flex>
+                                    <v-flex md6>
+
+
+                <v-menu
+                        ref="menu4"
+                        v-model="menu4"
+                        :close-on-content-click="false"
+                        :return-value.sync="date"
+                        transition="scale-transition"
+                        offset-y
+                        min-width="auto"
+                      >
+                        <template v-slot:activator="{ on, attrs }">
+                          <v-text-field
+                            v-model="editpersonnel_temporary.date_app_now"
+                            label="วันเดือนปีที่บรรจุ"
+                            prepend-icon="mdi-calendar"
+                            readonly
+                            v-bind="attrs"
+                            v-on="on"
+                            locale="th"
+                            required :rules="[v => !!v || '']"
+                          ></v-text-field>
+                        </template>
+                        <v-date-picker
+                          v-model="editpersonnel_temporary.date_app_now"
+                          no-title
+                          scrollable
+                          locale="th"
+                        >
+                          <v-spacer></v-spacer>
+                          <v-btn
+                            text
+                            color="primary"
+                            @click="menu4 = false"
+                          >
+                            Cancel
+                          </v-btn>
+                          <v-btn
+                            text
+                            color="primary"
+                            @click="$refs.menu4.save(date)"
+                          >
+                            OK
+                          </v-btn>
+                        </v-date-picker>
+                      </v-menu>
+                  </v-flex>                            
+                  <v-flex md6>
+                    <v-text-field label="เบอร์โทร" v-model="editpersonnel_temporary.tel_p" required :rules="[v => !!v || '']"></v-text-field>
+                  </v-flex>
+                   <v-flex md6>
+                    <v-text-field label="E-mail" v-model="editpersonnel_temporary.e_mail" required :rules="[v => !!v || '']"></v-text-field>
+                  </v-flex>
+
                 </v-layout>
+
+               
               </v-container>
               <small>* จำเป็น</small>
             </v-form>
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn large flat @click.stop="editpersonnel_temporarydialog = false" rounded>
+            <v-btn large @click.stop="editpersonnel_temporarydialog = false" rounded>
                 <v-icon dark>mdi-close</v-icon>ยกเลิก
               </v-btn>
               <v-btn large color="warning" @click.stop="editpersonnel_temporarySubmit()" rounded>
@@ -358,7 +510,7 @@
     
     <v-container fluid>      
 
- <v-snackbar v-model="snackbar.show" top :multi-line="multiLine" :timeout="snackbar.timeout" :color="snackbar.color">
+ <v-snackbar v-model="snackbar.show" top  :timeout="snackbar.timeout" :color="snackbar.color">
       <v-icon large>{{snackbar.icon}}</v-icon>
       <v-card-text>
         {{snackbar.text}}
@@ -377,8 +529,8 @@
 export default {  
   data() {
     return {
-       loading: true,       
-     ApiKey: 'HRvec2021',
+      loading: true,       
+      ApiKey: 'HRvec2021',
       valid: true,
       addpersonnel_temporarydialog: false,
       editpersonnel_temporarydialog: false,
@@ -396,27 +548,22 @@ export default {
       search: '',
       pagination: {},      
       headers: [
-        { text: "ลำดับ", align: "center", value:"id_rc"},
-        { text: "วิทยาลัย", align: "center", value:"college_code" },              
-        { text: "รหัสบัตรประชาชน", align: "center", value:"id_card" },
-        { text: "ชื่อ-นามสกุล", align: "center", value:"title_s" },
-        { text: "ตำแหน่ง", align: "center", value:"position_name"  },
-        { text: "เลขที่ตำแหน่ง", align: "center", value:"id_position" },       
-        { text: "วิทยฐานะ", align: "center", value:"rang_name"  },
-        { text: "ระดับ", align: "center", value:"rang_level"  },
-        { text: "วันเดือนปีเกิด", align: "center", value:"brith_day" },
-        { text: "วันเดือนปีบรรจุ", align: "center", value:"appoin_day" },
-        { text: "เกษียณ", align: "center", value:"retrire_year"  },      
+        { text: "ลำดับ", align: "center", value: "id_rc"},
+        { text: "วิทยาลัย",width: "20%", align: "center", value: "college_name" },              
+        { text: "รหัสบัตรประชาชน", align: "center", value: "id_card" },
+        { text: "คำนำ", align: "center", value: "title_s" },
+        { text: "ชื่อ", align: "center", value: "frist_name" },
+        { text: "สกุล", align: "center", value: "last_name" },
+        { text: "ตำแหน่ง", align: "center", value: "position_name"  },
+        { text: "เลขที่ตำแหน่ง", align: "center", value: "id_position" },       
+        { text: "วิทยฐานะ", align: "center", value: "rang_name"  },
+        { text: "ระดับ", align: "center", value: "rang_level"  },
+        { text: "วันเดือนปีเกิด", align: "center", value: "brith_day" },
+        { text: "วันเดือนปีบรรจุ", align: "center", value: "appoin_day" },
+        { text: "เกษียณ", align: "center", value: "retrire_year"  },      
         { text: "แก้ไข", align: "center", value: "actions", icon: "mdi-file-document-edit" },
         { text: "ลบ", align: "center", value: "action_s" , icon: "mdi-delete-forever" },
-      ],
-      position_names:[
-          { text: "ครูผู้ช่วย", value: "ครูผู้ช่วย"},
-          { text: "ครู", value: "ครู"},
-          { text: "รองผู้อำนวยการ", value: "รองผู้อำนวยการ"},
-          { text: "ผู้อำนวยการ", value: "ผู้อำนวยการ"},
-          { text: "ศึกษานิเทศก์", value: "ศึกษานิเทศก์"},
-      ],
+      ],    
       rang_names:[
           { text: "-", value: "-"},
           { text: "ชำนาญการ", value: "ชำนาญการ"},
@@ -435,20 +582,20 @@ export default {
         },
       ],    
      
-    college: {},
+      college: {},
       provinces: [],
       prefectures: [],
-       userstatus:[],
-       man_powers:[],
-     collgegs: [],
-     personnel_temporarystatus:[],
+      userstatus:[],
+      man_powers:[],
+      collgegs: [],
+      personnel_temporarystatus:[],
       regions: [],
       region_ena: true,  
-  date: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
-  date_t: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
-      menu: false,
-      modal: false,
+      date: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
+      menu: false,      
       menu2: false,
+      menu3: false,
+      menu4: false,
   
     };
     
@@ -457,6 +604,9 @@ export default {
      
  
 async mounted() {
+
+  await this.personnel_temporaryQueryAll()
+
       let result
       result = await this.$http.post('collegetype.php', {
         ApiKey: this.ApiKey
@@ -477,21 +627,38 @@ async mounted() {
       })
       this.regions = result.data  
 
-     // this.personnel_temporaryQueryAll()
+    
 
     let user_status_result     
       user_status_result = await this.$http.post('crud_user_status.php?crud=read', {
         ApiKey: this.ApiKey
       })
-        this.userstatus = user_status_result.data
+        this.userstatus = user_status_result.data         
+    },
 
-let man_power_result     
-      man_power_result = await this.$http.post('crud_man_power.php?crud=read', {
-        ApiKey: this.ApiKey
+
+    methods: {
+
+  async OnEnter(){
+       let result = await this.$http.post('personnel_temporary.php', {
+          ApiKey: this.ApiKey,
+          frist_name: this.search
+        })
+        this.personnel_temporarys = result.data  
+        console.log(result.data) 
+        console.log(this.search)  
+    },
+
+
+     async man_powerQuery(){
+         let man_power_result     
+      man_power_result = await this.$http.post('man_power.php', {
+        ApiKey: this.ApiKey,
+        college_code : this.addpersonnel_temporary.college_code
       })
         this.man_powers = man_power_result.data
-    },
-    methods: {
+      },
+
       async personnel_temporaryQueryAll() {
           this.loading = true
         let result = await this.$http.post('personnel_temporary.php', {
@@ -500,13 +667,22 @@ let man_power_result
         this.personnel_temporarys = result.data       
       },
 
-       async personnel_temporaryAdd() {
+      async personnel_temporaryAdd() {
       this.addpersonnel_temporary = {};
       this.addpersonnel_temporarydialog = true;
     },
       async addpersonnel_temporarySubmit() {
         if (this.$refs.addpersonnel_temporaryform.validate()) {         
           this.addpersonnel_temporary.ApiKey = this.ApiKey;
+          this.addpersonnel_temporary.p_word = this.p_word;
+          this.addpersonnel_temporary.brith_day = this.brith_day;
+          this.addpersonnel_temporary.brith_month = this.brith_month;
+          this.addpersonnel_temporary.brith_year = this.brith_year;
+          this.addpersonnel_temporary.appoin_day = this.appoin_day;
+          this.addpersonnel_temporary.appoin_month = this.appoin_month;
+          this.addpersonnel_temporary.appoin_year = this.appoin_year;
+          this.addpersonnel_temporary.retrire_year = this.retrire_year;
+        
           let result = await this.$http.post('personnel_temporary.insert.php', this.addpersonnel_temporary)        
           if (result.data.status == true) {
             this.personnel_temporary = result.data
@@ -530,16 +706,21 @@ let man_power_result
           ApiKey: this.ApiKey,
           id_rc: id_rc
         })
-        this.editpersonnel_temporary = result.data
-        this.editpersonnel_temporary.personnel_temporary_password = ''
+        this.editpersonnel_temporary = result.data       
         this.editpersonnel_temporarydialog = true
       },
       async editpersonnel_temporarySubmit() {
         if (this.$refs.editpersonnel_temporaryform.validate()) {
-          this.editpersonnel_temporary.ApiKey = this.ApiKey;
-          if(this.editpersonnel_temporary.personnel_temporary_password == '')
-            delete this.editpersonnel_temporary.personnel_temporary_password
-          let result = await this.$http.post('personnel_temporary.update.php', this.editpersonnel_temporary)
+          this.editpersonnel_temporary.ApiKey = this.ApiKey;     
+          this.editpersonnel_temporary.p_word = this.p_word;
+          this.editpersonnel_temporary.brith_day = this.brith_day;
+          this.editpersonnel_temporary.brith_month = this.brith_month;
+          this.editpersonnel_temporary.brith_year = this.brith_year;
+          this.editpersonnel_temporary.appoin_day = this.appoin_day;
+          this.editpersonnel_temporary.appoin_month = this.appoin_month;
+          this.editpersonnel_temporary.appoin_year = this.appoin_year;
+          this.editpersonnel_temporary.retrire_year = this.retrire_year;    
+          let result = await this.$http.post('personnel_temporary.update.admin.php', this.editpersonnel_temporary)
           if (result.data.status == true) {
             this.personnel_temporary = result.data
             this.snackbar.icon = 'mdi-font-awesome'
@@ -589,26 +770,6 @@ let man_power_result
           this.deletepersonnel_temporarydialog = false
         }
       }, 
-      formatDate (date) {
-        if (!date) return null
-        const [year, month, day] = date.split('-')
-        return `${month}/${day}/${year}`
-      },
-      formatDate_t (date_t) {
-        if (!date_t) return null
-        const [year, month, day] = date_t.split('-')
-        return `${month}/${day}/${year}`
-      },
-      parseDate (date) {
-        if (!date) return null
-        const [month, day, year] = date.split('/')
-        return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`
-      },    
-      parseDate_t (date_t) {
-        if (!date_) return null
-        const [month, day, year] = date_t.split('/')
-        return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`
-      },    
     },
     computed: {
       pages() {
@@ -617,38 +778,170 @@ let man_power_result
         ) return 0
 
         return Math.ceil(this.pagination.totalItems / this.pagination.rowsPerPage)
+      },  
+      p_word(){
+            let today = new Date(this.addpersonnel_temporary.birthday || this.editpersonnel_temporary.birthday);
+            let dd = String(today.getDate()).padStart(2, '0');
+            let mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+            let yyyy = today.getFullYear()+543;
+            let password = dd + '/' + mm + '/' + yyyy;
+            return password
       },
-      computedDateFormatted () {
-        return this.formatDate(this.date)
+      brith_day(){
+         let today = new Date(this.addpersonnel_temporary.birthday || this.editpersonnel_temporary.birthday);
+            let dd = parseInt(String(today.getDate()).padStart(2, '0'));  
+            return dd
       },
-       computedDateFormatted_t () {
-        return this.formatDate_t(this.date_t)
+      brith_month(){
+          let today = new Date(this.addpersonnel_temporary.birthday || this.editpersonnel_temporary.birthday);         
+            let mm = parseInt(String(today.getMonth() + 1).padStart(2, '0'));       
+            return mm
       },
-      reversedYearadd: function () {
-      // `this` points to the vm instance
-      return this.date_t.split('-',1)
-    },
-    reversedYearbrith: function () {
-      // `this` points to the vm instance
-      return this.date.split('-',1)
-    },
-     reversedMonthbrith: function () {
-        const [year, month, day] = this.date.split('-')
-        return `${month.padStart(1, '0')}`
-    }
-    },
-watch: {
-      date (val) {
-        this.addpersonnel_temporary.birthday = this.formatDate(this.date)
+      brith_year(){
+           let today = new Date(this.addpersonnel_temporary.birthday || this.editpersonnel_temporary.birthday);       
+            let yyyy = today.getFullYear()+543;        
+            return yyyy
       },
-        date_t (val) {
-        this.addpersonnel_temporary.date_appoinment = this.formatDate_t(this.date_t)
-      },
-    },
-  
 
- 
+      appoin_day(){
+         let today = new Date(this.addpersonnel_temporary.date_app_now || this.editpersonnel_temporary.date_app_now);
+            let dd = parseInt(String(today.getDate()).padStart(2, '0'));  
+            return dd
+      },
+      appoin_month(){
+          let today = new Date(this.addpersonnel_temporary.date_app_now || this.editpersonnel_temporary.date_app_now);
+          let mm = parseInt(String(today.getMonth() + 1).padStart(2, '0')); //January is 0!
+          return mm
+      },
+      appoin_year(){
+         let today = new Date(this.addpersonnel_temporary.date_app_now || this.editpersonnel_temporary.date_app_now);        
+        let yyyy = today.getFullYear()+543;      
+        return yyyy
+      },
+     date_today_cal() {
+            let today = new Date(this.addpersonnel_temporary.birthday || this.editpersonnel_temporary.birthday);
+            let dd = String(today.getDate()).padStart(2, '0');
+            let mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+            let yyyy = today.getFullYear();
 
-  
+            today = yyyy + '-' + mm + '-' + dd;
+            return today
+          },
+      retrire_year(){
+          let mm = this.brith_month
+          let yy_retire = this.brith_year
+          let result
+          if(mm >9){
+              result = yy_retire + 61
+          }else{
+              result = yy_retire + 60
+          }
+          return result
+      },
+      cal_date_age(){
+           let today = new Date(this.date_today_cal);
+                let DOB = new Date(this.addpersonnel_temporary.birthday || this.editpersonnel_temporary.birthday);
+              
+                let totalMonths = (today.getFullYear() - DOB.getFullYear()) * 12 + today.getMonth() - DOB.getMonth();
+                totalMonths += today.getDay() < DOB.getDay() ? -1 : 0;
+                let years = today.getFullYear() - DOB.getFullYear();
+                if (DOB.getMonth() > today.getMonth())
+                    years = years - 1;
+                else if (DOB.getMonth() === today.getMonth())
+                    if (DOB.getDate() > today.getDate())
+                        years = years - 1;
+
+                let days;
+                let months;
+
+                if (DOB.getDate() > today.getDate()) {
+                    months = (totalMonths % 12);
+                    if (months == 0)
+                        months = 11;
+                    let x = today.getMonth();
+                    switch (x) {
+                        case 1:
+                        case 3:
+                        case 5:
+                        case 7:
+                        case 8:
+                        case 10:
+                        case 12: {
+                            let a = DOB.getDate() - today.getDate();
+                            days = 31 - a;
+                            break;
+                        }
+                        default: {
+                            let a = DOB.getDate() - today.getDate();
+                            days = 30 - a;
+                            break;
+                        }
+                    }
+
+                }
+                else {
+                    days = today.getDate() - DOB.getDate();
+                    if (DOB.getMonth() === today.getMonth())
+                        months = (totalMonths % 12);
+                    else
+                        months = (totalMonths % 12);
+                }
+                let age = years + ' ปี ' + months + ' เดือน ' + days + ' วัน'; 
+                   return age;  
+      },   
+     
+      cal_date_age_gov(){
+           let today = new Date(this.date_today_cal);
+                let DOB = new Date(this.addpersonnel_temporary.date_app_now || this.editpersonnel_temporary.date_app_now);
+              
+                let totalMonths = (today.getFullYear() - DOB.getFullYear()) * 12 + today.getMonth() - DOB.getMonth();
+                totalMonths += today.getDay() < DOB.getDay() ? -1 : 0;
+                let years = today.getFullYear() - DOB.getFullYear();
+                if (DOB.getMonth() > today.getMonth())
+                    years = years - 1;
+                else if (DOB.getMonth() === today.getMonth())
+                    if (DOB.getDate() > today.getDate())
+                        years = years - 1;
+
+                let days;
+                let months;
+
+                if (DOB.getDate() > today.getDate()) {
+                    months = (totalMonths % 12);
+                    if (months == 0)
+                        months = 11;
+                    let x = today.getMonth();
+                    switch (x) {
+                        case 1:
+                        case 3:
+                        case 5:
+                        case 7:
+                        case 8:
+                        case 10:
+                        case 12: {
+                            let a = DOB.getDate() - today.getDate();
+                            days = 31 - a;
+                            break;
+                        }
+                        default: {
+                            let a = DOB.getDate() - today.getDate();
+                            days = 30 - a;
+                            break;
+                        }
+                    }
+
+                }
+                else {
+                    days = today.getDate() - DOB.getDate();
+                    if (DOB.getMonth() === today.getMonth())
+                        months = (totalMonths % 12);
+                    else
+                        months = (totalMonths % 12);
+                }
+                let age = years + ' ปี ' + months + ' เดือน ' + days + ' วัน'; 
+                   return age;  
+      },   
+     
+    },  
 }
 </script>
