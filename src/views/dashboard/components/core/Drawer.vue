@@ -111,7 +111,7 @@
          {
           title: 'ข่าวประชาสัมพันธ์',
           icon: 'mdi-bell',
-          to: '/components/notifications',
+          to: '/news',
         },
          {
           title: 'เข้าสู่ระบบ',

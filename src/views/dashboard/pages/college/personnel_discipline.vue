@@ -191,7 +191,7 @@
                       <v-btn  large color="success" type="submit">
                         <v-icon dark>mdi-content-save</v-icon>บันทึก
                       </v-btn>
-                      <v-btn  large color="warning" @click.stop="addpersonnel_experiencedialog = false" round>
+                      <v-btn  large color="warning" @click.stop="addpersonnel_experiencedialog = false" rounded>
                         <v-icon dark>mdi-close</v-icon>ยกเลิก
                       </v-btn>
                     </v-col>
@@ -394,10 +394,10 @@
             </v-card-text>
             <v-card-actions>
               <v-spacer></v-spacer>
-              <v-btn large  @click.stop="editpersonnel_experiencedialog = false" round>
+              <v-btn large  @click.stop="editpersonnel_experiencedialog = false" rounded>
                 <v-icon dark>mdi-close</v-icon>ยกเลิก
               </v-btn>
-              <v-btn large color="warning" @click.stop="editpersonnel_experienceSubmit()" round>
+              <v-btn large color="warning" @click.stop="editpersonnel_experienceSubmit()" rounded>
                 <v-icon dark>mdi-pencil</v-icon>&nbsp;แก้ไขข้อมูล
               </v-btn>
             </v-card-actions>

@@ -23,11 +23,12 @@ export default new Router({
                     component: () =>
                         import ('@/views/dashboard/pages/login'),
                 },
+
                 {
                     name: 'ข่าวประชาสัมพันธ์ ข้อกำหนด เกณฑ์',
-                    path: 'components/notifications',
+                    path: 'news',
                     component: () =>
-                        import ('@/views/dashboard/component/Notifications'),
+                        import ('@/views/dashboard/news_munual'),
                 },
                 {
                     name: 'Icons',
@@ -173,6 +174,30 @@ export default new Router({
                     component: () =>
                         import ('@/views/dashboard/pages/administrator/collegeinfo'),
                 },
+                {
+                    name: 'เงือนไขการรับย้ายของสถานศึกษา',
+                    path: '/admin/conditions_transfer',
+                    component: () =>
+                        import ('@/views/dashboard/pages/administrator/conditions_transfer'),
+                },
+                {
+                    name: 'สายงานการสอนและสายสนับสนุนการสอน',
+                    path: '/admin/transference_personnel',
+                    component: () =>
+                        import ('@/views/dashboard/pages/administrator/transference_personnel'),
+                },
+                {
+                    name: 'ข่าวสาร',
+                    path: '/admin/news_s',
+                    component: () =>
+                        import ('@/views/dashboard/pages/administrator/news_s'),
+                },
+                {
+                    name: 'ดำเนินการประมวลผลการย้าย',
+                    path: '/admin/process_transfer',
+                    component: () =>
+                        import ('@/views/dashboard/pages/administrator/process_transfer'),
+                },
                 
                 
 
@@ -262,6 +287,19 @@ export default new Router({
                         import ('@/views/dashboard/pages/college/Dashboard'),
                 },
                 {
+                    name: 'รายละเอียดสถานศึกษา',
+                    path: '/college/collegeinfo',
+                    component: () =>
+                        import ('@/views/dashboard/pages/college/collegeinfo'),
+                },
+                
+                {
+                    name: 'เมนูรายการ',
+                    path: '/college/home_menu',
+                    component: () =>
+                        import ('@/views/dashboard/pages/college/home_menu'),
+                },
+                {
                     name: 'ข้อมูลเกี่ยวกับบุคคล',
                     path: '/college/personnel',
                     component: () =>
@@ -316,7 +354,12 @@ export default new Router({
                     component: () =>
                         import ('@/views/dashboard/pages/college/conditions_branch'),
                 },
-                
+                {
+                    name: 'ประวัติข้อมูลเงือนไขการย้าย',
+                    path: '/college/history_conditions',
+                    component: () =>
+                        import ('@/views/dashboard/pages/college/history_conditions'),
+                },                
                 
 
             ]

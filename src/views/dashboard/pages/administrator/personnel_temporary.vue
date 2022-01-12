@@ -274,8 +274,7 @@
               color="error"
               icon="mdi-delete"
               title="ลบข้อมูลผู้ใช้"
-              class="px-5 py-3 text_google"
-              
+              class="px-5 py-3 text_google"           
              
             >
             </base-material-card>
@@ -300,7 +299,7 @@
             </v-card-text>
             <v-card-actions>
               <v-spacer></v-spacer>
-              <v-btn large flat @click.stop="deletepersonnel_temporarydialog = false"
+              <v-btn large @click.stop="deletepersonnel_temporarydialog = false"
                 ><v-icon dark>mdi-close</v-icon>ยกเลิก</v-btn
               >
               <v-btn large
@@ -744,15 +743,12 @@ async mounted() {
         })
         this.editpersonnel_temporary = result.data
         this.deletepersonnel_temporarydialog = true
+        console.log(result.date)
       },
+
       async deletepersonnel_temporarySubmit() {
         if (this.$refs.deletepersonnel_temporaryform.validate()) {
-          this.editpersonnel_temporary.ApiKey = this.ApiKey;
-          if(this.editpersonnel_temporary.personnel_temporary_status == 'D')
-            await this.$http.post('committee.delete.php', {
-              ApiKey: this.ApiKey,
-              id_rc: this.editpersonnel_temporary.id_rc
-            })
+          this.editpersonnel_temporary.ApiKey = this.ApiKey;         
           let result = await this.$http.post('personnel_temporary.delete.php', this.editpersonnel_temporary)
           if (result.data.status == true) {
             this.personnel_temporary = result.data

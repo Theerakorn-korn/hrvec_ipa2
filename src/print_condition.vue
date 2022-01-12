@@ -14,8 +14,8 @@
     <div class="page">
       <div align="center">
           <v-img max-height="30mm" max-width="25mm" src="~../src/assets/krud.jpg"></v-img>
-       <div class="head"> แบบรายงานข้อมูลเงือนไขสาขาวิชาเอก ประกอบการพิจารณาย้ายข้าราชการ ประจำปี  ครั้งที่  </div>
-       <div class="head"> ส่งมาพร้อมกับหนังสือ {{ colleges_user.college_name }} ที่ ................................ ลงวันที่ ..............................</div>
+       <div class="head"> แบบรายงานข้อมูลเงือนไขสาขาวิชาเอก ประกอบการพิจารณาย้ายข้าราชการ ประจำปี {{ conditions_transfers.year_s }} ครั้งที่ {{ conditions_transfers.time_s }} </div>
+       <div class="head"> ส่งมาพร้อมกับหนังสือ {{ colleges_user.college_name }} ที่  ลงวันที่ ..............................</div>
      <div>___________________________</div>
       </div>
     <table border="0" width="100%" align="center">
@@ -32,18 +32,15 @@
     </table>
       <table border="0" width="100%" align="center">
         <tr>
-            <td width="100%" class="regular16">เพื่อใช้ประกอบการพิจารณาย้ายข้าราชการครู ประจำปี.. ครั้งที่..นั้น วิทยาลัย.. ได้จัดประชุมคณะกรรมการบริหารสถานศึกษาแล้ว มีมติให้จัดความต้องการครูในสาขาวิชา เรียงลำดับดังต่อไปนี้  </td>
+            <td width="100%" class="regular16">เพื่อใช้ประกอบการพิจารณาย้ายข้าราชการครู ประจำปี {{ conditions_transfers.year_s }} ครั้งที่ {{ conditions_transfers.time_s }} นั้น วิทยาลัย{{ colleges_user.college_name }} ได้จัดประชุมคณะกรรมการบริหารสถานศึกษาแล้ว มีมติให้จัดความต้องการครูในสาขาวิชา เรียงลำดับดังต่อไปนี้  </td>
         </tr>
     </table>
      <table width="100%" align="center" class="table">
         <tr>
             <th width="7%" class="regular16 th" align="center">อันดับ</th>
-            <th width="10%" class="regular16 th" align="center">คุณวุฒิ</th>
-            <th width="25%" class="regular16 th" align="center">สาขาวิชา</th>
-            <th width="15%" class="regular16 th" align="center">จำนวนข้าราชการครู</th>
-            <th width="15%" class="regular16 th" align="center">จำนวนพนักงานราชการ</th>
-            <th width="15%" class="regular16 th" align="center">จำนวนครูจ้างสอน </th>
-            <th width="15%" class="regular16 th" align="center">จำนวนนักเรียน</th>
+            <th width="10%" class="regular16 " align="center">คุณวุฒิ</th>
+            <th width="25%" class="regular16 " align="left">สาขาวิชา</th>
+            <th width="10%" class="regular16 th" align="center">จำนวนรับ</th>            
         </tr>
      </table>
          <table width="100%" align="center" class="table"
@@ -53,19 +50,17 @@
          >
           <tr>
             <td width="7%" class="regular12 th" align="center"> {{item.sequence_n}} </td>
-            <td width="10%" class="regular12 th" align="center"> {{item.educational_level}} </td>
-            <td width="25%" class="regular12 th"> {{item.id_branch}} {{item.name_branch}} </td>
-            <td width="15%" class="regular12 th" align="center"> {{item.sequence_n}} </td>
-            <td width="15%" class="regular12 th" align="center"> {{item.sequence_n}} </td>
-            <td width="15%" class="regular12 th" align="center"> {{item.sequence_n}} </td>
-            <td width="15%" class="regular12 th" align="center"> {{item.sequence_n}} </td>
+            <td width="10%" class="regular12 " align="center"> {{item.educational_level}} </td>
+            <td width="25%" class="regular12 "> {{item.id_branch}} {{item.name_branch}} </td>
+            <td width="10%" class="regular12 th" align="center"> {{item.quantity_n}} </td>
+                    
         </tr>
     </table>
 
      <table border="0" width="100%" align="center">
         <tr>            
              <td width="10%"></td>             
-             <td width="40%"><div class="regular16"><span class="regular16">ข้อมูล ณ วันที่ </span></div></td>             
+             <td width="40%"><div class="regular16"><span class="regular16">ข้อมูล ณ วันที่ {{ conditions_transfers.date_time }}</span></div></td>             
          </tr> 
      </table>
            <br>
@@ -91,13 +86,14 @@
          </tr> 
           <tr>            
              <td width="60%"></td>             
-             <td width="40%" align="center"><div class="regular16">(..........................................................)</div></td>             
+             <td width="40%" align="center"><div class="regular16">(..............................................................)</div></td>             
          </tr> 
           <tr>            
              <td width="60%"></td>             
              <td width="40%" align="center"><div class="regular16">ผู้อำนวยการ{{ colleges_user.college_name }}</div></td>             
          </tr> 
           </table>
+           {{ id_ref_url }}
     </div>
   </div>
   </v-app>
@@ -166,6 +162,80 @@
     
     },
 
+     methods: {     
+            async personnel_temporaryQueryAll() {
+          this.loading = true
+        let result = await this.$http.post('admin.php', {
+          ApiKey: this.ApiKey,
+          user_name: this.id_ref_url  
+        })
+        this.colleges_user = result.data  
+      },
+   
+     async conditions_branchQueryAll() {
+          this.loading = true
+        let result = await this.$http.post('conditions_branch.php', {
+          ApiKey: this.ApiKey,
+          id_ref: this.url_result       
+        }).finally(() => this.loading = false)
+        this.conditions_branchs = result.data      
+        console.log(this.url_result)  
+      },
+    
+   async conditions_transferQueryAll() {
+          this.loading = true
+        let result = await this.$http.post('conditions_transfer.php', {
+          ApiKey: this.ApiKey,
+          id_ref: this.url_result       
+        }).finally(() => this.loading = false)
+        this.conditions_transfers = result.data   
+              
+      },
+    
+  
+
+
+
+      Export2Doc(element, filename) {
+        var preHtml =
+          "<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'><head><meta charset='utf-8'><title>Export HTML To Doc</title></head><body>"
+        var postHtml = "</body></html>"
+        var html = preHtml + document.getElementById(element).innerHTML + postHtml
+
+        var blob = new Blob(['\ufeff', html], {
+          type: 'application/msword'
+        })
+
+        // Specify link url
+        var url = 'data:application/vnd.ms-word;charset=utf-8,' + encodeURIComponent(html)
+
+        // Specify file name
+        filename = filename ? filename + '.doc' : 'document.doc'
+
+        // Create download link element
+        var downloadLink = document.createElement("a")
+
+        document.body.appendChild(downloadLink)
+
+        if (navigator.msSaveOrOpenBlob) {
+          navigator.msSaveOrOpenBlob(blob, filename)
+        } else {
+          // Create a link to the file
+          downloadLink.href = url
+
+          // Setting the file name
+          downloadLink.download = filename
+
+          //triggering the function
+          downloadLink.click()
+        }
+        document.body.removeChild(downloadLink)
+      },     
+    },
+    props: {
+      source: String
+    },
+
 
     computed:{    
 
@@ -232,80 +302,7 @@ return result
     },
 
 
-    methods: {     
-            async personnel_temporaryQueryAll() {
-          this.loading = true
-        let result = await this.$http.post('admin.php', {
-          ApiKey: this.ApiKey,
-          user_name: this.id_ref_url  
-        })
-        this.colleges_user = result.data  
-      },
-
-    
    
-     async conditions_branchQueryAll() {
-          this.loading = true
-        let result = await this.$http.post('conditions_branch.php', {
-          ApiKey: this.ApiKey,
-          id_ref: this.id_ref_url       
-        }).finally(() => this.loading = false)
-        this.conditions_branchs = result.data        
-      },
-    
-   async conditions_transferQueryAll() {
-          this.loading = true
-        let result = await this.$http.post('conditions_transfer.php', {
-          ApiKey: this.ApiKey,
-          id_ref: this.id_ref_url       
-        }).finally(() => this.loading = false)
-        this.conditions_transfers = result.data    
-        console.log(result.data)          
-      },
-    
-  
-
-
-
-      Export2Doc(element, filename) {
-        var preHtml =
-          "<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'><head><meta charset='utf-8'><title>Export HTML To Doc</title></head><body>"
-        var postHtml = "</body></html>"
-        var html = preHtml + document.getElementById(element).innerHTML + postHtml
-
-        var blob = new Blob(['\ufeff', html], {
-          type: 'application/msword'
-        })
-
-        // Specify link url
-        var url = 'data:application/vnd.ms-word;charset=utf-8,' + encodeURIComponent(html)
-
-        // Specify file name
-        filename = filename ? filename + '.doc' : 'document.doc'
-
-        // Create download link element
-        var downloadLink = document.createElement("a")
-
-        document.body.appendChild(downloadLink)
-
-        if (navigator.msSaveOrOpenBlob) {
-          navigator.msSaveOrOpenBlob(blob, filename)
-        } else {
-          // Create a link to the file
-          downloadLink.href = url
-
-          // Setting the file name
-          downloadLink.download = filename
-
-          //triggering the function
-          downloadLink.click()
-        }
-        document.body.removeChild(downloadLink)
-      },     
-    },
-    props: {
-      source: String
-    },
   
   }
 </script>

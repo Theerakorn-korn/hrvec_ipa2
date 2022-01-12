@@ -80,9 +80,9 @@
           <table border="0" width="100%" align="center"> 
           <tr>            
             <td width="50%"><div class="regular16"><span class="bold16">2.เริ่มปฏิบัติหน้าที่ในสถานศึกษาปัจจุบัน</span>  คำสั่งที่ </div></td>
-            <td width="15%"><div class="regular16 td_line" align="center">{{ personnel_temporarys.order_app_now || '-' }}</div></td>
+            <td width="20%"><div class="regular16 td_line" align="center">{{ personnel_temporarys.order_app_now || '-' }}</div></td>
             <td width="10%"><div class="regular16">เมื่อวันที่ </div></td>
-            <td width="25%"><div class="regular16 td_line" align="center">{{ date_appoin_ch_app }} </div></td>
+            <td width="20%"><div class="regular16 td_line" align="center">{{ date_appoin_ch_app }} </div></td>
          </tr>
           </table>
 

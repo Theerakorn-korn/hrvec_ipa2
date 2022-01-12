@@ -44,10 +44,12 @@
           avatar="https://www.bloggang.com/data/b/bigstory/picture/1449748275.gif"
         >
           <v-card-text class="text-center">
-            <h6 class="display-1 mb-1 grey--text">CEO / CO-FOUNDER</h6>
-            <h4 class="display-2 font-weight-light mb-3 black--text">Name Personal</h4>
-            <p class="font-weight-light grey--text">I,m Teacher.</p>
-            <v-btn color="success" rounded class="mr-0">Follow</v-btn>
+            <h2 class="font-weight-light mb-1 grey--text">เข้าสู่ระบบ</h2>
+            <h1 class="font-weight-light mb-3 black--text">ข้าราชการครูและบุคลากรทางการศึกษา</h1>
+            <p class="font-weight-light grey--text">ชื่อผู้ใช้ระบบ : รหัสบัตรประชาชน</p>
+            <p class="font-weight-light grey--text">รหัสผ่าน : วันเดือนปีเกิด "8/8/2531"</p>
+            <p class="font-weight-light black--text">เข้าสู่ระบบแล้วให้ดำเนินการเปลี่ยนรหัสผ่านของท่าน</p>
+            <v-btn color="success" rounded class="mr-0">คู่มือ</v-btn>
           </v-card-text>
         </base-material-card>
       </v-col>

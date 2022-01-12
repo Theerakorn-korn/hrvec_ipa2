@@ -55,15 +55,7 @@
         {
           href: '#',
           text: 'About Us',
-        },
-        {
-          href: '#',
-          text: 'Blog',
-        },
-        {
-          href: '#',
-          text: 'Licenses',
-        },
+        },         
       ],
     }),
   }

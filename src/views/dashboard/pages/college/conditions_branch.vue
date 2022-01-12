@@ -57,8 +57,34 @@
                   <v-row>  
 
 <v-col cols="12" sm="12">
+  <v-card class="px-5 py-3"  v-if="conditions_transfers.id_ref === id_ref"  >
+    <v-alert border="left" colored-border color="green darken-1" elevation="2"  type="info">
+     <table width="100%" align="center" class="table">
+        <tr>
+            <th width="7%" class="regular16 th" align="center">อันดับ</th>
+            <th width="10%" class="regular16 " align="center">คุณวุฒิ</th>
+            <th width="25%" class="regular16 " align="left">สาขาวิชา</th>
+            <th width="10%" class="regular16 th" align="center">จำนวนรับ</th>            
+        </tr>
+     </table>
+      <table width="100%" align="center" class="table"
+          v-for="item in conditions_branchs"
+                            :key="item.id_ref"                           
+                            small
+         >
+          <tr>
+            <td width="7%" class="regular12 th" align="center"> {{item.sequence_n}} </td>
+            <td width="10%" class="regular12 " align="center"> {{item.educational_level}} </td>
+            <td width="25%" class="regular12 "> {{item.id_branch}} {{item.name_branch}} </td>
+            <td width="10%" class="regular12 th" align="center"> {{item.quantity_n}} </td>
+                    
+        </tr>
+    </table>
+    </v-alert>
+  </v-card>
   <v-card   
-        class="px-5 py-3"        
+        class="px-5 py-3"     
+        v-else
       >     
        <v-btn
                       x-large
@@ -69,13 +95,14 @@
                     >
                       <v-icon>mdi-selection-multiple-marker</v-icon>
                       <span> เลือกสาขาวิชา</span>  
-                    </v-btn>      
+                    </v-btn>                                 
         <v-data-table             
           color="success"
           :loading="loading"
           :headers="header_trans"    
           :items="conditions_branchs"  
           :search="search"  
+       
        >    
        <template v-slot:[`item.action`]="{ item }">            
             <v-icon
@@ -88,12 +115,7 @@
         </v-data-table>
   </v-card>
 
-</v-col>
-<v-col cols="12"> 
-  <v-select v-model="addconditions_transfer.status_confirm" :items="status_condition" item-value="value" label="สถานะ"></v-select>
-
-</v-col>
-                     
+</v-col>         
 
                   </v-row>
                 </v-card>
@@ -183,10 +205,7 @@
                      <v-flex md4>
                       <v-text-field
                         v-model="addconditions_branch.quantity_n"
-                        type="number"
-                      :items="colleges"
-                      item-text="college_name"
-                      item-value="college_code"                      
+                        type="number"                                       
                         outlined
                         label="จำนวน :"
                         prepend-icon="mdi-flag-letiant"
@@ -348,7 +367,7 @@ export default {
     header_trans: [   
    { text: "ลำดับ", align: "center", value: "sequence_n" },
     { text: "รหัสอ้างอิง", align: "center", value: "id_ref" },     
-    { text: "สาขาวิชา", align: "center", value: "name_branch" },
+    { text: "สาขาวิชา", align: "left", value: "name_branch" },
     { text: "ระดับการศึกษา", align: "center", value: "educational_level" },
     { text: "จำนวน", align: "center", value: "quantity_n" },
     { text: "ยกเลิก", align: "center", value: "action" },
@@ -462,7 +481,7 @@ async personnel_temporaryQueryAll() {
       },
     
     //First >> Insert transference Location 
-    async addconditions_branchForm() {   
+    async addconditions_branchForm() {     
     this.addconditions_branchdialog = true;
     },   
 
@@ -474,7 +493,7 @@ async personnel_temporaryQueryAll() {
         let result = await this.$http.post(
           "conditions_branch.insert.php",
           this.addconditions_branch         
-        );          
+        );            
         if (result.data.status == true) {
           this.conditions_branch = result.data;
           this.snackbar.icon = "mdi-checkbox-marked-circle";
@@ -520,7 +539,7 @@ async personnel_temporaryQueryAll() {
           this.deletconditions_branchdialog = false
         }
       },     
-// Add conditions_branch 
+// Add conditions_transfer
       async addconditions_transferSubmit(){
 if (this.$refs.addconditions_transferform.validate()) {
         this.addconditions_transfer.ApiKey = this.ApiKey;
@@ -529,8 +548,7 @@ if (this.$refs.addconditions_transferform.validate()) {
         this.addconditions_transfer.year_s = this.year_s;
         this.addconditions_transfer.college_code = this.colleges_user.college_code;
         this.addconditions_transfer.date_time = this.date_today;
-        let result = await this.$http.post("conditions_transfer.insert.php", this.addconditions_transfer)              
-     
+        let result = await this.$http.post("conditions_transfer.insert.php", this.addconditions_transfer)    
        if (result.data.status == true) {
             this.conditions_transfers = result.data  
           this.snackbar.icon = "mdi-checkbox-marked-circle";
@@ -595,9 +613,11 @@ if (this.$refs.addconditions_transferform.validate()) {
             return today
           },
     },
+    watch:{
+        async conditions_br(){
+         await this.conditions_transferQueryAll()
+        }
+    },
 };
 </script>
 
-<style lang="scss" scoped>
-
-</style>

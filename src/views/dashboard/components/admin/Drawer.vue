@@ -96,22 +96,32 @@ export default {
         action: "mdi-chart-areaspline",
         items: [
           { title: "แผงควบคุม", action: "mdi-chart-multiple", to: "/admin/Dashboard",active: true },
-          { title: "การตั้งค่าระบบ", action: "mdi-ticket", to: "/admin/Dashboard" },
+         
         ],
         title: "ข้อมูลระบบ"
       },
+
       {
         action: "mdi-account-cog",
         items: [ 
-          { title: "ข้อมูลผู้ใช้งานระบบ", action: "mdi-account-arrow-right", to: "/admin/personnel" },
-          { title: "ข้อมูลกลุ่มผู้ใช้งานงานระบบ", action: "mdi-account-arrow-right", to: "/admin/user" },
+          { title: "ครูและบุคลาการ", action: "mdi-account-arrow-right", to: "/admin/personnel" },
+          { title: "วิทยาลัย อศจ สถานบัน กจ2", action: "mdi-account-arrow-right", to: "/admin/user" },
           { title: "สถานะผู้ใช้งานระบบ", action: "mdi-account-cog", to: "/admin/user_status" },
-          { title: "ข้อมูลประเภทสถานศึกษา", action: "mdi-office-building", to: "/admin/collegetype" },
           { title: "ข้อมูลรอบปี", action: "mdi-calendar", to: "/admin/period" },
-          { title: "ข้อมูลสถานศึกษา", action: "mdi-calendar", to: "/admin/college" },
+         
           
         ],
-        title: "จัดการผู้ใช้งานระบบ",
+        title: "ผู้ใช้งานระบบ",
+      },
+      {
+         action: "mdi-account-cog",
+        items: [ 
+          { title: "ข้อมูลประเภทสถานศึกษา", action: "mdi-office-building", to: "/admin/collegetype" },
+          { title: "ข้อมูลสถานศึกษา", action: "mdi-calendar", to: "/admin/college" },
+          { title: "ข้อมูลรายละเอียดสถานศึกษา", action: "mdi-calendar", to: "/admin/collegeinfo" },
+          
+        ],
+        title: "สถานศึกษา",
       },
       {
         action: "mdi-account-reactivate",        
@@ -129,7 +139,7 @@ export default {
       {
         action: "mdi-bluetooth-transfer",
         items: [
-          { title: "สายการสอนและสายสนับสนุน", action: "mdi-alarm-light", to: "/Dashboard" },
+          { title: "สายการสอนและสายสนับสนุน", action: "mdi-alarm-light", to: "/admin/transference_personnel" },
           { title: "สายงานบริหารสถานศึกษา", action: "mdi-alarm-light", to: "/Dashboard" },
           { title: "การย้ายกรณีพิเศษ", action: "mdi-alarm-light", to: "/Dashboard" },
         
@@ -140,7 +150,7 @@ export default {
         action: "mdi-order-bool-descending-variant",
         items: [
           { title: "สาขาวิชาเอก", action: "mdi-basket-plus", to: "/admin/branch" },        
-          { title: "ข้อมูลเงือนไขสาขาวิชาเอก", action: "mdi-basket-plus", to: "/Dashboard" },        
+          { title: "ข้อมูลเงือนไขสาขาวิชาเอก", action: "mdi-basket-plus", to: "/admin/conditions_transfer" },        
           { title: "สถิติเงือนไขสาขาวิชา", action: "mdi-chart-box-outline", to: "/Dashboard" },        
         ],
         title: "ระบบเงือนไขสาขาวิชาเอก",
@@ -149,8 +159,8 @@ export default {
         action: "mdi-human",
         items: [
           { title: "ข้อมูลอัตรากำลังสถานศึกษา", action: "mdi-basket-plus", to: "/admin/man_power" },        
-          { title: "ข้อมูลเชิงปริมาณ", action: "mdi-chart-box-outline", to: "/Dashboard" },        
-          { title: "ข้อมูลเชิงปริมาณ", action: "mdi-chart-box-outline", to: "/Dashboard" },        
+         /*  { title: "ข้อมูลเชิงปริมาณ", action: "mdi-chart-box-outline", to: "/Dashboard" },        
+          { title: "ข้อมูลเชิงปริมาณ", action: "mdi-chart-box-outline", to: "/Dashboard" },         */
         ],
         title: "ระบบอัตรากำลัง",
       },
@@ -162,6 +172,15 @@ export default {
           { title: "รายงาน", action: "mdi-chart-box-outline", to: "/Dashboard" },        
         ],
         title: "ระบบครูผู้ช่วย",
+      },
+       {
+        action: "mdi-account-supervisor-circle",
+        items: [
+          { title: "ข่าวสาร", action: "mdi-basket-plus", to: "/admin/news_s" },        
+          { title: "คู่มือใช้งาน", action: "mdi-chart-box-outline", to: "/Dashboard" },        
+          { title: "กระดานสนทนา", action: "mdi-chart-box-outline", to: "/Dashboard" },        
+        ],
+        title: "ข่าว คู่มือ",
       },
     ],  
   }),

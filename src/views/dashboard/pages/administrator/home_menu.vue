@@ -2,7 +2,7 @@
   <v-container id="home_menu" fluid tag="section">
   <v-alert
       outlined
-      color="purple"
+      color="pink darken-2"
        elevation="2"
     >     
     <v-row>
@@ -17,10 +17,11 @@
        <v-btn rounded
       color="primary"
       dark
+      block
       x-large
       @click.native="userUpdate()"
       >
-         Update Password
+         Reset Password
        </v-btn>
       </v-col>
         <v-col cols="12" md="3">       
@@ -29,6 +30,15 @@
         
          </v-alert>
     <v-row>
+      <v-col cols="12" md="12">
+         <v-alert
+      border="top"
+      color="red lighten-2"
+      dark
+    >
+     <h2>ส่วนหลักของระบบ</h2> 
+    </v-alert>
+      </v-col>
       <v-col cols="12" md="12"> 
           <v-alert
             border="left"
@@ -45,6 +55,7 @@
                   </v-list-item-icon>
                   <v-list-item-content>
                     <v-list-item-title v-text="item.text"></v-list-item-title>
+                    <v-list-item-title v-text="item.to"></v-list-item-title>
                   </v-list-item-content>
                 </v-list-item>
               </v-list-item-group>
@@ -69,6 +80,7 @@
                   </v-list-item-icon>
                   <v-list-item-content>
                     <v-list-item-title v-text="item.text"></v-list-item-title>
+                     <v-list-item-title v-text="item.to"></v-list-item-title>
                   </v-list-item-content>
                 </v-list-item>
               </v-list-item-group>
@@ -76,12 +88,13 @@
           </v-alert>
       
       </v-col>
+      
       <v-col cols="12" md="12">
               
           <v-alert
             border="left"
             colored-border
-            color="deep-purple accent-4"
+            type="error"
             elevation="2"
             icon="mdi-account-details"          
           > 
@@ -94,12 +107,25 @@
                   </v-list-item-icon>
                   <v-list-item-content>
                     <v-list-item-title v-text="item.text"></v-list-item-title>
+                     <v-list-item-title v-text="item.to"></v-list-item-title>
                   </v-list-item-content>
                 </v-list-item>
               </v-list-item-group>
             </v-list>
           </v-alert>      
       </v-col>
+      
+      <v-col cols="12" md="12">
+         <v-alert
+      border="top"
+      color="red lighten-2"
+      dark
+    >
+     <h2>ส่วนเงือนไขการย้ายและการย้าย</h2> 
+    </v-alert>
+      </v-col>
+
+
       <v-col cols="12" md="12">
                <v-alert
             border="left"
@@ -117,6 +143,7 @@
                   </v-list-item-icon>
                   <v-list-item-content>
                     <v-list-item-title v-text="item.text"></v-list-item-title>
+                     <v-list-item-title v-text="item.to"></v-list-item-title>
                   </v-list-item-content>
                 </v-list-item>
               </v-list-item-group>
@@ -127,7 +154,7 @@
           <v-alert
             border="left"
             colored-border
-            color="green darken-4"
+             type="info"
             elevation="2"
             icon="mdi-source-branch"          
           >  
@@ -140,11 +167,21 @@
                   </v-list-item-icon>
                   <v-list-item-content>
                     <v-list-item-title v-text="item.text"></v-list-item-title>
+                     <v-list-item-title v-text="item.to"></v-list-item-title>
                   </v-list-item-content>
                 </v-list-item>
               </v-list-item-group>
             </v-list>
           </v-alert>      
+      </v-col>
+       <v-col cols="12" md="12">
+         <v-alert
+      border="top"
+      color="red lighten-2"
+      dark
+    >
+     <h2>งานอัตรากำลัง</h2> 
+    </v-alert>
       </v-col>
       <v-col cols="12" md="12"> 
           <v-alert
@@ -162,6 +199,7 @@
                   </v-list-item-icon>
                   <v-list-item-content>
                     <v-list-item-title v-text="item.text"></v-list-item-title>
+                     <v-list-item-title v-text="item.to"></v-list-item-title>
                   </v-list-item-content>
                 </v-list-item>
               </v-list-item-group>
@@ -169,6 +207,17 @@
           </v-alert>
        
       </v-col>
+
+       <v-col cols="12" md="12">
+         <v-alert
+      border="top"
+      color="red lighten-2"
+      dark
+    >
+     <h2>ครูผู้ช่วย</h2> 
+    </v-alert>
+      </v-col>
+
       <v-col cols="12" md="12">      
           <v-alert
             border="left"
@@ -185,6 +234,39 @@
                   </v-list-item-icon>
                   <v-list-item-content>
                     <v-list-item-title v-text="item.text"></v-list-item-title>
+                     <v-list-item-title v-text="item.to"></v-list-item-title>
+                  </v-list-item-content>
+                </v-list-item>
+              </v-list-item-group>
+            </v-list>
+          </v-alert>      
+      </v-col>
+       <v-col cols="12" md="12">
+         <v-alert
+      border="top"
+      color="red lighten-2"
+      dark
+    >
+     <h2>ข่าวสารและคู่มือระบบ</h2> 
+    </v-alert>
+      </v-col>
+       <v-col cols="12" md="12">      
+          <v-alert
+            border="left"
+            colored-border
+           color="green"
+            elevation="2"
+            icon="mdi-human-male-male"         
+          >   <v-card-title>ข่าวและคู่มือใช้งานระบบ</v-card-title>
+            <v-list>
+              <v-list-item-group >
+                <v-list-item v-for="(item, i) in news_manual" :key="i" :to="item.to">
+                  <v-list-item-icon>
+                    <v-icon v-text="item.icon"></v-icon>
+                  </v-list-item-icon>
+                  <v-list-item-content>
+                    <v-list-item-title v-text="item.text"></v-list-item-title>
+                     <v-list-item-title v-text="item.to"></v-list-item-title>
                   </v-list-item-content>
                 </v-list-item>
               </v-list-item-group>
@@ -278,9 +360,9 @@ export default {
           { text: "ข้อมูลรอบปี", icon: "mdi-calendar", to: "/admin/period" },              
         ],
 
-         college_items: [           
-          { text: "ข้อมูลสถานศึกษา", icon: "mdi-calendar", to: "/admin/college" }, 
+         college_items: [ 
           { text: "ข้อมูลประเภทสถานศึกษา", icon: "mdi-office-building", to: "/admin/collegetype" },
+          { text: "ข้อมูลสถานศึกษา", icon: "mdi-calendar", to: "/admin/college" }, 
           { text: "ข้อมูลรายละเอียดสถานศึกษา", icon: "mdi-calendar", to: "/admin/collegeinfo" },        
         ],
 
@@ -292,17 +374,17 @@ export default {
           { text: "ข้อมูลผลงาน รางวัล", icon: "mdi-trophy-award", to: "/admin/personnel_award" },
           { text: "ข้อมูลโทษ วินัย", icon: "mdi-alarm-light", to: "/admin/personnel_discipline" },   */
           ],
-      movement_items: [
-          { text: "สายการสอนและสายสนับสนุน", icon: "mdi-alarm-light", to: "/Dashboard" },
-          { text: "สายงานบริหารสถานศึกษา", icon: "mdi-alarm-light", to: "/Dashboard" },
-          { text: "การย้ายกรณีพิเศษ", icon: "mdi-alarm-light", to: "/Dashboard" },
+      movement_items: [          
+          { text: "สายงานการสอนและสายสนับสนุนการสอน", icon: "mdi-alarm-light", to: "/admin/transference_personnel" },
+        /*   { text: "สายงานบริหารสถานศึกษา", icon: "mdi-alarm-light", to: "/Dashboard" },
+          { text: "การย้ายกรณีพิเศษ", icon: "mdi-alarm-light", to: "/Dashboard" }, */
         
         ],
      
        condition_items: [
           { text: "สาขาวิชาเอก", icon: "mdi-basket-plus", to: "/admin/branch" },        
-          { text: "ข้อมูลเงือนไขสาขาวิชาเอก", icon: "mdi-basket-plus", to: "/Dashboard" },        
-          { text: "สถิติเงือนไขสาขาวิชา", icon: "mdi-chart-box-outline", to: "/Dashboard" },        
+         { text: "เงือนไขการรับย้ายของสถานศึกษา", icon: "mdi-alarm-light", to: "/admin/conditions_transfer" },   
+          { text: "ประมวลผลการย้าย", icon: "mdi-chart-box-outline", to: "/admin/process_transfer" },        
         ],
 
           human_items: [           
@@ -310,11 +392,15 @@ export default {
          /*  { text: "ข้อมูลเชิงปริมาณ", icon: "mdi-chart-box-outline", to: "/Dashboard" },        
           { text: "ข้อมูลเชิงปริมาณ", icon: "mdi-chart-box-outline", to: "/Dashboard" },   */      
         ],
-
          prepare_items: [
           { text: "ข้อมูลครูผู้ช่วย", icon: "mdi-basket-plus", to: "/Dashboard" },        
           { text: "ประเมินครูผู้ช่วย", icon: "mdi-chart-box-outline", to: "/Dashboard" },        
           { text: "รายงาน", icon: "mdi-chart-box-outline", to: "/Dashboard" },        
+        ],
+         news_manual: [
+          { text: "ข่าวสาร", icon: "mdi-basket-plus", to: "/admin/news_s" },        
+          { text: "คู่มือใช้งาน", icon: "mdi-chart-box-outline", to: "/Dashboard" },        
+          { text: "กระดานสนทนา", icon: "mdi-chart-box-outline", to: "/Dashboard" },        
         ],
     };
   },

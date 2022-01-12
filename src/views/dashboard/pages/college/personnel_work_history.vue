@@ -171,7 +171,7 @@
                       <v-btn  large color="success" type="submit">
                         <v-icon dark>mdi-content-save</v-icon>บันทึก
                       </v-btn>
-                      <v-btn  large color="warning" @click.stop="addeducationdialog = false" round>
+                      <v-btn  large color="warning" @click.stop="addeducationdialog = false" rounded>
                         <v-icon dark>mdi-close</v-icon>ยกเลิก
                       </v-btn>
                     </v-col>
@@ -374,10 +374,10 @@
             </v-card-text>
             <v-card-actions>
               <v-spacer></v-spacer>
-              <v-btn large  @click.stop="editeducationdialog = false" round>
+              <v-btn large  @click.stop="editeducationdialog = false" rounded>
                 <v-icon dark>mdi-close</v-icon>ยกเลิก
               </v-btn>
-              <v-btn large color="warning" @click.stop="editeducationSubmit()" round>
+              <v-btn large color="warning" @click.stop="editeducationSubmit()" rounded>
                 <v-icon dark>mdi-pencil</v-icon>&nbsp;แก้ไขข้อมูล
               </v-btn>
             </v-card-actions>

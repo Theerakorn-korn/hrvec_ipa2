@@ -50,12 +50,12 @@
     data: () => ({
       links: [        
         {
-          href: '#',
-          text: 'About Us',
+          href: 'https://ipa.vec.go.th/',
+          text: 'กลุ่มงานจัดการบุคคล 2',
         },
         {
-          href: '#',
-          text: 'Blog',
+          href: 'https://boc2.vec.go.th/default.aspx',
+          text: 'สำนักความร่วมมือ',
         },        
       ],
     }),
