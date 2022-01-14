@@ -154,6 +154,9 @@ export default {
       headers: [
         { text: "อ้างอิง", align: "center", value: "id_ref" },                
         { text: "สถานศึกษา", align: "center", value: "college_name" },
+        { text: "รหัส", align: "center", value: "id_branch" },
+        { text: "สาขาวิชา", align: "left", value: "name_branch" },
+        { text: "วุฒิการศึกษา", align: "left", value: "educational_level" },
         { text: "ครั้งที่", align: "center", value: "time_s" },         
         { text: "ปีที่", align: "center", value: "year_s" },  
         { text: "วันที่ทำรายการ", align: "center", value: "date_time" },          
@@ -193,7 +196,7 @@ async mounted() {
           ApiKey: this.ApiKey,        
         }).finally(() => this.loading = false)
         this.conditions_transfers = result.data
-        console.log(result.data)   
+      
       },
     
       async conditions_transferEdit(id_rc) {

@@ -36,7 +36,7 @@
     <v-tabs vertical>
       
       <v-tab>
-        <v-icon left>
+        <v-icon left @click="OnetoOne()">
          mdi-access-point
         </v-icon>
         Option 1:1
@@ -136,14 +136,16 @@ export default {
         valid: true, 
         times_s:'',
         year_s:'',
-        headers: [
-        { text: "อ้างอิง", align: "center", value: "id_ref" },                
+        headers: [                   
         { text: "สถานศึกษา", align: "left", value: "college_name" },
         { text: "รหัส", align: "left", value: "id_branch" },
-        { text: "สาขา", align: "left", value: "name_branch" },
-        
-        { text: "ครั้งที่", align: "center", value: "time_s" },         
-        { text: "ปีที่", align: "center", value: "year_s" },  
+        { text: "สาขา", align: "left", value: "name_branch" },        
+        { text: "วุฒิ", align: "center", value: "educational_level" },   
+        { text: "วุฒิ", align: "center", value: "id_card" },   
+        { text: "ชื่อ-นามสกุล", align: "center", value: "personnel_name" },   
+        { text: "จำนวนรับ", align: "center", value: "quantity_n" },   
+        { text: "อัตราว่าง", align: "center", value: "num_position" },   
+        { text: "จำนวนเขียนเข้า", align: "center", value: "personnel_num" },   
         { text: "วันที่ทำรายการ", align: "center", value: "date_time" },          
         { text: "แก้ไข", align: "center", value: "actions", icon: "mdi-file-document-edit" },       
       ],
@@ -172,18 +174,31 @@ export default {
     methods: {
        async searchTimeYear(){
              this.loading = true
-        let result = await this.$http.post('conditions_transfer.php', {
+        let result = await this.$http.post('process_transfer.php', {
           ApiKey: this.ApiKey,
           time_s: this.times_s,
           year_s: this.year_s
         }).finally(() => this.loading = false)
-        this.conditions_transfers = result.data
+        this.conditions_transfers = result.data      
+        },
+
+        async OnetoOne(){
+          this.loading = true
+        let result = await this.$http.post('process_transfer.php', {
+          ApiKey: this.ApiKey,
+          time_s: this.times_s,
+          year_s: this.year_s,
+          OnetoOne: 'OnetoOne',
+
+        }).finally(() => this.loading = false)
+        this.conditions_transfers = result.data 
       
         },
+
        async conditions_transferQueryAll() {
           this.loading = true
-        let result = await this.$http.post('conditions_transfer.php', {
-          ApiKey: this.ApiKey,        
+        let result = await this.$http.post('process_transfer.php', {
+          ApiKey: this.ApiKey,                  
         }).finally(() => this.loading = false)
         this.conditions_transfers = result.data          
       },

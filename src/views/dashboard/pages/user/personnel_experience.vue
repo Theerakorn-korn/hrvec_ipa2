@@ -579,7 +579,7 @@ let userSession = JSON.parse(sessionStorage.getItem('user')) || 0
             this.snackbar.show = true
             this.personnel_experiencesQueryAll()
           } else {
-             console.log(result.data.status)
+         
             this.snackbar.icon = 'mdi-close-network'
             this.snackbar.color = 'red'
             this.snackbar.text = 'บันทึกข้อมูลผิดพลาด'

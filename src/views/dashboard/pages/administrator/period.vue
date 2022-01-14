@@ -375,7 +375,7 @@ async mounted() {
           this.addperiod.period_enable = '0'
         this.addperiod.ApiKey = this.ApiKey
         let result = await this.$http.post('period.insert.php', this.addperiod)
-        console.log(result)
+       
          if (result.data.status == true) {           
             this.period = result.data
             this.snackbar.icon = 'mdi-font-awesome'
@@ -384,7 +384,7 @@ async mounted() {
             this.snackbar.show = true
             this.periodQueryAll()
           } else {
-             console.log(result.data.status)
+           
             this.snackbar.icon = 'mdi-close-network'
             this.snackbar.color = 'red'
             this.snackbar.text = 'บันทึกข้อมูลผิดพลาด'

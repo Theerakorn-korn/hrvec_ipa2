@@ -391,8 +391,7 @@ async mounted() {
         })
         this.editcollegeinfo = result.data       
         this.editcollegeinfodialog = true
-        console.log(result.data)
-        console.log(college_ID)
+       
        
       },
      

@@ -293,13 +293,11 @@ async mounted() {
             this.snackbar.text = 'บันทึกข้อมูลเรียบร้อย'
             this.snackbar.show = true
             this.user_statusQueryAll()
-          } else {
-             console.log(result.data.status)
+          } else {           
             this.snackbar.icon = 'mdi-close-network'
             this.snackbar.color = 'red'
             this.snackbar.text = 'บันทึกข้อมูลผิดพลาด'
-            this.snackbar.show = true   
-              this.user_statusQueryAll()         
+            this.snackbar.show = true  
           }
           this.adduser_statusdialog = false
         }
@@ -317,7 +315,7 @@ async mounted() {
         if (this.$refs.edituser_statusform.validate()) {
           this.edituser_status.ApiKey = this.ApiKey;         
           let result = await this.$http.post('crud_user_status.php?crud=update', this.edituser_status)
-          console.log(result)
+        
           if (result.data.status == true) {
             this.user_status = result.data
             this.snackbar.icon = 'mdi-font-awesome'

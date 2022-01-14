@@ -13,7 +13,7 @@
        <div> <h3> ชื่อผู้ใช้งาน : {{ user.user_firstname }}  {{ user.user_lastname || '' }}</h3></div>
         <h3> สถานะ : {{ user.user_status_name }}</h3>
       </v-col>
-        <v-col cols="12" md="3">
+       <!--  <v-col cols="12" md="3">
        <v-btn rounded
       color="primary"
       dark
@@ -22,7 +22,7 @@
       >
          Update Password
        </v-btn>
-      </v-col>
+      </v-col> -->
         <v-col cols="12" md="3">       
       </v-col>
     </v-row>
@@ -345,7 +345,7 @@ export default {
             this.snackbar.color = 'red'
             this.snackbar.text = 'แก้ไขข้อมูลผิดพลาด'
             this.snackbar.show = true
-            console.log('2')
+          
           }
           this.adduserdialog = false
         }

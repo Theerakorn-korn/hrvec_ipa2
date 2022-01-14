@@ -644,8 +644,7 @@ async mounted() {
           frist_name: this.search
         })
         this.personnel_temporarys = result.data  
-        console.log(result.data) 
-        console.log(this.search)  
+      
     },
 
 
@@ -743,7 +742,7 @@ async mounted() {
         })
         this.editpersonnel_temporary = result.data
         this.deletepersonnel_temporarydialog = true
-        console.log(result.date)
+       
       },
 
       async deletepersonnel_temporarySubmit() {

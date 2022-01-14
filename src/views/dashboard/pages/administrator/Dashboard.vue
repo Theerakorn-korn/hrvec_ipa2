@@ -3,7 +3,7 @@
     <v-row>
       <v-col cols="12" sm="6" lg="4">
         <base-material-stats-card          
-          :value="Number(showAlldata.count_id).toLocaleString()"
+          :value="Number(showAlldata.count_all).toLocaleString()"
           color="primary"
           icon="mdi-account-group"
           title="ครูบุคลากรทั้งหมด"
@@ -14,7 +14,7 @@
 
       <v-col cols="12" sm="6" lg="4">
         <base-material-stats-card
-         :value="Number(showAlldatatech.count_id).toLocaleString()"
+         :value="Number(showAlldata.count_tech).toLocaleString()"
           color="primary"
           icon="mdi-account-group"
           title="ข้าราชการครู"
@@ -25,7 +25,7 @@
 
       <v-col cols="12" sm="6" lg="4">
         <base-material-stats-card
-        :value="Number(showAlldatadr.count_id).toLocaleString()"
+        :value="Number(showAlldata.count_dr).toLocaleString()"
           color="primary"
           icon="mdi-account-group"
           title="ผู้อำนวยการวิทยาลัย"
@@ -36,7 +36,7 @@
 
       <v-col cols="12" sm="6" lg="4">
         <base-material-stats-card
-         :value="Number(showAlldatasedr.count_id).toLocaleString()"
+         :value="Number(showAlldata.count_se_dr).toLocaleString()"
           color="primary"
           icon="mdi-account-group"
           title="รองผู้อำนวยการ"          
@@ -47,7 +47,7 @@
 
       <v-col cols="12" sm="6" lg="4">
         <base-material-stats-card
-        :value="Number(showAlldatasupervision.count_id).toLocaleString()"
+        :value="Number(showAlldata.count_supervision).toLocaleString()"
           color="primary"
           icon="mdi-account-group"
           title="ศึกษานิเทศก์"
@@ -59,7 +59,7 @@
 
       <v-col cols="12" sm="6" lg="4">
         <base-material-stats-card
-        :value="Number(showAlldatatechprepare.count_id).toLocaleString()"
+        :value="Number(showAlldata.count_perpare).toLocaleString()"
           color="primary"
           icon="mdi-account-group"
           title="ครูผู้ช่วย"         
@@ -108,8 +108,8 @@
 
       <v-col cols="12" lg="6">
         <base-material-chart-card
-          :data="dailySalesChart.data"
-          :options="dailySalesChart.options"
+          :data="personnel_rangChart.data"
+          :options="personnel_rangChart.options"
           color="success"
           hover-reveal
           type="Line"
@@ -241,8 +241,7 @@ export default {
   data() {
     return {
     
-     headers: [      
-        { text: "รหัสสถานศึกษา", align: "center", value: "college_code" },              
+     headers: [  
         { text: "ชื่อสถานศึกษา", align: "left", value: "college_name" },
         { text: "อำเภอ", align: "left", value: "prefecture_name" },
         { text: "จังหวัด", align: "left", value: "province_name" },
@@ -268,44 +267,26 @@ export default {
           value: -1,
         },
       ],    
-      dailySalesChart: {
+      personnel_rangChart: {
         data: {
-          labels: ["M", "T", "W", "T", "F", "S", "S"],
-          series: [[this.num_tech, 17, 7, 17, 23, 18, 38]],
+          labels: ["ครูผู้ช่วย", "คศ.1", "คศ.2", "คศ.3", "คศ.4", "คศ.5"],
+          series: [[0, 0, 0, 0, 0, 0]],
         },
         options: {
           lineSmooth: this.$chartist.Interpolation.cardinal({
             tension: 0,
           }),
           low: 0,
-          high: 50, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
+          high: 5000, 
           chartPadding: {
             top: 0,
-            right: 0,
+            right: 10,
             bottom: 0,
             left: 0,
           },
         },
       },
-      dataCompletedTasksChart: {
-        data: {
-          labels: ["12am", "3pm", "6pm", "9pm", "12pm", "3am", "6am", "9am"],
-          series: [[this.num_tech, 750, 450, 300, 280, 240, 200, 190]],
-        },
-        options: {
-          lineSmooth: this.$chartist.Interpolation.cardinal({
-            tension: 0,
-          }),
-          low: 0,
-          high: 1000, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
-          chartPadding: {
-            top: 0,
-            right: 0,
-            bottom: 0,
-            left: 0,
-          },
-        },
-      },
+     
      
       Personnel_chart: {
         data: {
@@ -325,7 +306,7 @@ export default {
             showGrid: false,
           },
           low: 0,
-          high: 12000,
+          high: 14000,
           chartPadding: {
             top: 0,
             right: 5,
@@ -349,18 +330,14 @@ export default {
         ],
       },
            
-    
+      user: [],
+      showAlldata_rang: [],
       colleges: [],
       provinces: [],
       prefectures: [],        
       regions: [],     
       region_ena: true,
-      showAlldata: {},
-      showAlldatatech: {},
-      showAlldatadr: {},
-      showAlldatasedr: {},
-      showAlldatasupervision: {},
-      showAlldatatechprepare: {},
+      showAlldata: {},    
       showcollegedata: {},   
        showbranchdata: [],  
     };
@@ -388,46 +365,47 @@ export default {
       })
       this.regions = result.data 
     
-  await this.getAlldata();
-  await this.getAlldatatech();
-  await this.getAlldatadr();
-  await this.getAlldatasedr();
-  await this.getAlldataSupervision();
-  await this.getAlldatatechprepare();
+  await this.getuser();
+  await this.getAlldata();  
+  await this.getAlldata_rang();  
   await this.getPersonnelChart();
+  await this.getPersonnel_rangChart();  
   await this.getAllbranchdata();
   
    },
 
 
   methods: { 
+    async getuser(){
+      let result;
+       let userSession = JSON.parse(sessionStorage.getItem("user")) || 0;
+    result = await this.$http.post("admin.php", {
+      user_name: userSession.user_name,
+      ApiKey: "HRvec2021",
+    });
+    this.user = result.data; 
+    },
+
     async getAlldata() {
       let result = await this.$http.post("show_dashboard_all.php");
-      this.showAlldata = result.data;
-    },
-    async getAlldatatech() {
-      let result = await this.$http.post("show_dashboard_tech.php");
-      this.showAlldatatech = result.data;
-    },
-    async getAlldatadr() {
-      let result = await this.$http.post("show_dashboard_dr.php");
-      this.showAlldatadr = result.data;
-    },
-    async getAlldatasedr() {
-      let result = await this.$http.post("show_dashboard_se_dr.php");
-      this.showAlldatasedr = result.data;
-    },
-     async getAlldataSupervision() {
-      let result = await this.$http.post("show_dashboard_supervision.php");
-      this.showAlldatasupervision = result.data;
-    }, 
-    async getAlldatatechprepare() {
-      let result = await this.$http.post("show_dashboard_tech_prepare.php");
-      this.showAlldatatechprepare = result.data;
-    },
+      this.showAlldata = result.data;        
+    },   
+
+     async getAlldata_rang() {
+      let result = await this.$http.post("show_dachboard_rang.php");
+      this.showAlldata_rang = result.data; 
+    },   
+  
+
     async getPersonnelChart(){ 
    this.Personnel_chart.data.series=[[this.num_dr,this.num_se_dr,this.num_se_tech,this.num_se_techprepare,this.num_se_supervision]] 
     },
+
+    async getPersonnel_rangChart(){ 
+   this.personnel_rangChart.data.series=[[this.num_rang_0,this.num_rang_1,this.num_rang_2,this.num_rang_3,this.num_rang_4,this.num_rang_5]] 
+    },
+
+
 
      async getAllbranchdata() {
       let result = await this.$http.post("branch.php",{
@@ -436,25 +414,50 @@ export default {
       this.showbranchdata = result.data;
     },
   },
-  computed:{
-    num_dr(){
-      let result = parseInt(this.showAlldatadr.count_id)           
+  computed:{   
+ num_dr(){
+      let result = parseInt(this.showAlldata.count_dr)           
       return result
     },
     num_se_dr(){
-      let result = parseInt(this.showAlldatasedr.count_id)           
+      let result = parseInt(this.showAlldata.count_se_dr)           
       return result
     },
      num_se_tech(){
-      let result = parseInt(this.showAlldatatech.count_id)           
+      let result = parseInt(this.showAlldata.count_tech)           
       return result
     },
      num_se_techprepare(){
-      let result = parseInt(this.showAlldatatechprepare.count_id)           
+      let result = parseInt(this.showAlldata.count_perpare)           
       return result
     },
      num_se_supervision(){
-      let result = parseInt(this.showAlldatasupervision.count_id)           
+      let result = parseInt(this.showAlldata.count_supervision)           
+      return result
+    },
+
+     num_rang_0(){
+      let result = parseInt(this.showAlldata_rang.count_rang0)           
+      return result
+    },
+    num_rang_1(){
+      let result = parseInt(this.showAlldata_rang.count_rang1)           
+      return result
+    },
+    num_rang_2(){
+      let result = parseInt(this.showAlldata_rang.count_rang2)           
+      return result
+    },
+    num_rang_3(){
+      let result = parseInt(this.showAlldata_rang.count_rang3)           
+      return result
+    },
+    num_rang_4(){
+      let result = parseInt(this.showAlldata_rang.count_rang4)           
+      return result
+    },
+    num_rang_5(){
+      let result = parseInt(this.showAlldata_rang.count_rang5)           
       return result
     },
 

@@ -186,10 +186,7 @@ async mounted() {
           time_s: this.times_select,
           year_s: this.years_select
         }).finally(() => this.loading = false)
-        this.transference_personnels = result.data
-        console.log(result.data)
-        console.log(this.times_select)
-        console.log(this.years_select)
+        this.transference_personnels = result.data      
         },
 
       async transference_personnelQueryAll() {

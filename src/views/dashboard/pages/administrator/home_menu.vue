@@ -415,32 +415,7 @@ export default {
       this.user = result.data 
   },
 
-  methods: {
-      async userUpdate() {   
-        this.adduserdialog = true
-      }, 
-       async userSubmit(){
-          if (this.$refs.userform.validate()) {
-          this.user.ApiKey = this.ApiKey;        
-          let result      
-          result = await this.$http.post('user.update_password.php', this.user);     
-          if (result.status == '200') {
-            this.users = result.data
-            this.snackbar.icon = 'mdi-font-awesome'
-            this.snackbar.color = 'success'
-            this.snackbar.text = 'แก้ไขข้อมูลเรียบร้อย'
-            this.snackbar.show = true           
-          } else {
-            this.snackbar.icon = 'mdi-close-network'
-            this.snackbar.color = 'red'
-            this.snackbar.text = 'แก้ไขข้อมูลผิดพลาด'
-            this.snackbar.show = true
-            console.log('2')
-          }
-          this.adduserdialog = false
-        }
-      },
-
+  methods: {     
   },
 };
 </script>

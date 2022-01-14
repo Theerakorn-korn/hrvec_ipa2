@@ -653,7 +653,7 @@
 <v-select v-model="addtransference_location.sequence_n" :items="order_need" outlined   label="ลำดับที่ :">  
 </v-select>
                    </v-flex>                                
-                    <v-flex md5>                    
+                    <v-flex md5>                                        
                       <v-autocomplete                         
                         :items="branch_s"
                         item-text="name_branch"
@@ -1047,7 +1047,7 @@ if (this.$refs.addtransference_personnelform.validate()) {
         
         
         let result = await this.$http.post("transference_personnel.insert.php", this.addtransference_personnel)     
-        console.log(result.data)         
+            
         if (result.data.status == true){ 
           this.snackbar.icon = "mdi-checkbox-marked-circle";
           this.snackbar.color = "success";

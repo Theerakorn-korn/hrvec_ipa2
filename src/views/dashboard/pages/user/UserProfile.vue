@@ -11,7 +11,7 @@
           <v-card-text class="text-center">             
             <div align="center">             
                <img v-if="user.personnel_temporary_pic"    
-                width="350"                   
+                width="300"                   
                     style="border-radius: 8px"
                     :src="'http://localhost:8080/HRvecfiles/' + user.personnel_temporary_pic"                    
                   /> 
@@ -398,7 +398,7 @@ export default {
       async personnelSubmit(){
       if (this.$refs.personnelform.validate()) {
           this.user.ApiKey = this.ApiKey; 
-          console.log(this.user)             
+                  
           let result = await this.$http.post('personnel_temporary.update.php', this.user)
           let result_m = await this.$http.post("personnel_marriage.insert.php",this.user)
           if (result.data.status == true || result_m.data.status == true) {

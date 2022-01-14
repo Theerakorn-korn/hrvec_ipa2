@@ -89,7 +89,7 @@
             <table border="0" width="100%" align="center"> 
            <tr>            
              <td width="55%"><div class="regular16">ปฏิบัติหน้าที่ในสถานศึกษา/หน่วยงานปัจจุบัน เป็นเวลา</div></td>
-             <td width="45%"><div class="regular16 td_line" align="center"> {{ get_Appoint_Age }} </div></td>
+             <td width="45%"><div class="regular16 td_line" align="center"> {{ transference_personnels.age_app_time }} </div></td>
          </tr>
             </table>
           <table border="0" width="100%" align="center">

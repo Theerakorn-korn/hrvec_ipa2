@@ -73,7 +73,7 @@
 
       <!--addpersonnel_educationdialog  -->
       <v-layout row justify-center>
-        <v-dialog v-model="addpersonnel_educationdialog" persistent max-width="50%" overlay-opacity="0.6">
+        <v-dialog v-model="addpersonnel_educationdialog" persistent max-width="80%" overlay-opacity="0.6">
           <v-card class="mx-auto pa-5" >
             <base-material-card
               icon="mdi-clipboard-text"
@@ -91,6 +91,7 @@
                     <v-flex md12>
                       <v-row>
                         <v-col cols="12" lg="6">
+                          {{ addpersonnel_education.education_level }}
                           <v-combobox
                             v-model="addpersonnel_education.education_level"
                             :items="education_level"
@@ -101,6 +102,22 @@
                           ></v-combobox>
                         
                         </v-col>
+
+                        <v-col cols="12" lg="6">                                           
+                           <v-autocomplete                         
+                        :items="branch_s"
+                        item-text="name_branch"
+                        item-value="id_branch"                        
+                        label="ประเภท :"
+                        prepend-icon="mdi-account-details"
+                        request
+                         v-model="addpersonnel_education.id_branch"
+                        :rules="[(v) => !!v || '']"
+                      ></v-autocomplete>
+                        
+                        </v-col>
+
+
                         <v-col cols="12" lg="6">
                           <v-text-field
                             v-model="addpersonnel_education.faculty_name"
@@ -218,7 +235,7 @@
 
       <!-- V-model editpersonnel_educationdialog -->
       <v-layout row justify-center>
-        <v-dialog v-model="editpersonnel_educationdialog" persistent max-width="50%">
+        <v-dialog v-model="editpersonnel_educationdialog" persistent max-width="80%">
           <v-card class="mx-auto pa-5" >
             <base-material-card
               color="yellow"
@@ -243,6 +260,20 @@
                           ></v-combobox>
                         
                         </v-col>
+             <v-col cols="12" lg="6">
+                          <v-combobox
+                            v-model="editpersonnel_education.personnel_id_branch"
+                            :items="branch_s"
+                            item-text="name_branch"
+                            item-value="id_branch"
+                            label="ประเภท"
+                            dense
+                            :rules="[(v) => !!v || '']"
+                          ></v-combobox>
+                        
+                        </v-col>
+
+
                         <v-col cols="12" lg="6">
                           <v-text-field
                             v-model="editpersonnel_education.faculty_name"
@@ -354,8 +385,9 @@ export default {
       currentPK: null,
       headers: [
         { text: "ลำดับ", align: "center", value: "id_red" },
+        { text: "ประเภทสาขาวิชา", align: "left", value: "name_branch" },
         { text: "ระดับการศึกษา", align: "left", value: "education_level" },
-        { text: "คณะวิชา", align: "left", value: "faculty_name" },
+        { text: "คณะวิชา", align: "left", value: "faculty_name" },        
         { text: "สาขาวิชา", align: "center", value: "branch_name" },
         { text: "จบจาก", align: "center", value: "academy_name" },
         { text: "ปีที่จบ", align: "center", value: "year_finish" },
@@ -377,15 +409,23 @@ export default {
       addpersonnel_education: {},
       editpersonnel_education: [],
       personnel_educations: [],
-      personnel_education_sub: [],         
+      personnel_education_sub: [],   
+      branch_s: [],      
       education_level: ["ปริญญาตรี", "ปริญญาโท", "ปริญญาเอก"],
     };
   },
 
   async mounted() {
+
+    let result_branch
+        result_branch = await this.$http.post('branch.php', {
+        ApiKey: this.ApiKey       
+      })
+      this.branch_s = result_branch.data   
+      
+      
      
      this.personnel_educationsQueryAll()
-       
   },
 
   methods: {
@@ -394,11 +434,11 @@ export default {
           let userSession = JSON.parse(sessionStorage.getItem('user')) || 0   
         let result = await this.$http.post('personnel_education.php', {
           ApiKey: this.ApiKey,
-            id_card: userSession.id_card  
-
+            id_card: userSession.id_card 
         }).finally(() => this.loading = false)
         this.personnel_educations = result.data            
       },
+
 //Add data
     async personnel_educationAdd() {
       this.addpersonnel_education = {};    
@@ -407,10 +447,11 @@ export default {
     
     async addpersonnel_educationSubmit() {       
         if (this.$refs.addpersonnel_educationform.validate()) {
-let userSession = JSON.parse(sessionStorage.getItem('user')) || 0  
+          let userSession = JSON.parse(sessionStorage.getItem('user')) || 0  
           this.addpersonnel_education.ApiKey = this.ApiKey;
           this.addpersonnel_education.id_card = userSession.id_card 
-          let result = await this.$http.post('personnel_education.insert.php', this.addpersonnel_education)         
+          let result = await this.$http.post('personnel_education.insert.php', this.addpersonnel_education)       
+         
          if (result.data.status == true) {           
             this.personnel_education = result.data
             this.snackbar.icon = 'mdi-font-awesome'
@@ -419,7 +460,6 @@ let userSession = JSON.parse(sessionStorage.getItem('user')) || 0
             this.snackbar.show = true
             this.personnel_educationsQueryAll()
           } else {
-             console.log(result.data.status)
             this.snackbar.icon = 'mdi-close-network'
             this.snackbar.color = 'red'
             this.snackbar.text = 'บันทึกข้อมูลผิดพลาด'
@@ -446,6 +486,7 @@ let userSession = JSON.parse(sessionStorage.getItem('user')) || 0
           "personnel_education.update.php",
           this.editpersonnel_education
         );
+      
         if (result.data.status == true) {
           this.personnel_education = result.data;
           this.snackbar.icon = "mdi-content-save";

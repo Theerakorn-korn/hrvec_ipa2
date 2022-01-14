@@ -1,78 +1,77 @@
 <template>
   <v-container id="dashboard" fluid tag="section">
     <v-row>
-      <v-col cols="12" sm="6" lg="4">        
+      <v-col cols="12" sm="6" lg="4">
         <base-material-stats-card          
-          :value="Number(showAlldata.count_id).toLocaleString()"
+          :value="Number(showAlldata.count_all).toLocaleString()"
           color="primary"
           icon="mdi-account-group"
           title="ครูบุคลากรทั้งหมด"
           sub-icon="mdi-clock"
-          sub-text="Just Updated"
+          sub-text="ALL Personnel"
         />
       </v-col>
 
       <v-col cols="12" sm="6" lg="4">
         <base-material-stats-card
-         :value="Number(showAlldatatech.count_id).toLocaleString()"
+         :value="Number(showAlldata.count_tech).toLocaleString()"
           color="primary"
           icon="mdi-account-group"
           title="ข้าราชการครู"
           sub-icon="mdi-clock"
-          sub-text="Just Updated"
+          sub-text="Teacher"
         />
       </v-col>
 
       <v-col cols="12" sm="6" lg="4">
         <base-material-stats-card
-        :value="Number(showAlldatadr.count_id).toLocaleString()"
+        :value="Number(showAlldata.count_dr).toLocaleString()"
           color="primary"
           icon="mdi-account-group"
           title="ผู้อำนวยการวิทยาลัย"
           sub-icon="mdi-clock"
-          sub-text="Just Updated"
+          sub-text="Director"
         />
       </v-col>
 
       <v-col cols="12" sm="6" lg="4">
         <base-material-stats-card
-         :value="Number(showAlldatasedr.count_id).toLocaleString()"
+         :value="Number(showAlldata.count_se_dr).toLocaleString()"
           color="primary"
           icon="mdi-account-group"
           title="รองผู้อำนวยการ"          
           sub-icon="mdi-clock"
-          sub-text="Just Updated"
+          sub-text="Deputy Director"
         />
       </v-col>
 
       <v-col cols="12" sm="6" lg="4">
         <base-material-stats-card
-        :value="Number(showAlldatasupervision.count_id).toLocaleString()"
+        :value="Number(showAlldata.count_supervision).toLocaleString()"
           color="primary"
           icon="mdi-account-group"
           title="ศึกษานิเทศก์"
         
           sub-icon="mdi-clock"
-          sub-text="Just Updated"
+          sub-text="Study supervision"
         />
       </v-col>
 
       <v-col cols="12" sm="6" lg="4">
         <base-material-stats-card
-        :value="Number(showAlldatatechprepare.count_id).toLocaleString()"
+        :value="Number(showAlldata.count_perpare).toLocaleString()"
           color="primary"
           icon="mdi-account-group"
           title="ครูผู้ช่วย"         
           sub-icon="mdi-clock"
-          sub-text="Just Updated"
+          sub-text="Intense Preparation"
         />
       </v-col>
-
-      <v-col cols="12" lg="4">
+      <v-col cols="12" lg="6">
         <base-material-chart-card
-          :data="emailsSubscriptionChart.data"
-          :options="emailsSubscriptionChart.options"
-          :responsive-options="emailsSubscriptionChart.responsiveOptions"
+          :data="Personnel_chart.data"
+          :options="Personnel_chart.options"
+          :responsive-options="Personnel_chart.responsiveOptions"         
           color="#E91E63"
           hover-reveal
           type="Bar"
@@ -84,7 +83,6 @@
                   <v-icon color="info">mdi-refresh</v-icon>
                 </v-btn>
               </template>
-
               <span>Refresh</span>
             </v-tooltip>
 
@@ -99,9 +97,7 @@
             </v-tooltip>
           </template>
 
-          <h4 class="card-title font-weight-light mt-2 ml-2">Personal</h4>
-
-          <p class="d-inline-flex font-weight-light ml-2 mt-1">Last Campaign Performance</p>
+          <h4 class="card-title font-weight-light mt-2 ml-2">ข้าราชการครูและบุคลากรทางการศึกษา</h4>
 
           <template v-slot:actions>
             <v-icon class="mr-1" small>mdi-clock-outline</v-icon>
@@ -110,10 +106,10 @@
         </base-material-chart-card>
       </v-col>
 
-      <v-col cols="12" lg="4">
+      <v-col cols="12" lg="6">
         <base-material-chart-card
-          :data="dailySalesChart.data"
-          :options="dailySalesChart.options"
+          :data="personnel_rangChart.data"
+          :options="personnel_rangChart.options"
           color="success"
           hover-reveal
           type="Line"
@@ -140,14 +136,8 @@
             </v-tooltip>
           </template>
 
-          <h4 class="card-title font-weight-light mt-2 ml-2">Daily Sales</h4>
-
-          <p class="d-inline-flex font-weight-light ml-2 mt-1">
-            <v-icon color="green" small>mdi-arrow-up</v-icon>
-            <span class="green--text">55%</span>&nbsp;
-            increase in today's sales
-          </p>
-
+          <h4 class="card-title font-weight-light mt-2 ml-2">ข้อมูลวิทยฐานะข้าราชการครู</h4>
+         
           <template v-slot:actions>
             <v-icon class="mr-1" small>mdi-clock-outline</v-icon>
             <span class="caption grey--text font-weight-light">updated 4 minutes ago</span>
@@ -155,7 +145,7 @@
         </base-material-chart-card>
       </v-col>
 
-      <v-col cols="12" lg="4">
+     <!--  <v-col cols="12" lg="4">
         <base-material-chart-card
           :data="dataCompletedTasksChart.data"
           :options="dataCompletedTasksChart.options"
@@ -195,63 +185,51 @@
           </template>
         </base-material-chart-card>
       </v-col>
-
+ -->
       <v-col cols="12" md="12">
         <base-material-card color="warning" class="px-5 py-3">
           <template v-slot:heading>
-            <div class="display-2 font-weight-light">Employees Stats</div>
+            <div class="font-weight-light">สถานศึกษา</div>
 
-            <div class="subtitle-1 font-weight-light">New employees on 15th September, 2016</div>
+            <div class="font-weight-light">ข้อมูลสถานศึกษาที่อยู่ในระบบ</div>
           </template>
           <v-card-text>
-            <v-data-table :headers="headers" :items="items" />
+            <v-data-table :headers="headers" :items="colleges"  :search="search">
+              <template v-slot:top>
+        <v-text-field
+          v-model="search"
+          label="ค้นหา :"
+          class="mx-4"
+        ></v-text-field>
+      </template>
+            </v-data-table>
           </v-card-text>
         </base-material-card>
       </v-col>
 
-      <v-col cols="12" md="12">
-        <base-material-card class="px-5 py-3">
+
+
+       <v-col cols="12" md="12">
+        <base-material-card color="success" class="px-5 py-3">
           <template v-slot:heading>
-            <v-tabs v-model="tabs" background-color="transparent" slider-color="white">
-              <span class="subheading font-weight-light mx-3" style="align-self: center">Tasks:</span>
-              <v-tab class="mr-3">
-                <v-icon class="mr-2">mdi-bug</v-icon>Bugs
-              </v-tab>
-              <v-tab class="mr-3">
-                <v-icon class="mr-2">mdi-code-tags</v-icon>Website
-              </v-tab>
-              <v-tab>
-                <v-icon class="mr-2">mdi-cloud</v-icon>Server
-              </v-tab>
-            </v-tabs>
+            <div class="font-weight-light">สาขาวิชาเอก</div>
+
+            <div class="font-weight-light">ข้อมูลสาขาวิชาในระบบ</div>
           </template>
-
-          <v-tabs-items v-model="tabs" class="transparent">
-            <v-tab-item v-for="n in 3" :key="n">
-              <v-card-text>
-                <template v-for="(task, i) in tasks[tabs]">
-                  <v-row :key="i" align="center">
-                    <v-col cols="1">
-                      <v-list-item-action>
-                        <v-checkbox v-model="task.value" color="secondary" />
-                      </v-list-item-action>
-                    </v-col>
-
-                    <v-col cols="9">
-                      <div class="font-weight-light" v-text="task.text" />
-                    </v-col>
-
-                    <v-col cols="2" class="text-right">
-                      <v-icon class="mx-1">mdi-pencil</v-icon>
-                      <v-icon color="error" class="mx-1">mdi-close</v-icon>
-                    </v-col>
-                  </v-row>
-                </template>
-              </v-card-text>
-            </v-tab-item>
-          </v-tabs-items>
+          <v-card-text>
+            <v-data-table :headers="header_branchs" :items="showbranchdata"  :search="search_branch">
+              <template v-slot:top>
+        <v-text-field
+          v-model="search_branch"
+          label="ค้นหา :"
+          class="mx-4"
+        ></v-text-field>
+      </template>
+            </v-data-table>
+          </v-card-text>
         </base-material-card>
       </v-col>
+     
     </v-row>
      </v-container>
 </template>
@@ -262,18 +240,44 @@ export default {
 
   data() {
     return {
-      user: {},
-      dailySalesChart: {
+    
+     headers: [  
+        { text: "ชื่อสถานศึกษา", align: "left", value: "college_name" },
+        { text: "อำเภอ", align: "left", value: "prefecture_name" },
+        { text: "จังหวัด", align: "left", value: "province_name" },
+        { text: "ประเภทสถานศึกษา", align: "left", value: "collegetype_name" }, 
+        { text: "เบอร์โทร", align: "left", value: "collegeinfo_phone" }, 
+      ],
+      header_branchs: [      
+        { text: "รหัสสาขา", align: "center", value: "id_branch" },              
+        { text: "สาขาวิชา", align: "left", value: "name_branch" },
+        { text: "รายละเอียด", align: "left", value: "detail_branch" },
+      ],
+      search: '',
+      search_branch: '',
+      pagination: {},
+      ApiKey: 'HRvec2021',
+      
+      rowsperpage: [
+        25,
+        50,
+        100,
+        {
+          text: "All",
+          value: -1,
+        },
+      ],    
+      personnel_rangChart: {
         data: {
-          labels: ["M", "T", "W", "T", "F", "S", "S"],
-          series: [[12, 17, 7, 17, 23, 18, 38]],
+          labels: ["ครูผู้ช่วย", "คศ.1", "คศ.2", "คศ.3", "คศ.4", "คศ.5"],
+          series: [[0, 0, 0, 0, 0, 0]],
         },
         options: {
           lineSmooth: this.$chartist.Interpolation.cardinal({
             tension: 0,
           }),
           low: 0,
-          high: 50, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
+          high: 50, 
           chartPadding: {
             top: 0,
             right: 0,
@@ -282,43 +286,19 @@ export default {
           },
         },
       },
-      dataCompletedTasksChart: {
-        data: {
-          labels: ["12am", "3pm", "6pm", "9pm", "12pm", "3am", "6am", "9am"],
-          series: [[230, 750, 450, 300, 280, 240, 200, 190]],
-        },
-        options: {
-          lineSmooth: this.$chartist.Interpolation.cardinal({
-            tension: 0,
-          }),
-          low: 0,
-          high: 1000, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
-          chartPadding: {
-            top: 0,
-            right: 0,
-            bottom: 0,
-            left: 0,
-          },
-        },
-      },
-      emailsSubscriptionChart: {
+     
+     
+      Personnel_chart: {
         data: {
           labels: [
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6",
-            "7",
-            "8",
-            "9",
-            "10",
-            "11",
-            "12",
+            "ผู้อำนวยการ",
+            "รองผู้อำนวยการ",
+            "ครู",
+            "ครูผู้ช่วย",
+            "ศึกษานิเทศก์",
           ],
           series: [
-            [542, 443, 320, 780, 553, 453, 326, 434, 568, 610, 756, 895],
+            [ 0, 0, 0, 0, 0]
           ],
         },
         options: {
@@ -326,164 +306,76 @@ export default {
             showGrid: false,
           },
           low: 0,
-          high: 1000,
+          high: 200,
           chartPadding: {
             top: 0,
             right: 5,
             bottom: 0,
-            left: 0,
+            left: 10,
           },
         },
         responsiveOptions: [
           [
-            "screen and (max-width: 640px)",
+            "screen and (max-width: 100%)",
             {
               seriesBarDistance: 5,
               axisX: {
                 labelInterpolationFnc: function (value) {
                   return value[0];
                 },
+
               },
             },
           ],
         ],
       },
-      headers: [
-        {
-          sortable: false,
-          text: "ID",
-          value: "id",
-        },
-        {
-          sortable: false,
-          text: "Name",
-          value: "name",
-        },
-        {
-          sortable: false,
-          text: "Salary",
-          value: "salary",
-          align: "right",
-        },
-        {
-          sortable: false,
-          text: "Country",
-          value: "country",
-          align: "right",
-        },
-        {
-          sortable: false,
-          text: "City",
-          value: "city",
-          align: "right",
-        },
-      ],
-      items: [
-        {
-          id: 1,
-          name: "Dakota Rice",
-          country: "Niger",
-          city: "Oud-Tunrhout",
-          salary: "$35,738",
-        },
-        {
-          id: 2,
-          name: "Minerva Hooper",
-          country: "Curaçao",
-          city: "Sinaai-Waas",
-          salary: "$23,738",
-        },
-        {
-          id: 3,
-          name: "Sage Rodriguez",
-          country: "Netherlands",
-          city: "Overland Park",
-          salary: "$56,142",
-        },
-        {
-          id: 4,
-          name: "Philip Chanley",
-          country: "Korea, South",
-          city: "Gloucester",
-          salary: "$38,735",
-        },
-        {
-          id: 5,
-          name: "Doris Greene",
-          country: "Malawi",
-          city: "Feldkirchen in Kārnten",
-          salary: "$63,542",
-        },
-      ],
-      tabs: 0,
-      tasks: {
-        0: [
-          {
-            text: 'Sign contract for "What are conference organizers afraid of?"',
-            value: true,
-          },
-          {
-            text: "Lines From Great Russian Literature? Or E-mails From My Boss?",
-            value: false,
-          },
-          {
-            text: "Flooded: One year later, assessing what was lost and what was found when a ravaging rain swept through metro Detroit",
-            value: false,
-          },
-          {
-            text: "Create 4 Invisible college Experiences you Never Knew About",
-            value: true,
-          },
-        ],
-        1: [
-          {
-            text: "Flooded: One year later, assessing what was lost and what was found when a ravaging rain swept through metro Detroit",
-            value: true,
-          },
-          {
-            text: 'Sign contract for "What are conference organizers afraid of?"',
-            value: false,
-          },
-        ],
-        2: [
-          {
-            text: "Lines From Great Russian Literature? Or E-mails From My Boss?",
-            value: false,
-          },
-          {
-            text: "Flooded: One year later, assessing what was lost and what was found when a ravaging rain swept through metro Detroit",
-            value: true,
-          },
-          {
-            text: 'Sign contract for "What are conference organizers afraid of?"',
-            value: true,
-          },
-        ],
-      },
-      list: {
-        0: false,
-        1: false,
-        2: false,
-      },
-      showAlldata: {},
-      showAlldatatech: {},
-      showAlldatadr: {},
-      showAlldatasedr: {},
-      showAlldatasupervision: {},
-      showAlldatatechprepare: {},
+           
+      user: [],
+      showAlldata_rang: [],
+      colleges: [],
+      provinces: [],
+      prefectures: [],        
+      regions: [],     
+      region_ena: true,
+      showAlldata: {},    
+      showcollegedata: {},   
+       showbranchdata: [],  
     };
   },
 
- async mounted() { 
-   await this.getuser();
-   await this.getAlldata();
-   await this.getAlldatatech();
-   await this.getAlldatadr();
-   await this.getAlldatasedr();
-   await this.getAlldataSupervision();
-   await this.getAlldatatechprepare();
-  },
-  methods: {  
+ async mounted() {
+      
+    let result
+      result = await this.$http.post('collegetype.php', {
+        ApiKey: this.ApiKey
+      })
+      this.collegetypes = result.data
+      result = await this.$http.post('college.php', {
+        ApiKey: this.ApiKey
+      })
+      
+      this.colleges = result.data
+      result = await this.$http.post('province.php', {
+        ApiKey: this.ApiKey
+      })
+      this.provinces = result.data
+      
+      result = await this.$http.post('region.php', {
+        ApiKey: this.ApiKey
+      })
+      this.regions = result.data 
+    
+  await this.getuser();
+  await this.getAlldata();  
+  await this.getAlldata_rang();  
+  await this.getPersonnelChart();
+  await this.getPersonnel_rangChart();  
+  await this.getAllbranchdata();
+  
+   },
+
+
+  methods: { 
     async getuser(){
       let result;
        let userSession = JSON.parse(sessionStorage.getItem("user")) || 0;
@@ -496,40 +388,84 @@ export default {
 
     async getAlldata() {
       let result = await this.$http.post("show_dashboard_all.php", {
-          college_code : this.user.college_code         
+          college_code: this.user.college_code         
         });
-      this.showAlldata = result.data;     
+      this.showAlldata = result.data;        
+    },   
+
+     async getAlldata_rang() {
+      let result = await this.$http.post("show_dachboard_rang.php", {
+          college_code: this.user.college_code         
+        });
+      this.showAlldata_rang = result.data;   
+    
+    },   
+  
+
+    async getPersonnelChart(){ 
+   this.Personnel_chart.data.series=[[this.num_dr,this.num_se_dr,this.num_se_tech,this.num_se_techprepare,this.num_se_supervision]] 
     },
-    async getAlldatatech() {
-      let result = await this.$http.post("show_dashboard_tech.php", {
-          college_code : this.user.college_code         
-        });
-      this.showAlldatatech = result.data;
+
+    async getPersonnel_rangChart(){ 
+   this.personnel_rangChart.data.series=[[this.num_rang_0,this.num_rang_1,this.num_rang_2,this.num_rang_3,this.num_rang_4,this.num_rang_5]] 
     },
-    async getAlldatadr() {
-      let result = await this.$http.post("show_dashboard_dr.php", {
-          college_code : this.user.college_code         
-        });
-      this.showAlldatadr = result.data;
+
+
+
+     async getAllbranchdata() {
+      let result = await this.$http.post("branch.php",{
+        ApiKey: this.ApiKey
+      });
+      this.showbranchdata = result.data;
     },
-    async getAlldatasedr() {
-      let result = await this.$http.post("show_dashboard_se_dr.php", {
-          college_code : this.user.college_code         
-        });
-      this.showAlldatasedr = result.data;
+  },
+  computed:{   
+ num_dr(){
+      let result = parseInt(this.showAlldata.count_dr)           
+      return result
     },
-     async getAlldataSupervision() {
-      let result = await this.$http.post("show_dashboard_supervision.php", {
-          college_code : this.user.college_code         
-        });
-      this.showAlldatasupervision = result.data;
-    }, 
-    async getAlldatatechprepare() {
-      let result = await this.$http.post("show_dashboard_tech_prepare.php", {
-          college_code : this.user.college_code         
-        });
-      this.showAlldatatechprepare = result.data;
+    num_se_dr(){
+      let result = parseInt(this.showAlldata.count_se_dr)           
+      return result
     },
+     num_se_tech(){
+      let result = parseInt(this.showAlldata.count_tech)           
+      return result
+    },
+     num_se_techprepare(){
+      let result = parseInt(this.showAlldata.count_perpare)           
+      return result
+    },
+     num_se_supervision(){
+      let result = parseInt(this.showAlldata.count_supervision)           
+      return result
+    },
+
+     num_rang_0(){
+      let result = parseInt(this.showAlldata_rang.count_rang0)           
+      return result
+    },
+    num_rang_1(){
+      let result = parseInt(this.showAlldata_rang.count_rang1)           
+      return result
+    },
+    num_rang_2(){
+      let result = parseInt(this.showAlldata_rang.count_rang2)           
+      return result
+    },
+    num_rang_3(){
+      let result = parseInt(this.showAlldata_rang.count_rang3)           
+      return result
+    },
+    num_rang_4(){
+      let result = parseInt(this.showAlldata_rang.count_rang4)           
+      return result
+    },
+    num_rang_5(){
+      let result = parseInt(this.showAlldata_rang.count_rang5)           
+      return result
+    },
+
   },
 };
 </script>

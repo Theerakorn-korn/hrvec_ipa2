@@ -179,7 +179,7 @@
           id_ref: this.url_result       
         }).finally(() => this.loading = false)
         this.conditions_branchs = result.data      
-        console.log(this.url_result)  
+       
       },
     
    async conditions_transferQueryAll() {

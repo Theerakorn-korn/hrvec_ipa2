@@ -370,8 +370,7 @@ async mounted() {
         })
         this.editman_power = result.data       
         this.editman_powerdialog = true
-        console.log(result.data)
-        console.log(id_m)
+       
        
       },
       async editman_powerSubmit() {

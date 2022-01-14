@@ -328,23 +328,16 @@ async mounted() {
                 'Content-Type': 'multipart/form-data'
               }
             })
-             console.log(result.data)
-
             if (result.data.status == true){                
-              this.addnews_s.link_file = filename             
-              console.log(filename)
+              this.addnews_s.link_file = filename 
             }
-            uploaded = true
-            console.log(uploaded)
+            uploaded = true         
           } else {
             uploaded = false
-          console.log(uploaded)
           }
         }     
           this.addnews_s.ApiKey = this.ApiKey        
-          result = await this.$http.post('news_s.insert.php', this.addnews_s)  
-          console.log(result.data)
-          console.log(this.addnews_s)
+          result = await this.$http.post('news_s.insert.php', this.addnews_s) 
           if (result.data.status || uploaded) {
             await this.news_sQueryAll()
             this.snackbar.icon = 'mdi-font-awesome'
