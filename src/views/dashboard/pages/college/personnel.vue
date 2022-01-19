@@ -197,7 +197,6 @@ async mounted() {
         let result = await this.$http.post('personnel_temporary.php', {
           ApiKey: this.ApiKey,
            user_name: userSession.user_name  
-
         }).finally(() => this.loading = false)
         this.personnel_temporarys = result.data
       },    

@@ -32,7 +32,7 @@
                 color="primary"
                 @click.native="periodAdd()"
               >
-                <v-icon>mdi-plus-circle-outline</v-icon>เพื่อรายการ
+                <v-icon>mdi-plus-circle-outline</v-icon>เพิ่มรายการ
               </v-btn>
             </v-col>
           </v-row>
@@ -104,12 +104,16 @@
                   <v-flex xs12 md6>
                     <v-select v-model="addperiod.period_year" :items="periodselect" item-text="text" item-value="value" label="เลือกปีการศึกษา"
                       single-line>
-                    </v-select>
+                    </v-select>                    
                     <v-spacer></v-spacer>
-                  </v-flex>
+                  </v-flex>                  
                   <v-flex xs12 md6>
                     <v-text-field type="number" label="ครั้งที่" v-model="addperiod.period_times" required :rules="[v => !!v || '']"></v-text-field>
                   </v-flex>
+                   <v-flex xs12 md6>
+                    <v-select :items="period_types" item-value="value" label="ปรเภทการย้าย" v-model="addperiod.period_type" required :rules="[v => !!v || '']"></v-select>
+                  </v-flex>
+                  
                   <v-flex xs12 md6>
                     <v-text-field type="date" label="วันที่เริ่ม" v-model="addperiod.period_start" required :rules="[v => !!v || '']"></v-text-field>
                   </v-flex>
@@ -223,6 +227,9 @@
                    <v-flex xs12 md6>
                     <v-text-field type="number" label="ครั้งที่" v-model="editperiod.period_times" required :rules="[v => !!v || '']"></v-text-field>
                   </v-flex>
+                   <v-flex xs12 md6>
+                    <v-select :items="period_types" item-value="value" label="ปรเภทการย้าย" v-model="editperiod.period_type" required :rules="[v => !!v || '']"></v-select>
+                  </v-flex>
                   <v-flex xs12 md6>
                     <v-text-field type="date" label="วันที่เริ่ม" v-model="editperiod.period_start" required :rules="[v => !!v || '']"></v-text-field>
                   </v-flex>
@@ -292,18 +299,23 @@ export default {
         icon: '',
         text: ''
       },
+      period_types:[
+        { text: 'สายงานบริหารสถานศึกษา', value: 'manage'},
+        { text: 'สายการสอนและสายสนับสนุนการสอน', value: 'teacher'},
+      ],
       periods: [],
       addperiod: {},
       editperiod: {},
       search: '',
       pagination: {},      
-      headers: [
-        { text: "ลำดับ", align: "center", value: "id_pr" },
-        { text: "ปี", align: "center", value: "period_yearbd" },              
-        { text: "ปี", align: "center", value: "period_times" },              
+      headers: [     
+               
+        { text: "ครั้งที่", align: "center", value: "period_times" }, 
+        { text: "ปี", align: "center", value: "period_yearbd" },                  
         { text: "เริ่มวันที่", align: "center", value: "period_start" },        
         { text: "สิ้นสุดวันที่", align: "center", value: "period_stop" },        
         { text: "วันที่นับถึง", align: "center", value: "period_cal_end" },        
+        { text: "เกี่ยวข้องกับ", align: "center", value: "period_type" },        
         { text: "สถานะ", align: "center", value: "period_enable" },        
         { text: "แก้ไข", align: "center", value: "actions", icon: "mdi-file-document-edit" },
         { text: "ลบ", align: "center", value: "action_s" , icon: "mdi-delete-forever" },
@@ -361,10 +373,12 @@ async mounted() {
         this.periods = result.data
       },
        async periodAdd() {
+         this.addperiod={};
         this.addperiod.period_year = new Date().getFullYear().toString()
         this.addperiod.period_start = new Date().toISOString().substr(0, 10)
         this.addperiod.period_stop = new Date().toISOString().substr(0, 10)
         this.addperiod.period_enable_sw = false
+
         this.adddialog = true
       this.addperioddialog = true;
     },

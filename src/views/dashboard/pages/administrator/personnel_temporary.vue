@@ -32,7 +32,7 @@
                 color="primary"
                 @click.native="personnel_temporaryAdd()"
               >
-                <v-icon>mdi-plus-circle-outline</v-icon>เพื่อรายการ
+                <v-icon>mdi-plus-circle-outline</v-icon>เพิ่มรายการ
               </v-btn>
             </v-col>
           </v-row>
@@ -43,7 +43,17 @@
         class="elevation-1"
         :loading="loading"
          :search="search"
-              >            
+              >        
+
+              
+
+ <template v-slot:[`item.brith_day`]="{ item }">
+          {{ item.brith_day +'/'+ item.brith_month +'/'+ item.brith_year}}
+          </template>
+ <template v-slot:[`item.appoin_day`]="{ item }">
+          {{ item.appoin_day +'/'+ item.appoin_month +'/'+ item.appoin_year}}
+          </template>
+          
                <template v-slot:[`item.actions`]="{ item }">
             <v-icon
               color="yellow"
@@ -342,39 +352,39 @@
                     <v-divider></v-divider>
                   </v-flex>  
                    <v-flex md12>
-                    <v-text-field label="คำสั่งที่" v-model="editpersonnel_temporary.order_app_now" required :rules="[v => !!v || '']"></v-text-field>
+                    <v-text-field label="คำสั่งที่" v-model="editpersonnel_temporary.order_app_now"></v-text-field>
                   </v-flex>       
                   <v-flex md6>
-                    <v-text-field label="รหัสบัตรประชาชน" v-model="editpersonnel_temporary.id_card" required :rules="[v => !!v || '']"></v-text-field>
+                    <v-text-field label="รหัสบัตรประชาชน" v-model="editpersonnel_temporary.id_card"></v-text-field>
                   </v-flex>
                   <v-flex md6>
                   </v-flex>
                   <v-flex md4>
-                    <v-text-field label="คำนำหน้าชื่อ" v-model="editpersonnel_temporary.title_s" require :rules="[v => !!v || '']"></v-text-field>
+                    <v-text-field label="คำนำหน้าชื่อ" v-model="editpersonnel_temporary.title_s"></v-text-field>
                   </v-flex> 
                   <v-flex md4>
-                    <v-text-field label="ชื่อ" v-model="editpersonnel_temporary.frist_name" require :rules="[v => !!v || '']"></v-text-field>
+                    <v-text-field label="ชื่อ" v-model="editpersonnel_temporary.frist_name"></v-text-field>
                   </v-flex>
                   <v-flex md4>
-                    <v-text-field label="นามสกุล" v-model="editpersonnel_temporary.last_name" required :rules="[v => !!v || '']"></v-text-field>
+                    <v-text-field label="นามสกุล" v-model="editpersonnel_temporary.last_name"></v-text-field>
                   </v-flex>
                   <v-flex md6>
-                    <v-autocomplete v-model="editpersonnel_temporary.position_name" :items="userstatus" item-text="user_status_name" item-value="user_status_name" label="ตำแหน่ง"  required :rules="[v => !!v || '']"></v-autocomplete>
+                    <v-autocomplete v-model="editpersonnel_temporary.position_name" :items="userstatus" item-text="user_status_name" item-value="user_status_name" label="ตำแหน่ง"></v-autocomplete>
                   </v-flex>
                    <v-flex md6>
-                    <v-autocomplete v-model="editpersonnel_temporary.id_position" :items="man_powers" item-text="college_position" item-value="id_position" label="เลขที่ตำแหน่ง"  required :rules="[v => !!v || '']"></v-autocomplete>
+                    <v-autocomplete v-model="editpersonnel_temporary.id_position" :items="man_powers" item-text="college_position" item-value="id_position" label="เลขที่ตำแหน่ง"></v-autocomplete>
                   </v-flex>
                   <v-flex md6>
-                    <v-autocomplete v-model="editpersonnel_temporary.rang_name" :items="rang_names" item-text="text" item-value="value" label="วิทยฐานะ"  required :rules="[v => !!v || '']"></v-autocomplete>
+                    <v-autocomplete v-model="editpersonnel_temporary.rang_name" :items="rang_names" item-text="text" item-value="value" label="วิทยฐานะ"></v-autocomplete>
                   </v-flex>
                    <v-flex md6>
-                    <v-select v-model="editpersonnel_temporary.rang_level" :items="rang_levels" label="ระดับ"  required :rules="[v => !!v || '']"></v-select>
+                    <v-select v-model="editpersonnel_temporary.rang_level" :items="rang_levels" label="ระดับ" ></v-select>
                   </v-flex>
                    <v-flex md6>
-                    <v-text-field label="คุณวิฒิ" v-model="editpersonnel_temporary.ed_abb" required :rules="[v => !!v || '']"></v-text-field>
+                    <v-text-field label="คุณวิฒิ" v-model="editpersonnel_temporary.ed_abb" ></v-text-field>
                   </v-flex>
                    <v-flex md6>
-                    <v-text-field label="สาขาวิชา" v-model="editpersonnel_temporary.ed_name" required :rules="[v => !!v || '']"></v-text-field>
+                    <v-text-field label="สาขาวิชา" v-model="editpersonnel_temporary.ed_name" ></v-text-field>
                   </v-flex>
                      <v-flex md6>
                 <v-menu
@@ -395,7 +405,7 @@
                             v-bind="attrs"
                             v-on="on"
                             locale="th"
-                            required :rules="[v => !!v || '']"
+                          
                           ></v-text-field>
                         </template>
                         <v-date-picker
@@ -450,7 +460,7 @@
                             v-bind="attrs"
                             v-on="on"
                             locale="th"
-                            required :rules="[v => !!v || '']"
+                           
                           ></v-text-field>
                         </template>
                         <v-date-picker
@@ -478,10 +488,10 @@
                       </v-menu>
                   </v-flex>                            
                   <v-flex md6>
-                    <v-text-field label="เบอร์โทร" v-model="editpersonnel_temporary.tel_p" required :rules="[v => !!v || '']"></v-text-field>
+                    <v-text-field label="เบอร์โทร" v-model="editpersonnel_temporary.tel_p"></v-text-field>
                   </v-flex>
                    <v-flex md6>
-                    <v-text-field label="E-mail" v-model="editpersonnel_temporary.e_mail" required :rules="[v => !!v || '']"></v-text-field>
+                    <v-text-field label="E-mail" v-model="editpersonnel_temporary.e_mail"></v-text-field>
                   </v-flex>
 
                 </v-layout>
@@ -704,13 +714,15 @@ async mounted() {
           ApiKey: this.ApiKey,
           id_rc: id_rc
         })
-        this.editpersonnel_temporary = result.data       
+        this.editpersonnel_temporary = result.data 
+        this.editpersonnel_temporary.p_word = ''      
         this.editpersonnel_temporarydialog = true
       },
       async editpersonnel_temporarySubmit() {
         if (this.$refs.editpersonnel_temporaryform.validate()) {
-          this.editpersonnel_temporary.ApiKey = this.ApiKey;     
-          this.editpersonnel_temporary.p_word = this.p_word;
+          this.editpersonnel_temporary.ApiKey = this.ApiKey; 
+           if(this.editpersonnel_temporary.p_word == '')
+            delete this.editpersonnel_temporary.p_word   
           this.editpersonnel_temporary.brith_day = this.brith_day;
           this.editpersonnel_temporary.brith_month = this.brith_month;
           this.editpersonnel_temporary.brith_year = this.brith_year;

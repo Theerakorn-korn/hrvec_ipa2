@@ -228,7 +228,8 @@
           >   <v-card-title>ระบบครูผู้ช่วย</v-card-title>
             <v-list>
               <v-list-item-group >
-                <v-list-item v-for="(item, i) in prepare_items" :key="i" :to="item.to">
+                <!-- <v-list-item v-for="(item, i) in prepare_items" :key="i" :to="item.to"> -->
+                <v-list-item v-for="(item, i) in prepare_items" :key="i">
                   <v-list-item-icon>
                     <v-icon v-text="item.icon"></v-icon>
                   </v-list-item-icon>
@@ -259,7 +260,7 @@
             icon="mdi-human-male-male"         
           >   <v-card-title>ข่าวและคู่มือใช้งานระบบ</v-card-title>
             <v-list>
-              <v-list-item-group >
+              <v-list-item-group >            
                 <v-list-item v-for="(item, i) in news_manual" :key="i" :to="item.to">
                   <v-list-item-icon>
                     <v-icon v-text="item.icon"></v-icon>
@@ -276,7 +277,7 @@
     </v-row>
      <!-- V-model userdialog -->
       <v-layout row justify-center>
-         <v-dialog v-model="adduserdialog" persistent max-width="80%">
+         <v-dialog v-model="edituserdialog" persistent max-width="80%">
         <v-card class="mx-auto pa-6" elevation="2">
            <base-material-card
               color="yellow"
@@ -287,17 +288,17 @@
             >            
             </base-material-card>
           <v-card-text>
-            <v-form ref="userform" lazy-validation>
+            <v-form ref="edituserform" lazy-validation>
               <v-container grid-list-md>
                 <v-layout wrap> 
                     <v-flex md12>
-                   {{ user.user_name }} {{ user.user_firstname }}{{ user.user_lastname }}
+                   {{ edituser.user_name }} {{ edituser.user_firstname }}{{ edituser.user_lastname }}
                   </v-flex>                                        
                   <v-flex md6>
-                    <v-text-field outlined label="Password" v-model="user.user_password" type="password"></v-text-field>
+                    <v-text-field outlined label="Password" v-model="edituser.user_password" type="password"></v-text-field>
                   </v-flex>
                   <v-flex md6>
-                 <v-text-field outlined label="Confirm Password" v-model="user.user_confirmpassword" type="password"  required :rules="[v => v==user.user_password]"></v-text-field>             
+                 <v-text-field outlined label="Confirm Password" v-model="edituser.user_confirmpassword" type="password"  required :rules="[v => v==edituser.user_password]"></v-text-field>             
                   </v-flex>
                   <v-flex xs12>
                     <v-divider></v-divider>
@@ -309,10 +310,10 @@
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn large @click.stop="adduserdialog = false" rounded>
+            <v-btn large @click.stop="edituserdialog = false" rounded>
                 <v-icon dark>mdi-close</v-icon>ยกเลิก
               </v-btn>
-              <v-btn large color="warning" @click.stop="userSubmit()" rounded>
+              <v-btn large color="warning" @click.stop="edituserSubmit()" rounded>
                 <v-icon dark>mdi-pencil</v-icon>&nbsp;แก้ไข
               </v-btn>
 
@@ -345,7 +346,8 @@ export default {
       ApiKey: "HRvec2021",   
       user: {}, 
       users: [],
-      adduserdialog: false,
+      edituser: [],
+      edituserdialog: false,
   snackbar: {
         show: false,
         color: '',
@@ -399,8 +401,8 @@ export default {
         ],
          news_manual: [
           { text: "ข่าวสาร", icon: "mdi-basket-plus", to: "/admin/news_s" },        
-          { text: "คู่มือใช้งาน", icon: "mdi-chart-box-outline", to: "/Dashboard" },        
-          { text: "กระดานสนทนา", icon: "mdi-chart-box-outline", to: "/Dashboard" },        
+          { text: "คู่มือใช้งาน", icon: "mdi-chart-box-outline", to: "/admin/manual_s" },        
+          { text: "กระดานสนทนา", icon: "mdi-chart-box-outline", to: "" },        
         ],
     };
   },
@@ -415,7 +417,45 @@ export default {
       this.user = result.data 
   },
 
-  methods: {     
+  methods: {
+    async userQueryAll(){
+       let result
+      let userSession = JSON.parse(sessionStorage.getItem('user')) || 0
+      result = await this.$http.post('user.php', {
+          ApiKey: this.ApiKey,     
+        user_ID: userSession.user_ID       
+      })
+      this.user = result.data 
+    },
+     async userUpdate() {
+          let result = await this.$http.post('user.php', {
+          ApiKey: this.ApiKey,
+          user_ID: this.user.user_ID
+        })
+        this.edituser = result.data
+        this.edituser.p_word = ''
+        this.edituserdialog = true
+      },
+      async edituserSubmit() {
+        if (this.$refs.edituserform.validate()) {
+          this.edituser.ApiKey = this.ApiKey;         
+          let result = await this.$http.post('user.update.php', this.edituser)
+          if (result.data.status == true) {
+            this.user = result.data
+            this.snackbar.icon = 'mdi-font-awesome'
+            this.snackbar.color = 'success'
+            this.snackbar.text = 'แก้ไขข้อมูลเรียบร้อย'
+            this.snackbar.show = true
+            this.userQueryAll()
+          } else {
+            this.snackbar.icon = 'mdi-close-network'
+            this.snackbar.color = 'red'
+            this.snackbar.text = 'แก้ไขข้อมูลผิดพลาด'
+            this.snackbar.show = true
+          }
+          this.edituserdialog = false
+        }
+      },                  
   },
 };
 </script>

@@ -18,3 +18,8 @@ You can also run additional npm tasks such as
 - git add .
 - git commit -m "13-12-2564"
 - git push origin master    
+
+# Edit Code Before Upload Host
+- main.js  axios
+- news_munual.vue 
+- UserProfile.vue 

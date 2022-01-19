@@ -15,7 +15,7 @@
             depressed
             color="primary"
             @click.native="catagoryAdd()"
-            ><v-icon>mdi-plus-circle-outline</v-icon>เพื่อรายการ</v-btn
+            ><v-icon>mdi-plus-circle-outline</v-icon>เพิ่มรายการ</v-btn
           >
           <v-text-field
             v-model="search"

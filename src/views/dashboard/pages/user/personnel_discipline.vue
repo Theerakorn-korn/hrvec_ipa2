@@ -22,7 +22,7 @@
                 class="mb-2"
               />
             </v-col>
-            <v-col cols="12" lg="6" class="text-right">
+            <!-- <v-col cols="12" lg="6" class="text-right">
               <v-btn
                 
                 large
@@ -31,9 +31,9 @@
                 color="primary"
                 @click.native="personnel_disciplineAdd()"
               >
-                <v-icon>mdi-plus-circle-outline</v-icon>เพื่อรายการ
+                <v-icon>mdi-plus-circle-outline</v-icon>เพิ่มรายการ
               </v-btn>
-            </v-col>
+            </v-col> -->
           </v-row>
         </v-card>
 
@@ -44,7 +44,7 @@
           :items="personnel_disciplines"
           :search="search"         
         >       
-
+<!-- 
         <template v-slot:[`item.actions`]="{ item }">
             <v-icon
               color="yellow"
@@ -62,7 +62,7 @@
             >
               mdi-delete
             </v-icon>
-          </template>      
+          </template>   -->    
           <v-alert
             slot="no-results"
             :value="true"
@@ -364,8 +364,8 @@ export default {
         { text: "รายการ", align: "center", value: "discipline_blame" },
         { text: "สถานที่", align: "left", value: "location_disbla" },
         { text: "เมื่อวันที่", align: "left", value: "date_time" },              
-         { text: "แก้ไข", align: "center", value: "actions", icon: "mdi-file-document-edit" },
-        { text: "ลบ", align: "center", value: "action_s" , icon: "mdi-delete-forever" },     
+        /*  { text: "แก้ไข", align: "center", value: "actions", icon: "mdi-file-document-edit" },
+        { text: "ลบ", align: "center", value: "action_s" , icon: "mdi-delete-forever" },      */
       ],
       rowsperpage: [
         25,

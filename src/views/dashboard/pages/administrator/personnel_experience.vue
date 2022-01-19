@@ -31,7 +31,7 @@
                 color="primary"
                 @click.native="personnel_experienceAdd()"
               >
-                <v-icon>mdi-plus-circle-outline</v-icon>เพื่อรายการ
+                <v-icon>mdi-plus-circle-outline</v-icon>เพิ่มรายการ
               </v-btn>
             </v-col>
           </v-row>

@@ -38,8 +38,24 @@
                     <h3> เขียนที่ : {{ user.college_name }}</h3>
                     <h3> วันที่ยื่นคำร้อง : {{ date_today }}  </h3>
                     <hr>
-                      <h3> วันที่เริ่มปฏิบัติหน้าที่ในสถานศึกษาปัจจุบัน : {{ date_appoin_ch_app }} </h3>
+                    <div v-if="user.date_app_now===''">
+                       <v-alert
+                                prominent
+                                type="error"
+                              >
+                                <v-row>
+                                  <v-col class="grow">
+                                  <h3>ให้งานบุคลากร วิทยาลัย ดำเนินการเกี่ยวกับวันที่ปฏิบัติงาน ณ สถานศึกษาปัจจุบันให้เรียบร้อย</h3>
+                                  </v-col>                                  
+                                </v-row>
+                              </v-alert>
+                    </div>
+                    <div v-else>
+                        <h3> วันที่เริ่มปฏิบัติหน้าที่ในสถานศึกษาปัจจุบัน : {{ date_appoin_ch_app }} </h3>
                       <h2> ปฏิบัติหน้าที่เป็นเวลา : {{ get_Appoint_Age }}  </h2>
+                    </div>
+                      
+                     
                       <v-btn
                       v-if="transference_personnels.id_ref === id_ref"
                       x-large
@@ -55,14 +71,31 @@
                   </v-alert>
                 </v-col>              
                                   
-                <v-col cols="12" sm="12">  
+                <v-col cols="12" sm="12"> 
                      <v-alert border="left" colored-border color="green darken-1" elevation="2"  type="info">
-                     <v-card>
+                       <v-card v-if="personnel_education_check.count_ed ==='0'">
+                          <v-alert
+                                prominent
+                                type="error"
+                              >
+                                <v-row align="center">
+                                  <v-col class="grow">
+                                  <h2>ให้ดำเนินการบันทึกข้อมูลคุณวุฒิการศึกษาของท่านเรียบร้อย</h2>
+                                  </v-col>
+                                  <v-col class="shrink">
+                                    <v-btn large rounded dark to="/personnel_education"> <v-icon>mdi-school</v-icon> วุฒิการศึกษา</v-btn>
+                                  </v-col>
+                                </v-row>
+                              </v-alert>
+                       </v-card>
+                     <v-card v-else>
                       <v-card-title class="mt-8">
+
                         <v-avatar size="56">
                           <v-icon large left>mdi-cast-education</v-icon>
                         </v-avatar>
                         <p class="ml-3">ประวัติการศึกษา</p>
+                      
                       </v-card-title>
 
                       <v-card-text>
@@ -70,7 +103,7 @@
                           <v-timeline-item
                             v-for="item in personnel_educations"
                             :key="item.id_red"                           
-                            small
+                            small                            
                           >
                             <div>
                               <div
@@ -79,6 +112,7 @@
                             </div>
                           </v-timeline-item>
                         </v-timeline>
+                       
                       </v-card-text>
                     </v-card>
                      </v-alert>               
@@ -100,6 +134,7 @@
 <h1> ท่านได้ยืนแบบแสดงความประสงค์ขอย้ายกรณีปกติ ของข้าราชการครูและบุคลากรทางการศึกษา ผ่านระบบออนไลน์เป็นที่เรียนร้อย กรุณา พิมพ์แบบแสดงความประสงค์ขอย้าย เพื่อเสนอความเห็นชอบจากผู้บริหารสถานศึกษา / ผู้อำนวยการสำนัก / ผู้อำนวยการศูนย์ฯ</h1>
 </v-alert>
 </v-form>
+
 <v-form ref="addtransference_personnelform" lazy-validation v-else>  
 
             <v-card class="pa-2 ma-2" v-if="get_gov_Age_year > 0 && user.position_name ==='ครู'">
@@ -111,14 +146,14 @@
                   <v-row>
                    <v-alert class="mx-auto justify-center pa-2 ma-2" border="bottom" colored-border type="warning" elevation="2">
                       <v-radio-group row v-model="addtransference_personnel.teaching_status"> 
-                        <v-radio value="no_tech" v-on:click="isHidden = true">
+                        <v-radio value="no_tech">
                           <template v-slot:label>
                             <div>                            
                               <strong class="warning--text" v-on:click="clear_tech()">ไม่ได้ทำการสอน</strong>
                             </div>
                           </template>
                         </v-radio>
-                        <v-radio value="tech" v-on:click="isHidden = !isHidden">
+                        <v-radio value="tech">
                           <template v-slot:label>
                             <div>                             
                               <strong class="primary--text">ทำการสอน</strong>
@@ -130,7 +165,7 @@
                   </v-row>
                 </v-col>
                 <v-col cols="12" sm="12">
-                  <v-card class="pa-2 ma-2" v-if="!isHidden" hidden>
+                  <v-card class="pa-2 ma-2">
                     <v-row>
                       <v-col cols="12" sm="6">
                         <v-text-field
@@ -196,14 +231,14 @@
                    <v-row>
                   <v-alert class="mx-auto justify-center pa-2 ma-2" border="bottom" colored-border type="warning" elevation="2">
                          <v-radio-group row v-model="addtransference_personnel.service_status">                                            
-                        <v-radio value="not_service" v-on:click="isHidden_service_gov = !isHidden_service_gov">
+                        <v-radio value="not_service">
                           <template v-slot:label>
                             <div>                            
                               <strong class="primary--text" v-on:click="clear_gov_service()">ไม่อยู่</strong>
                             </div>
                           </template>
                         </v-radio>
-                        <v-radio value="gov_service" v-on:click="isHidden_service_gov = true">
+                        <v-radio value="gov_service">
                           <template v-slot:label>
                             <div>                             
                               <strong class="warning--text">ช่วยปฏิบัติราชการ</strong>
@@ -215,7 +250,7 @@
                     </v-row>                   
                 </v-col>
                 <v-col cols="12" sm="12">
-                  <v-card class="pa-2 ma-2" v-if="isHidden_service_gov" hidden>
+                  <v-card class="pa-2 ma-2">
                     <v-row>                      
                       <v-col cols="12" sm="6">                     
                      <v-autocomplete
@@ -379,11 +414,12 @@
        <v-btn
                       x-large
                       color="success"
-                      dark                    
+                      dark   
+                      rounded                 
                       @click.stop="addtransference_locationdialogsubmit()"                      
                     >
                       <v-icon>mdi-selection-multiple-marker</v-icon>
-                      <span> เลือกวิทยาลัยแห่งใหม่</span>  
+                      <span> เลือกหน่วยงานแห่งใหม่</span>  
                     </v-btn>      
         <v-data-table             
           color="success"
@@ -487,7 +523,7 @@
                       <v-card-title>
                         <div class="font-weight-light v-size--x-large"><v-icon></v-icon> ย้ายเพื่ออยู่ร่วมคู่สมรส</div>
                       </v-card-title>
-                      {{ addtransference_personnel.reason_1 }}
+                     
 
                       <v-checkbox v-model="addtransference_personnel.reason_1" value="1" hide-details class="shrink mr-2 mt-0"></v-checkbox>
                       <v-text-field v-model="addtransference_personnel.reason_1_spouse" :disabled="!addtransference_personnel.reason_1" label="คู่สมรสชื่อ : " ></v-text-field>                      
@@ -505,7 +541,7 @@
                       <v-card-title>
                         <div class="font-weight-light v-size--x-large">ย้ายเพื่อดูแลบิดา มารดา :</div>
                       </v-card-title>
-                      {{ addtransference_personnel.reason_2 }}
+                     
 
                       <v-checkbox v-model="addtransference_personnel.reason_2" value="1" hide-details class="shrink mr-2 mt-0"></v-checkbox>
                       <v-text-field v-model="addtransference_personnel.reason_2_fyear" :disabled="!addtransference_personnel.reason_2" label="อายุของบิดาปี" ></v-text-field>
@@ -519,7 +555,7 @@
                           class="font-weight-light v-size--x-large"
                         >ย้ายกลับภูมิลำเนาของข้าพเจ้า จังหวัด :</div>
                       </v-card-title>
-                      {{ addtransference_personnel.reason_3 }}
+                     
                       <v-checkbox v-model="addtransference_personnel.reason_3" value="1" hide-details class="shrink mr-2 mt-0"></v-checkbox>
                       <v-autocomplete v-model="addtransference_personnel.reason_3_domicile" :items="provices_sh" item-text="province_name" item-value="province_ID" :disabled="!addtransference_personnel.reason_3" label="ภูมิลำเนาของคู่สมรส จังหวัด : "  ></v-autocomplete>
                       
@@ -527,8 +563,7 @@
                     <v-row align="center">
                       <v-card-title>
                         <div class="font-weight-light v-size--x-large">เหตุผลอื่น :</div>
-                      </v-card-title>
-                      {{ addtransference_personnel.reason_4 }}
+                      </v-card-title>                    
                       <v-checkbox v-model="addtransference_personnel.reason_4" value="1" hide-details class="shrink mr-2 mt-0"></v-checkbox>
                       <v-textarea v-model="addtransference_personnel.reason_4_detail" :disabled="!addtransference_personnel.reason_4" label="(ระบุ) : "  ></v-textarea>
                     </v-row>
@@ -614,8 +649,10 @@
                       x-large
                       color="success"
                       dark
+                      rounded
+                      block
                       class="ma-2"
-                      @click.stop="addtransference_personnelSubmit()"
+                      @click.stop="confirmsSubmit()"
                       
                     >
                       <v-icon>mdi-content-save</v-icon>
@@ -756,6 +793,57 @@
         </v-dialog>
       </v-layout>
 
+
+
+  <!-- V-model confirm -->
+      <v-layout>
+        <v-dialog v-model="confirm_dialog" persistent max-width="40%">
+          <v-card class="mx-auto pa-5">                     
+             <base-material-card
+              color="warning"
+              icon="mdi-content-save"
+              title="ยืนยันรายการ"
+              class="px-5 py-3 text_google"          
+             
+            >
+            </base-material-card>
+
+            <v-card-text class="text_google">
+              
+        <v-card>        
+          <v-card-text>
+            <v-form ref="deletetransference_locationform" lazy-validation>
+              <v-container grid-list-md>
+                <v-alert outlined type="warning" prominent border="left">
+                  <h2>
+                     เตือน
+                </h2>
+                <h3>
+                  หากกดปุ่มบันทึกท่านไม่สามารถ แก้ไขข้อมูลใดๆ ได้แล้ว กรุณาตรวจสอบให้ถูกต้องก่อนการบันทึก   </h3>
+                  </v-alert>              
+              </v-container>
+            </v-form>
+          </v-card-text>        
+        </v-card>
+    
+            </v-card-text>
+            <v-card-actions>
+              <v-spacer></v-spacer>            
+              <v-btn large rounded @click.stop="confirm_dialog = false"
+                ><v-icon dark>mdi-close</v-icon>ยกเลิก</v-btn
+              >
+              <v-btn large
+                color="warning"
+                @click.stop="addtransference_personnelSubmit()"
+                dark
+                rounded
+              >
+                <v-icon dark>mdi-content-save</v-icon>&nbsp;ยืนยัน
+              </v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
+      </v-layout>
       </v-col>
     </v-row>   
       
@@ -790,6 +878,7 @@ export default {
      ApiKey: 'HRvec2021',  
     isHidden: false,
     timestamp: '',
+    
     colleges: {},
     personnel_search: {},
     show_personnel: [],
@@ -805,16 +894,29 @@ export default {
      addtransference_locationdialog: false,
      delettransference_locationdialog : false,
      Search_Personneldialog: false,
+     confirm_dialog: false,
  user: {},  
     transference_personnel: [],   
-    transference_personnels: [],  
-    addtransference_personnel: {teaching_status: 'tech', service_status: 'not_service', in_preparation: 'no_prepare', on_study_leave: 'no_leave'},
+    transference_personnels: [], 
+
+    addtransference_personnel: {
+      subject_1: '-',subject_2: '-',
+      subject_3: '-',subject_4: '-',
+      ser_college_code: '-',ser_order: '-',
+      ser_date: '-',ser_reason_help: '-',
+      teaching_status: 'tech', service_status: 'not_service', 
+      in_preparation: 'no_prepare', on_study_leave: 'no_leave', 
+      reason_1: 0, reason_2: 0, reason_3: 0, reason_4:0, switch_position: '-', perform_other_duties: '-'
+      },
+
     addtransference_location: {},
     edittransference_location: [],
     provinces: [],
     provices_sh: [],
     prefectures: [],
+    
     personnel_educations: [],
+    personnel_education_check: [],
     district: [],
     district_post_s: [], 
     snackbar: {
@@ -883,10 +985,13 @@ export default {
   },
 
   async  mounted() {
+
     
-    let result_branch
+      let userSession = JSON.parse(sessionStorage.getItem('user')) || 0
+    let result_branch     
         result_branch = await this.$http.post('branch.php', {
-        ApiKey: this.ApiKey       
+        ApiKey: this.ApiKey, 
+   //      id_card: userSession.id_card   
       })
       this.branch_s = result_branch.data      
       
@@ -917,17 +1022,20 @@ export default {
       })
       this.regions = result.data 
 
-      let result_user
-      let userSession = JSON.parse(sessionStorage.getItem('user')) || 0
+      let result_user     
       result_user = await this.$http.post('personnel_temporary.php', {
         ApiKey: this.ApiKey,    
          id_card: userSession.id_card     
       })
       this.user = result_user.data
+
+
+
    
       await this.transference_personnelAll()
      await this.transference_locationQueryAll()
      await this.personnel_educationsQueryAll()
+     await this.personnel_educations_checkQueryAll()
 
   },
 
@@ -940,8 +1048,20 @@ export default {
             id_card: userSession.id_card  
 
         }).finally(() => this.loading = false)
-        this.personnel_educations = result.data            
+        this.personnel_educations = result.data                 
       }, 
+
+async personnel_educations_checkQueryAll() {     
+         this.loading = true
+          let userSession = JSON.parse(sessionStorage.getItem('user')) || 0   
+        let result = await this.$http.post('personnel_education.check.php', {
+          ApiKey: this.ApiKey,
+            id_card: userSession.id_card  
+
+        }).finally(() => this.loading = false)
+        this.personnel_education_check = result.data                 
+      }, 
+
 
     async OnEnter() {
         let result = await this.$http.post('personnel_temporary.php', {
@@ -1002,6 +1122,16 @@ export default {
         this.addtransference_locationdialog = false
       }
     },
+
+
+    //Confirm data
+
+    
+     async confirmsSubmit() {                
+        this.confirm_dialog = true
+      },      
+
+
       //Delete transference Location
       async transference_locationDelete(id_tfl) {
         let result = await this.$http.post('transference_location.php', {
@@ -1033,7 +1163,7 @@ export default {
       },     
 // Add transference_personnel 
       async addtransference_personnelSubmit(){
-if (this.$refs.addtransference_personnelform.validate()) {
+        if (this.$refs.addtransference_personnelform.validate()) {
         this.addtransference_personnel.ApiKey = this.ApiKey;
         this.addtransference_personnel.id_ref = this.id_ref;
         this.addtransference_personnel.time_s = this.time_s;
@@ -1044,11 +1174,16 @@ if (this.$refs.addtransference_personnelform.validate()) {
         this.addtransference_personnel.transfer_status = 'send';
         this.addtransference_personnel.ser_time_year = this.get_gov_Age_year_service;
         this.addtransference_personnel.ser_time_month = this.get_gov_Age_month_service;
-        
-        
-        let result = await this.$http.post("transference_personnel.insert.php", this.addtransference_personnel)     
-            
-        if (result.data.status == true){ 
+        this.addtransference_personnel.status_confirm = 'save';
+        this.addtransference_personnel.college_code_now = this.user.college_code;
+      
+
+    
+       let result = await this.$http.post("transference_personnel.insert.php", this.addtransference_personnel)     
+       let result_up = await this.$http.post("transference_location.update.php", this.addtransference_personnel)     
+           
+
+        if (result.data.status == true || result_up.data.status == true){ 
           this.snackbar.icon = "mdi-checkbox-marked-circle";
           this.snackbar.color = "success";
           this.snackbar.text = "บันทึกข้อมูลเรียบร้อย";
@@ -1062,6 +1197,7 @@ if (this.$refs.addtransference_personnelform.validate()) {
         } 
         /* this.loadOnce() */
         this.addtransference_locationdialog = false
+        this.confirm_dialog = false
       }
       },
 

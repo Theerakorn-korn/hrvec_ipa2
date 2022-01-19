@@ -1,5 +1,6 @@
 <template>
-  <div>     
+  <div>
+      
     <v-container>
     <base-material-card
         icon="mdi-clipboard-text"
@@ -14,7 +15,8 @@
                 append-icon="mdi-magnify"
                 label="ค้นหา ระบุคำ หรือ ส่วนข้อความเกี่ยวข้อง"
                 single-line
-                hide-details                
+                hide-details
+                
                 dense
                 filled
                 class="mb-2"
@@ -39,8 +41,17 @@
           :headers="headers"
           :items="transference_personnels"
           :search="search"
-       >           
-             
+       > 
+          
+        <!--  <template v-slot:[`item.actions`]="{ item }">
+            <v-icon
+              color="yellow"
+              
+              @click.stop="transference_personnelEdit(item.id_rc)"
+            >
+              mdi-pencil
+            </v-icon>          
+          </template>      -->       
           <v-alert
             slot="no-results"
             :value="true"
@@ -148,8 +159,8 @@ export default {
         { text: "ครั้งที่", align: "center", value: "time_s" },         
         { text: "ปีที่", align: "center", value: "year_s" },         
         { text: "อายุงาน ณ ปัจจุบัน", align: "center", value: "age_app_time" },         
-        { text: "วันที่ทำรายการ", align: "center", value: "date_time" },     
-        { text: "ผลการย้าย", align: "center", value: "" },     
+        { text: "วันที่ทำรายการ", align: "center", value: "date_time" },          
+       /*  { text: "แก้ไข", align: "center", value: "actions", icon: "mdi-file-document-edit" },        */
       ],
       rowsperpage: [
         25,
@@ -164,27 +175,34 @@ export default {
    userstatus:{},     
     };
   },
- mounted() {      
-     this.transference_personnelQueryAll()      
+async mounted() {      
+     await this.transference_personnelQueryAll()      
     },
     methods: {
       async searchTimeYear(){
              this.loading = true
+              let userSession = JSON.parse(sessionStorage.getItem('user')) || 0 
         let result = await this.$http.post('transference_personnel.php', {
           ApiKey: this.ApiKey,
           time_s: this.times_select,
-          year_s: this.years_select
+          year_s: this.years_select,
+          user_name: userSession.user_name 
+
         }).finally(() => this.loading = false)
         this.transference_personnels = result.data      
         },
 
       async transference_personnelQueryAll() {
           this.loading = true
+            let userSession = JSON.parse(sessionStorage.getItem('user')) || 0 
         let result = await this.$http.post('transference_personnel.php', {
-          ApiKey: this.ApiKey
+          ApiKey: this.ApiKey,
+          user_name: userSession.user_name 
         }).finally(() => this.loading = false)
         this.transference_personnels = result.data
-      },  
+        console.log(result.data)
+        console.log(userSession)
+      }, 
     },
     computed: {
       pages() {

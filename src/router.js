@@ -193,6 +193,12 @@ export default new Router({
                         import ('@/views/dashboard/pages/administrator/news_s'),
                 },
                 {
+                    name: 'คู่มือ',
+                    path: '/admin/manual_s',
+                    component: () =>
+                        import ('@/views/dashboard/pages/administrator/manual_s'),
+                },
+                {
                     name: 'ดำเนินการประมวลผลการย้าย',
                     path: '/admin/process_transfer',
                     component: () =>
@@ -359,6 +365,12 @@ export default new Router({
                     path: '/college/history_conditions',
                     component: () =>
                         import ('@/views/dashboard/pages/college/history_conditions'),
+                },   
+                {
+                    name: 'การย้ายสายการสอนและสายสนับสนุน',
+                    path: '/college/transference_personnel',
+                    component: () =>
+                        import ('@/views/dashboard/pages/college/transference_personnel'),
                 },                
                 
 

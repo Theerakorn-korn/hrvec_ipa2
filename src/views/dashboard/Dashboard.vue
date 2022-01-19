@@ -34,7 +34,7 @@
         />
       </v-col>
 
-      <v-col cols="12" sm="6" lg="4">
+      <v-col cols="12" sm="6" lg="3">
         <base-material-stats-card
          :value="Number(showAlldata.count_se_dr).toLocaleString()"
           color="primary"
@@ -45,7 +45,7 @@
         />
       </v-col>
 
-      <v-col cols="12" sm="6" lg="4">
+      <v-col cols="12" sm="6" lg="3">
         <base-material-stats-card
         :value="Number(showAlldata.count_supervision).toLocaleString()"
           color="primary"
@@ -57,7 +57,7 @@
         />
       </v-col>
 
-      <v-col cols="12" sm="6" lg="4">
+      <v-col cols="12" sm="6" lg="3">
         <base-material-stats-card
         :value="Number(showAlldata.count_perpare).toLocaleString()"
           color="primary"
@@ -65,6 +65,16 @@
           title="ครูผู้ช่วย"         
           sub-icon="mdi-clock"
           sub-text="Intense Preparation"
+        />
+      </v-col>
+       <v-col cols="12" sm="6" lg="3">
+        <base-material-stats-card
+        :value="Number(showAlldata.count_38).toLocaleString()"
+          color="primary"
+          icon="mdi-account-group"
+          title="(38)"         
+          sub-icon="mdi-clock"
+          sub-text="Support"
         />
       </v-col>
       <v-col cols="12" lg="6">

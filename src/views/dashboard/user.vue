@@ -4,7 +4,7 @@
     <dashboard-core-drawer />
     <dashboard-core-view />
     <dashboard-core-settings />
-  </v-app>
+  </v-app>  
 </template>
 
 <script>
@@ -17,14 +17,19 @@ export default {
     DashboardCoreView: () => import("./components/user/View"),
   },
   data: () => ({   
-    loginuser: JSON.parse(sessionStorage.getItem('user')) || 0
+    loginuser: JSON.parse(sessionStorage.getItem('user')) || 0,   
   }),
     mounted() {
       let user = JSON.parse(sessionStorage.getItem('user')) || 0
-      if (user.user_status != 'tech')
-        this.$router.push('/')
+      if (user.user_status == 'tech' || user.user_status == 'se_director' || user.user_status == 'director')
+      {
+      
+      }else{
+            this.$router.push('/')           
+      }
+        
     },
-        methods: {
+        methods: {        
       home() {
         this.$router.push('user')
       },

@@ -31,7 +31,7 @@
                 color="primary"
                 @click.native="personnel_work_historyAdd()"
               >
-                <v-icon>mdi-plus-circle-outline</v-icon>เพื่อรายการ
+                <v-icon>mdi-plus-circle-outline</v-icon>เพิ่มรายการ
               </v-btn>
             </v-col>
           </v-row>
@@ -525,10 +525,10 @@ export default {
         { text: "เลขที่ตำแหน่ง", align: "center", value: "id_position" },
         { text: "สถานะช่วยราชการ", align: "left", value: "government_status" },
         { text: "วันที่", align: "left", value: "date_begin" },
-        { text: "สถานที่", align: "center", value: "college_name" },
+        { text: "สถานที่", align: "left", value: "college_name" },
         { text: "สิ้นสุด", align: "center", value: "date_end" },
         { text: "ตำแหน่ง", align: "center", value: "position_s" },
-        { text: "หน้าที่อื่น", align: "center", value: "special_duty" },       
+        { text: "หน้าที่อื่น", align: "left", value: "special_duty" },       
          { text: "แก้ไข", align: "center", value: "actions", icon: "mdi-file-document-edit" },
         { text: "ลบ", align: "center", value: "action_s" , icon: "mdi-delete-forever" },     
       ],

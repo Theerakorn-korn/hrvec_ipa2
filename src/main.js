@@ -13,7 +13,8 @@ import i18n from './i18n'
 import VueMoment from 'vue-moment'
 import moment from 'moment-timezone'
 const request = axios.create({
-    baseURL: 'http://localhost:8080/HRvec_api/',
+    baseURL: 'http://hrvec.org/HRvec_api/',
+    /* baseURL: 'http://localhost:8080/HRvec_api/', */
 })
 Vue.config.productionTip = false
 Vue.use(VueAxios, request)

@@ -2,7 +2,7 @@
   <v-container id="user-profile" fluid tag="section" class="text_google">
     <v-row justify="center">
       <v-col cols="12" md="8">
-        <base-material-card>
+        <base-material-card  color="warning">
           <template v-slot:heading>
             <div class="display-2 font-weight-light">Login System</div>
 

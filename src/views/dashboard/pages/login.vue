@@ -14,7 +14,7 @@
               prepend-icon="mdi-account"
               id="id_card"
               name="id_card"
-              label="ชื่อผู้ใช้"
+              label="ชื่อผู้ใช้ : รหัสบัตรประชาชน"
               type="text"
               v-model="id_card"
               :rules="[(v) => !!v || 'กรุณากรอกชื่อผู้ใช้']"
@@ -23,7 +23,7 @@
               id="p_word"
               prepend-icon="mdi-lock-outline"
               name="p_word"
-              label="รหัสผ่าน"
+              label="รหัสผ่าน : 8/8/2531"
               type="password"
               v-model="p_word"
               :rules="[(v) => !!v || 'กรุณากรอกรหัสผ่าน']"
@@ -47,7 +47,7 @@
             <h2 class="font-weight-light mb-1 grey--text">เข้าสู่ระบบ</h2>
             <h1 class="font-weight-light mb-3 black--text">ข้าราชการครูและบุคลากรทางการศึกษา</h1>
             <p class="font-weight-light grey--text">ชื่อผู้ใช้ระบบ : รหัสบัตรประชาชน</p>
-            <p class="font-weight-light grey--text">รหัสผ่าน : วันเดือนปีเกิด "8/8/2531"</p>
+            <p class="font-weight-light red--text">รหัสผ่าน : วันเดือนปีเกิด "8/8/2531" ไม่ต้องระบุ 0 นำหน้า</p>
             <p class="font-weight-light black--text">เข้าสู่ระบบแล้วให้ดำเนินการเปลี่ยนรหัสผ่านของท่าน</p>
             <v-btn color="success" rounded class="mr-0">คู่มือ</v-btn>
           </v-card-text>
@@ -98,11 +98,11 @@ export default {
           } else if (user.user_status == "se_director") {
             this.dialog = true;           
             sessionStorage.setItem("user", JSON.stringify(user));
-            this.$router.push("/#");
+            this.$router.push("/user");
           } else if (user.user_status == "director") {
             this.dialog = true;           
             sessionStorage.setItem("user", JSON.stringify(user));
-            this.$router.push("/#");
+            this.$router.push("/user");
           } else {
             sessionStorage.clear();
             this.dialog = true;

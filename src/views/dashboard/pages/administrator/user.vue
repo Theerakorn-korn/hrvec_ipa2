@@ -31,7 +31,7 @@
                 color="primary"
                 @click.native="userAdd()"
               >
-                <v-icon>mdi-plus-circle-outline</v-icon>เพื่อรายการ
+                <v-icon>mdi-plus-circle-outline</v-icon>เพิ่มรายการ
               </v-btn>
             </v-col>
           </v-row>
@@ -206,11 +206,14 @@
           <v-card-text>
             <v-form ref="edituserform" lazy-validation>
               <v-container grid-list-md>
-                <v-layout wrap>
-                  <v-flex md6>
-                    <v-select :items="userstatus" item-text="text" item-value="value" v-model="edituser.user_status" label="User Type" required
+                <v-layout wrap>                
+
+                   <v-flex md6>
+                    <v-select :items="userstatus" item-text="user_status_name" item-value="user_status_sub" v-model="edituser.user_status" label="User Type" required
                       :rules="[v => !!v || '']"></v-select>
-                  </v-flex>
+                  </v-flex>   
+
+
                   <v-flex md6>
                     <v-text-field label="Username" v-model="edituser.user_name" required :rules="[v => !!v || '']"></v-text-field>
                   </v-flex>
@@ -295,12 +298,12 @@ export default {
       pagination: {},      
       headers: [
         { text: "ลำดับ", align: "center", value: "user_ID" },
-        { text: "ชื่อผู้ใช้งาน", align: "center", value: "user_name" },              
+        { text: "ชื่อผู้ใช้งาน", align: "left", value: "user_name" },              
         { text: "เบอร์โทร", align: "center", value: "tel_p" },
-        { text: "สถานะ", align: "center", value: "user_status_name" },
-        { text: "สถานศึกษา", align: "center", value: "user_firstname" },
-        { text: "สถานศึกษา", align: "center", value: "user_lastname" },       
-        { text: "จังหวัด", align: "center", value: "province_name" },
+        { text: "สถานะ", align: "left", value: "user_status_name" },
+        { text: "ชื่อ/สถานศึกษา", align: "left", value: "user_firstname" },
+        { text: "นามสกุล/บุคคล", align: "left", value: "user_lastname" },       
+        { text: "จังหวัด", align: "left", value: "province_name" },
         { text: "แก้ไข", align: "center", value: "actions", icon: "mdi-file-document-edit" },
         { text: "ลบ", align: "center", value: "action_s" , icon: "mdi-delete-forever" },
       ],

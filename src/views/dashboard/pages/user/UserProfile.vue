@@ -5,12 +5,18 @@
       <v-col cols="12" md="4">
         <base-material-card
           class="v-card-profile"
-          avatar="https://www.vec.go.th/portals/0/ovec.jpg"    
+          avatar="/HRvecfiles/logo.png"    
          
-        >      
+        >   
+
+        <!-- <base-material-card
+          class="v-card-profile"
+          avatar="http://localhost:8080/HRvecfiles/logo.png"    
+         
+        > -->      
           <v-card-text class="text-center">             
             <div align="center">             
-               <img v-if="user.personnel_temporary_pic"    
+               <!-- <img v-if="user.personnel_temporary_pic"    
                 width="300"                   
                     style="border-radius: 8px"
                     :src="'http://localhost:8080/HRvecfiles/' + user.personnel_temporary_pic"                    
@@ -19,7 +25,17 @@
                    width="200" 
                     src="http://localhost:8080/HRvecfiles/blank-human-image.png"
                     style="border-radius: 30px"
-                    />                 
+                    /> -->    
+                    <img v-if="user.personnel_temporary_pic"    
+                width="300"                   
+                    style="border-radius: 8px"
+                    :src="'/HRvecfiles/' + user.personnel_temporary_pic"                    
+                  /> 
+                  <img v-else
+                   width="200" 
+                    src="/HRvecfiles/blank-human-image.png"
+                    style="border-radius: 30px"
+                    />                   
                           
               </div>      
               <div class="text-center">
@@ -51,13 +67,21 @@
           </template>
   <v-card class="elevation-6" style="border-radius: 10px; border: solid 2px green" width="100%">
           <v-form>
-            <v-container>            
-              <v-row>
-              
-                <v-col cols="12" md="12" class="text-right" v-if="periods.period_enable === '1'">                             
+            <v-container>           
+              <v-row>      
+                <v-col cols="12" md="12" class="text-right" v-if="periods.period_enable === '1' && user.user_status === 'tech' && periods.period_type ==='teacher'">                                           
               <v-btn rounded color="primary" x-large dark to="/transference_personnel"> <v-icon>mdi-pencil</v-icon> การย้ายสายการสอน</v-btn>
            
-                </v-col>                         
+                </v-col>  
+                  <v-col cols="12" md="12" class="text-right" v-if="periods.period_enable === '1' && user.user_status === 'se_director' && periods.period_type ==='manage'">                                           
+              <v-btn rounded color="primary" x-large dark to="/transference_personnel"> <v-icon>mdi-pencil</v-icon> การย้ายสายงานบริหารสถานศึกษา</v-btn>
+            </v-col>  
+ <v-col cols="12" md="12" class="text-right" v-if="periods.period_enable === '1' && user.user_status === 'director' && periods.period_type ==='manage'">                                           
+              <v-btn rounded color="primary" x-large dark to="/transference_personnel"> <v-icon>mdi-pencil</v-icon> การย้ายสายงานบริหารสถานศึกษา</v-btn>
+            </v-col>  
+
+            
+
                 <v-col cols="12" md="6">
                   <v-icon large>mdi-menu-right</v-icon> สังกัด : {{ user.college_name }} 
                 </v-col>
@@ -101,9 +125,9 @@
                    <v-icon large left>mdi-menu-right</v-icon> สถานภาพสมรส : {{ marital_status }}
                 </v-col>
                  <v-col cols="12" md="12">                
-                   <h2> * ข้อมูลส่วนบุคลคลให้ท่านตรวจสอบ และแก้ไขข้อมูลให้เรียบร้อยก่อนการ เสนอย้าย</h2>
+                   <h2 class="text-center"> * ข้อมูลส่วนบุคลคลให้ท่านตรวจสอบ และแก้ไขข้อมูลให้เรียบร้อยก่อนการ เสนอย้าย</h2>
                 </v-col>
-                <v-col cols="12" class="text-right">                  
+                <v-col cols="12" class="text-center">                  
             <v-btn elevation="2" x-large  rounded color="warning" class="mr-0"  @click.native="personnelUpdate()"> <v-icon>mdi-pencil</v-icon> แก้ไขข้อมูลเบื้องต้น</v-btn>         
                   </v-col>    
                                
@@ -210,7 +234,7 @@
                     <v-text-field outlinedd label="Password" v-model="user.p_word" type="password"></v-text-field>
                   </v-flex>
                   <v-flex md6>
-                 <v-text-field outlinedd label="Confirm Password" v-model="user.user_confirmpassword" type="password"  required :rules="[v => v==user.p_word]"></v-text-field>             
+                 <v-text-field outlinedd label="Confirm Password" v-model="user.user_confirmpassword" type="password"  :rules="[v => v==user.p_word]"></v-text-field>             
                   </v-flex>                
                   <v-flex xs12>
                     <v-divider></v-divider>
@@ -225,8 +249,8 @@
             <v-btn large @click.stop="addpersonneldialog = false" rounded>
                 <v-icon dark>mdi-close</v-icon>ยกเลิก
               </v-btn>
-              <v-btn large color="warning" @click.stop="personnelSubmit()" rounded>
-                <v-icon dark>mdi-pencil</v-icon>&nbsp;แก้ไข
+              <v-btn large color="success" @click.stop="personnelSubmit()" rounded>
+                <v-icon dark>mdi-pencil</v-icon>&nbsp;บันทึก
               </v-btn>
 
           </v-card-actions>
@@ -239,7 +263,7 @@
           <base-material-card
               color="yellow"
               icon="mdi-clipboard-text"
-              title="แก้ไขข้อมูลเบื้องต้น"
+              title="แก้ไขรูปโปรไฟล์"
               class="px-5 py-3 text_google"
               elevation="2"
             >       
@@ -260,8 +284,8 @@
           <v-card-actions>
             <v-spacer></v-spacer>
             <v-btn large @click.stop="personnel_temporary_pic_dialog = false" rounded>  <v-icon dark>mdi-close</v-icon>ยกเลิก</v-btn>
-            <v-btn large color="warning" @click.stop="editpersonnel_temporaryinfoSubmit(true)" rounded>
-              <v-icon dark>mdi-pencil</v-icon>&nbsp;แก้ไข</v-btn>
+            <v-btn large color="success" @click.stop="editpersonnel_temporaryinfoSubmit(true)" rounded>
+              <v-icon dark>mdi-content-save</v-icon> &nbsp;บันทึก</v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>
@@ -380,12 +404,15 @@ export default {
       }).finally(() => this.loading = false)
       this.user = result.data  
     },    
-    async personnelUpdate() {   
+    async personnelUpdate() {  
+       this.user.p_word =''  
         this.addpersonneldialog = true
+        
       }, 
 
       async personnelPicUpdate() { 
         this.updateuser.id_card = this.user.id_card  
+        this.user.p_word =''        
         this.personnel_temporary_pic_dialog = true
       }, 
 
@@ -398,7 +425,8 @@ export default {
       async personnelSubmit(){
       if (this.$refs.personnelform.validate()) {
           this.user.ApiKey = this.ApiKey; 
-                  
+            if(this.user.p_word == '')
+            delete this.user.p_word 
           let result = await this.$http.post('personnel_temporary.update.php', this.user)
           let result_m = await this.$http.post("personnel_marriage.insert.php",this.user)
           if (result.data.status == true || result_m.data.status == true) {
@@ -433,6 +461,7 @@ export default {
               }
             })
             if (result.data.status == true){   
+              this.user.personnel_temporary_pic =''
               this.updateuser.personnel_temporary_pic = filename
             }
             uploaded = true
@@ -518,7 +547,7 @@ export default {
   },
    watch: {
       async period_year(newVal, oldVal) {       
-        await this.personnelQuery()
+        await this.personnelQuery()      
       }
     }
 };

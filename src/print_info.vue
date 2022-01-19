@@ -610,10 +610,11 @@
     async mounted() {   
     await this.personnel_temporarysQueryAll()
     await this.transference_personnelsQueryAll()
+     await this.personnel_educationsQueryAll()
     await this.province_sh_spQueryAll()
     await this.province_sh_fmQueryAll() 
-    await this.province_sh_mQueryAll()       
-    await this.personnel_educationsQueryAll()
+    await this.province_sh_mQueryAll()     
+   
     await this.transference_locationsQueryAll()
     await this.personnel_temporarys_switchQueryAll()
     
@@ -830,7 +831,7 @@ return result
           ApiKey: this.ApiKey,
             id_card: this.id_card_s 
         }).finally(() => this.loading = false)
-        this.personnel_temporarys = result.data       
+        this.personnel_temporarys = result.data  
       }, 
 
  async personnel_temporarys_switchQueryAll() {     
@@ -851,13 +852,12 @@ return result
         this.transference_personnels = result.data 
       }, 
 
-  async personnel_educationsQueryAll() {     
-         this.loading = true
+  async personnel_educationsQueryAll() {  
         let result = await this.$http.post('personnel_education.php', {
           ApiKey: this.ApiKey,
             id_card: this.id_card_s  
-        }).finally(() => this.loading = false)
-        this.personnel_educations = result.data            
+        })
+        this.personnel_educations = result.data  
       }, 
 
        async transference_locationsQueryAll() {     
@@ -927,17 +927,7 @@ return result
         }
 
         document.body.removeChild(downloadLink)
-      },
-       async personnel_educationsQueryAll() {     
-         this.loading = true
-          let userSession = JSON.parse(sessionStorage.getItem('user')) || 0   
-        let result = await this.$http.post('personnel_education.php', {
-          ApiKey: this.ApiKey,
-            id_card: userSession.id_card  
-
-        }).finally(() => this.loading = false)
-        this.personnel_educations = result.data            
-      }, 
+      },      
     },
     props: {
       source: String

@@ -45,6 +45,7 @@
                   </v-list-item-icon>
                   <v-list-item-content>
                     <v-list-item-title v-text="item.text"></v-list-item-title>
+                    <v-list-item-title v-text="item.to"></v-list-item-title>
                   </v-list-item-content>
                 </v-list-item>
               </v-list-item-group>
@@ -69,6 +70,7 @@
                   </v-list-item-icon>
                   <v-list-item-content>
                     <v-list-item-title v-text="item.text"></v-list-item-title>
+                    <v-list-item-title v-text="item.to"></v-list-item-title>
                   </v-list-item-content>
                 </v-list-item>
               </v-list-item-group>
@@ -94,6 +96,7 @@
                   </v-list-item-icon>
                   <v-list-item-content>
                     <v-list-item-title v-text="item.text"></v-list-item-title>
+                    <v-list-item-title v-text="item.to"></v-list-item-title>
                   </v-list-item-content>
                 </v-list-item>
               </v-list-item-group>
@@ -117,6 +120,7 @@
                   </v-list-item-icon>
                   <v-list-item-content>
                     <v-list-item-title v-text="item.text"></v-list-item-title>
+                    <v-list-item-title v-text="item.to"></v-list-item-title>
                   </v-list-item-content>
                 </v-list-item>
               </v-list-item-group>
@@ -140,6 +144,7 @@
                   </v-list-item-icon>
                   <v-list-item-content>
                     <v-list-item-title v-text="item.text"></v-list-item-title>
+                    <v-list-item-title v-text="item.to"></v-list-item-title>
                   </v-list-item-content>
                 </v-list-item>
               </v-list-item-group>
@@ -162,6 +167,7 @@
                   </v-list-item-icon>
                   <v-list-item-content>
                     <v-list-item-title v-text="item.text"></v-list-item-title>
+                    <v-list-item-title v-text="item.to"></v-list-item-title>
                   </v-list-item-content>
                 </v-list-item>
               </v-list-item-group>
@@ -179,12 +185,14 @@
           >   <v-card-title>ระบบครูผู้ช่วย</v-card-title>
             <v-list>
               <v-list-item-group >
-                <v-list-item v-for="(item, i) in prepare_items" :key="i" :to="item.to">
+               <!--  <v-list-item v-for="(item, i) in prepare_items" :key="i" :to="item.to"> -->
+                <v-list-item v-for="(item, i) in prepare_items" :key="i">
                   <v-list-item-icon>
                     <v-icon v-text="item.icon"></v-icon>
                   </v-list-item-icon>
                   <v-list-item-content>
                     <v-list-item-title v-text="item.text"></v-list-item-title>
+                    <v-list-item-title v-text="item.to"></v-list-item-title>
                   </v-list-item-content>
                 </v-list-item>
               </v-list-item-group>
@@ -281,24 +289,21 @@ export default {
 
           user_items: [ 
         { text: "ข้อมูลเกี่ยวกับบุคคล", icon: "mdi-account", to: "/college/personnel_tem" },
-        /*   { text: "ข้อมูลคุณวุฒิการศึกษา", icon: "mdi-school", to: "/college/personnel_education" },
-          { text: "ข้อมูลประสบการณ์", icon: "mdi-airplane", to: "/college/personnel_experience" },
+          { text: "ข้อมูลคุณวุฒิการศึกษา", icon: "mdi-school", to: "/college/personnel_education" },
+         /*  { text: "ข้อมูลประสบการณ์", icon: "mdi-airplane", to: "/college/personnel_experience" },
           { text: "ข้อมูลประวัติการทำงาน", icon: "mdi-access-point-network", to: "/college/personnel_work_history" },
           { text: "ข้อมูลผลงาน รางวัล", icon: "mdi-trophy-award", to: "/college/personnel_award" },
-          { text: "ข้อมูลโทษ วินัย", icon: "mdi-alarm-light", to: "/college/personnel_discipline" },   */
+          { text: "ข้อมูลโทษ วินัย", icon: "mdi-alarm-light", to: "/college/personnel_discipline" }, */  
           ],
       movement_items: [
-          { text: "สายการสอนและสายสนับสนุน", icon: "mdi-alarm-light", to: "/Dashboard" },
+          { text: "สายการสอนและสายสนับสนุน", icon: "mdi-alarm-light", to: "/college/transference_personnel" },
           { text: "สายงานบริหารสถานศึกษา", icon: "mdi-alarm-light", to: "/Dashboard" },
-          { text: "การย้ายกรณีพิเศษ", icon: "mdi-alarm-light", to: "/Dashboard" },
-        
         ],
      
        condition_items: [              
           { text: "ข้อมูลเงือนไขสาขาวิชาเอก", icon: "mdi-basket-plus", to: "/college/conditions_branch" },        
-          { text: "ประวัติข้อมูลเงืนอไขสาขาวิชาเอก", icon: "mdi-basket-plus", to: "/college/history_conditions" },        
-          { text: "ข้อมูลการย้ายข้าราชการครูและสายการสอน", icon: "mdi-chart-box-outline", to: "/Dashboard" },        
-          { text: "ข้อมูลการย้ายสายงานบริหารสถานศึกษา", icon: "mdi-chart-box-outline", to: "/Dashboard" },        
+          { text: "ประวัติข้อมูลเงืนอไขสาขาวิชาเอก", icon: "mdi-basket-plus", to: "/college/history_conditions" },       
+        
         ],
 
           human_items: [           

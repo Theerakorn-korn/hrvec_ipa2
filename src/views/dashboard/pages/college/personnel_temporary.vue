@@ -306,16 +306,7 @@ async mounted() {
     },
       async addpersonnel_temporarySubmit() {
         if (this.$refs.addpersonnel_temporaryform.validate()) {         
-          this.addpersonnel_temporary.ApiKey = this.ApiKey;
-          this.addpersonnel_temporary.p_word = this.p_word;
-          this.addpersonnel_temporary.brith_day = this.brith_day;
-          this.addpersonnel_temporary.brith_month = this.brith_month;
-          this.addpersonnel_temporary.brith_year = this.brith_year;
-          this.addpersonnel_temporary.appoin_day = this.appoin_day;
-          this.addpersonnel_temporary.appoin_month = this.appoin_month;
-          this.addpersonnel_temporary.appoin_year = this.appoin_year;
-          this.addpersonnel_temporary.retrire_year = this.retrire_year;
-        
+          this.addpersonnel_temporary.ApiKey = this.ApiKey;    
           let result = await this.$http.post('personnel_temporary.insert.php', this.addpersonnel_temporary)        
           if (result.data.status == true) {
             this.personnel_temporary = result.data
@@ -339,20 +330,15 @@ async mounted() {
           ApiKey: this.ApiKey,
           id_rc: id_rc
         })
-        this.editpersonnel_temporary = result.data       
+        this.editpersonnel_temporary = result.data 
+         this.editpersonnel_temporary.p_word = ''      
         this.editpersonnel_temporarydialog = true
       },
       async editpersonnel_temporarySubmit() {
         if (this.$refs.editpersonnel_temporaryform.validate()) {
-          this.editpersonnel_temporary.ApiKey = this.ApiKey;     
-          this.editpersonnel_temporary.p_word = this.p_word;
-          this.editpersonnel_temporary.brith_day = this.brith_day;
-          this.editpersonnel_temporary.brith_month = this.brith_month;
-          this.editpersonnel_temporary.brith_year = this.brith_year;
-          this.editpersonnel_temporary.appoin_day = this.appoin_day;
-          this.editpersonnel_temporary.appoin_month = this.appoin_month;
-          this.editpersonnel_temporary.appoin_year = this.appoin_year;
-          this.editpersonnel_temporary.retrire_year = this.retrire_year;    
+          this.editpersonnel_temporary.ApiKey = this.ApiKey;  
+           if(this.editpersonnel_temporary.p_word == '')
+            delete this.editpersonnel_temporary.p_word 
           let result = await this.$http.post('personnel_temporary.update.admin.php', this.editpersonnel_temporary)
           if (result.data.status == true) {
             this.personnel_temporary = result.data

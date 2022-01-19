@@ -140,8 +140,8 @@ export default {
         action: "mdi-bluetooth-transfer",
         items: [
           { title: "สายการสอนและสายสนับสนุน", action: "mdi-alarm-light", to: "/admin/transference_personnel" },
-          { title: "สายงานบริหารสถานศึกษา", action: "mdi-alarm-light", to: "/Dashboard" },
-          { title: "การย้ายกรณีพิเศษ", action: "mdi-alarm-light", to: "/Dashboard" },
+          { title: "สายงานบริหารสถานศึกษา", action: "mdi-alarm-light", to: "" },
+          { title: "การย้ายกรณีพิเศษ", action: "mdi-alarm-light", to: "" },
         
         ],
         title: "ระบบการย้าย",
@@ -151,7 +151,7 @@ export default {
         items: [
           { title: "สาขาวิชาเอก", action: "mdi-basket-plus", to: "/admin/branch" },        
           { title: "ข้อมูลเงือนไขสาขาวิชาเอก", action: "mdi-basket-plus", to: "/admin/conditions_transfer" },        
-          { title: "สถิติเงือนไขสาขาวิชา", action: "mdi-chart-box-outline", to: "/Dashboard" },        
+          { title: "สถิติเงือนไขสาขาวิชา", action: "mdi-chart-box-outline", to: "" },        
         ],
         title: "ระบบเงือนไขสาขาวิชาเอก",
       },
@@ -167,9 +167,9 @@ export default {
       {
         action: "mdi-account-supervisor-circle",
         items: [
-          { title: "ข้อมูลครูผู้ช่วย", action: "mdi-basket-plus", to: "/Dashboard" },        
-          { title: "ประเมินครูผู้ช่วย", action: "mdi-chart-box-outline", to: "/Dashboard" },        
-          { title: "รายงาน", action: "mdi-chart-box-outline", to: "/Dashboard" },        
+          { title: "ข้อมูลครูผู้ช่วย", action: "mdi-basket-plus", to: "" },        
+          { title: "ประเมินครูผู้ช่วย", action: "mdi-chart-box-outline", to: "" },        
+          { title: "รายงาน", action: "mdi-chart-box-outline", to: "" },        
         ],
         title: "ระบบครูผู้ช่วย",
       },
@@ -177,8 +177,8 @@ export default {
         action: "mdi-account-supervisor-circle",
         items: [
           { title: "ข่าวสาร", action: "mdi-basket-plus", to: "/admin/news_s" },        
-          { title: "คู่มือใช้งาน", action: "mdi-chart-box-outline", to: "/Dashboard" },        
-          { title: "กระดานสนทนา", action: "mdi-chart-box-outline", to: "/Dashboard" },        
+          { title: "คู่มือใช้งาน", action: "mdi-chart-box-outline", to: "/admin/manual_s" },        
+          { title: "กระดานสนทนา", action: "mdi-chart-box-outline", to: "" },        
         ],
         title: "ข่าว คู่มือ",
       },

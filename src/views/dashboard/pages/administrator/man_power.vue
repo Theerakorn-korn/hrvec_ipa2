@@ -32,7 +32,7 @@
                 color="primary"
                 @click.native="man_powerAdd()"
               >
-                <v-icon>mdi-plus-circle-outline</v-icon>เพื่อรายการ
+                <v-icon>mdi-plus-circle-outline</v-icon>เพิ่มรายการ
               </v-btn>
             </v-col>
           </v-row>
@@ -276,6 +276,7 @@ export default {
       headers: [       
         { text: "สถานศึกษา", align: "left", value: "college_name" }, 
         { text: "จังหวัด", align: "left", value: "province_name" }, 
+        { text: "อัตราว่าง", align: "left", value: "num_position" }, 
         { text: "รหัสตำแหน่ง", align: "left", value: "id_position" }, 
         { text: "ตำแหน่ง", align: "left", value: "position" }, 
         { text: "กรณี", align: "left", value: "case_vacancy" },       

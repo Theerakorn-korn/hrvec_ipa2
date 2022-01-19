@@ -37,6 +37,7 @@
    <span v-if="item.user_status=='se_director'">รองผู้อำนวยการ</span>
    <span v-if="item.user_status=='director'">ผู้อำนวยการ</span>
    <span v-if="item.user_status=='supervision'">ศึกษานิเทศก์</span>
+   <span v-if="item.user_status=='38'">สนับสนุน</span>
          
           </template>
           
@@ -182,12 +183,15 @@ async mounted() {
           ApiKey: this.ApiKey,
           id_rc: id_rc
         })
-        this.editpersonnel_temporary_admin = result.data      
+        this.editpersonnel_temporary_admin = result.data    
+        this.editpersonnel_temporary_admin.p_word = ''  
         this.editpersonnel_temporary_admindialog = true
       },
       async editpersonnel_temporary_adminSubmit() {
         if (this.$refs.editpersonnel_temporary_adminform.validate()) {
-          this.editpersonnel_temporary_admin.ApiKey = this.ApiKey;        
+          this.editpersonnel_temporary_admin.ApiKey = this.ApiKey;   
+            if(this.editpersonnel_temporary_admin.p_word == '')
+            delete this.editpersonnel_temporary_admin.p_word     
           let result = await this.$http.post('personnel_temporary.update.php', this.editpersonnel_temporary_admin)
           if (result.data.status == true) {
             this.personnel_temporary_admin = result.data

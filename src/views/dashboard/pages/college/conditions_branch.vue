@@ -150,7 +150,7 @@
                       color="success"
                       dark
                       class="ma-2"
-                      @click.stop="addconditions_transferSubmit()"
+                      @click.stop="confirmsSubmit()"
                       
                     >
                       <v-icon>mdi-content-save</v-icon>
@@ -305,6 +305,57 @@
         </v-dialog>
       </v-layout>
 
+
+       <!-- V-model confirm -->
+      <v-layout>
+        <v-dialog v-model="confirm_dialog" persistent max-width="40%">
+          <v-card class="mx-auto pa-5">                     
+             <base-material-card
+              color="warning"
+              icon="mdi-content-save"
+              title="ยืนยันรายการ"
+              class="px-5 py-3 text_google"          
+             
+            >
+            </base-material-card>
+
+            <v-card-text class="text_google">
+              
+        <v-card>        
+          <v-card-text>
+            <v-form ref="deletetransference_locationform" lazy-validation>
+              <v-container grid-list-md>
+                <v-alert outlined type="warning" prominent border="left">
+                  <h2>
+                     เตือน
+                </h2>
+                <h3>
+                  หากกดปุ่มบันทึกท่านไม่สามารถ แก้ไขข้อมูลใดๆ ได้แล้ว กรุณาตรวจสอบให้ถูกต้องก่อนการบันทึก   </h3>
+                  </v-alert>              
+              </v-container>
+            </v-form>
+          </v-card-text>        
+        </v-card>
+    
+            </v-card-text>
+            <v-card-actions>
+              <v-spacer></v-spacer>            
+              <v-btn large rounded @click.stop="confirm_dialog = false"
+                ><v-icon dark>mdi-close</v-icon>ยกเลิก</v-btn
+              >
+              <v-btn large
+                color="warning"
+                @click.stop="addconditions_transferSubmit()"
+                dark
+                rounded
+              >
+                <v-icon dark>mdi-content-save</v-icon>&nbsp;ยืนยัน
+              </v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
+      </v-layout>
+
       </v-col>
     </v-row>   
       
@@ -344,6 +395,7 @@ export default {
      addconditions_branchdialog: false,
      deletconditions_branchdialog : false,
      Search_Personneldialog: false,
+     confirm_dialog: false,
  user: {},  
     conditions_branch: [],   
     conditions_branchs: [],  
@@ -460,7 +512,9 @@ async personnel_temporaryQueryAll() {
         this.colleges_user = result.data  
       },
 
-    
+    async confirmsSubmit() {                
+        this.confirm_dialog = true
+      },   
    
      async conditions_branchQueryAll() {
           this.loading = true
@@ -563,6 +617,7 @@ if (this.$refs.addconditions_transferform.validate()) {
           this.snackbar.text = "บันทึกข้อมูลผิดพลาด";
           this.snackbar.show = true;
         }
+        this.confirm_dialog = false
       }
       },   
   },  

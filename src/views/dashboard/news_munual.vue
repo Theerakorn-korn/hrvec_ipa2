@@ -22,16 +22,18 @@
               v-for=" item in news_ss"
              :key="item.id_new"
               ref="item.link_file"
+              
             >
-            <h3> {{ item.topic_s }}</h3>
+            <span style="font-size: 18px;"> {{ item.topic_s }}</span>
              <v-divider
         class="my-4 info"
         style="opacity: 0.22"
       ></v-divider>
-            <h4> {{ item.detail_s }}</h4>
+            <span style="font-size: 16px;"> {{ item.detail_s }}</span>
              <h5> {{ item.date_times }}</h5>
 <div class="text-right">
- <a :href="'http://localhost:8080/HRvecfiles/' + item.link_file" target="_blank" id="a"> OPEN </a>
+ <!-- <a :href="'http://localhost:8080/HRvecfiles/' + item.link_file" target="_blank" id="a"> OPEN </a> -->
+ <a :href="'/HRvecfiles/' + item.link_file" target="_blank" id="a"> OPEN </a>
     </div>          
             </base-material-alert>
           </v-card-text>
@@ -45,18 +47,25 @@
         <v-card>
           <v-card-text>
             <base-subheading subheading="คู่มือการใช้งาน" />
-
             <base-material-alert
-              v-for="color in colors"
-              :key="color"
-              :color="color"
-              dark
-              dismissible
-            >
-              <span
-                class="text-uppercase"
-                v-text="color"
-              /> — This is a regular alert made with the color of "{{ color }}"
+             v-for=" item in manual_ss"
+             :key="item.id_manual"    
+              dark   
+              color="primary"                         
+            >           
+                <span style="font-size: 18px;"                
+                > {{ item.topic_s }}</span>
+             <v-divider
+        class="my-4 info"
+        style="opacity: 0.22"
+      ></v-divider>
+            <span style="font-size: 16px;"> {{ item.detail_s }}</span>
+             <h5> {{ item.date_times }}</h5>
+<div class="text-right">
+ <!-- <a :href="'http://localhost:8080/HRvecfiles/' + item.link_file" target="_blank" id="a"> OPEN </a> -->
+ <a :href="'/HRvecfiles/' + item.link_file" target="_blank" id="a"> OPEN </a>
+    </div>        
+   
             </base-material-alert>           
           </v-card-text>
         </v-card>
@@ -73,6 +82,7 @@
        ApiKey: 'HRvec2021',  
       color: 'info',
       news_ss: [],
+      manual_ss: [],
       colors: [
         'info',
         'success',
@@ -110,6 +120,14 @@
           ApiKey: this.ApiKey
         }).finally(() => this.loading = false)
         this.news_ss = result.data
+      },
+
+ async news_sQueryAll() {
+          this.loading = true
+        let result = await this.$http.post('manual_s.php', {
+          ApiKey: this.ApiKey
+        }).finally(() => this.loading = false)
+        this.manual_ss = result.data
       },
 
       randomColor () {

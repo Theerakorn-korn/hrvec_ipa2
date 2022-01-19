@@ -31,7 +31,7 @@
                 color="primary"
                 @click.native="personnel_educationAdd()"
               >
-                <v-icon>mdi-plus-circle-outline</v-icon>เพื่อรายการ
+                <v-icon>mdi-plus-circle-outline</v-icon>เพิ่มรายการ
               </v-btn>
             </v-col>
           </v-row>
@@ -383,8 +383,8 @@ export default {
         text: "",
       },
       currentPK: null,
-      headers: [
-        { text: "ลำดับ", align: "center", value: "id_red" },
+      headers: [       
+        { text: "รหัสประเภทสาขา", align: "left", value: "id_branch" },
         { text: "ประเภทสาขาวิชา", align: "left", value: "name_branch" },
         { text: "ระดับการศึกษา", align: "left", value: "education_level" },
         { text: "คณะวิชา", align: "left", value: "faculty_name" },        

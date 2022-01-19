@@ -43,15 +43,7 @@
           :search="search"
        > 
           
-         <template v-slot:[`item.actions`]="{ item }">
-            <v-icon
-              color="yellow"
               
-              @click.stop="conditions_transferEdit(item.id_rc)"
-            >
-              mdi-pencil
-            </v-icon>          
-          </template>            
           <v-alert
             slot="no-results"
             :value="true"
@@ -60,55 +52,7 @@
           >ไม่พบผลลัพธ์ "{{ search }}" ที่คุณกำลังค้นหา.</v-alert>
         </v-data-table>
       </base-material-card>
-
-   
-
-      <!-- V-model editconditions_transferdialog -->
-      <v-layout row justify-center>
-         <v-dialog v-model="editconditions_transferdialog" persistent max-width="80%">
-        <v-card class="mx-auto pa-6" >
-           <base-material-card
-              color="yellow"
-              icon="mdi-clipboard-text"
-              title="แก้ไขข้อมูลผู้ใช้งานระบบ"
-              class="px-5 py-3 text_google"
-              
-            ></base-material-card>
-          <v-card-text>
-            <v-form ref="editconditions_transferform" lazy-validation>
-              <v-container grid-list-md>
-                <v-layout wrap> 
-                    <v-flex md6>
-                   {{ editconditions_transfer.id_card }}
-                  </v-flex>                                
-                  <v-flex md6>
-                    <v-text-field label="Password" v-model="editconditions_transfer.p_word" type="password"></v-text-field>
-                  </v-flex>
-                  <v-flex md6>
-                    <v-text-field label="Confirm Password" v-model="editconditions_transfer.conditions_transfer_confirmpassword" type="password"></v-text-field>
-                  </v-flex>
-                  <v-flex xs12>
-                    <v-divider></v-divider>
-                  </v-flex>   
-                </v-layout>
-              </v-container>
-              <small>* จำเป็น</small>
-            </v-form>
-          </v-card-text>
-          <v-card-actions>
-            <v-spacer></v-spacer>
-            <v-btn large @click.stop="editconditions_transferdialog = false" rounded>
-                <v-icon dark>mdi-close</v-icon>ยกเลิก
-              </v-btn>
-              <v-btn large color="warning" @click.stop="editconditions_transferSubmit()" rounded>
-                <v-icon dark>mdi-pencil</v-icon>&nbsp;บันทึก
-              </v-btn>
-
-          </v-card-actions>
-        </v-card>
-      </v-dialog>
-      </v-layout>
-    </v-container>
+</v-container>
 
     
     <v-container fluid>      
@@ -160,7 +104,7 @@ export default {
         { text: "ครั้งที่", align: "center", value: "time_s" },         
         { text: "ปีที่", align: "center", value: "year_s" },  
         { text: "วันที่ทำรายการ", align: "center", value: "date_time" },          
-        { text: "แก้ไข", align: "center", value: "actions", icon: "mdi-file-document-edit" },       
+        { text: "ผลการพิจารณา", align: "center", value: "actions", icon: "mdi-file-document-edit" },       
       ],
       rowsperpage: [
         25,
@@ -195,53 +139,17 @@ async mounted() {
         let result = await this.$http.post('conditions_transfer.php', {
           ApiKey: this.ApiKey,        
         }).finally(() => this.loading = false)
-        this.conditions_transfers = result.data
-      
+        this.conditions_transfers = result.data      
       },
-    
-      async conditions_transferEdit(id_rc) {
-        let result = await this.$http.post('conditions_transfer.php', {
-          ApiKey: this.ApiKey,
-          id_rc: id_rc
-        })
-        this.editconditions_transfer = result.data      
-        this.editconditions_transferdialog = true
-      },
-      async editconditions_transferSubmit() {
-        if (this.$refs.editconditions_transferform.validate()) {
-          this.editconditions_transfer.ApiKey = this.ApiKey;        
-          let result = await this.$http.post('personnel_temporary.update.php', this.editconditions_transfer)
-          if (result.data.status == true) {
-            this.conditions_transfer = result.data
-            this.snackbar.icon = 'mdi-font-awesome'
-            this.snackbar.color = 'success'
-            this.snackbar.text = 'แก้ไขข้อมูลเรียบร้อย'
-            this.snackbar.show = true
-            this.conditions_transferQueryAll()
-          } else {
-            this.snackbar.icon = 'mdi-close-network'
-            this.snackbar.color = 'red'
-            this.snackbar.text = 'แก้ไขข้อมูลผิดพลาด'
-            this.snackbar.show = true
-          }
-          this.editconditions_transferdialog = false
-        }
-      },             
+               
     },
     computed: {
       pages() {
         if (this.pagination.rowsPerPage == null ||
           this.pagination.totalItems == null
         ) return 0
-
         return Math.ceil(this.pagination.totalItems / this.pagination.rowsPerPage)
       },     
-    },
-
-  
-
- 
-
-  
+    },  
 }
 </script>
