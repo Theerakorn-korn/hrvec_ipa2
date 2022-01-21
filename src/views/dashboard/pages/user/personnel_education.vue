@@ -122,7 +122,7 @@
                           <v-text-field
                             v-model="addpersonnel_education.faculty_name"
                             dense
-                            label="คณะวิชา : "
+                            label="วุฒิการศึกษา ตัวอย่าง บธ.บ. : "
                             item-value="cat_name"
                             prepend-icon="mdi-barcode"
                             request
@@ -133,7 +133,7 @@
                           <v-text-field
                             v-model="addpersonnel_education.branch_name"
                             dense
-                            label="สาขาวิชา : "
+                            label="สาขาวิชา : ระบบสารสนเทศทางคอมพิวเตอร์"
                             item-value="cat_name"
                             prepend-icon="mdi-barcode"
                             request
@@ -144,7 +144,7 @@
                           <v-text-field
                             v-model="addpersonnel_education.academy_name"
                             dense
-                            label="สถานศึกษาที่จบ : "
+                            label="สถานศึกษาที่จบ : มหาวิทยาลัย"
                             item-value="cat_name"
                             prepend-icon="mdi-barcode"
                             request
@@ -154,7 +154,7 @@
                          <v-col cols="12" lg="6">
                           <v-text-field
                                 v-model="addpersonnel_education.year_finish"
-                                label="สำเร็จปีการศึกษา : "
+                                label="สำเร็จปีการศึกษา : 2553"
                                 prepend-icon="mdi-calendar"                                                         
                               ></v-text-field>
                         </v-col>
@@ -164,7 +164,7 @@
                           <v-text-field
                             v-model="addpersonnel_education.academic_results"
                             dense
-                            label="ผลการเรียนเรียน : "
+                            label="ผลการเรียนเรียน : 4.00"
                             item-value="cat_name"
                             prepend-icon="mdi-barcode"
                             request

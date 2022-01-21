@@ -60,16 +60,7 @@
     </v-list>
     <v-list>     
     </v-list>
-
-    <template v-slot:append>
-      <base-item
-        :item="{
-          title: 'ออกจากระบบ',
-          icon: 'mdi-package-up',         
-        }"
-        @click="logout()"
-      />
-    </template>
+    
   </v-navigation-drawer>
 </template>
 

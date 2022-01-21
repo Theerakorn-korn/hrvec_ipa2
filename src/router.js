@@ -181,6 +181,12 @@ export default new Router({
                         import ('@/views/dashboard/pages/administrator/conditions_transfer'),
                 },
                 {
+                    name: 'เงือนไขการรับย้ายสาขาวิชา',
+                    path: '/admin/conditions_branch',
+                    component: () =>
+                        import ('@/views/dashboard/pages/administrator/conditions_branch'),
+                },
+                {
                     name: 'สายงานการสอนและสายสนับสนุนการสอน',
                     path: '/admin/transference_personnel',
                     component: () =>
@@ -360,6 +366,7 @@ export default new Router({
                     component: () =>
                         import ('@/views/dashboard/pages/college/conditions_branch'),
                 },
+                
                 {
                     name: 'ประวัติข้อมูลเงือนไขการย้าย',
                     path: '/college/history_conditions',
@@ -371,7 +378,8 @@ export default new Router({
                     path: '/college/transference_personnel',
                     component: () =>
                         import ('@/views/dashboard/pages/college/transference_personnel'),
-                },                
+                },   
+                            
                 
 
             ]

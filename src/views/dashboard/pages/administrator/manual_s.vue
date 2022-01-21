@@ -319,7 +319,7 @@ async mounted() {
       if (this.$refs.file2.files[0]) {
           if (this.$refs.file2.files[0].type != '') {
             let formData = new FormData()
-            let filename = this.addmanual_s.topic_s + '.' + 'manual.pdf'
+            let filename = this.addmanual_s.topic_s + '.' + this.time_stamp + '.' + 'manual.pdf'
             formData.append('file', this.$refs.file2.files[0])
             formData.append('filename', '../HRvecfiles/'+filename)
             formData.append('ApiKey', this.ApiKey)
@@ -428,7 +428,12 @@ async mounted() {
         ) return 0
 
         return Math.ceil(this.pagination.totalItems / this.pagination.rowsPerPage)
-      }
+      },
+       time_stamp(){
+            const d = new Date();
+            let time = d.getTime();
+            return time
+          },
     },
 
   

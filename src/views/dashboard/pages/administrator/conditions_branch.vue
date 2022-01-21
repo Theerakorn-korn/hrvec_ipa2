@@ -1,5 +1,6 @@
 <template>
-  <div>      
+  <div>
+      
     <v-container>
     <base-material-card
         icon="mdi-clipboard-text"
@@ -8,7 +9,7 @@
       >
         <v-card class="mb-4 pa-2">
           <v-row>
-            <v-col cols="12" md="4" class="text-right">
+            <v-col cols="12" md="6" class="text-right">
               <v-text-field
                 v-model="search"
                 append-icon="mdi-magnify"
@@ -20,7 +21,7 @@
                 filled
                 class="mb-2"
               />
-            </v-col>            
+            </v-col>
             <v-col cols="12" md="2">
                 <v-select v-model="times_select" :items="time_ss" item-value="time_ss" :value="1" label="ครั้งที่ :">                    
                 </v-select>
@@ -31,9 +32,6 @@
                 </v-col>      
                   <v-col cols="12" md="2">
                       <v-btn large block @click="searchTimeYear()"> ค้นหา</v-btn>               
-                </v-col> 
-                  <v-col cols="12" md="2">
-                      <v-btn large block @click="search_confirm()"> สถานศึกษายังไม่ได้ยืนยัน</v-btn>               
                 </v-col>           
           </v-row>
         </v-card>
@@ -44,17 +42,6 @@
           :items="conditions_transfers"
           :search="search"
        > 
-          <template v-slot:[`item.date_time`]="{ item }">
-            <span
-            v-if="item.count_idref==='0'"                          
-            >
-            <h2 class="red--text">ยังไม่ได้ดำเนินการยืนยัน</h2>             
-            </span>
-            <span v-else>
-            {{ item.date_time }}
-            </span>
-
-          </template>
           
               
           <v-alert
@@ -110,7 +97,10 @@ export default {
       pagination: {},      
       headers: [
         { text: "อ้างอิง", align: "center", value: "id_ref" },                
-        { text: "สถานศึกษา", align: "center", value: "college_name" },      
+        { text: "สถานศึกษา", align: "center", value: "college_name" },
+        { text: "รหัส", align: "center", value: "id_branch" },
+        { text: "สาขาวิชา", align: "left", value: "name_branch" },
+        { text: "วุฒิการศึกษา", align: "left", value: "educational_level" },
         { text: "ครั้งที่", align: "center", value: "time_s" },         
         { text: "ปีที่", align: "center", value: "year_s" },  
         { text: "วันที่ทำรายการ", align: "center", value: "date_time" },          
@@ -133,19 +123,9 @@ async mounted() {
      await this.conditions_transferQueryAll()      
     },
     methods: {
-
-      async search_confirm(){
-        this.loading = true
-        let result = await this.$http.post('conditions_transfer_admin.php', {
-          ApiKey: this.ApiKey,
-          check_send: 'check',      
-        }).finally(() => this.loading = false)
-        this.conditions_transfers = result.data
-      },
-
       async searchTimeYear(){
              this.loading = true
-        let result = await this.$http.post('conditions_transfer_admin.php', {
+        let result = await this.$http.post('conditions_transfer.php', {
           ApiKey: this.ApiKey,
           time_s: this.times_select,
           year_s: this.years_select
@@ -156,7 +136,7 @@ async mounted() {
 
       async conditions_transferQueryAll() {
           this.loading = true
-        let result = await this.$http.post('conditions_transfer_admin.php', {
+        let result = await this.$http.post('conditions_transfer.php', {
           ApiKey: this.ApiKey,        
         }).finally(() => this.loading = false)
         this.conditions_transfers = result.data      

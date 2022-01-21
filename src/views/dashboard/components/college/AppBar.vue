@@ -26,14 +26,14 @@
         </div>
       </v-list>
     </v-menu>     
-     <v-btn class="ml-2" min-width="0" text to="/college/Dashboard">
+     <v-btn class="ml-4" min-width="0" text to="/college/Dashboard">
       <v-icon>mdi-chart-multiple</v-icon>Dashboard
     </v-btn>
- <v-btn class="ml-2" min-width="0" text to="/college/home_menu">
+ <v-btn class="ml-4" min-width="0" text to="/college/home_menu">
       <v-icon>mdi-home</v-icon>เมนูระบบ
     </v-btn>
 
-    <v-btn class="ml-2" min-width="0" text @click="logout()">
+    <v-btn class="ml-12" min-width="0" text @click="logout()">
       <v-icon>mdi-exit-to-app</v-icon>ออกจากระบบ
     </v-btn>
   </v-app-bar>

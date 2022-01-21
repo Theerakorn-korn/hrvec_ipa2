@@ -625,7 +625,7 @@
             <v-card class="pa-1 d-flex justify-center" v-if="get_gov_Age_year > 0 && user.position_name ==='ครู'">            
                   <div> 
                      <v-row justify="end">                     
-้<h2>* เมื่อกดปุ่มบันทึกแล้ว ท่านจะไม่สามารถแก้ไขข้อมูลใดๆ ได้ กรุณาตรวจสอบข้อมูลให้ถูกต้องการกดปุ่ม บันทึก</h2> 
+้<h4 class="red--text">* เมื่อกดปุ่มบันทึกและยืนยันข้อมูลแล้ว ท่านจะไม่สามารถแก้ไขข้อมูลใดๆ ได้ กรุณาตรวจสอบข้อมูลให้ถูกต้องการกดปุ่ม บันทึก</h4> 
           
       </v-row>                             
 <v-row>   
@@ -649,8 +649,7 @@
                       x-large
                       color="success"
                       dark
-                      rounded
-                      block
+                      rounded                      
                       class="ma-2"
                       @click.stop="confirmsSubmit()"
                       

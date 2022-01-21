@@ -113,9 +113,9 @@ export default {
       {
         action: "mdi-bluetooth-transfer",
         items: [
-          { title: "สายการสอนและสายสนับสนุน", action: "mdi-alarm-light", to: "/Dashboard" },
-          { title: "สายงานบริหารสถานศึกษา", action: "mdi-alarm-light", to: "/Dashboard" },
-          { title: "การย้ายกรณีพิเศษ", action: "mdi-alarm-light", to: "/Dashboard" },
+          { title: "สายการสอนและสายสนับสนุน", action: "mdi-alarm-light", to: "/college/transference_personnel" },
+          /* { title: "สายงานบริหารสถานศึกษา", action: "mdi-alarm-light", to: "/Dashboard" },
+          { title: "การย้ายกรณีพิเศษ", action: "mdi-alarm-light", to: "/Dashboard" }, */
         
         ],
         title: "ระบบการย้าย",
@@ -124,11 +124,11 @@ export default {
         action: "mdi-order-bool-descending-variant",
         items: [
           { title: "ข้อมูลเงือนไขสาขาวิชาเอก", action: "mdi-basket-plus", to: "/college/conditions_branch" },        
-          { title: "สถิติเงือนไขสาขาวิชา", action: "mdi-chart-box-outline", to: "/Dashboard" },        
+        /*   { title: "สถิติเงือนไขสาขาวิชา", action: "mdi-chart-box-outline", to: "/Dashboard" },    */     
         ],
         title: "ระบบเงือนไขสาขาวิชาเอก",
       },
-       {
+      /*  {
         action: "mdi-human",
         items: [
           { title: "ข้อมูลอัตรากำลังสถานศึกษา", action: "mdi-basket-plus", to: "/Dashboard" },        
@@ -136,8 +136,8 @@ export default {
           { title: "ข้อมูลเชิงปริมาณ", action: "mdi-chart-box-outline", to: "/Dashboard" },        
         ],
         title: "ระบบอัตรากำลัง",
-      },
-      {
+      }, */
+      /* {
         action: "mdi-account-supervisor-circle",
         items: [
           { title: "ข้อมูลครูผู้ช่วย", action: "mdi-basket-plus", to: "/Dashboard" },        
@@ -145,7 +145,7 @@ export default {
           { title: "รายงาน", action: "mdi-chart-box-outline", to: "/Dashboard" },        
         ],
         title: "ระบบครูผู้ช่วย",
-      },
+      }, */
     ],  
   }),
 

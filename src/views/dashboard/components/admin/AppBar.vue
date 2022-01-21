@@ -33,7 +33,7 @@
       <v-icon>mdi-home</v-icon>เมนูระบบ
     </v-btn>
 
-    <v-btn class="ml-2" min-width="0" text @click="logout()">
+    <v-btn class="ml-12" min-width="0" text @click="logout()">
       <v-icon>mdi-exit-to-app</v-icon>ออกจากระบบ
     </v-btn>
   </v-app-bar>

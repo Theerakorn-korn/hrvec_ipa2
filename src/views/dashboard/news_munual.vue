@@ -32,8 +32,8 @@
             <span style="font-size: 16px;"> {{ item.detail_s }}</span>
              <h5> {{ item.date_times }}</h5>
 <div class="text-right">
- <!-- <a :href="'http://localhost:8080/HRvecfiles/' + item.link_file" target="_blank" id="a"> OPEN </a> -->
- <a :href="'/HRvecfiles/' + item.link_file" target="_blank" id="a"> OPEN </a>
+ <a :href="'http://localhost:8080/HRvecfiles/' + item.link_file" target="_blank" id="a"> OPEN </a>
+ <!-- <a :href="'/HRvecfiles/' + item.link_file" target="_blank" id="a"> OPEN </a> -->
     </div>          
             </base-material-alert>
           </v-card-text>
@@ -62,8 +62,8 @@
             <span style="font-size: 16px;"> {{ item.detail_s }}</span>
              <h5> {{ item.date_times }}</h5>
 <div class="text-right">
- <!-- <a :href="'http://localhost:8080/HRvecfiles/' + item.link_file" target="_blank" id="a"> OPEN </a> -->
- <a :href="'/HRvecfiles/' + item.link_file" target="_blank" id="a"> OPEN </a>
+ <a :href="'http://localhost:8080/HRvecfiles/' + item.link_file" target="_blank" id="a"> OPEN </a>
+ <!-- <a :href="'/HRvecfiles/' + item.link_file" target="_blank" id="a"> OPEN </a> -->
     </div>        
    
             </base-material-alert>           

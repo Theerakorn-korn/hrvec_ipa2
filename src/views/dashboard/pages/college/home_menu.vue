@@ -44,8 +44,7 @@
                     <v-icon v-text="item.icon"></v-icon>
                   </v-list-item-icon>
                   <v-list-item-content>
-                    <v-list-item-title v-text="item.text"></v-list-item-title>
-                    <v-list-item-title v-text="item.to"></v-list-item-title>
+                    <v-list-item-title v-text="item.text"></v-list-item-title>                   
                   </v-list-item-content>
                 </v-list-item>
               </v-list-item-group>
@@ -69,8 +68,7 @@
                     <v-icon v-text="item.icon"></v-icon>
                   </v-list-item-icon>
                   <v-list-item-content>
-                    <v-list-item-title v-text="item.text"></v-list-item-title>
-                    <v-list-item-title v-text="item.to"></v-list-item-title>
+                    <v-list-item-title v-text="item.text"></v-list-item-title>                  
                   </v-list-item-content>
                 </v-list-item>
               </v-list-item-group>
@@ -95,8 +93,7 @@
                     <v-icon v-text="item.icon"></v-icon>
                   </v-list-item-icon>
                   <v-list-item-content>
-                    <v-list-item-title v-text="item.text"></v-list-item-title>
-                    <v-list-item-title v-text="item.to"></v-list-item-title>
+                    <v-list-item-title v-text="item.text"></v-list-item-title>                  
                   </v-list-item-content>
                 </v-list-item>
               </v-list-item-group>
@@ -111,7 +108,7 @@
             elevation="2"
             icon="mdi-account-convert"           
           > 
-           <v-card-title>ระบบการย้าย</v-card-title>
+           <v-card-title>รายงานการเสนอย้าย</v-card-title>
             <v-list>
               <v-list-item-group >
                 <v-list-item v-for="(item, i) in movement_items" :key="i" :to="item.to">
@@ -119,8 +116,7 @@
                     <v-icon v-text="item.icon"></v-icon>
                   </v-list-item-icon>
                   <v-list-item-content>
-                    <v-list-item-title v-text="item.text"></v-list-item-title>
-                    <v-list-item-title v-text="item.to"></v-list-item-title>
+                    <v-list-item-title v-text="item.text"></v-list-item-title>                   
                   </v-list-item-content>
                 </v-list-item>
               </v-list-item-group>
@@ -143,8 +139,7 @@
                     <v-icon v-text="item.icon"></v-icon>
                   </v-list-item-icon>
                   <v-list-item-content>
-                    <v-list-item-title v-text="item.text"></v-list-item-title>
-                    <v-list-item-title v-text="item.to"></v-list-item-title>
+                    <v-list-item-title v-text="item.text"></v-list-item-title>                   
                   </v-list-item-content>
                 </v-list-item>
               </v-list-item-group>
@@ -297,7 +292,7 @@ export default {
           ],
       movement_items: [
           { text: "สายการสอนและสายสนับสนุน", icon: "mdi-alarm-light", to: "/college/transference_personnel" },
-          { text: "สายงานบริหารสถานศึกษา", icon: "mdi-alarm-light", to: "/Dashboard" },
+         /*  { text: "สายงานบริหารสถานศึกษา", icon: "mdi-alarm-light", to: "/Dashboard" }, */
         ],
      
        condition_items: [              
@@ -307,15 +302,15 @@ export default {
         ],
 
           human_items: [           
-          { text: "ข้อมูลอัตรากำลังสถานศึกษา", icon: "mdi-basket-plus", to: "/college/man_power" },        
+         /*  { text: "ข้อมูลอัตรากำลังสถานศึกษา", icon: "mdi-basket-plus", to: "/college/man_power" },         */
          /*  { text: "ข้อมูลเชิงปริมาณ", icon: "mdi-chart-box-outline", to: "/Dashboard" },        
           { text: "ข้อมูลเชิงปริมาณ", icon: "mdi-chart-box-outline", to: "/Dashboard" },   */      
         ],
 
          prepare_items: [
-          { text: "ข้อมูลครูผู้ช่วย", icon: "mdi-basket-plus", to: "/Dashboard" },        
+         /*  { text: "ข้อมูลครูผู้ช่วย", icon: "mdi-basket-plus", to: "/Dashboard" },        
           { text: "ประเมินครูผู้ช่วย", icon: "mdi-chart-box-outline", to: "/Dashboard" },        
-          { text: "รายงาน", icon: "mdi-chart-box-outline", to: "/Dashboard" },        
+          { text: "รายงาน", icon: "mdi-chart-box-outline", to: "/Dashboard" },         */
         ],
     };
   },
