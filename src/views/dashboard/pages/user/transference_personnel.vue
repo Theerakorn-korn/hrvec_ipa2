@@ -1,6 +1,6 @@
 <template>
-   <v-container id="upgrade" fluid tag="section" class="text_google">
-    <v-row >
+   <v-container fluid>
+    <v-row >      
       <v-col cols="12" md="12">
         <base-material-card color="primary">
           <template v-slot:heading>
@@ -337,7 +337,7 @@
               <v-card-title>
                 <div
                   class="font-weight-light v-size--x-large"
-                ><v-icon large left>mdi-account-reactivate</v-icon> อยู่ระหว่างทดลองปฏิบัติราชการหรือการเตรียมความพร้อมและพัฒนาอย่างเข็มหรือไม่</div>
+                ><v-icon large left>mdi-account-reactivate</v-icon> อยู่ระหว่างทดลองปฏิบัติราชการหรือการเตรียมความพร้อมและพัฒนาอย่างเข้มหรือไม่</div>
               </v-card-title>
               
               <v-row>

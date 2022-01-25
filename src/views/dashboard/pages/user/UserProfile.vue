@@ -246,7 +246,7 @@
            <base-material-card
               color="yellow"
               icon="mdi-clipboard-text"
-              title="แก้ไขข้อมูลเบื้องต้น"
+              title="แก้ไขรหัสผ่าน"
               class="px-5 py-3 text_google"
               elevation="2"
             >   

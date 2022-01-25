@@ -44,29 +44,43 @@
           </v-row>
         </v-card>
         <v-data-table
+         
           color="success"
           :loading="loading"
           :headers="headers"
           :items="transference_personnels"
-          :search="search"
-        >
-          <template v-slot:[`item.actions`]="{ item }">
-            <v-icon
-            v-if="item.succ_college===''"
-              color="yellow"
-              large
-              @click.stop="select_idPosition(item.id_ref)"
-            >mdi-credit-card-plus</v-icon>
+          :search="search" 
+          item-key="tid_ref"
+          
+        >      
 
+
+     <template v-slot:footer>
+    <v-btn @click="clear_data()">ยกเลิกรายการ</v-btn>      
+  </template>
+      
+      <template v-slot:[`item.succ_college`]="{ item }">    
+            <v-chip
+        :color="getColor(item.succ_college)"
+        dark
+      >
+       <span style="font-size:16px;"> {{ item.succ_college }}</span>
+      </v-chip>   
+    </template>
+          <template v-slot:[`item.actions`]="{ item }">
               <v-icon
-              v-else
-              color="yellow"
+              v-if="item.succ_college >= 1"
+              color="red"
               large
               @click.stop="deletePosition(item.id_ref)"
-            >mdi-close</v-icon>
-
+            >mdi-box-cutter-off</v-icon>
+     <v-icon
+          v-else
+              color="yellow"
+              large
+              @click.stop="select_idPosition(item.tid_ref)"
+            >mdi-credit-card-plus</v-icon>
           </template>
-
           <v-alert
             slot="no-results"
             :value="true"
@@ -76,55 +90,100 @@
         </v-data-table>
       </base-material-card>
 
-      <!-- V-model edittransference_personneldialog -->
+      <!-- V-model canceldialog -->
       <v-layout row justify-center>
-        <v-dialog v-model="edittransference_personneldialog" persistent max-width="80%">
+        <v-dialog v-model="canceldialog" persistent max-width="80%">
           <v-card class="mx-auto pa-6">
             <base-material-card
               color="yellow"
               icon="mdi-clipboard-text"
-              title="แก้ไขข้อมูลผู้ใช้งานระบบ"
+              title="ยกเลิกรายการ"
               class="px-5 py-3 text_google"
-            ></base-material-card>
+            >
+            <div class="text-right">
+             
+            </div>
+            
+            </base-material-card>
             <v-card-text>
-              <v-form ref="edittransference_personnelform" lazy-validation>
+              <v-form ref="cancelform" lazy-validation>
+                 {{ conditons_transfer_successs.id_cts }}
                 <v-container grid-list-md>
                   <v-layout wrap>
-                    <v-flex md6>{{ edittransference_personnel.id_card }}</v-flex>
                     <v-flex md6>
-                      <v-text-field
-                        label="Password"
-                        v-model="edittransference_personnel.p_word"
-                        type="password"
-                      ></v-text-field>
-                    </v-flex>
-                    <v-flex md6>
-                      <v-text-field
-                        label="Confirm Password"
-                        v-model="edittransference_personnel.transference_personnel_confirmpassword"
-                        type="password"
-                      ></v-text-field>
-                    </v-flex>
+                   <p> รหัสอ้างอิง : {{ transference_personnels_id_ref.id_ref }}</p>
+                   <div> รหัสบัตรประชาชน :  {{ transference_personnels_id_ref.id_card }} ชื่อ-นามสกุล : {{ transference_personnels_id_ref.title_s }}{{ transference_personnels_id_ref.frist_name }} {{ transference_personnels_id_ref.last_name }}</div>
+                     สถานศึกษาปัจจุบัน :  {{ transference_personnels_id_ref.college_name }}  เลขที่ตำแหน่งปัจจุบัน : {{ transference_personnels_id_ref.id_position }} 
+                      </v-flex>                   
+                    <v-flex md6>                   
+                     <p>รหัสวิทยาลัยปลายทาง : {{ man_powerss.college_code }}</p> 
+                     <div>วิทยาลัย : {{ man_powerss.college_name }}</div> 
+                      เลขที่ตำแหน่ง : {{ man_powerss.id_position }}                      
+                      </v-flex>                       
                     <v-flex xs12>
                       <v-divider></v-divider>
                     </v-flex>
                   </v-layout>
                 </v-container>
-                <small>* จำเป็น</small>
+              
               </v-form>
             </v-card-text>
             <v-card-actions>
               <v-spacer></v-spacer>
-              <v-btn large @click.stop="edittransference_personneldialog = false" rounded>
+              <v-btn large @click.stop="canceldialog = false" rounded>
                 <v-icon dark>mdi-close</v-icon>ยกเลิก
               </v-btn>
-              <v-btn large color="warning" @click.stop="edittransference_personnelSubmit()" rounded>
-                <v-icon dark>mdi-pencil</v-icon>&nbsp;บันทึก
+              <v-btn large color="warning" @click.stop="cancelSubmit()" rounded>
+                <v-icon dark>mdi-pencil</v-icon>&nbsp;ยืนยัน
               </v-btn>
             </v-card-actions>
           </v-card>
         </v-dialog>
       </v-layout>
+
+
+  <!-- V-model clear_datadialog -->
+      <v-layout row justify-center>
+        <v-dialog v-model="clear_dataDialog" persistent max-width="80%">
+          <v-card class="mx-auto pa-6">
+            <base-material-card
+              color="red"
+              icon="mdi-clipboard-text"
+              title="ยกเลิกรายการเสนอย้ายทั้งหมด"
+              class="px-5 py-3 text_google"
+            >               
+            </base-material-card>
+            <v-card-text>
+              <v-form ref="clear_dataform" lazy-validation>
+                <v-container grid-list-md>
+                  <v-layout wrap>
+                    <v-flex md12>
+                         <v-alert
+                          dense
+                          outlined
+                          type="error"
+                        >
+                        <h1> ระบบจะดำเนินการยกเลิกการเขียนย้ายทั้งหมดออกจากระบบ</h1>
+                          </v-alert>
+                      </v-flex>    
+                  </v-layout>
+                </v-container>
+              
+              </v-form>
+            </v-card-text>
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn large @click.stop="clear_dataDialog = false" rounded>
+                <v-icon dark>mdi-close</v-icon>ยกเลิก
+              </v-btn>
+              <v-btn large color="warning" @click.stop="clear_dataSubmit()" rounded>
+                <v-icon dark>mdi-pencil</v-icon>&nbsp;ยืนยัน
+              </v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
+      </v-layout>
+
 
       <!-- V-model positiondialog -->
       <v-layout row justify-center>
@@ -141,6 +200,9 @@
                 <v-container>
                  
                   <v-row>
+                     <v-flex md6>
+                     รหัสอ้างอิง :  {{ transference_personnels_id_ref.tid_ref }}
+                    </v-flex>
                      <v-flex md6>
                      รหัสบัตรประชาชน :  {{ transference_personnels_id_ref.id_card }} ชื่อ-นามสกุล : {{ transference_personnels_id_ref.title_s }}{{ transference_personnels_id_ref.frist_name }} {{ transference_personnels_id_ref.last_name }}
                     </v-flex>
@@ -222,9 +284,11 @@ export default {
       loading: true,
       ApiKey: "HRvec2021",
        branch_s:[],
+       tid_ref:[],
       valid: true,
-      edittransference_personneldialog: false,
+      canceldialog: false,
       positiondialog: false,
+      clear_dataDialog: false,
       times_select: "1",
       years_select: "2565",
       snackbar: {
@@ -240,18 +304,22 @@ export default {
       edittransference_personnel: {},
       search: "",
       pagination: {},
+       singleSelect: false,
+        selected: [],
       headers: [
-        { text: "อ้างอิง", align: "center", value: "id_ref" },
-        { text: "วิทยาลัย", align: "center", value: "college_name" },
+        { text: "อ้างอิง", align: "center", value: "tid_ref" },
+        { text: "วิทยาลัย", align: "left", value: "college_name" },
         { text: "รหัสบัตรประชาชน", align: "center", value: "id_card" },
-        { text: "ชื่อ", align: "center", value: "frist_name" },
-        { text: "นามสกุล", align: "center", value: "last_name" },
+        { text: "ชื่อ", align: "left", value: "frist_name" },
+        { text: "นามสกุล", align: "left", value: "last_name" },
         { text: "ครั้งที่", align: "center", value: "time_ss" },
         { text: "ปีที่", align: "center", value: "year_ss" },
         { text: "อายุงาน ณ ปัจจุบัน", align: "center", value: "age_app_time" },
         { text: "วันที่ทำรายการ", align: "center", value: "date_time" },
-        { text: "ปลายทาง", align: "center", value: "succ_college" },
-        { text: "ย้ายกรณีพิเศษ", align: "center", value: "actions" },
+        { text: "แห่งใหม่", align: "center", value: "succ_college" },
+        { text: "วิทยาลัยแห่งใหม่", align: "left", value: "college_name_suss" },        
+        { text: "เลขที่", align: "left", value: "id_position_new" },        
+        { text: "ย้ายแบบที่ 1", align: "center", value: "actions" },
         
       ],
 
@@ -273,12 +341,16 @@ export default {
       ],
       transference_personnelstatus: [],
       transference_personnels_id_ref: [],
+      conditons_transfer_successs: [],
       updatepositions_condition:{},
       transference_locations: [],
+      conditons_transfer_success_del: [],
       man_powers:[],
       userstatus: {},
       updatepositions:{},
+      man_powerss:[],
       colleges: [],
+      data_select:[],
       provinces: [],
       regions: [],
     };
@@ -328,18 +400,19 @@ export default {
     },
     
 
-    async select_idPosition(id_ref) {
+    async select_idPosition(tid_ref) {
       let result_con = await this.$http.post("transference_personnel.php", {
         ApiKey: this.ApiKey,
-        id_ref: id_ref,
+        id_ref: tid_ref,
       });
 
       let result = await this.$http.post("transference_location.php", {
         ApiKey: this.ApiKey,
-        id_ref: id_ref,
+        id_ref: tid_ref,
       });
       this.transference_locations = result.data;
-      this.transference_personnels_id_ref = result_con.data;     
+      this.transference_personnels_id_ref = result_con.data;  
+      this.updatepositions={}   
       this.positiondialog = true;
     },
     
@@ -368,15 +441,19 @@ export default {
           this.updatepositions.ApiKey = this.ApiKey;
           this.updatepositions.time_s = this.transference_personnels_id_ref.time_ss;
           this.updatepositions.year_s = this.transference_personnels_id_ref.year_ss;        
+          this.updatepositions.id_postion_old = this.transference_personnels_id_ref.id_position;        
           this.updatepositions.id_card = this.transference_personnels_id_ref.id_card;              
+          this.updatepositions.id_ref = this.transference_personnels_id_ref.tid_ref;              
           this.updatepositions.name_position = 'ครู';
+
+         // transference_personnels_id_ref.id_position
 
           this.updatepositions_condition.ApiKey = this.ApiKey;   
           this.updatepositions_condition.id_position = this.updatepositions.id_position;   
           this.updatepositions_condition.status_booking = this.transference_personnels_id_ref.id_card;               
           let result_man = await this.$http.post('man_power.update_process.php', this.updatepositions_condition)   
           let result = await this.$http.post('conditons_transfer_success.insert.php', this.updatepositions)   
-      
+    
           if (result_man.data.status == true && result.data.status == true) {           
             this.snackbar.icon = 'mdi-font-awesome'
             this.snackbar.color = 'success'
@@ -399,22 +476,88 @@ export default {
         id_ref: id_ref,
       });
 
-      let result = await this.$http.post("transference_location.php", {
-        ApiKey: this.ApiKey,
-        id_ref: id_ref,
-      });
+       this.transference_personnels_id_ref = result_con.data;   
 
-      let result_position = await this.$http.post("transference_location.php", {
+       let result_man = await this.$http.post("man_power.php", {
+        ApiKey: this.ApiKey,
+        id_card: this.transference_personnels_id_ref.id_card,
+      });
+    this.man_powerss = result_man.data; 
+  
+      let result_cts = await this.$http.post("conditons_transfer_success.php", {
         ApiKey: this.ApiKey,
         id_ref: id_ref,
       });
-      
-      this.transference_locations = result.data;
-      this.transference_personnels_id_ref = result_con.data;     
-      this.positiondialog = true;
+            
+      this.conditons_transfer_successs= result_cts.data; 
+      this.canceldialog = true;
     },
 
+    async cancelSubmit(){
+          if (this.$refs.cancelform.validate()) {
+        this.man_powerss.ApiKey = this.ApiKey;          
+          this.man_powerss.status_booking = ""; 
+          this.conditons_transfer_successs.ApiKey = this.ApiKey; 
+          let result_man = await this.$http.post('man_power.update_process.php', this.man_powerss)
+         let result_cts = await this.$http.post('conditons_transfer_success.delete.php', this.conditons_transfer_successs)
+          
+          if (result_man.data.status == true && result_cts.data.status == true) {              
+            this.snackbar.icon = 'mdi-font-awesome'
+            this.snackbar.color = 'success'
+            this.snackbar.text = 'ยกเลิกข้อมูลเรียบร้อย'
+            this.snackbar.show = true
+           this.transference_personnelQueryAll()
+          } else {
+            this.snackbar.icon = 'mdi-close-network'
+            this.snackbar.color = 'red'
+            this.snackbar.text = 'ยกเลิกข้อมูลผิดพลาด'
+            this.snackbar.show = true
+          }
+          this.canceldialog = false          
+          }
+    },
     
+
+    async clear_dataSubmit(){
+        if (this.$refs.clear_dataform.validate()) {
+          this.man_powerss.ApiKey = this.ApiKey;          
+          this.man_powerss.status_booking = '';   
+          this.conditons_transfer_successs.ApiKey = this.ApiKey;  
+          
+          console.log(this.man_powerss)
+          console.log(this.conditons_transfer_successs)
+         /*  let result_man = await this.$http.post('man_power.update.php', this.man_powerss)
+          let result_cts = await this.$http.post('conditons_transfer_success.delete.php', this.conditons_transfer_successs)
+          
+          if (result_man.data.status == true && result_cts.data.status == true) {
+            this.period = result.data
+            this.snackbar.icon = 'mdi-font-awesome'
+            this.snackbar.color = 'success'
+            this.snackbar.text = 'ยกเลิกข้อมูลเรียบร้อย'
+            this.snackbar.show = true
+           this.transference_personnelQueryAll()
+          } else {
+            this.snackbar.icon = 'mdi-close-network'
+            this.snackbar.color = 'red'
+            this.snackbar.text = 'ยกเลิกข้อมูลผิดพลาด'
+            this.snackbar.show = true
+          }
+          this.canceldialog = false */
+        }  
+
+
+    },
+
+async clear_data(){
+   this.clear_dataDialog = true;
+},
+      getColor (calories) {
+       /*  if (calories > 400) return 'red'
+        else if (calories > 200) return 'orange'
+        else return 'green'  */   
+        if (calories > 0) return 'green'       
+        else return ''  
+      },
   },
   computed: {
     pages() {

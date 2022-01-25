@@ -1,6 +1,5 @@
 <template>
-  <div>
-      
+  <div>      
     <v-container>
     <base-material-card
         icon="mdi-clipboard-text"
@@ -23,6 +22,7 @@
                 class="mb-2"
               />
             </v-col>
+             
             <v-col cols="12" lg="6" class="text-right">
               <v-btn
                 
@@ -32,9 +32,33 @@
                 color="primary"
                 @click.native="personnel_temporaryAdd()"
               >
-                <v-icon>mdi-plus-circle-outline</v-icon>เพิ่มรายการ
+                <v-icon>mdi-plus-circle-outline</v-icon> <h3>เพิ่มรายการ</h3> 
               </v-btn>
             </v-col>
+             <v-col cols="12" lg="12" class="text-left">
+               <v-btn
+                
+                large
+                right
+                depressed
+                color="info"
+                @click.native="personnel_temporaryQueryAll()"
+              >
+                <v-icon>mdi-book-search</v-icon> <h3>แสดงทั้งหมด</h3> 
+              </v-btn>
+              <v-btn
+                
+                large
+                right
+                depressed
+                color="info"
+                @click.native="searchWait()"
+              >
+                <v-icon>mdi-book-search</v-icon> <h3>อยู่ระหว่างพิจารณาย้าย</h3> 
+              </v-btn>
+            </v-col>
+
+
           </v-row>
         </v-card>
        <v-data-table 
@@ -558,7 +582,7 @@ export default {
       pagination: {},      
       headers: [
         { text: "ลำดับ", align: "center", value: "id_rc"},
-        { text: "วิทยาลัย",width: "20%", align: "center", value: "college_name" },              
+        { text: "วิทยาลัย",width: "20%", align: "left", value: "college_name" },              
         { text: "รหัสบัตรประชาชน", align: "center", value: "id_card" },
         { text: "คำนำ", align: "center", value: "title_s" },
         { text: "ชื่อ", align: "center", value: "frist_name" },
@@ -674,6 +698,17 @@ async mounted() {
         }).finally(() => this.loading = false)
         this.personnel_temporarys = result.data       
       },
+
+       async searchWait() {
+          this.loading = true
+        let result = await this.$http.post('personnel_temporary.php', {
+          ApiKey: this.ApiKey,
+          status_appove : 'wait'
+        }).finally(() => this.loading = false)
+        this.personnel_temporarys = result.data       
+      },
+
+      
 
       async personnel_temporaryAdd() {
       this.addpersonnel_temporary = {};

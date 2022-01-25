@@ -94,6 +94,19 @@
             </v-icon>     
 
           </template>
+
+
+
+  
+      <template v-slot:[`item.college_code_susss`]="{ item }">    
+            <v-chip
+        :color="getColor(item.college_code_susss)"
+        dark
+      >
+       <span style="font-size:16px;"> {{ item.college_code_susss }}</span>
+      </v-chip>   
+    </template>
+
           <v-alert
             slot="no-results"
             :value="true"
@@ -270,6 +283,9 @@ export default {
         { text: "คะแนน", align: "center", value: "point_s" },   
         { text: "อายุงาน ณ ปัจจบัน", align: "center", value: "age_app_time" },      
         { text: "เลขที่ตำแหน่ง", align: "center", value: "actions", icon: "mdi-file-document-edit" },       
+        { text: "แห่งใหม่", align: "center", value: "college_code_susss"}, 
+        { text: "สถานศึกษาแห่งใหม่", align: "center", value: "college_name_suss"}, 
+        { text: "เลขที่", align: "center", value: "id_postion_susss"},       
       ],
             search: '',
       pagination: {},  
@@ -411,6 +427,14 @@ async man_powerQuery(college_code){
 
           }
       },   
+
+      getColor (calories) {
+       /*  if (calories > 400) return 'red'
+        else if (calories > 200) return 'orange'
+        else return 'green'  */   
+        if (calories > 0) return 'green'       
+        else return ''  
+      },
 
     },
     computed:{
