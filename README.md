@@ -23,3 +23,4 @@ You can also run additional npm tasks such as
 - main.js  axios
 - news_munual.vue 
 - UserProfile.vue 
+- collegeinfo.vue

@@ -8,10 +8,11 @@ import store from './store'
 import './plugins/base'
 import './plugins/chartist'
 import './plugins/vee-validate'
+import './plugins/moment'
 import vuetify from './plugins/vuetify'
 import i18n from './i18n'
-import VueMoment from 'vue-moment'
-import moment from 'moment-timezone'
+/* import VueMoment from 'vue-moment'
+import moment from 'moment-timezone' */
 const request = axios.create({
     /* baseURL: 'http://hrvec.org/HRvec_api/', */
     baseURL: 'http://localhost:8080/HRvec_api/',
@@ -19,9 +20,9 @@ const request = axios.create({
 Vue.config.productionTip = false
 Vue.use(VueAxios, request)
 Vue.use(VueLazyLoad)
-Vue.use(VueMoment, {
+/* Vue.use(VueMoment, {
     moment,
-})
+}) */
 new Vue({
     router,
     store,

@@ -210,6 +210,19 @@ export default new Router({
                     component: () =>
                         import ('@/views/dashboard/pages/administrator/process_transfer'),
                 },
+                {
+                    name: 'คำสั่งแต่งตั้งรักษาการในตำแหน่ง',
+                    path: '/admin/Order_appoint',
+                    component: () =>
+                        import ('@/views/dashboard/pages/administrator/Order_appoint'),
+                },                
+                {
+                    name: 'สรุปผลการประมวลผลการย้าย',
+                    path: '/admin/conditons_transfer_success',
+                    component: () =>
+                        import ('@/views/dashboard/pages/administrator/conditons_transfer_success'),
+                },
+                
                 
                 
 
@@ -281,7 +294,15 @@ export default new Router({
             path: '/college/print_condition/:id_ref',
             component: () =>
             import ('@/print_condition'),
-        },    
+        },
+        {
+            name: 'พิมพ์คำสั่ง แต่งตั้งรักษาการในตำแหน่ง',
+            path: '/admin/print_report_movement/:times_s:year_s',
+            component: () =>
+            import ('@/print_report_movement'),
+        }, 
+        
+        
         {
             path: "/college",
             component: () =>

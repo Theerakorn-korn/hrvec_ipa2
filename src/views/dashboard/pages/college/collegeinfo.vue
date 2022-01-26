@@ -55,7 +55,8 @@
                   <v-card class="elevation-0">                   
                     <v-card-text class="text-xs-left pl-5">
                       <img :src="'http://localhost:8080/HRvecfiles/'+collegeinfo.collegeinfo_directorpic" height="300" v-if="collegeinfo.collegeinfo_directorpic" style="border-radius: 30px">
-                      <v-btn @click.stop="deletefiledialog2 = true"
+                      <!-- <img :src="'/HRvecfiles/'+collegeinfo.collegeinfo_directorpic" height="300" v-if="collegeinfo.collegeinfo_directorpic" style="border-radius: 30px">
+                     -->  <v-btn @click.stop="deletefiledialog2 = true"
                       color="red darken-3" v-if="collegeinfo.collegeinfo_directorpic" dark icon outlined>
                       <v-icon small>mdi-delete</v-icon>
                     </v-btn>
@@ -87,7 +88,7 @@
 
 
 
-
+   <!-- แก้ไขข้อมูล -->
     <v-layout row justify-center>
       <v-dialog v-model="collegeinfodialog1" persistent max-width="80%">         
         <v-card class="mx-auto pa-5" >  
@@ -125,14 +126,14 @@
           <v-card-actions>
             <v-spacer></v-spacer>
             <v-btn  @click.stop="collegeinfodialog1 = false" rounded><v-icon dark>mdi-close</v-icon> ยกเลิก</v-btn>
-            <v-btn color="success" @click.stop="editcollegeinfoSubmit(false)" rounded>
+            <v-btn color="success" @click.stop="editcollegeinfoSubmit1()" rounded>
               <v-icon dark>mdi-content-save</v-icon>&nbsp;บันทึก</v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>
     </v-layout>
      
-  
+  <!-- ข้อมูลผู้อำนวยการ -->
     <v-layout row justify-center>
       <v-dialog v-model="collegeinfodialog5" persistent max-width="80%">
         <v-card class="mx-auto pa-5" >  
@@ -171,7 +172,8 @@
         </v-card>
       </v-dialog>
     </v-layout>
- 
+
+ <!-- ลบรูปภาพ -->
     <v-layout row justify-center>
       <v-dialog v-model="deletefiledialog2" persistent max-width="50%">
         <v-card>
@@ -199,12 +201,12 @@
       </v-dialog>
     </v-layout>
     <v-container fluid>
-      <v-snackbar v-model="snackbar.show" multi-line vertical top auto-height :timeout="snackbar.timeout" :color="snackbar.color">
+      <v-snackbar v-model="snackbar.show" top :timeout="snackbar.timeout" :color="snackbar.color">
         <v-icon large>{{snackbar.icon}}</v-icon>
-        <br> {{snackbar.text}}
-        <v-btn dark  @click="snackbar.show = false">
-          Close
-        </v-btn>
+        <v-card-text>{{snackbar.text}}</v-card-text>
+        <template v-slot:action="{ attrs }">
+          <v-btn color="red" text v-bind="attrs" @click="snackbar.show = false">Close</v-btn>
+        </template>
       </v-snackbar>
     </v-container>
   </div>
@@ -276,6 +278,30 @@
           this.collegeinfodialog5 = true      
       },
       
+
+
+        async editcollegeinfoSubmit1() {          
+          if (this.$refs.form1.validate()) {
+          this.editcollegeinfo.ApiKey = this.ApiKey;   
+          console.log(this.editcollegeinfo)   
+          let result = await this.$http.post('collegeinfo.update.php', this.editcollegeinfo)
+           if (result.data.status == true) {
+            this.editcollegeinfo = result.data
+            this.snackbar.icon = 'mdi-font-awesome'
+            this.snackbar.color = 'success'
+            this.snackbar.text = 'แก้ไขข้อมูลเรียบร้อย'
+            this.snackbar.show = true
+            this.collegeinfoQuery()
+          } else {
+            this.snackbar.icon = 'mdi-close-network'
+            this.snackbar.color = 'red'
+            this.snackbar.text = 'แก้ไขข้อมูลผิดพลาด'
+            this.snackbar.show = true
+          }
+          this.collegeinfodialog1 = false
+        }          
+      },
+
       async editcollegeinfoSubmit(upload) {
         let result = ''
         let uploaded = null
@@ -283,7 +309,7 @@
      if (this.$refs.file2.files[0]) {
           if (this.$refs.file2.files[0].type == 'image/jpeg') {
             let formData = new FormData()
-            let filename = this.editcollegeinfo.college_ID + '.' + this.period_year_bd +
+            let filename = this.editcollegeinfo.college_ID + '.' + this.time_stamp + '.' + this.period_year_bd +
               '.directorpic.jpg'
             formData.append('file', this.$refs.file2.files[0])
             formData.append('filename', '../HRvecfiles/'+filename)
@@ -368,6 +394,11 @@
           let year = today.getFullYear()+543;
         return year
       },
+      time_stamp(){
+            const d = new Date();
+            let time = d.getTime();
+            return time
+          },
     },
     watch: {
       async period_year_bd(newVal, oldVal) {        

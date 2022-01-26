@@ -172,6 +172,29 @@
             </v-list>
           </v-alert>      
       </v-col>
+      <v-col cols="12" md="12">    
+          <v-alert
+            border="left"
+            colored-border
+             type="info"
+            elevation="2"
+            icon="mdi-source-branch"          
+          >  
+          <v-card-title>หนังสือราชการ</v-card-title>
+            <v-list>
+              <v-list-item-group >
+                <v-list-item v-for="(item, i) in official_book" :key="i" :to="item.to">
+                  <v-list-item-icon>
+                    <v-icon v-text="item.icon"></v-icon>
+                  </v-list-item-icon>
+                  <v-list-item-content>
+                    <v-list-item-title v-text="item.text"></v-list-item-title>                   
+                  </v-list-item-content>
+                </v-list-item>
+              </v-list-item-group>
+            </v-list>
+          </v-alert>      
+      </v-col>
        <v-col cols="12" md="12">
          <v-alert
      shaped
@@ -378,7 +401,7 @@ export default {
           { text: "ข้อมูลโทษ วินัย", icon: "mdi-alarm-light", to: "/admin/personnel_discipline" },   */
           ],
       movement_items: [          
-          { text: "สายงานการสอนและสายสนับสนุนการสอน", icon: "mdi-alarm-light", to: "/admin/transference_personnel" },
+          { text: "สายงานการสอนและสายสนับสนุนการสอน [ประมวลผลแบบ 1]", icon: "mdi-alarm-light", to: "/admin/transference_personnel" },
         /*   { text: "สายงานบริหารสถานศึกษา", icon: "mdi-alarm-light", to: "/Dashboard" },
           { text: "การย้ายกรณีพิเศษ", icon: "mdi-alarm-light", to: "/Dashboard" }, */
         
@@ -388,8 +411,14 @@ export default {
           { text: "สาขาวิชาเอก", icon: "mdi-basket-plus", to: "/admin/branch" },        
           { text: "เงือนไขการรับย้ายของสถานศึกษา", icon: "mdi-basket-plus", to: "/admin/conditions_transfer" },        
          { text: "เงือนไขการรับย้ายสาขาวิชา", icon: "mdi-alarm-light", to: "/admin/conditions_branch" },   
-          { text: "ประมวลผลการย้าย", icon: "mdi-chart-box-outline", to: "/admin/process_transfer" },        
+          { text: "ประมวลผลการย้าย [ประมวลผลแบบ 2]", icon: "mdi-chart-box-outline", to: "/admin/process_transfer" },        
+          { text: "สรุปผลการย้าย", icon: "mdi-chart-box-outline", to: "/admin/conditons_transfer_success" },        
         ],
+
+
+        official_book: [
+          { text: "คำสั่งแต่งตั้งรักษาการในตำแหน่ง", icon: "mdi-basket-plus", to: "/admin/Order_appoint" },        
+          ],
 
           human_items: [           
           { text: "ข้อมูลอัตรากำลังสถานศึกษา", icon: "mdi-basket-plus", to: "/admin/man_power" },        

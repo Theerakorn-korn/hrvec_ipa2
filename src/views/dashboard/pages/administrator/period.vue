@@ -56,11 +56,18 @@
                  {{ item.period_cal_end| moment("add","543 years") | moment("D MMMM YYYY") }}
           </template>
  <template v-slot:[`item.period_enable`]="{ item }">
-                <v-icon color="green darken-2" v-if="item.period_enable === '1'">mdi-alarm-light</v-icon> 
+                <v-icon large color="green darken-2" v-if="item.period_enable === '1'">mdi-alarm-light</v-icon> 
                 <v-icon v-if="item.period_enable === '0'">mdi-alarm-light-outline</v-icon> 
           </template>
+          
+<template v-slot:[`item.period_type`]="{ item }">
+  <span v-if="item.period_type==='teacher'">สายการสอนและสายสนับสนุน</span>
+  <span v-if="item.period_type==='manage'">สายงานบริหารสถานศึกษา</span>
+                   </template>
+
          <template v-slot:[`item.actions`]="{ item }">
             <v-icon
+            large
               color="yellow"              
               @click.stop="periodEdit(item.id_pr)"
             >
@@ -70,7 +77,7 @@
             <template v-slot:[`item.action_s`]="{ item }">            
             <v-icon
               color="red"
-              
+              large
               @click.stop="periodDelete(item.id_pr)"
             >
               mdi-delete
@@ -316,7 +323,7 @@ export default {
         { text: "สิ้นสุดวันที่", align: "center", value: "period_stop" },        
         { text: "วันที่นับถึง", align: "center", value: "period_cal_end" },        
         { text: "เกี่ยวข้องกับ", align: "center", value: "period_type" },        
-        { text: "สถานะ", align: "center", value: "period_enable" },        
+        { text: "สถานะ", align: "center", value: "period_enable" }, 
         { text: "แก้ไข", align: "center", value: "actions", icon: "mdi-file-document-edit" },
         { text: "ลบ", align: "center", value: "action_s" , icon: "mdi-delete-forever" },
       ],

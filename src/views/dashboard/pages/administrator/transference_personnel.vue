@@ -269,7 +269,6 @@
       <v-snackbar v-model="snackbar.show" top :timeout="snackbar.timeout" :color="snackbar.color">
         <v-icon large>{{snackbar.icon}}</v-icon>
         <v-card-text>{{snackbar.text}}</v-card-text>
-
         <template v-slot:action="{ attrs }">
           <v-btn color="red" text v-bind="attrs" @click="snackbar.show = false">Close</v-btn>
         </template>
@@ -441,6 +440,7 @@ export default {
           this.updatepositions.ApiKey = this.ApiKey;
           this.updatepositions.time_s = this.transference_personnels_id_ref.time_ss;
           this.updatepositions.year_s = this.transference_personnels_id_ref.year_ss;        
+          this.updatepositions.college_code_old = this.transference_personnels_id_ref.college_code;        
           this.updatepositions.id_postion_old = this.transference_personnels_id_ref.id_position;        
           this.updatepositions.id_card = this.transference_personnels_id_ref.id_card;              
           this.updatepositions.id_ref = this.transference_personnels_id_ref.tid_ref;              
@@ -450,7 +450,11 @@ export default {
 
           this.updatepositions_condition.ApiKey = this.ApiKey;   
           this.updatepositions_condition.id_position = this.updatepositions.id_position;   
-          this.updatepositions_condition.status_booking = this.transference_personnels_id_ref.id_card;               
+          this.updatepositions_condition.status_booking = this.transference_personnels_id_ref.id_card; 
+          
+          console.log(this.updatepositions)
+          console.log(this.updatepositions_condition)
+          
           let result_man = await this.$http.post('man_power.update_process.php', this.updatepositions_condition)   
           let result = await this.$http.post('conditons_transfer_success.insert.php', this.updatepositions)   
     
