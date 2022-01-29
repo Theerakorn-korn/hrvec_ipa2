@@ -212,7 +212,7 @@
                 :disabled="!isEditing"
                 
                 @click.stop="addmemberSubmit()"
-                rounded
+                round
               >
                 <v-icon>mdi-content-save</v-icon>
                 <span>บันทึก</span>

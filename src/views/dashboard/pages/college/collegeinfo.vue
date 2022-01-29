@@ -54,9 +54,9 @@
                 <v-flex>
                   <v-card class="elevation-0">                   
                     <v-card-text class="text-xs-left pl-5">
-                      <img :src="'http://localhost:8080/HRvecfiles/'+collegeinfo.collegeinfo_directorpic" height="300" v-if="collegeinfo.collegeinfo_directorpic" style="border-radius: 30px">
-                      <!-- <img :src="'/HRvecfiles/'+collegeinfo.collegeinfo_directorpic" height="300" v-if="collegeinfo.collegeinfo_directorpic" style="border-radius: 30px">
-                     -->  <v-btn @click.stop="deletefiledialog2 = true"
+                     <!--  <img :src="'http://localhost:8080/HRvecfiles/'+collegeinfo.collegeinfo_directorpic" height="300" v-if="collegeinfo.collegeinfo_directorpic" style="border-radius: 30px">
+                     -->  <img :src="'/HRvecfiles/'+collegeinfo.collegeinfo_directorpic" height="300" v-if="collegeinfo.collegeinfo_directorpic" style="border-radius: 30px">
+                      <v-btn @click.stop="deletefiledialog2 = true"
                       color="red darken-3" v-if="collegeinfo.collegeinfo_directorpic" dark icon outlined>
                       <v-icon small>mdi-delete</v-icon>
                     </v-btn>

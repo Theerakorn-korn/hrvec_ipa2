@@ -73,7 +73,7 @@
                       <h3>ข้อมูลการเริ่มปฏิบัติหน้าที่ในสถานศึกษาปัจจุบัน</h3>
                     </v-flex>
                    <v-flex md6>
-                    <v-text-field label="คำสั่งที่" v-model="editpersonnel_temporary.order_app_now" required :rules="[v => !!v || '']"></v-text-field>
+                    <v-text-field label="คำสั่งที่ ระบุเพียง : 783/2563" v-model="editpersonnel_temporary.order_app_now" required :rules="[v => !!v || '']"></v-text-field>
                   </v-flex>      
                 <v-flex md6>
                 <v-menu
@@ -123,7 +123,7 @@
                    </v-flex>
                 </v-layout>               
               </v-container>
-              <small>* จำเป็น</small>
+              <strong class="red--text">* จำเป็น</strong>
             </v-form>
           </v-card-text>
           <v-card-actions>

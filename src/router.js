@@ -29,6 +29,7 @@ export default new Router({
                     path: 'news',
                     component: () =>
                         import ('@/views/dashboard/news_munual'),
+                      
                 },
                 {
                     name: 'Icons',

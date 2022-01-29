@@ -54,8 +54,8 @@
           text: 'กลุ่มงานจัดการบุคคล 2',
         },
         {
-          href: 'https://boc2.vec.go.th/default.aspx',
-          text: 'สำนักความร่วมมือ',
+          href: 'https://bpa.vec.go.th/',
+          text: 'สำนักบริหารงานบุคคลและนิติการ',
         },        
       ],
     }),

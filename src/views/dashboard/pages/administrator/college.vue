@@ -54,7 +54,7 @@
               mdi-pencil
             </v-icon>          
           </template>
-            <template v-slot:[`item.action_s`]="{ item }">            
+            <!-- <template v-slot:[`item.action_s`]="{ item }">            
             <v-icon
               color="red"
               
@@ -62,7 +62,7 @@
             >
               mdi-delete
             </v-icon>
-          </template>
+          </template> -->
           <v-alert
             slot="no-results"
             :value="true"
@@ -284,7 +284,7 @@ export default {
         { text: "จังหวัด", align: "left", value: "province_name" }, 
         { text: "ประเภท", align: "left", value: "collegetype_name" },       
         { text: "แก้ไข", align: "center", value: "actions", icon: "mdi-file-document-edit" },
-        { text: "ลบ", align: "center", value: "action_s" , icon: "mdi-delete-forever" },
+      /*   { text: "ลบ", align: "center", value: "action_s" , icon: "mdi-delete-forever" }, */
       ],
       rowsperpage: [
         25,

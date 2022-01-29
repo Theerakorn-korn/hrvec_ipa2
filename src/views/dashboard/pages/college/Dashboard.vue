@@ -66,7 +66,7 @@
           sub-icon="mdi-clock"
           sub-text="Intense Preparation"
         />
-      </v-col>
+      </v-col>      
       <v-col cols="12" lg="6">
         <base-material-chart-card
           :data="Personnel_chart.data"

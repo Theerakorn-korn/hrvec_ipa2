@@ -17,7 +17,6 @@
                 label="ค้นหา ระบุคำ หรือ ส่วนข้อความเกี่ยวข้อง"
                 single-line
                 hide-details
-                
                 dense
                 filled
                 class="mb-2"

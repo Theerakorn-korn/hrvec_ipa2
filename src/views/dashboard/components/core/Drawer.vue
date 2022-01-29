@@ -75,9 +75,9 @@
     </v-list>
 
     <template v-slot:append>
-      <base-item
+      <base-item    
         :item="{
-          title: 'เข้าสู่ระบบ Administrator',
+          title: 'เข้าสู่ระบบสำหรับสถานศึกษา',
           icon: 'mdi-package-up',
           to: '/pages/loginAdmin',
         }"
