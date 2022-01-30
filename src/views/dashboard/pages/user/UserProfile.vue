@@ -433,17 +433,20 @@
                         v-model="user.province_IDm"
                       ></v-autocomplete>
                     </v-flex>
+                      <v-flex xs12>
+                      <v-divider></v-divider>
+                    </v-flex>
                     <v-flex md6>
                       <v-text-field
-                        outlinedd
-                        label="เบอร์โทรติดต่อ :"
+                        outlined
+                        label="เบอร์โทรติดต่อ ของท่าน : "
                         v-model="user.tel_p"
                       ></v-text-field>
                     </v-flex>
                     <v-flex md6>
                       <v-text-field
-                        outlinedd
-                        label="E-mail :"
+                        outlined
+                        label="E-mail ของท่าน :"
                         v-model="user.e_mail"
                       ></v-text-field>
                     </v-flex>
@@ -466,7 +469,7 @@
                 @click.stop="personnelSubmit()"
                 rounded
               >
-                <v-icon dark>mdi-pencil</v-icon>&nbsp;บันทึก
+                <v-icon dark>mdi-content-save</v-icon>&nbsp;บันทึก
               </v-btn>
             </v-card-actions>
           </v-card>
@@ -530,7 +533,7 @@
                 @click.stop="passwordSubmit()"
                 rounded
               >
-                <v-icon dark>mdi-pencil</v-icon>&nbsp;บันทึก
+                <v-icon dark>mdi-content-save</v-icon>&nbsp;บันทึก
               </v-btn>
             </v-card-actions>
           </v-card>

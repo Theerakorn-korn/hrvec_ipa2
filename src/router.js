@@ -206,11 +206,19 @@ export default new Router({
                         import ('@/views/dashboard/pages/administrator/manual_s'),
                 },
                 {
-                    name: 'ดำเนินการประมวลผลการย้าย',
+                    name: 'ดำเนินการประมวลผลการย้าย แบบที่ 2 ',
                     path: '/admin/process_transfer',
                     component: () =>
                         import ('@/views/dashboard/pages/administrator/process_transfer'),
                 },
+                {
+                    name: 'ดำเนินการประมวลผลการย้าย แบบ 3 สับเปลี่ยนตำแหน่ง',
+                    path: '/admin/process_transfer_switch',
+                    component: () =>
+                        import ('@/views/dashboard/pages/administrator/process_transfer_switch'),
+                },
+
+                
                 {
                     name: 'คำสั่งแต่งตั้งรักษาการในตำแหน่ง',
                     path: '/admin/Order_appoint',

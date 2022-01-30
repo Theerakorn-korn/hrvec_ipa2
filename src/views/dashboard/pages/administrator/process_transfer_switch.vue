@@ -3,7 +3,9 @@
     <v-container id="home_menu" fluid tag="section">
       <v-card>
         <v-toolbar flat color="primary" dark>
-          <v-toolbar-title>ประมวลผลข้อมูลการย้าย</v-toolbar-title>
+          <v-toolbar-title
+            >ประมวลผลข้อมูลการย้าย แบบที่ 3 สับเปลี่ยนตำแหน่ง</v-toolbar-title
+          >
         </v-toolbar>
 
         <v-card class="ma-2 pa-2">
@@ -24,15 +26,6 @@
                 label="ปี :"
               ></v-select>
             </v-col>
-            <v-col class="d-flex" cols="12" md="5">
-              <v-radio-group v-model="row" row>
-                <v-radio label="สถานะ 1 : 1" @click="OnetoOne()"></v-radio>               
-                <v-radio
-                  @click="searchTimeYear()"
-                  label="แสดงทั้งหมด"
-                ></v-radio>
-              </v-radio-group>
-            </v-col>
             <v-col class="d-flex" cols="12" md="3">
               <v-btn
                 elevation="2"
@@ -41,38 +34,9 @@
                 dark
                 x-large
                 block
-                @click="searchTimeYear()"
+                @click="Switch_personnel()"
               >
                 <v-icon>mdi-clipboard-check</v-icon> เลือกดำเนินการ</v-btn
-              >
-            </v-col>
-          </v-row>
-          <v-row>
-            <v-col class="d-flex" cols="12" md="3">
-              <v-btn
-                elevation="2"
-                rounded
-                color="warning"
-                dark
-                x-large
-                block
-                @click="transference_locationDelete()"
-                ><v-icon>mdi-format-clear</v-icon>
-                ลบข้อมูลการย้ายที่ไม่ได้กดบันทึกเสนอ</v-btn
-              >
-            </v-col>
-            <v-col class="d-flex" cols="12" md="3">
-              <v-btn
-                elevation="2"
-                rounded
-                color="info"
-                dark
-                x-large
-                block
-                :href="'#/admin/print_report_movement/' + times_s + year_s"
-                target="_blank"
-                ><v-icon>mdi-printer</v-icon> พิมพ์คำสั่ง
-                แต่งตั้งผู้รักษาการในตำแหน่ง</v-btn
               >
             </v-col>
           </v-row>
@@ -87,18 +51,34 @@
             :search="search"
             :items-per-page="20"
           >
-          
-
-      <template v-slot:[`item.college_name`]="{ item }">   
-           <v-chip color="warning" dark>
+            <template v-slot:[`item.title_sa`]="{ item }">
+              <v-chip color="warning" dark>
                 <span style="font-size:16px;">
-                  {{ item.college_name }}</span
+                  {{
+                    item.title_sa + item.frist_namea + " " + item.last_namea
+                  }}</span
                 >
               </v-chip>
             </template>
 
-<template v-slot:[`item.college_name_now`]="{ item }">   
-           <v-chip color="warning" dark>
+            <template v-slot:[`item.title_sb`]="{ item }">
+              <v-chip color="warning" dark>
+                <span style="font-size:16px;">
+                  {{
+                    item.title_sb + item.frist_nameb + " " + item.last_nameb
+                  }}</span
+                >
+              </v-chip>
+            </template>
+
+            <template v-slot:[`item.college_name`]="{ item }">
+              <v-chip color="warning" dark>
+                <span style="font-size:16px;"> {{ item.college_name }}</span>
+              </v-chip>
+            </template>
+
+            <template v-slot:[`item.college_name_now`]="{ item }">
+              <v-chip color="warning" dark>
                 <span style="font-size:16px;">
                   {{ item.college_name_now }}</span
                 >
@@ -423,21 +403,17 @@ export default {
         text: ""
       },
       headers: [
-        { text: "สถานศึกษาแห่งใหม่", align: "left", value: "college_name" },
+        { text: "ID A", align: "left", value: "id_carda" },
+        { text: "ชื่อ-นามสกุล", align: "left", value: "title_sa" },
         { text: "รหัส", align: "left", value: "id_branch" },
         { text: "สาขา", align: "left", value: "name_branch" },
-        {
-          text: "วุฒิการศึกษาที่เปิดรับ",
-          align: "left",
-          value: "condition_edu"
-        },
-        { text: "อัตราว่าง", align: "center", value: "num_position" },
-        { text: "จำนวนรับ", align: "center", value: "quantity_n" },
-        { text: "จำนวนเขียนเข้า", align: "center", value: "personnel_num_s" },
+        { text: "วิทยาลัย A", align: "left", value: "college_namea" },
         { text: "สถานะ", align: "center", value: "status_process" },
-        { text: "ลำดับที่", align: "center", value: "sequence_n" },
-        { text: "วุฒิ", align: "center", value: "personnel_edu" },
-        { text: "ชื่อ-นามสกุล", align: "center", value: "personnel_name" },
+        { text: "ID B", align: "left", value: "id_cardb" },
+        { text: "ชื่อ-นามสกุล", align: "center", value: "title_sb" },
+        { text: "วิทยาลัย B", align: "left", value: "college_nameb" },
+
+        
         { text: "คะแนน", align: "center", value: "point_s" },
         { text: "อายุงาน ณ ปัจจบัน", align: "center", value: "age_app_time" },
         { text: "สังกัด", align: "center", value: "college_name_now" },
@@ -448,7 +424,7 @@ export default {
           icon: "mdi-file-document-edit"
         },
         { text: "แห่งใหม่", align: "center", value: "college_code_susss" },
-       /*  {
+        /*  {
           text: "สถานศึกษาแห่งใหม่",
           align: "center",
           value: "college_name_suss"
@@ -485,7 +461,7 @@ export default {
   },
 
   async mounted() {
-    await this.conditions_transferQueryAll();
+    //await this.conditions_transferQueryAll();
     await this.period_QueryAll();
     await this.man_powerQuery();
   },
@@ -525,18 +501,18 @@ export default {
       this.conditions_transfers = result.data;
     },
 
-async Switch_personnel(){
-   this.loading = true;
+    async Switch_personnel() {
+      this.loading = true;
       let result = await this.$http
         .post("process_transfer.php", {
           ApiKey: this.ApiKey,
           time_s: this.times_s,
           year_s: this.year_s,
-          switchs: 'Ok'         
+          switchs: "Ok"
         })
         .finally(() => (this.loading = false));
       this.conditions_transfers = result.data;
-},
+    },
 
     async conditions_transferQueryAll() {
       this.loading = true;

@@ -455,12 +455,32 @@ export default {
           text: "ข้อมูลเกี่ยวกับบุคคล",
           icon: "mdi-account",
           to: "/admin/personnel_tem"
+        },
+        {
+          text: "ข้อมูลคุณวุฒิการศึกษา",
+          icon: "mdi-school",
+          to: "/admin/personnel_education"
+        },
+        {
+          text: "ข้อมูลประสบการณ์",
+          icon: "mdi-airplane",
+          to: "/admin/personnel_experience"
+        },
+        {
+          text: "ข้อมูลประวัติการทำงาน",
+          icon: "mdi-access-point-network",
+          to: "/admin/personnel_work_history"
+        },
+        {
+          text: "ข้อมูลผลงาน รางวัล",
+          icon: "mdi-trophy-award",
+          to: "/admin/personnel_award"
+        },
+        {
+          text: "ข้อมูลโทษ วินัย",
+          icon: "mdi-alarm-light",
+          to: "/admin/personnel_discipline"
         }
-        /*   { text: "ข้อมูลคุณวุฒิการศึกษา", icon: "mdi-school", to: "/admin/personnel_education" },
-          { text: "ข้อมูลประสบการณ์", icon: "mdi-airplane", to: "/admin/personnel_experience" },
-          { text: "ข้อมูลประวัติการทำงาน", icon: "mdi-access-point-network", to: "/admin/personnel_work_history" },
-          { text: "ข้อมูลผลงาน รางวัล", icon: "mdi-trophy-award", to: "/admin/personnel_award" },
-          { text: "ข้อมูลโทษ วินัย", icon: "mdi-alarm-light", to: "/admin/personnel_discipline" },   */
       ],
       movement_items: [
         {
@@ -488,6 +508,11 @@ export default {
           text: "ประมวลผลการย้าย [ประมวลผลแบบ 2]",
           icon: "mdi-chart-box-outline",
           to: "/admin/process_transfer"
+        },
+         {
+          text: "ประมวลผลการย้าย [ประมวลผลแบบ 3 สับเปลี่ยน]",
+          icon: "mdi-chart-box-outline",
+          to: "/admin/process_transfer_switch"
         },
         {
           text: "สรุปผลการย้าย",
