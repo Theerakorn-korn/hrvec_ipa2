@@ -384,11 +384,10 @@ export default {
         text: "",
       },
       currentPK: null,
-      headers: [
-        { text: "ลำดับ", align: "center", value: "id_red" },
-        { text: "รหัสบัตรประชาชน", align: "center", value: "id_card" },        
-        { text: "ชื่อ", align: "center", value: "frist_name" },        
-        { text: "นามสกุล", align: "center", value: "last_name" },        
+      headers: [  
+        { text: "คำนำหน้าชื่อ", align: "left", value: "title_s" },        
+        { text: "ชื่อ", align: "left", value: "frist_name" },        
+        { text: "นามสกุล", align: "left", value: "last_name" },        
         { text: "ประเภทสาขาวิชา", align: "left", value: "name_branch" },
         { text: "ระดับการศึกษา", align: "left", value: "education_level" },
         { text: "คณะวิชา", align: "left", value: "faculty_name" },        
@@ -425,10 +424,7 @@ export default {
         result_branch = await this.$http.post('branch.php', {
         ApiKey: this.ApiKey       
       })
-      this.branch_s = result_branch.data   
-      
-      
-     
+      this.branch_s = result_branch.data       
      this.personnel_educationsQueryAll()
   },
 

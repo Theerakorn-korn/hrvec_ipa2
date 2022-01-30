@@ -17,7 +17,13 @@ You can also run additional npm tasks such as
 # Backup
 - git add .
 - git commit -m "13-12-2564"
-- git push origin master    
+- git push origin master  
+
+git push -u origin main
+To https://github.com/Theerakorn-korn/hrvec_ipa2.git
+ * [new branch]      main -> main
+branch 'main' set up to track 'origin/main'.
+
 
 # Edit Code Before Upload Host
 - main.js  axios

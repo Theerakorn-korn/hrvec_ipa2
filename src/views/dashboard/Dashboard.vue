@@ -81,6 +81,8 @@
           sub-text="Intense Preparation"
         />
       </v-col>
+
+      
       <v-col cols="12" sm="6" lg="3">
         <base-material-stats-card
           :value="Number(showAlldata.count_38).toLocaleString()"
