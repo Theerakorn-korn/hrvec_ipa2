@@ -561,7 +561,7 @@
                 <v-container grid-list-md>
                   <v-layout wrap>
                     <v-flex xs12>
-                      เลือกไฟล์ภาพของท่าน
+                      เลือกไฟล์ภาพของท่าน : ชนิด JPEG / JPG
                       <input type="file" ref="file2" id="file2" />
                     </v-flex>
                   </v-layout>

@@ -26,7 +26,7 @@
             </v-col>
             <v-col class="d-flex" cols="12" md="5">
               <v-radio-group v-model="row" row>
-                <v-radio label="สถานะ 1 : 1" @click="OnetoOne()"></v-radio>               
+                <v-radio label="สถานะ 1 : 1" @click="OnetoOne()"></v-radio>
                 <v-radio
                   @click="searchTimeYear()"
                   label="แสดงทั้งหมด"
@@ -48,6 +48,26 @@
             </v-col>
           </v-row>
           <v-row>
+            <v-col cols="12" md="2">
+              <v-btn
+                rounded
+                large
+                block
+                color="info"
+                to="/admin/transference_personnel"
+                >ประมวลผลแบบที่ 1
+              </v-btn>
+            </v-col>
+            <v-col cols="12" md="2">
+              <v-btn
+                rounded
+                large
+                block
+                color="info"
+                to="/admin/process_transfer_switch"
+                >ประมวลผลแบบที่ 3 (สับเปลี่ยนตำแหน่ง)
+              </v-btn>
+            </v-col>
             <v-col class="d-flex" cols="12" md="3">
               <v-btn
                 elevation="2"
@@ -61,6 +81,7 @@
                 ลบข้อมูลการย้ายที่ไม่ได้กดบันทึกเสนอ</v-btn
               >
             </v-col>
+
             <v-col class="d-flex" cols="12" md="3">
               <v-btn
                 elevation="2"
@@ -75,6 +96,9 @@
                 แต่งตั้งผู้รักษาการในตำแหน่ง</v-btn
               >
             </v-col>
+            <v-col cols="12" md="2" class="text-right">
+              <h1 class="text--right">ประมวลผลแบบที่ 2</h1>
+            </v-col>
           </v-row>
         </v-card>
 
@@ -87,18 +111,14 @@
             :search="search"
             :items-per-page="20"
           >
-          
-
-      <template v-slot:[`item.college_name`]="{ item }">   
-           <v-chip color="warning" dark>
-                <span style="font-size:16px;">
-                  {{ item.college_name }}</span
-                >
+            <template v-slot:[`item.college_name`]="{ item }">
+              <v-chip color="warning" dark>
+                <span style="font-size:16px;"> {{ item.college_name }}</span>
               </v-chip>
             </template>
 
-<template v-slot:[`item.college_name_now`]="{ item }">   
-           <v-chip color="warning" dark>
+            <template v-slot:[`item.college_name_now`]="{ item }">
+              <v-chip color="warning" dark>
                 <span style="font-size:16px;">
                   {{ item.college_name_now }}</span
                 >
@@ -345,6 +365,67 @@
                         </h4>
                       </v-card>
                     </v-col>
+                    <v-col cols="12" md="12">
+                      <v-card elevation="2" class="pa-2">
+                        <h2>
+                          เหตุผลในการย้าย :
+                        </h2>
+
+                        <div v-if="transference_personnels.reason_1 === '1'">
+                          <v-alert
+                            border="left"
+                            colored-border
+                            type="info"
+                            elevation="2"
+                          >
+                          <h3>ย้ายเพื่ออยู่ร่วมคู่สมรส</h3>
+                            คู่สมรสชื่อ : {{ transference_personnels.reason_1_spouse }}
+                           คู่สมรสประกอบอาชีพ : {{ transference_personnels.reason_1_occupation }}
+                           สถานที่ประกอบอาชีพของคู่สมรส : {{ transference_personnels.reason_1_location }}
+                           ภูมิลำเนาของคู่สมรส จังหวัด {{ transference_personnels.r1_province }}
+                          </v-alert>
+                        </div>
+
+                        <div v-if="transference_personnels.reason_2 === '1'">
+                            <v-alert
+                            border="left"
+                            colored-border
+                            type="info"
+                            elevation="2"
+                          >
+                           <h3>ย้ายเพื่ออยู่ดูแลบิดา มารดา</h3>                    
+                           อายุของบิดา : {{ transference_personnels.reason_2_fyear }} ปี
+                           อายุของมารดา : {{ transference_personnels.reason_2_myear }} ปี
+                           ภูมิลำเนาของบิดา มารดา จังหวัด : {{ transference_personnels.r2_province }}
+                            </v-alert>
+                        </div>
+                        <div v-if="transference_personnels.reason_3 === '1'">
+                            <v-alert
+                            border="left"
+                            colored-border
+                            type="info"
+                            elevation="2"
+                          >
+                          <h3>ย้ายกลับภูมิลำเนา</h3> 
+                           
+                           จังหวัด :  {{ transference_personnels.r3_province }}
+                            </v-alert>
+                        </div>
+                        <div v-if="transference_personnels.reason_4 === '1'">
+                           <v-alert
+                            border="left"
+                            colored-border
+                            type="info"
+                            elevation="2"
+                          >
+                            <h3>
+                              เหตุผลอื่น ๆ :                             
+                            </h3>
+                             {{ transference_personnels.reason_4_detail }}
+                           </v-alert>
+                        </div>
+                      </v-card>
+                    </v-col>
                   </v-row>
                   <v-layout wrap>
                     <v-flex md12>
@@ -448,7 +529,7 @@ export default {
           icon: "mdi-file-document-edit"
         },
         { text: "แห่งใหม่", align: "center", value: "college_code_susss" },
-       /*  {
+        /*  {
           text: "สถานศึกษาแห่งใหม่",
           align: "center",
           value: "college_name_suss"
@@ -525,18 +606,18 @@ export default {
       this.conditions_transfers = result.data;
     },
 
-async Switch_personnel(){
-   this.loading = true;
+    async Switch_personnel() {
+      this.loading = true;
       let result = await this.$http
         .post("process_transfer.php", {
           ApiKey: this.ApiKey,
           time_s: this.times_s,
           year_s: this.year_s,
-          switchs: 'Ok'         
+          switchs: "Ok"
         })
         .finally(() => (this.loading = false));
       this.conditions_transfers = result.data;
-},
+    },
 
     async conditions_transferQueryAll() {
       this.loading = true;

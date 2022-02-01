@@ -487,7 +487,13 @@ export default {
           text: "สายงานการสอนและสายสนับสนุนการสอน [ประมวลผลแบบ 1]",
           icon: "mdi-alarm-light",
           to: "/admin/transference_personnel"
-        }
+        },
+        {
+          text: "สายงานการสอนและสายสนับสนุนการสอน รายละเอียด",
+          icon: "mdi-alarm-light",
+          to: "/admin/transference_location"
+        },
+
         /*   { text: "สายงานบริหารสถานศึกษา", icon: "mdi-alarm-light", to: "/Dashboard" },
           { text: "การย้ายกรณีพิเศษ", icon: "mdi-alarm-light", to: "/Dashboard" }, */
       ],

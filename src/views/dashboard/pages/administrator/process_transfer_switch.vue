@@ -26,7 +26,7 @@
                 label="ปี :"
               ></v-select>
             </v-col>
-            <v-col class="d-flex" cols="12" md="3">
+            <v-col class="d-flex" cols="12" md="2">
               <v-btn
                 elevation="2"
                 rounded
@@ -39,6 +39,15 @@
                 <v-icon>mdi-clipboard-check</v-icon> เลือกดำเนินการ</v-btn
               >
             </v-col>
+            <v-col cols="12" md="2">
+              <v-btn rounded large block color="info" to="/admin/transference_personnel">ประมวลผลแบบที่ 1 </v-btn>
+            </v-col>
+               <v-col cols="12" md="2">
+              <v-btn  rounded large block color="info" to="/admin/process_transfer">ประมวลผลแบบที่ 2 </v-btn>
+            </v-col>
+            <v-col cols="12" md="2" class="text-right">
+               <h1 class="text--right">ประมวลผลแบบที่ 3 </h1>
+                 </v-col>
           </v-row>
         </v-card>
 
@@ -70,6 +79,14 @@
                 >
               </v-chip>
             </template>
+
+            
+             <template v-slot:[`item.college_namea`]="{ item }">
+              <v-chip color="warning" dark>
+                <span style="font-size:16px;"> {{ item.college_namea }}</span>
+              </v-chip>
+            </template>
+
 
             <template v-slot:[`item.college_name`]="{ item }">
               <v-chip color="warning" dark>
@@ -390,9 +407,9 @@ export default {
       ApiKey: "HRvec2021",
       process_transfer: {},
       valid: true,
-      times_s: "",
-      row: null,
+      times_s: "", 
       year_s: "",
+           row: null,
       man_powers: [],
       man_powers: [],
       snackbar: {
@@ -462,6 +479,7 @@ export default {
 
   async mounted() {
     //await this.conditions_transferQueryAll();
+    await this.Switch_personnelAll()
     await this.period_QueryAll();
     await this.man_powerQuery();
   },
@@ -486,16 +504,14 @@ export default {
         college_code: college_code
       });
       this.man_powers = man_power_result.data;
-    },
+    },    
 
-    async OnetoOne() {
+async Switch_personnelAll() {
       this.loading = true;
       let result = await this.$http
         .post("process_transfer.php", {
-          ApiKey: this.ApiKey,
-          time_s: this.times_s,
-          year_s: this.year_s,
-          OnetoOne: "1"
+          ApiKey: this.ApiKey,      
+          switchs: "Ok"
         })
         .finally(() => (this.loading = false));
       this.conditions_transfers = result.data;

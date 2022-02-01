@@ -1,8 +1,52 @@
 <template>
   <v-container id="dashboard" fluid tag="section">
     <v-row>
+      <v-col cols="12" sm="12">
+        <base-material-card
+          color="primary"
+          icon="mdi-account-group"
+          title="รายงานผล"
+        >
+          <v-card class="mb-4 pa-2">
+            <v-row>
+              <v-col cols="12" md="2">
+                <v-select
+                  v-model="times_select"
+                  :items="time_ss"
+                  item-value="time_ss"
+                  :value="1"
+                  label="ครั้งที่ :"
+                ></v-select>
+              </v-col>
+              <v-col cols="12" md="2">
+                <v-select
+                  v-model="years_select"
+                  :items="year_ss"
+                  item-value="year_ss"
+                  :value="2565"
+                  label="ปีที่ :"
+                ></v-select>
+              </v-col>
+              <v-col cols="12" md="1">
+                <v-btn fab dark color="success" @click="searchTimeYear()"
+                  ><v-icon dark>
+                    mdi-account-search
+                  </v-icon></v-btn
+                >
+              </v-col>
+              <v-col cols="12" md="7">
+                <v-alert border="top" colored-border type="info" elevation="2">
+                <h2>จำนวนวิทยาลัยที่ดำเนินการ : {{ conditions_transfers.count_condition }} แห่ง</h2>
+                <h2>ผู้ยืนย้ายจำนวน : {{ transference_personnels.count_personnel }} คน</h2>
+                </v-alert></v-col
+              >
+            </v-row>
+          </v-card>
+        </base-material-card>
+      </v-col>
+
       <v-col cols="12" sm="6" lg="4">
-        <base-material-stats-card          
+        <base-material-stats-card
           :value="Number(showAlldata.count_all).toLocaleString()"
           color="primary"
           icon="mdi-account-group"
@@ -14,7 +58,7 @@
 
       <v-col cols="12" sm="6" lg="4">
         <base-material-stats-card
-         :value="Number(showAlldata.count_tech).toLocaleString()"
+          :value="Number(showAlldata.count_tech).toLocaleString()"
           color="primary"
           icon="mdi-account-group"
           title="ข้าราชการครู"
@@ -25,7 +69,7 @@
 
       <v-col cols="12" sm="6" lg="4">
         <base-material-stats-card
-        :value="Number(showAlldata.count_dr).toLocaleString()"
+          :value="Number(showAlldata.count_dr).toLocaleString()"
           color="primary"
           icon="mdi-account-group"
           title="ผู้อำนวยการวิทยาลัย"
@@ -36,10 +80,10 @@
 
       <v-col cols="12" sm="6" lg="3">
         <base-material-stats-card
-         :value="Number(showAlldata.count_se_dr).toLocaleString()"
+          :value="Number(showAlldata.count_se_dr).toLocaleString()"
           color="primary"
           icon="mdi-account-group"
-          title="รองผู้อำนวยการ"          
+          title="รองผู้อำนวยการ"
           sub-icon="mdi-clock"
           sub-text="Deputy Director"
         />
@@ -47,11 +91,10 @@
 
       <v-col cols="12" sm="6" lg="3">
         <base-material-stats-card
-        :value="Number(showAlldata.count_supervision).toLocaleString()"
+          :value="Number(showAlldata.count_supervision).toLocaleString()"
           color="primary"
           icon="mdi-account-group"
           title="ศึกษานิเทศก์"
-        
           sub-icon="mdi-clock"
           sub-text="Study supervision"
         />
@@ -59,20 +102,20 @@
 
       <v-col cols="12" sm="6" lg="3">
         <base-material-stats-card
-        :value="Number(showAlldata.count_perpare).toLocaleString()"
+          :value="Number(showAlldata.count_perpare).toLocaleString()"
           color="primary"
           icon="mdi-account-group"
-          title="ครูผู้ช่วย"         
+          title="ครูผู้ช่วย"
           sub-icon="mdi-clock"
           sub-text="Intense Preparation"
         />
       </v-col>
-       <v-col cols="12" sm="6" lg="3">
+      <v-col cols="12" sm="6" lg="3">
         <base-material-stats-card
-        :value="Number(showAlldata.count_38).toLocaleString()"
+          :value="Number(showAlldata.count_38).toLocaleString()"
           color="primary"
           icon="mdi-account-group"
-          title="(38)"         
+          title="(38)"
           sub-icon="mdi-clock"
           sub-text="Support"
         />
@@ -81,7 +124,7 @@
         <base-material-chart-card
           :data="Personnel_chart.data"
           :options="Personnel_chart.options"
-          :responsive-options="Personnel_chart.responsiveOptions"         
+          :responsive-options="Personnel_chart.responsiveOptions"
           color="#E91E63"
           hover-reveal
           type="Bar"
@@ -107,11 +150,15 @@
             </v-tooltip>
           </template>
 
-          <h4 class="card-title font-weight-light mt-2 ml-2">ข้าราชการครูและบุคลากรทางการศึกษา</h4>
+          <h4 class="card-title font-weight-light mt-2 ml-2">
+            ข้าราชการครูและบุคลากรทางการศึกษา
+          </h4>
 
           <template v-slot:actions>
             <v-icon class="mr-1" small>mdi-clock-outline</v-icon>
-            <span class="caption grey--text font-weight-light">updated 10 minutes ago</span>
+            <span class="caption grey--text font-weight-light"
+              >updated 10 minutes ago</span
+            >
           </template>
         </base-material-chart-card>
       </v-col>
@@ -146,16 +193,20 @@
             </v-tooltip>
           </template>
 
-          <h4 class="card-title font-weight-light mt-2 ml-2">ข้อมูลวิทยฐานะข้าราชการครู</h4>
-         
+          <h4 class="card-title font-weight-light mt-2 ml-2">
+            ข้อมูลวิทยฐานะข้าราชการครู
+          </h4>
+
           <template v-slot:actions>
             <v-icon class="mr-1" small>mdi-clock-outline</v-icon>
-            <span class="caption grey--text font-weight-light">updated 4 minutes ago</span>
+            <span class="caption grey--text font-weight-light"
+              >updated 4 minutes ago</span
+            >
           </template>
         </base-material-chart-card>
       </v-col>
 
-     <!--  <v-col cols="12" lg="4">
+      <!--  <v-col cols="12" lg="4">
         <base-material-chart-card
           :data="dataCompletedTasksChart.data"
           :options="dataCompletedTasksChart.options"
@@ -204,22 +255,20 @@
             <div class="font-weight-light">ข้อมูลสถานศึกษาที่อยู่ในระบบ</div>
           </template>
           <v-card-text>
-            <v-data-table :headers="headers" :items="colleges"  :search="search">
+            <v-data-table :headers="headers" :items="colleges" :search="search">
               <template v-slot:top>
-        <v-text-field
-          v-model="search"
-          label="ค้นหา :"
-          class="mx-4"
-        ></v-text-field>
-      </template>
+                <v-text-field
+                  v-model="search"
+                  label="ค้นหา :"
+                  class="mx-4"
+                ></v-text-field>
+              </template>
             </v-data-table>
           </v-card-text>
         </base-material-card>
       </v-col>
 
-
-
-       <v-col cols="12" md="12">
+      <v-col cols="12" md="12">
         <base-material-card color="success" class="px-5 py-3">
           <template v-slot:heading>
             <div class="font-weight-light">สาขาวิชาเอก</div>
@@ -227,21 +276,24 @@
             <div class="font-weight-light">ข้อมูลสาขาวิชาในระบบ</div>
           </template>
           <v-card-text>
-            <v-data-table :headers="header_branchs" :items="showbranchdata"  :search="search_branch">
+            <v-data-table
+              :headers="header_branchs"
+              :items="showbranchdata"
+              :search="search_branch"
+            >
               <template v-slot:top>
-        <v-text-field
-          v-model="search_branch"
-          label="ค้นหา :"
-          class="mx-4"
-        ></v-text-field>
-      </template>
+                <v-text-field
+                  v-model="search_branch"
+                  label="ค้นหา :"
+                  class="mx-4"
+                ></v-text-field>
+              </template>
             </v-data-table>
           </v-card-text>
         </base-material-card>
       </v-col>
-     
     </v-row>
-     </v-container>
+  </v-container>
 </template>
 
 <script>
@@ -250,55 +302,55 @@ export default {
 
   data() {
     return {
-    
-     headers: [  
+      headers: [
         { text: "รหัสสถานศึกษา", align: "left", value: "college_code" },
         { text: "ชื่อสถานศึกษา", align: "left", value: "college_name" },
         { text: "อำเภอ", align: "left", value: "prefecture_name" },
         { text: "จังหวัด", align: "left", value: "province_name" },
-        { text: "ประเภทสถานศึกษา", align: "left", value: "collegetype_name" }, 
-        { text: "เบอร์โทร", align: "left", value: "collegeinfo_phone" }, 
+        { text: "ประเภทสถานศึกษา", align: "left", value: "collegetype_name" },
+        { text: "เบอร์โทร", align: "left", value: "collegeinfo_phone" }
       ],
-      header_branchs: [      
-        { text: "รหัสสาขา", align: "center", value: "id_branch" },              
+      header_branchs: [
+        { text: "รหัสสาขา", align: "center", value: "id_branch" },
         { text: "สาขาวิชา", align: "left", value: "name_branch" },
-        { text: "รายละเอียด", align: "left", value: "detail_branch" },
+        { text: "รายละเอียด", align: "left", value: "detail_branch" }
       ],
-      search: '',
-      search_branch: '',
+      time_ss: [1, 2],
+      year_ss: [2565, 2566, 2567, 2568, 2569, 2570],
+      search: "",
+      search_branch: "",
       pagination: {},
-      ApiKey: 'HRvec2021',
-      
+      ApiKey: "HRvec2021",
+
       rowsperpage: [
         25,
         50,
         100,
         {
           text: "All",
-          value: -1,
-        },
-      ],    
+          value: -1
+        }
+      ],
       personnel_rangChart: {
         data: {
           labels: ["ครูผู้ช่วย", "คศ.1", "คศ.2", "คศ.3", "คศ.4", "คศ.5"],
-          series: [[0, 0, 0, 0, 0, 0]],
+          series: [[0, 0, 0, 0, 0, 0]]
         },
         options: {
           lineSmooth: this.$chartist.Interpolation.cardinal({
-            tension: 0,
+            tension: 0
           }),
           low: 0,
-          high: 5000, 
+          high: 5000,
           chartPadding: {
             top: 0,
             right: 10,
             bottom: 0,
-            left: 0,
-          },
-        },
+            left: 0
+          }
+        }
       },
-     
-     
+
       Personnel_chart: {
         data: {
           labels: [
@@ -306,15 +358,13 @@ export default {
             "รองผู้อำนวยการ",
             "ครู",
             "ครูผู้ช่วย",
-            "ศึกษานิเทศก์",
+            "ศึกษานิเทศก์"
           ],
-          series: [
-            [ 0, 0, 0, 0, 0]
-          ],
+          series: [[0, 0, 0, 0, 0]]
         },
         options: {
           axisX: {
-            showGrid: false,
+            showGrid: false
           },
           low: 0,
           high: 14000,
@@ -322,8 +372,8 @@ export default {
             top: 0,
             right: 5,
             bottom: 0,
-            left: 10,
-          },
+            left: 10
+          }
         },
         responsiveOptions: [
           [
@@ -331,147 +381,181 @@ export default {
             {
               seriesBarDistance: 5,
               axisX: {
-                labelInterpolationFnc: function (value) {
+                labelInterpolationFnc: function(value) {
                   return value[0];
-                },
-
-              },
-            },
-          ],
-        ],
+                }
+              }
+            }
+          ]
+        ]
       },
-           
+
       user: [],
       showAlldata_rang: [],
       colleges: [],
       provinces: [],
-      prefectures: [],        
-      regions: [],     
+      prefectures: [],
+      regions: [],
       region_ena: true,
-      showAlldata: {},    
-      showcollegedata: {},   
-       showbranchdata: [],  
+      showAlldata: {},
+      showcollegedata: {},
+      showbranchdata: [],
+      transference_personnels:[],
+      conditions_transfers:[],
+       times_select: "1",
+      years_select: "2565",
     };
   },
 
- async mounted() {
-      
-    let result
-      result = await this.$http.post('collegetype.php', {
-        ApiKey: this.ApiKey
-      })
-      this.collegetypes = result.data
-      result = await this.$http.post('college.php', {
-        ApiKey: this.ApiKey
-      })
-      
-      this.colleges = result.data
-      result = await this.$http.post('province.php', {
-        ApiKey: this.ApiKey
-      })
-      this.provinces = result.data
-      
-      result = await this.$http.post('region.php', {
-        ApiKey: this.ApiKey
-      })
-      this.regions = result.data 
-    
-  await this.getuser();
-  await this.getAlldata();  
-  await this.getAlldata_rang();  
-  await this.getPersonnelChart();
-  await this.getPersonnel_rangChart();  
-  await this.getAllbranchdata();
-  
-   },
-
-
-  methods: { 
-    async getuser(){
-      let result;
-       let userSession = JSON.parse(sessionStorage.getItem("user")) || 0;
-    result = await this.$http.post("admin.php", {
-      user_name: userSession.user_name,
-      ApiKey: "HRvec2021",
+  async mounted() {
+    let result;
+    result = await this.$http.post("collegetype.php", {
+      ApiKey: this.ApiKey
     });
-    this.user = result.data; 
+    this.collegetypes = result.data;
+    result = await this.$http.post("college.php", {
+      ApiKey: this.ApiKey
+    });
+
+    this.colleges = result.data;
+    result = await this.$http.post("province.php", {
+      ApiKey: this.ApiKey
+    });
+    this.provinces = result.data;
+
+    result = await this.$http.post("region.php", {
+      ApiKey: this.ApiKey
+    });
+    this.regions = result.data;
+
+    await this.getuser();
+    await this.getAlldata();
+    await this.getAlldata_rang();
+    await this.getPersonnelChart();
+    await this.getPersonnel_rangChart();
+    await this.getAllbranchdata();
+  },
+
+  methods: {
+     async searchTimeYear() {    
+      let result = await this.$http
+        .post("transference_personnel.php", {
+          ApiKey: this.ApiKey,
+          time_s: this.times_select,
+          year_s: this.years_select,
+          count_s: 'ok'
+        })       
+      this.transference_personnels = result.data;    
+       
+        let result_con = await this.$http.post('conditions_transfer_admin.php', {
+          ApiKey: this.ApiKey,
+          time_s: this.times_select,
+          year_s: this.years_select,
+            count_s: 'ok'
+        }).finally(() => this.loading = false)
+        this.conditions_transfers = result_con.data
+
+    },
+
+
+    async getuser() {
+      let result;
+      let userSession = JSON.parse(sessionStorage.getItem("user")) || 0;
+      result = await this.$http.post("admin.php", {
+        user_name: userSession.user_name,
+        ApiKey: "HRvec2021"
+      });
+      this.user = result.data;
     },
 
     async getAlldata() {
       let result = await this.$http.post("show_dashboard_all.php");
-      this.showAlldata = result.data;        
-    },   
+      this.showAlldata = result.data;
+    },
 
-     async getAlldata_rang() {
+    async getAlldata_rang() {
       let result = await this.$http.post("show_dachboard_rang.php");
-      this.showAlldata_rang = result.data; 
-    },   
-  
-
-    async getPersonnelChart(){ 
-   this.Personnel_chart.data.series=[[this.num_dr,this.num_se_dr,this.num_se_tech,this.num_se_techprepare,this.num_se_supervision]] 
+      this.showAlldata_rang = result.data;
     },
 
-    async getPersonnel_rangChart(){ 
-   this.personnel_rangChart.data.series=[[this.num_rang_0,this.num_rang_1,this.num_rang_2,this.num_rang_3,this.num_rang_4,this.num_rang_5]] 
+    async getPersonnelChart() {
+      this.Personnel_chart.data.series = [
+        [
+          this.num_dr,
+          this.num_se_dr,
+          this.num_se_tech,
+          this.num_se_techprepare,
+          this.num_se_supervision
+        ]
+      ];
     },
 
+    async getPersonnel_rangChart() {
+      this.personnel_rangChart.data.series = [
+        [
+          this.num_rang_0,
+          this.num_rang_1,
+          this.num_rang_2,
+          this.num_rang_3,
+          this.num_rang_4,
+          this.num_rang_5
+        ]
+      ];
+    },
 
-
-     async getAllbranchdata() {
-      let result = await this.$http.post("branch.php",{
+    async getAllbranchdata() {
+      let result = await this.$http.post("branch.php", {
         ApiKey: this.ApiKey
       });
       this.showbranchdata = result.data;
-    },
+    }
   },
-  computed:{   
- num_dr(){
-      let result = parseInt(this.showAlldata.count_dr)           
-      return result
+  computed: {
+    num_dr() {
+      let result = parseInt(this.showAlldata.count_dr);
+      return result;
     },
-    num_se_dr(){
-      let result = parseInt(this.showAlldata.count_se_dr)           
-      return result
+    num_se_dr() {
+      let result = parseInt(this.showAlldata.count_se_dr);
+      return result;
     },
-     num_se_tech(){
-      let result = parseInt(this.showAlldata.count_tech)           
-      return result
+    num_se_tech() {
+      let result = parseInt(this.showAlldata.count_tech);
+      return result;
     },
-     num_se_techprepare(){
-      let result = parseInt(this.showAlldata.count_perpare)           
-      return result
+    num_se_techprepare() {
+      let result = parseInt(this.showAlldata.count_perpare);
+      return result;
     },
-     num_se_supervision(){
-      let result = parseInt(this.showAlldata.count_supervision)           
-      return result
+    num_se_supervision() {
+      let result = parseInt(this.showAlldata.count_supervision);
+      return result;
     },
 
-     num_rang_0(){
-      let result = parseInt(this.showAlldata_rang.count_rang0)           
-      return result
+    num_rang_0() {
+      let result = parseInt(this.showAlldata_rang.count_rang0);
+      return result;
     },
-    num_rang_1(){
-      let result = parseInt(this.showAlldata_rang.count_rang1)           
-      return result
+    num_rang_1() {
+      let result = parseInt(this.showAlldata_rang.count_rang1);
+      return result;
     },
-    num_rang_2(){
-      let result = parseInt(this.showAlldata_rang.count_rang2)           
-      return result
+    num_rang_2() {
+      let result = parseInt(this.showAlldata_rang.count_rang2);
+      return result;
     },
-    num_rang_3(){
-      let result = parseInt(this.showAlldata_rang.count_rang3)           
-      return result
+    num_rang_3() {
+      let result = parseInt(this.showAlldata_rang.count_rang3);
+      return result;
     },
-    num_rang_4(){
-      let result = parseInt(this.showAlldata_rang.count_rang4)           
-      return result
+    num_rang_4() {
+      let result = parseInt(this.showAlldata_rang.count_rang4);
+      return result;
     },
-    num_rang_5(){
-      let result = parseInt(this.showAlldata_rang.count_rang5)           
-      return result
-    },
-
-  },
+    num_rang_5() {
+      let result = parseInt(this.showAlldata_rang.count_rang5);
+      return result;
+    }
+  }
 };
 </script>

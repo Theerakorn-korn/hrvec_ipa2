@@ -194,6 +194,12 @@ export default new Router({
                         import ('@/views/dashboard/pages/administrator/transference_personnel'),
                 },
                 {
+                    name: 'สายงานการสอนและสายสนับสนุนการสอน รายละเอียด',
+                    path: '/admin/transference_location',
+                    component: () =>
+                        import ('@/views/dashboard/pages/administrator/transference_location'),
+                },
+                {
                     name: 'ข่าวสาร',
                     path: '/admin/news_s',
                     component: () =>
@@ -231,6 +237,8 @@ export default new Router({
                     component: () =>
                         import ('@/views/dashboard/pages/administrator/conditons_transfer_success'),
                 },
+                
+               
                 
                 
                 

@@ -15,8 +15,9 @@
       <div align="center">
        <div class="head"> แบบแสดงความประสงค์ขอย้ายกรณีปกติ ของข้าราชการครูและบุคลากรทางการศึกษา</div>
        <div class="head"> สายการสอนและสายสนับสนุนการสอน สำกัดสำนักงานคณะกรรมการการอาชีวศึกษา</div>
-       <div class="head"> ยื่นครั้งที่ {{ transference_personnels.time_s }} ระหว่างวันที่ {{ day_tims }} {{ transference_personnels.year_s }}</div>
-      <hr>
+       <div class="head"> ยื่นครั้งที่ 1 ระหว่างวันที่ 1-15 กุมภาพันธ์ 2565</div>
+       <span class="white--text" hidden> {{ transference_personnels.time_s }} - {{ day_tims }}- {{ transference_personnels.year_s }}   </span>
+               <hr>
      </div>
      <table border="0" width="100%">
          <tr>
@@ -163,7 +164,7 @@
              <td width="100%" colspan="2"><div class="regular16"><span class="bold16">6. อยู่ระหว่างช่วยปฏิบัติราชการหรือไม่</span>  <input type="checkbox" name="" checked v-if="transference_personnels.service_status ==='not_service'" class="largerCheckbox" disabled> <input type="checkbox" name="" id="" v-else class="largerCheckbox" disabled> ไม่อยู่  <input type="checkbox" name="" id="" checked v-if="transference_personnels.service_status ==='gov_service'" class="largerCheckbox" disabled><input type="checkbox" name="" id="" v-else class="largerCheckbox" disabled> ช่วยปฏิบัติราชการอยู่ที่ </div></td>             
          </tr>
            <tr v-if="transference_personnels.service_status ==='gov_service'">           
-          <td width="100%"><div class="regular16">{{ transference_personnels.college_name || '-'}}</div></td>                
+          <td width="100%"><div class="regular16">{{ transference_personnels.college_name_ser || '-'}}</div></td>                
         </tr>   
            <tr v-if="transference_personnels.service_status ==='gov_service'">           
           <td width="100%"><div class="regular16">เริ่มช่วยปฏิบัติราชการ คำสั่งที่ {{ transference_personnels.ser_order || '-'}}</div></td>                
@@ -310,8 +311,6 @@
              <td width="45%" colspan="2"><div class="regular16 td_line">{{ province_sh_m.province_name || '-'}}</div></td>             
          </tr>            
           </table>
-<br>
-<br>
           <table border="0" width="100%" align="center">
         <tr>            
              <td width="5%" colspan="2"><div class="regular16"></div></td>             
@@ -581,7 +580,8 @@
           <tr>            
              <td width="60%"></td>             
              <td width="40%"><div class="regular16"><span class="regular16">วันที่.............../...................../...................</span></div></td>             
-         </tr>            
+         </tr>  
+               
           </table>
     </div>
   </div>
@@ -850,6 +850,7 @@ return result
           id_ref: this.url_result 
         }).finally(() => this.loading = false)
         this.transference_personnels = result.data 
+        console.log(result.data)
       }, 
 
   async personnel_educationsQueryAll() {  
@@ -1019,7 +1020,7 @@ return result
 
   .head {
     font-family: "TH SarabunIT๙", "TH SarabunPSK", "Angsana New", AngsanaUPC;
-    font-size: 20pt;
+    font-size: 18t;
     font-weight: bold;
   }
 
@@ -1030,29 +1031,29 @@ return result
 
   .regular16 {
     font-family: "TH SarabunIT๙", "TH SarabunPSK", "Angsana New", AngsanaUPC;
-    font-size: 18pt;
+    font-size: 16pt;
   }
 
   .bold16 {
     font-family: "TH SarabunIT๙", "TH SarabunPSK", "Angsana New", AngsanaUPC;
-    font-size: 18pt;
+    font-size: 16pt;
     font-weight: bold;
   }
 
   .blod12 {
     font-family: "TH SarabunIT๙", "TH SarabunPSK", "Angsana New", AngsanaUPC;
-    font-size: 14pt;
+    font-size: 12pt;
     font-weight: bold;
   }
 
   .blackRegula10 {
     font-family: "TH SarabunIT๙", "TH SarabunPSK", "Angsana New", AngsanaUPC;
-    font-size: 12pt;
+    font-size: 10pt;
   }
 
   .blackBold18 {
     font-family: "TH SarabunIT๙", "TH SarabunPSK", "Angsana New", AngsanaUPC;
-    font-size: 20pt;
+    font-size: 18pt;
     font-weight: bold;
   }
 
@@ -1104,23 +1105,23 @@ return result
 
   .head {
     font-family: "TH SarabunIT๙", "TH SarabunPSK", "Angsana New", AngsanaUPC;
-    font-size: 22pt;
+    font-size: 18pt;
     font-weight: bold;
   }
 
   .regular12 {
     font-family: "TH SarabunIT๙", "TH SarabunPSK", "Angsana New", AngsanaUPC;
-    font-size: 16pt;
+    font-size: 12pt;
   }
 
   .regular16 {
     font-family: "TH SarabunIT๙", "TH SarabunPSK", "Angsana New", AngsanaUPC;
-    font-size: 20pt;
+    font-size: 16pt;
   }
 
   .bold16 {
     font-family: "TH SarabunIT๙", "TH SarabunPSK", "Angsana New", AngsanaUPC;
-    font-size: 20pt;
+    font-size: 16pt;
     font-weight: bold;
   }
 
@@ -1137,7 +1138,7 @@ return result
 
   .blackBold18 {
     font-family: "TH SarabunIT๙", "TH SarabunPSK", "Angsana New", AngsanaUPC;
-    font-size: 22pt;
+    font-size: 18pt;
     font-weight: bold;
   }
  

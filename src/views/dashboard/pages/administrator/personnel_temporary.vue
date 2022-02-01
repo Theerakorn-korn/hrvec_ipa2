@@ -76,6 +76,13 @@
             }}
           </template>
 
+           <template v-slot:[`item.date_app_now`]="{ item }">
+                 {{ item.date_app_now| moment("add","543 years") | moment("D MMMM YYYY") }}
+          </template>
+
+
+
+
           <template v-slot:[`item.actions`]="{ item }">
             <v-icon
               color="yellow"
@@ -658,6 +665,23 @@
                         </v-date-picker>
                       </v-menu>
                     </v-flex>
+                     <v-flex md6>
+                    <v-text-field
+                            v-model="editpersonnel_temporary.order_app_now"
+                            label="คำสั่งที่"
+                            prepend-icon="mdi-calendar"                         
+                          ></v-text-field>
+                    </v-flex>
+
+                    <v-flex md6>
+                    <v-text-field
+                            v-model="editpersonnel_temporary.date_app_now"
+                            label="วันเดือนปีที่เริ่มปฏิบัติงาน ณ สถานศึกษาปัจจุบัน"
+                            prepend-icon="mdi-calendar"
+                          type="date"
+                          ></v-text-field>
+                    </v-flex>
+
                     <v-flex md6>
                       <v-text-field
                         label="เบอร์โทร"
@@ -759,6 +783,8 @@ export default {
         { text: "ระดับ", align: "center", value: "rang_level" },
         { text: "วันเดือนปีเกิด", align: "center", value: "brith_day" },
         { text: "วันเดือนปีบรรจุ", align: "center", value: "appoin_day" },
+      { text: "คำสั่งที่", align: "center", value: "order_app_now" },
+        { text: "วันที่ปฏิบัติหน้าที่ ณ สถานศึกษาปัจจุบัน", align: "center", value: "date_app_now" },
         { text: "เกษียณ", align: "center", value: "retrire_year" },
         {
           text: "แก้ไข",

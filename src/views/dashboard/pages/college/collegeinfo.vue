@@ -244,7 +244,7 @@
         ApiKey: 'HRvec2021'
       })
       this.college = result.data     
-    
+    console.log(this.college)
       await this.collegeinfoQuery()
     },
 
@@ -257,8 +257,7 @@
         this.collegeinfo = result.data
       },
       
-    async collegeinfoEditmain(){
-        this.editcollegeinfo = {}       
+    async collegeinfoEditmain(){             
         this.editcollegeinfo.college_ID = this.collegeinfo.college_ID  
         this.editcollegeinfo.ApiKey = this.ApiKey 
         this.editcollegeinfo.collegeinfo_name = this.collegeinfo.collegeinfo_name
@@ -267,6 +266,7 @@
           this.editcollegeinfo.collegeinfo_fax = this.collegeinfo.collegeinfo_fax
           this.editcollegeinfo.collegeinfo_email = this.collegeinfo.collegeinfo_email    
           this.collegeinfodialog1 = true
+          console.log( this.editcollegeinfo)
       },
     
     async  collegeinfoEditpic() {      
