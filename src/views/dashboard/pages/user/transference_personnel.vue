@@ -819,13 +819,16 @@
             v-if="get_gov_Age_year > 0 && user.position_name === 'ครู'"
           >
             <div>
-              <v-row justify="end">
-                ้
-                <h4 class="red--text">
+              <v-row> 
+                     <div class="text-center">
+                       <h3 class="red--text">
                   * เมื่อกดปุ่มบันทึกและยืนยันข้อมูลแล้ว
                   ท่านจะไม่สามารถแก้ไขข้อมูลใดๆ ได้
                   กรุณาตรวจสอบข้อมูลให้ถูกต้องการกดปุ่ม บันทึก
-                </h4>
+                </h3> 
+                <h2 class="success--text"> * เมื่อกดปุ่มบันทึกแล้วจะปรากฎปุ่มสำหรับพิมพ์แบบเสนอขอย้าย</h2> 
+                       </div>     
+                   
               </v-row>
               <v-row>
                 <v-col align="center">

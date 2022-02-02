@@ -7,7 +7,7 @@
       >
         <v-card class="mb-4 pa-2">
           <v-row>
-            <v-col cols="12" md="6" class="text-right">
+            <v-col cols="12" md="4" class="text-right">
               <v-text-field
                 v-model="search"
                 append-icon="mdi-magnify"
@@ -38,17 +38,50 @@
               ></v-select>
             </v-col>
             <v-col cols="12" md="2">
-              <v-btn rounded large block color="success" @click="searchTimeYear()">ค้นหา</v-btn>
+              <v-btn
+                rounded
+                large
+                block
+                color="success"
+                @click="searchTimeYear()"
+                >ค้นหา</v-btn
+              >
             </v-col>
-             <v-col cols="12" md="2">
-              <v-btn rounded large block color="info" to="/admin/process_transfer">ประมวลผลแบบที่ 2 </v-btn>
+            <v-col cols="12" md="2">
+              <v-btn
+                rounded
+                large
+                block
+                color="success"
+                @click="showSuccessPosition()"               
+                >รายการที่สำเร็จแล้ว
+              </v-btn>
             </v-col>
-               <v-col cols="12" md="2">
-              <v-btn  rounded large block color="info" to="/admin/process_transfer_switch">ประมวลผลแบบที่ 3 (สับเปลี่ยนตำแหน่ง) </v-btn>
+            <v-col cols="12" md="2">
+              <v-btn
+                rounded
+                large
+                block
+                color="info"
+                to="/admin/process_transfer"
+                >ประมวลผลแบบที่ 2
+              </v-btn>
             </v-col>
-             <v-col cols="12" md="8" class="text-right">
-               <h1 class="text--right">ประมวลผลแบบที่ 1 </h1>
-                 </v-col>
+            <v-col cols="12" md="2">
+              <v-btn
+                rounded
+                large
+                block
+                color="info"
+                to="/admin/process_transfer_switch"
+                >ประมวลผลแบบที่ 3 (สับเปลี่ยนตำแหน่ง)
+              </v-btn>
+            </v-col>
+            <v-col cols="12" md="8" class="text-right">
+              <h1 class="text--right">ประมวลผลแบบที่ 1</h1>
+              ย้ายครั้งที่ : {{ periods.period_times }} ปี :
+              {{ periods.period_year| moment("add", "543 years")| moment("YYYY")}}
+            </v-col>
           </v-row>
         </v-card>
         <v-data-table
@@ -116,11 +149,6 @@
             >
           </template>
 
-
-
-
-
-
           <v-alert
             slot="no-results"
             :value="true"
@@ -149,22 +177,25 @@
                 <v-container grid-list-md>
                   <v-layout wrap>
                     <v-flex md6>
+
                       <p>
                         รหัสอ้างอิง :
                         {{ transference_personnels_id_ref.id_ref }}
                       </p>
-                      <div>
+
+                       <div class="text--center">
                         รหัสบัตรประชาชน :
                         {{ transference_personnels_id_ref.id_card }}
                         ชื่อ-นามสกุล :
                         {{ transference_personnels_id_ref.title_s
                         }}{{ transference_personnels_id_ref.frist_name }}
                         {{ transference_personnels_id_ref.last_name }}
+
+                        สถานศึกษาปัจจุบัน :
+                        {{ transference_personnels_id_ref.college_name }}
+                        เลขที่ตำแหน่งปัจจุบัน :
+                        {{ transference_personnels_id_ref.id_position }}
                       </div>
-                      สถานศึกษาปัจจุบัน :
-                      {{ transference_personnels_id_ref.college_name }}
-                      เลขที่ตำแหน่งปัจจุบัน :
-                      {{ transference_personnels_id_ref.id_position }}
                     </v-flex>
                     <v-flex md6>
                       <p>
@@ -193,7 +224,6 @@
         </v-dialog>
       </v-layout>
 
-    
       <!-- V-model positiondialog -->
       <v-layout row justify-center>
         <v-dialog v-model="positiondialog" persistent max-width="80%">
@@ -208,22 +238,55 @@
               <v-form ref="updatepositionform" lazy-validation>
                 <v-container>
                   <v-row>
-                    <v-flex md6>
-                      รหัสอ้างอิง : {{ transference_personnels_id_ref.tid_ref }}
-                    </v-flex>
-                    <v-flex md6>
+                    <v-col cols="12" sm="12" md="12">
+                      <h3>
+                        รหัสอ้างอิง :
+                        {{ transference_personnels_id_ref.tid_ref }}
+                      </h3>
                       รหัสบัตรประชาชน :
-                      {{ transference_personnels_id_ref.id_card }} ชื่อ-นามสกุล
-                      : {{ transference_personnels_id_ref.title_s
-                      }}{{ transference_personnels_id_ref.frist_name }}
-                      {{ transference_personnels_id_ref.last_name }}
-                    </v-flex>
-                    <v-flex md6>
-                      สถานศึกษาปัจจุบัน :
-                      {{ transference_personnels_id_ref.college_name }}
-                      เลขที่ตำแหน่งปัจจุบัน :
-                      {{ transference_personnels_id_ref.id_position }}
-                    </v-flex>
+                      {{ transference_personnels_id_ref.id_card }}
+                      <h3>
+                        ชื่อ-นามสกุล :
+                        {{ transference_personnels_id_ref.title_s
+                        }}{{ transference_personnels_id_ref.frist_name }}
+                        {{ transference_personnels_id_ref.last_name }}
+                        สถานศึกษาปัจจุบัน :
+                        {{ transference_personnels_id_ref.college_code }}
+                        {{ transference_personnels_id_ref.college_name }}
+                        เลขที่ตำแหน่งปัจจุบัน :
+                        {{ transference_personnels_id_ref.id_position }}
+                      </h3>
+                      <h4>
+                        ย้ายครั้งที่ : {{ periods.period_times }} ปี :
+                        {{
+                          periods.period_year
+                            | moment("add", "543 years")
+                            | moment("YYYY")
+                        }}
+                      </h4>
+                      <h4>
+                        รอบการย้าย :
+                        {{
+                          periods.period_start
+                            | moment("add", "543 years")
+                            | moment("D MMMM YYYY")
+                        }}
+                        -
+                        {{
+                          periods.period_stop
+                            | moment("add", "543 years")
+                            | moment("D MMMM YYYY")
+                        }}
+                      </h4>
+                      <h4>
+                        คำนวณอายุงาน ณ สถานศึกษาปัจจุบัน โดยใช้วันที่ :
+                        {{
+                          periods.period_cal_end
+                            | moment("add", "543 years")
+                            | moment("D MMMM YYYY")
+                        }}
+                      </h4>
+                    </v-col>
 
                     <v-col cols="12" sm="12" md="12">
                       <v-data-table
@@ -235,53 +298,156 @@
                       >
                       </v-data-table>
                     </v-col>
-                  </v-row>
-                  <v-layout wrap>
-                    <v-flex md12>
-                      <v-autocomplete
-                        :items="branch_s"
-                        item-text="name_branch"
-                        item-value="id_branch"
-                        outlined
-                        label="สาขาวิชา :"
-                        prepend-icon="mdi-account-details"
-                        request
-                        v-model="updatepositions.id_branch"
-                        :rules="[v => !!v || '']"
-                      ></v-autocomplete>
-                    </v-flex>
+                    <v-col cols="12" md="12">
+                      <v-card elevation="2" class="pa-2">
+                        <h2>
+                          เหตุผลในการย้าย :
+                        </h2>
 
-                    <v-flex xs12>
-                      <v-autocomplete
-                        prepend-icon="mdi-account-details"
-                        :items="colleges"
-                        item-text="college_name"
-                        item-value="college_code"
-                        v-model="updatepositions.college_code"
-                        label="วิทยาลัย"
-                        @change="man_powerQuery()"
-                        required
-                        :rules="[v => !!v || '']"
-                        outlined
-                      >
-                      </v-autocomplete>
-                    </v-flex>
-                    <v-flex md12>
-                      <v-autocomplete
-                        prepend-icon="mdi-account-details"
-                        :items="man_powers"
-                        item-text="college_position_case"
-                        item-value="id_position"
-                        label="เลขที่ตำแหน่ง"
-                        v-model="updatepositions.id_position"
-                        outlined
-                        required
-                        :rules="[v => !!v || '']"
-                      ></v-autocomplete>
-                    </v-flex>
-                  </v-layout>
+                        <div
+                          v-if="transference_personnels_id_ref.reason_1 === '1'"
+                        >
+                          <v-alert
+                            border="left"
+                            colored-border
+                            type="info"
+                            elevation="2"
+                          >
+                            <h3>ย้ายเพื่ออยู่ร่วมคู่สมรส</h3>
+                            <h4>
+                              คู่สมรสชื่อ :
+                              {{
+                                transference_personnels_id_ref.reason_1_spouse ||
+                                  "-"
+                              }}
+                              คู่สมรสประกอบอาชีพ :
+                              {{
+                                transference_personnels_id_ref.reason_1_occupation ||
+                                  "-"
+                              }}
+                              สถานที่ประกอบอาชีพของคู่สมรส :
+                              {{
+                                transference_personnels_id_ref.reason_1_location ||
+                                  "-"
+                              }}
+                              ภูมิลำเนาของคู่สมรส จังหวัด
+                              {{ transference_personnels_id_ref.r1_province }}
+                            </h4>
+                          </v-alert>
+                        </div>
+
+                        <div
+                          v-if="transference_personnels_id_ref.reason_2 === '1'"
+                        >
+                          <v-alert
+                            border="left"
+                            colored-border
+                            type="info"
+                            elevation="2"
+                          >
+                            <h3>ย้ายเพื่ออยู่ดูแลบิดา มารดา</h3>
+                            <h4>
+                              อายุของบิดา :
+                              {{
+                                transference_personnels_id_ref.reason_2_fyear ||
+                                  "-"
+                              }}
+                              ปี อายุของมารดา :
+                              {{
+                                transference_personnels_id_ref.reason_2_myear ||
+                                  "-"
+                              }}
+                              ปี ภูมิลำเนาของบิดา มารดา จังหวัด :
+                              {{ transference_personnels_id_ref.r2_province }}
+                            </h4>
+                          </v-alert>
+                        </div>
+                        <div
+                          v-if="transference_personnels_id_ref.reason_3 === '1'"
+                        >
+                          <v-alert
+                            border="left"
+                            colored-border
+                            type="info"
+                            elevation="2"
+                          >
+                            <h3>ย้ายกลับภูมิลำเนา</h3>
+
+                            <h4>
+                              จังหวัด :
+                              {{ transference_personnels_id_ref.r3_province }}
+                            </h4>
+                          </v-alert>
+                        </div>
+                        <div
+                          v-if="transference_personnels_id_ref.reason_4 === '1'"
+                        >
+                          <v-alert
+                            border="left"
+                            colored-border
+                            type="info"
+                            elevation="2"
+                          >
+                            <h3>
+                              เหตุผลอื่น ๆ :
+                            </h3>
+                            <h4>
+                              {{
+                                transference_personnels_id_ref.reason_4_detail
+                              }}
+                            </h4>
+                          </v-alert>
+                        </div>
+                      </v-card>
+                    </v-col>
+                  </v-row>
+                  <v-col cols="12" md="12">
+                    <v-card elevation="2" class="pa-2">
+                      <v-flex md12>
+                        <v-autocomplete
+                          :items="branch_s"
+                          item-text="name_branch"
+                          item-value="id_branch"
+                          outlined
+                          label="สาขาวิชา :"
+                          prepend-icon="mdi-account-details"
+                          request
+                          v-model="updatepositions.id_branch"
+                          :rules="[v => !!v || '']"
+                        ></v-autocomplete>
+                      </v-flex>
+
+                      <v-flex xs12>
+                        <v-autocomplete
+                          prepend-icon="mdi-account-details"
+                          :items="colleges"
+                          item-text="college_name"
+                          item-value="college_code"
+                          v-model="updatepositions.college_code"
+                          label="วิทยาลัย"
+                          @change="man_powerQuery()"
+                          required
+                          :rules="[v => !!v || '']"
+                          outlined
+                        >
+                        </v-autocomplete>
+                      </v-flex>
+                      <v-flex md12>
+                        <v-autocomplete
+                          prepend-icon="mdi-account-details"
+                          :items="man_powers"
+                          item-text="college_position_case"
+                          item-value="id_position"
+                          label="เลขที่ตำแหน่ง"
+                          v-model="updatepositions.id_position"
+                          outlined
+                          required
+                          :rules="[v => !!v || '']"
+                        ></v-autocomplete>
+                      </v-flex>
+                    </v-card>
+                  </v-col>
                 </v-container>
-                <small>* จำเป็น</small>
               </v-form>
             </v-card-text>
             <v-card-actions>
@@ -327,6 +493,7 @@ export default {
     return {
       loading: true,
       ApiKey: "HRvec2021",
+      position: "ครู",
       branch_s: [],
       tid_ref: [],
       valid: true,
@@ -353,14 +520,15 @@ export default {
       headers: [
         /*  { text: "อ้างอิง", align: "center", value: "tid_ref" }, */
         { text: "รหัสบัตรประชาชน", align: "center", value: "id_card" },
-        { text: "ชื่อ-นามสกุล", align: "center", value: "title_s" },
-        { text: "สถานศึกษาปัจจุบัน", align: "center", value: "college_name" },
+        { text: "ชื่อ-นามสกุล", align: "left", value: "title_s" },
+        { text: "สถานศึกษาปัจจุบัน", align: "left", value: "college_name" },
+        { text: "เลขที่ตำแหน่งเดิม", align: "left", value: "id_position" },
         { text: "ครั้งที่/ปี", align: "center", value: "time_ss" },
         { text: "อายุงาน ณ ปัจจุบัน", align: "center", value: "age_app_time" },
         { text: "วันที่ทำรายการ", align: "center", value: "date_time" },
         { text: "แห่งใหม่", align: "center", value: "succ_college" },
         { text: "วิทยาลัยแห่งใหม่", align: "left", value: "college_name_suss" },
-        { text: "เลขที่", align: "left", value: "id_position_new" },
+        { text: "เลขที่ตำแหน่งใหม่", align: "left", value: "id_position_new" },
         { text: "ย้ายแบบที่ 1", align: "center", value: "actions" }
       ],
 
@@ -368,8 +536,7 @@ export default {
         { text: "ลำดับ", align: "center", value: "sequence_n" },
         { text: "รหัสอ้างอิง", align: "center", value: "id_ref" },
         { text: "สาขาวิชา", align: "center", value: "name_branch" },
-        { text: "วิทยาลัย", align: "left", value: "college_name" },
-        { text: "เลือก", align: "center", value: "action" }
+        { text: "วิทยาลัย", align: "left", value: "college_name" }
       ],
       rowsperpage: [
         25,
@@ -384,16 +551,21 @@ export default {
       transference_personnels_id_ref: [],
       conditons_transfer_successs: [],
       updatepositions_condition: {},
+      man_power_cancel:{},
+      addreturn_man_power: {},
       transference_locations: [],
       conditons_transfer_success_del: [],
       man_powers: [],
       userstatus: {},
       updatepositions: {},
       man_powerss: [],
+      id_return_man_powers:[],
       colleges: [],
       data_select: [],
       provinces: [],
-      regions: []
+      regions: [],
+      periods: [],
+      period_enable: "1"
     };
   },
   async mounted() {
@@ -424,8 +596,18 @@ export default {
     this.regions = result.data;
 
     this.transference_personnelQueryAll();
+    this.periodQuery();
   },
   methods: {
+    async periodQuery() {
+      let result_period;
+      result_period = await this.$http.post("period.php", {
+        ApiKey: this.ApiKey,
+        period_enable: this.period_enable
+      });
+      this.periods = result_period.data;
+    },
+
     async searchTimeYear() {
       this.loading = true;
       let result = await this.$http
@@ -433,6 +615,19 @@ export default {
           ApiKey: this.ApiKey,
           time_s: this.times_select,
           year_s: this.years_select
+        })
+        .finally(() => (this.loading = false));
+      this.transference_personnels = result.data;
+    },
+
+    async showSuccessPosition() {
+      this.loading = true;
+      let result = await this.$http
+        .post("transference_personnel.php", {
+          ApiKey: this.ApiKey,
+          time_s: this.times_select,
+          year_s: this.years_select,
+          success_s: 'ok',
         })
         .finally(() => (this.loading = false));
       this.transference_personnels = result.data;
@@ -483,33 +678,39 @@ export default {
         this.updatepositions.id_postion_old = this.transference_personnels_id_ref.id_position;
         this.updatepositions.id_card = this.transference_personnels_id_ref.id_card;
         this.updatepositions.id_ref = this.transference_personnels_id_ref.tid_ref;
-        this.updatepositions.name_position = "ครู";
-
-        // transference_personnels_id_ref.id_position
+        this.updatepositions.name_position = this.position;
 
         this.updatepositions_condition.ApiKey = this.ApiKey;
         this.updatepositions_condition.id_position = this.updatepositions.id_position;
         this.updatepositions_condition.status_booking = this.transference_personnels_id_ref.id_card;
 
-        console.log(this.updatepositions);
-        console.log(this.updatepositions_condition);
+        this.addreturn_man_power.ApiKey = this.ApiKey;
+        this.addreturn_man_power.college_code = this.transference_personnels_id_ref.college_code;
+        this.addreturn_man_power.id_position = this.transference_personnels_id_ref.id_position;        
+        this.addreturn_man_power.position = this.position;
+        this.addreturn_man_power.case_vacancy = 'ย้ายรอบ-' + this.periods.period_times + '/' + this.period_years;
+       
+        let result_man_return = await this.$http.post('man_power.insert.php', this.addreturn_man_power) 
+       
+        if (result_man_return.data.status == true) {
+          let result_man = await this.$http.post(
+            "man_power.update_process.php",
+            this.updatepositions_condition
+          );
+          
 
-        let result_man = await this.$http.post(
-          "man_power.update_process.php",
-          this.updatepositions_condition
-        );
-        
-        let result = await this.$http.post(
-          "conditons_transfer_success.insert.php",
-          this.updatepositions
-        );
+          let result = await this.$http.post(
+            "conditons_transfer_success.insert.php",
+            this.updatepositions
+          );
 
-        if (result_man.data.status == true && result.data.status == true) {
-          this.snackbar.icon = "mdi-font-awesome";
-          this.snackbar.color = "success";
-          this.snackbar.text = "บันทึกข้อมูลเรียบร้อย";
-          this.snackbar.show = true;
-          this.transference_personnelQueryAll();
+          if (result_man.data.status == true && result.data.status == true) {
+            this.snackbar.icon = "mdi-font-awesome";
+            this.snackbar.color = "success";
+            this.snackbar.text = "บันทึกข้อมูลเรียบร้อย";
+            this.snackbar.show = true;
+            this.transference_personnelQueryAll();
+          }
         } else {
           this.snackbar.icon = "mdi-close-network";
           this.snackbar.color = "red";
@@ -521,11 +722,11 @@ export default {
     },
 
     async deletePosition(id_ref) {
+
       let result_con = await this.$http.post("transference_personnel.php", {
         ApiKey: this.ApiKey,
         id_ref: id_ref
       });
-
       this.transference_personnels_id_ref = result_con.data;
 
       let result_man = await this.$http.post("man_power.php", {
@@ -533,7 +734,7 @@ export default {
         id_card: this.transference_personnels_id_ref.id_card
       });
       this.man_powerss = result_man.data;
-
+      
       let result_cts = await this.$http.post("conditons_transfer_success.php", {
         ApiKey: this.ApiKey,
         id_ref: id_ref
@@ -547,17 +748,29 @@ export default {
       if (this.$refs.cancelform.validate()) {
         this.man_powerss.ApiKey = this.ApiKey;
         this.man_powerss.status_booking = "";
+
         this.conditons_transfer_successs.ApiKey = this.ApiKey;
+
+        this.man_power_cancel.ApiKey = this.ApiKey;
+        this.man_power_cancel.id_position = this.conditons_transfer_successs.id_postion_old;
+        
+       
         let result_man = await this.$http.post(
           "man_power.update_process.php",
           this.man_powerss
         );
+
+         let result_man_delete = await this.$http.post(
+          "man_power.delete.php",
+          this.man_power_cancel
+        );
+
         let result_cts = await this.$http.post(
           "conditons_transfer_success.delete.php",
           this.conditons_transfer_successs
         );
 
-        if (result_man.data.status == true && result_cts.data.status == true) {
+        if (result_man.data.status == true && result_cts.data.status == true && result_man_delete.data.status == true) {
           this.snackbar.icon = "mdi-font-awesome";
           this.snackbar.color = "success";
           this.snackbar.text = "ยกเลิกข้อมูลเรียบร้อย";
@@ -573,7 +786,6 @@ export default {
       }
     },
 
-   
     getColor(calories) {
       /*  if (calories > 400) return 'red'
         else if (calories > 200) return 'orange'
@@ -594,6 +806,10 @@ export default {
       return Math.ceil(
         this.pagination.totalItems / this.pagination.rowsPerPage
       );
+    },
+    period_years() {
+      let yyyy = parseInt(this.periods.period_year) + 543;
+      return yyyy;
     }
   }
 };

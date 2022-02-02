@@ -41,7 +41,7 @@
               <v-btn rounded large block color="success" @click="searchTimeYear()">ค้นหา</v-btn>
             </v-col>
              <v-col cols="12" md="2">
-              <v-btn rounded large block color="info" to="/admin/transference_location">ประมวลผลแบบที่ 1 </v-btn>
+              <v-btn rounded large block color="info" to="/admin/transference_personnel">ประมวลผลแบบที่ 1 </v-btn>
             </v-col>
              <v-col cols="12" md="2">
               <v-btn rounded large block color="info" to="/admin/process_transfer">ประมวลผลแบบที่ 2 </v-btn>

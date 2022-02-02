@@ -37,7 +37,7 @@
               <v-col cols="12" md="7">
                 <v-alert border="top" colored-border type="info" elevation="2">
                 <h2>จำนวนวิทยาลัยที่ดำเนินการ : {{ conditions_transfers.count_condition }} แห่ง</h2>
-                <h2>ผู้ยืนย้ายจำนวน : {{ transference_personnels.count_personnel }} คน</h2>
+                <h2>ผู้ยื่นย้ายจำนวน : {{ transference_personnels.count_personnel }} คน</h2>
                 </v-alert></v-col
               >
             </v-row>

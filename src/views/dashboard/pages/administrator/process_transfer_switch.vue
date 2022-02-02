@@ -10,6 +10,19 @@
 
         <v-card class="ma-2 pa-2">
           <v-row>
+             <v-col cols="12" md="4" class="text-right">
+              <v-text-field
+                v-model="search"
+                append-icon="mdi-magnify"
+                label="ค้นหา ระบุคำ หรือ ส่วนข้อความเกี่ยวข้อง"
+                single-line
+                hide-details
+                dense
+                filled
+                class="mb-2"
+              />
+            </v-col>
+            
             <v-col class="d-flex" cols="12" md="2">
               <v-select
                 v-model="times_s"
@@ -40,14 +53,28 @@
               >
             </v-col>
             <v-col cols="12" md="2">
-              <v-btn rounded large block color="info" to="/admin/transference_personnel">ประมวลผลแบบที่ 1 </v-btn>
+              <v-btn
+                rounded
+                large
+                block
+                color="info"
+                to="/admin/transference_personnel"
+                >ประมวลผลแบบที่ 1
+              </v-btn>
             </v-col>
-               <v-col cols="12" md="2">
-              <v-btn  rounded large block color="info" to="/admin/process_transfer">ประมวลผลแบบที่ 2 </v-btn>
+            <v-col cols="12" md="2">
+              <v-btn
+                rounded
+                large
+                block
+                color="info"
+                to="/admin/process_transfer"
+                >ประมวลผลแบบที่ 2
+              </v-btn>
             </v-col>
             <v-col cols="12" md="2" class="text-right">
-               <h1 class="text--right">ประมวลผลแบบที่ 3 </h1>
-                 </v-col>
+              <h1 class="text--right">ประมวลผลแบบที่ 3</h1>
+            </v-col>
           </v-row>
         </v-card>
 
@@ -71,7 +98,7 @@
             </template>
 
             <template v-slot:[`item.title_sb`]="{ item }">
-              <v-chip color="warning" dark>
+              <v-chip color="info" dark>
                 <span style="font-size:16px;">
                   {{
                     item.title_sb + item.frist_nameb + " " + item.last_nameb
@@ -80,13 +107,11 @@
               </v-chip>
             </template>
 
-            
-             <template v-slot:[`item.college_namea`]="{ item }">
+            <template v-slot:[`item.college_namea`]="{ item }">
               <v-chip color="warning" dark>
                 <span style="font-size:16px;"> {{ item.college_namea }}</span>
               </v-chip>
             </template>
-
 
             <template v-slot:[`item.college_name`]="{ item }">
               <v-chip color="warning" dark>
@@ -94,10 +119,10 @@
               </v-chip>
             </template>
 
-            <template v-slot:[`item.college_name_now`]="{ item }">
-              <v-chip color="warning" dark>
+            <template v-slot:[`item.college_nameb`]="{ item }">
+              <v-chip color="info" dark>
                 <span style="font-size:16px;">
-                  {{ item.college_name_now }}</span
+                  {{ item.college_nameb }}</span
                 >
               </v-chip>
             </template>
@@ -407,9 +432,9 @@ export default {
       ApiKey: "HRvec2021",
       process_transfer: {},
       valid: true,
-      times_s: "", 
+      times_s: "",
       year_s: "",
-           row: null,
+      row: null,
       man_powers: [],
       man_powers: [],
       snackbar: {
@@ -427,13 +452,11 @@ export default {
         { text: "วิทยาลัย A", align: "left", value: "college_namea" },
         { text: "สถานะ", align: "center", value: "status_process" },
         { text: "ID B", align: "left", value: "id_cardb" },
-        { text: "ชื่อ-นามสกุล", align: "center", value: "title_sb" },
+        { text: "ชื่อ-นามสกุล", align: "left", value: "title_sb" },
         { text: "วิทยาลัย B", align: "left", value: "college_nameb" },
 
-        
         { text: "คะแนน", align: "center", value: "point_s" },
-        { text: "อายุงาน ณ ปัจจบัน", align: "center", value: "age_app_time" },
-        { text: "สังกัด", align: "center", value: "college_name_now" },
+        { text: "อายุงาน ณ ปัจจบัน", align: "center", value: "age_app_time" },       
         {
           text: "เลขที่ตำแหน่ง",
           align: "center",
@@ -479,7 +502,7 @@ export default {
 
   async mounted() {
     //await this.conditions_transferQueryAll();
-    await this.Switch_personnelAll()
+    await this.Switch_personnelAll();
     await this.period_QueryAll();
     await this.man_powerQuery();
   },
@@ -504,13 +527,13 @@ export default {
         college_code: college_code
       });
       this.man_powers = man_power_result.data;
-    },    
+    },
 
-async Switch_personnelAll() {
+    async Switch_personnelAll() {
       this.loading = true;
       let result = await this.$http
         .post("process_transfer.php", {
-          ApiKey: this.ApiKey,      
+          ApiKey: this.ApiKey,
           switchs: "Ok"
         })
         .finally(() => (this.loading = false));

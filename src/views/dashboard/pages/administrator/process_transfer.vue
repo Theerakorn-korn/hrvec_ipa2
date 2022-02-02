@@ -8,6 +8,18 @@
 
         <v-card class="ma-2 pa-2">
           <v-row>
+             <v-col cols="12" md="4" class="text-right">
+              <v-text-field
+                v-model="search"
+                append-icon="mdi-magnify"
+                label="ค้นหา ระบุคำ หรือ ส่วนข้อความเกี่ยวข้อง"
+                single-line
+                hide-details
+                dense
+                filled
+                class="mb-2"
+              />
+            </v-col>
             <v-col class="d-flex" cols="12" md="2">
               <v-select
                 v-model="times_s"
@@ -24,7 +36,7 @@
                 label="ปี :"
               ></v-select>
             </v-col>
-            <v-col class="d-flex" cols="12" md="5">
+            <v-col class="d-flex" cols="12" md="2">
               <v-radio-group v-model="row" row>
                 <v-radio label="สถานะ 1 : 1" @click="OnetoOne()"></v-radio>
                 <v-radio
@@ -33,7 +45,7 @@
                 ></v-radio>
               </v-radio-group>
             </v-col>
-            <v-col class="d-flex" cols="12" md="3">
+            <v-col class="d-flex" cols="12" md="2">
               <v-btn
                 elevation="2"
                 rounded
@@ -68,35 +80,8 @@
                 >ประมวลผลแบบที่ 3 (สับเปลี่ยนตำแหน่ง)
               </v-btn>
             </v-col>
-            <v-col class="d-flex" cols="12" md="3">
-              <v-btn
-                elevation="2"
-                rounded
-                color="warning"
-                dark
-                x-large
-                block
-                @click="transference_locationDelete()"
-                ><v-icon>mdi-format-clear</v-icon>
-                ลบข้อมูลการย้ายที่ไม่ได้กดบันทึกเสนอ</v-btn
-              >
-            </v-col>
 
-            <v-col class="d-flex" cols="12" md="3">
-              <v-btn
-                elevation="2"
-                rounded
-                color="info"
-                dark
-                x-large
-                block
-                :href="'#/admin/print_report_movement/' + times_s + year_s"
-                target="_blank"
-                ><v-icon>mdi-printer</v-icon> พิมพ์คำสั่ง
-                แต่งตั้งผู้รักษาการในตำแหน่ง</v-btn
-              >
-            </v-col>
-            <v-col cols="12" md="2" class="text-right">
+            <v-col cols="12" md="8" class="text-center">
               <h1 class="text--right">ประมวลผลแบบที่ 2</h1>
             </v-col>
           </v-row>
@@ -109,7 +94,7 @@
             :headers="headers"
             :items="conditions_transfers"
             :search="search"
-            :items-per-page="20"
+            :items-per-page="20"          
           >
             <template v-slot:[`item.college_name`]="{ item }">
               <v-chip color="warning" dark>
@@ -184,6 +169,17 @@
               </v-chip>
             </template>
 
+             <template v-slot:[`item.college_name_suss`]="{ item }">
+            <v-chip v-if="item.college_name_suss === ''"> </v-chip>
+            <v-chip
+              v-else-if="item.college_name_suss !== ''"
+              color="green"
+              dark
+            >
+              <span style="font-size:16px;"> {{ item.college_name_suss }}</span>
+            </v-chip>
+          </template>
+
             <template v-slot:[`item.id_postion_susss`]="{ item }">
               <v-chip :color="getColor(item.id_postion_susss)" dark>
                 <span style="font-size:16px;">
@@ -200,6 +196,35 @@
               >ไม่พบผลลัพธ์ "{{ search }}" ที่คุณกำลังค้นหา.</v-alert
             >
           </v-data-table>
+        </v-card>
+        <v-card class="ma-2 pa-2">
+          <v-row>
+            <v-col class="d-flex" cols="12" md="12">
+              <v-btn
+                class="ma-1"
+                elevation="2"
+                rounded
+                color="warning"
+                dark
+                x-large
+                @click="transference_locationDelete()"
+                ><v-icon>mdi-format-clear</v-icon>
+                ลบข้อมูลการย้ายที่ไม่ได้กดบันทึกเสนอ</v-btn
+              >
+               <v-btn
+                class="ma-1"
+                elevation="2"
+                rounded
+                color="info"
+                dark
+                x-large
+                :href="'#/admin/print_report_movement/' + times_s + year_s"
+                target="_blank"
+                ><v-icon>mdi-printer</v-icon> พิมพ์คำสั่ง
+                แต่งตั้งผู้รักษาการในตำแหน่ง</v-btn
+              >
+            </v-col>
+          </v-row>
         </v-card>
       </v-card>
 
@@ -329,7 +354,7 @@
                     <v-col cols="12" sm="6" md="6">
                       <v-card elevation="2" class="pa-2">
                         <h2>
-                          สถานศึกษา : {{ transference_locations.college_name }}
+                          สถานศึกษาแห่งใหม่ : {{ transference_locations.college_name }}
                         </h2>
                         <h4>
                           รหัสสาขาวิชาเอก : {{ conditions_branchs.id_branch }}
@@ -378,51 +403,58 @@
                             type="info"
                             elevation="2"
                           >
-                          <h3>ย้ายเพื่ออยู่ร่วมคู่สมรส</h3>
-                            คู่สมรสชื่อ : {{ transference_personnels.reason_1_spouse }}
-                           คู่สมรสประกอบอาชีพ : {{ transference_personnels.reason_1_occupation }}
-                           สถานที่ประกอบอาชีพของคู่สมรส : {{ transference_personnels.reason_1_location }}
-                           ภูมิลำเนาของคู่สมรส จังหวัด {{ transference_personnels.r1_province }}
+                            <h3>ย้ายเพื่ออยู่ร่วมคู่สมรส</h3>
+                            คู่สมรสชื่อ :
+                            {{ transference_personnels.reason_1_spouse }}
+                            คู่สมรสประกอบอาชีพ :
+                            {{ transference_personnels.reason_1_occupation }}
+                            สถานที่ประกอบอาชีพของคู่สมรส :
+                            {{ transference_personnels.reason_1_location }}
+                            ภูมิลำเนาของคู่สมรส จังหวัด
+                            {{ transference_personnels.r1_province }}
                           </v-alert>
                         </div>
 
                         <div v-if="transference_personnels.reason_2 === '1'">
-                            <v-alert
+                          <v-alert
                             border="left"
                             colored-border
                             type="info"
                             elevation="2"
                           >
-                           <h3>ย้ายเพื่ออยู่ดูแลบิดา มารดา</h3>                    
-                           อายุของบิดา : {{ transference_personnels.reason_2_fyear }} ปี
-                           อายุของมารดา : {{ transference_personnels.reason_2_myear }} ปี
-                           ภูมิลำเนาของบิดา มารดา จังหวัด : {{ transference_personnels.r2_province }}
-                            </v-alert>
+                            <h3>ย้ายเพื่ออยู่ดูแลบิดา มารดา</h3>
+                            อายุของบิดา :
+                            {{ transference_personnels.reason_2_fyear }} ปี
+                            อายุของมารดา :
+                            {{ transference_personnels.reason_2_myear }} ปี
+                            ภูมิลำเนาของบิดา มารดา จังหวัด :
+                            {{ transference_personnels.r2_province }}
+                          </v-alert>
                         </div>
                         <div v-if="transference_personnels.reason_3 === '1'">
-                            <v-alert
+                          <v-alert
                             border="left"
                             colored-border
                             type="info"
                             elevation="2"
                           >
-                          <h3>ย้ายกลับภูมิลำเนา</h3> 
-                           
-                           จังหวัด :  {{ transference_personnels.r3_province }}
-                            </v-alert>
+                            <h3>ย้ายกลับภูมิลำเนา</h3>
+
+                            จังหวัด : {{ transference_personnels.r3_province }}
+                          </v-alert>
                         </div>
                         <div v-if="transference_personnels.reason_4 === '1'">
-                           <v-alert
+                          <v-alert
                             border="left"
                             colored-border
                             type="info"
                             elevation="2"
                           >
                             <h3>
-                              เหตุผลอื่น ๆ :                             
+                              เหตุผลอื่น ๆ :
                             </h3>
-                             {{ transference_personnels.reason_4_detail }}
-                           </v-alert>
+                            {{ transference_personnels.reason_4_detail }}
+                          </v-alert>
                         </div>
                       </v-card>
                     </v-col>
@@ -504,7 +536,7 @@ export default {
         text: ""
       },
       headers: [
-        { text: "สถานศึกษาแห่งใหม่", align: "left", value: "college_name" },
+        { text: "สถานศึกษาที่ประสงค์", align: "left", value: "college_name" },
         { text: "รหัส", align: "left", value: "id_branch" },
         { text: "สาขา", align: "left", value: "name_branch" },
         {
@@ -518,10 +550,11 @@ export default {
         { text: "สถานะ", align: "center", value: "status_process" },
         { text: "ลำดับที่", align: "center", value: "sequence_n" },
         { text: "วุฒิ", align: "center", value: "personnel_edu" },
+        { text: "ID Card", align: "center", value: "id_card" },
         { text: "ชื่อ-นามสกุล", align: "center", value: "personnel_name" },
         { text: "คะแนน", align: "center", value: "point_s" },
         { text: "อายุงาน ณ ปัจจบัน", align: "center", value: "age_app_time" },
-        { text: "สังกัด", align: "center", value: "college_name_now" },
+        { text: "สถานศึกษาปัจจุบัน", align: "center", value: "college_name_now" },
         {
           text: "เลขที่ตำแหน่ง",
           align: "center",
@@ -529,11 +562,11 @@ export default {
           icon: "mdi-file-document-edit"
         },
         { text: "แห่งใหม่", align: "center", value: "college_code_susss" },
-        /*  {
+         {
           text: "สถานศึกษาแห่งใหม่",
           align: "center",
           value: "college_name_suss"
-        }, */
+        },
         { text: "เลขที่", align: "center", value: "id_postion_susss" }
       ],
       search: "",
