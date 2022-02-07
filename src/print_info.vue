@@ -220,7 +220,7 @@
              <tr>
             <td width="5%"></td>
             <td width="55%" colspan="2"><div class="regular16">9.4 ขอย้ายสับเปลี่ยนตำแหน่งกับ (นาย/นาง/นางสาว)</div></td>   
-            <td width="40%" colspan="2"><div class="regular16 td_line"> {{ personnel_temporarys_switch.title_s + personnel_temporarys_switch.frist_name + personnel_temporarys_switch.last_name || '-'}} {{ personnel_temporarys_switch.last_name || '-'}}</div></td>   
+            <td width="40%" colspan="2"><div class="regular16 td_line"> {{ personnel_temporarys_switch.title_s || ''}}{{ personnel_temporarys_switch.frist_name || ''}} {{ personnel_temporarys_switch.last_name || ''}} </div></td>   
         </tr>
           </table>
          <table border="0" width="100%" align="center">
@@ -236,9 +236,9 @@
         <tr>
             <td width="5%"></td>
             <td width="15%"><div class="regular16">เลขที่ตำแหน่ง</div></td>          
-            <td width="20%"><div class="regular16 td_line">{{ personnel_temporarys_switch.rang_name || '-'}}</div></td>          
+            <td width="20%"><div class="regular16 td_line">{{ personnel_temporarys_switch.id_position || '-'}}</div></td>          
             <td width="20%"><div class="regular16">สังกัด (สถานศึกษา)</div></td>     
-            <td width="40%"><div class="regular16 td_line">{{ personnel_temporarys_switch.rang_name || '-'}}</div></td>     
+            <td width="40%"><div class="regular16 td_line">{{ personnel_temporarys_switch.college_name || '-'}}</div></td>     
         </tr>
           </table>
         <table border="0" width="100%" align="center">

@@ -129,6 +129,7 @@
 export default {  
   data() {
     return {
+    
     loading: true,       
      ApiKey: 'HRvec2021',
       valid: true,     
@@ -147,6 +148,7 @@ export default {
       headers: [
         { text: "ลำดับ", align: "center", value: "id_rc" },                
         { text: "รหัสสถานศึกษา", align: "center", value: "college_code" }, 
+        { text: "ID Card", align: "center", value: "id_card" }, 
         { text: "ชื่อ", align: "center", value: "frist_name" },         
         { text: "นามสกุล", align: "center", value: "last_name" },         
         { text: "สถานะ", align: "center", value: "user_status" },  

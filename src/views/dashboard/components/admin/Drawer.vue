@@ -141,7 +141,7 @@ export default {
         action: "mdi-order-bool-descending-variant",
         items: [
           { title: "สาขาวิชาเอก", action: "mdi-basket-plus", to: "/admin/branch" },        
-          { title: "ข้อมูลเงือนไขสาขาวิชาเอก", action: "mdi-basket-plus", to: "/admin/conditions_transfer" },        
+          { title: "ข้อมูลเงื่อนไขสาขาวิชาเอก", action: "mdi-basket-plus", to: "/admin/conditions_transfer" },        
           { title: "สถิติเงือนไขสาขาวิชา", action: "mdi-chart-box-outline", to: "" },        
         ],
         title: "ระบบเงือนไขสาขาวิชาเอก",

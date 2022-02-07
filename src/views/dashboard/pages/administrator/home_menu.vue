@@ -515,11 +515,16 @@ export default {
           icon: "mdi-chart-box-outline",
           to: "/admin/process_transfer"
         },
+          {
+          text: "ประมวลผลการย้าย สับเปลี่ยน แบบปกติ]",
+          icon: "mdi-chart-box-outline",
+          to: "/admin/process_transfer_switch_normal"
+        },
          {
           text: "ประมวลผลการย้าย [ประมวลผลแบบ 3 สับเปลี่ยน]",
           icon: "mdi-chart-box-outline",
           to: "/admin/process_transfer_switch"
-        },
+        },            
         {
           text: "สรุปผลการย้าย",
           icon: "mdi-chart-box-outline",

@@ -180,13 +180,13 @@ export default {
         action: "mdi-order-bool-descending-variant",
         items: [
           {
-            title: "ข้อมูลเงือนไขสาขาวิชาเอก",
+            title: "ข้อมูลเงื่อนไขสาขาวิชาเอก",
             action: "mdi-basket-plus",
             to: "/college/conditions_branch"
           }
-          /*   { title: "สถิติเงือนไขสาขาวิชา", action: "mdi-chart-box-outline", to: "/Dashboard" },    */
+          /*   { title: "สถิติเงื่อนไขสาขาวิชา", action: "mdi-chart-box-outline", to: "/Dashboard" },    */
         ],
-        title: "ระบบเงือนไขสาขาวิชาเอก"
+        title: "ระบบเงื่อนไขสาขาวิชาเอก"
       }
       /*  {
         action: "mdi-human",

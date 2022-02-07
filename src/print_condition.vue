@@ -14,7 +14,7 @@
     <div class="page">
       <div align="center">
           <v-img max-height="30mm" max-width="25mm" src="~../src/assets/krud.jpg"></v-img>
-       <div class="head"> แบบรายงานข้อมูลเงือนไขสาขาวิชาเอก ประกอบการพิจารณาย้ายข้าราชการ ประจำปี {{ conditions_transfers.year_s }} ครั้งที่ {{ conditions_transfers.time_s }} </div>
+       <div class="head"> แบบรายงานข้อมูลเงื่อนไขสาขาวิชาเอก ประกอบการพิจารณาย้ายข้าราชการ ประจำปี {{ conditions_transfers.year_s }} ครั้งที่ {{ conditions_transfers.time_s }} </div>
        <div class="head"> ส่งมาพร้อมกับหนังสือ {{ colleges_user.college_name }} ที่  ลงวันที่ ..............................</div>
      <div>___________________________</div>
       </div>
@@ -27,7 +27,7 @@
      <table border="0" width="100%" align="center">
         <tr>
             <td width="20%" class="regular16"></td>
-            <td width="80%" class="regular16">ตามที่สำนักงานคณะกรรมการการอาชีวศึกษา ขอทราบข้อมูลเงือนไขสาขาวิชาเอก</td>
+            <td width="80%" class="regular16">ตามที่สำนักงานคณะกรรมการการอาชีวศึกษา ขอทราบข้อมูลเงื่อนไขสาขาวิชาเอก</td>
         </tr>
     </table>
       <table border="0" width="100%" align="center">
@@ -93,7 +93,7 @@
              <td width="40%" align="center"><div class="regular16">ผู้อำนวยการ{{ colleges_user.college_name }}</div></td>             
          </tr> 
           </table>
-           {{ id_ref_url }}
+          <!--  {{ id_ref_url }} -->
     </div>
   </div>
   </v-app>
@@ -400,7 +400,7 @@ return result
 
   .bold16 {
     font-family: "TH SarabunIT๙", "TH SarabunPSK", "Angsana New", AngsanaUPC;
-    font-size: 18pt;
+    font-size: 16pt;
     font-weight: bold;
   }
 
@@ -417,7 +417,7 @@ return result
 
   .blackBold18 {
     font-family: "TH SarabunIT๙", "TH SarabunPSK", "Angsana New", AngsanaUPC;
-    font-size: 20pt;
+    font-size: 18pt;
     font-weight: bold;
   }
 
@@ -469,7 +469,7 @@ return result
 
   .head {
     font-family: "TH SarabunIT๙", "TH SarabunPSK", "Angsana New", AngsanaUPC;
-    font-size: 22pt;
+    font-size: 20pt;
     font-weight: bold;
   }
 
@@ -502,7 +502,7 @@ return result
 
   .blackBold18 {
     font-family: "TH SarabunIT๙", "TH SarabunPSK", "Angsana New", AngsanaUPC;
-    font-size: 22pt;
+    font-size: 18pt;
     font-weight: bold;
   }
  

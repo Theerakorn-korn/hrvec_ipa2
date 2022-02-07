@@ -5,7 +5,7 @@
         <base-material-card color="primary">
           <template v-slot:heading>
             <h2 class="h1 font-weight-light text_google">
-              <v-icon large left>mdi-file-send</v-icon>เงือนไขในการรับย้าย
+              <v-icon large left>mdi-file-send</v-icon>เงื่อนไขในการรับย้าย
             </h2>
           </template>
           <v-card class="pa-2 ma-6">
@@ -38,7 +38,7 @@
                       target="_blank"
                     >
                       <v-icon>mdi-printer</v-icon>
-                      <span>พิมพ์แบบรายงานเงือนไขสาขาวิชาเอก</span>
+                      <span>พิมพ์แบบรายงานเงื่อนไขสาขาวิชาเอก</span>
                     </v-btn>
                   </div>
                 </v-alert>
@@ -57,13 +57,13 @@
                 </v-alert>
               </v-col>
             </v-row>
-          </v-card> {{ periods.period_enable }}
+          </v-card>
+         <!--  {{ periods.period_enable }} -->
           <v-form
             ref="addconditions_transferform"
             lazy-validation
             v-if="periods.period_enable === '1'"
           >
-         
             <v-card class="pa-2 ma-2">
               <v-card-title>
                 <div class="font-weight-light v-size--x-large">
@@ -178,21 +178,20 @@
             </v-card>
           </v-form>
 
-<v-form  v-else          >
-         
+          <v-form v-else>
             <v-card class="pa-2 ma-2">
               <v-alert
-      border="bottom"
-      colored-border
-      type="warning"
-      elevation="2"
-    >
-    <h1 class="text-center red--text">ยังไม่ถึงกำหนดการการยืนเงือนไขการรับย้าย</h1>
-        </v-alert>
-
+                border="bottom"
+                colored-border
+                type="warning"
+                elevation="2"
+              >
+                <h1 class="text-center red--text">
+                  ยังไม่ถึงกำหนดการการยืนเงื่อนไขการรับย้าย
+                </h1>
+              </v-alert>
             </v-card>
-</v-form>
-         
+          </v-form>
 
           <v-card
             class="pa-1 d-flex justify-center"
@@ -201,13 +200,15 @@
             <div>
               <v-row>
                 <div class="text-center">
-                       <h3 class="red--text">
-                  * เมื่อกดปุ่มบันทึกและยืนยันข้อมูลแล้ว
-                  ท่านจะไม่สามารถแก้ไขข้อมูลใดๆ ได้
-                  กรุณาตรวจสอบข้อมูลให้ถูกต้องการกดปุ่ม บันทึก
-                </h3> 
-                <h2 class="success--text"> * เมื่อกดปุ่มบันทึกแล้วจะปรากฎปุ่มสำหรับพิมพ์แบบเสนอขอย้าย</h2> 
-                       </div>     
+                  <h3 class="red--text">
+                    * เมื่อกดปุ่มบันทึกและยืนยันข้อมูลแล้ว
+                    ท่านจะไม่สามารถแก้ไขข้อมูลใดๆ ได้
+                    กรุณาตรวจสอบข้อมูลให้ถูกต้องการกดปุ่ม บันทึก
+                  </h3>
+                  <h2 class="success--text">
+                    * เมื่อกดปุ่มบันทึกแล้วจะปรากฎปุ่มสำหรับพิมพ์แบบเสนอขอย้าย
+                  </h2>
+                </div>
               </v-row>
               <v-row>
                 <v-col cols="12" align="center">
@@ -221,7 +222,7 @@
                     target="_blank"
                   >
                     <v-icon>mdi-printer</v-icon>
-                    <span>พิมพ์แบบรายงานเงือนไขสาขาวิชาเอก</span>
+                    <span>พิมพ์แบบรายงานเงื่อนไขสาขาวิชาเอก</span>
                   </v-btn>
 
                   <v-btn
@@ -537,20 +538,18 @@ export default {
           value: -1
         }
       ],
-       period_enable: '1',
+      period_enable: "1"
     };
   },
 
   async mounted() {
-
     let result_period;
     result_period = await this.$http.post("period.php", {
       ApiKey: this.ApiKey,
       period_enable: this.period_enable
     });
     this.periods = result_period.data;
-    console.log(result_period.data)
-
+    console.log(result_period.data);
 
     let result_branch;
     result_branch = await this.$http.post("branch.php", {

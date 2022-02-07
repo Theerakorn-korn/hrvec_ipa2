@@ -1,5 +1,42 @@
 <template>
   <div>
+    <v-bottom-navigation
+      :value="value"
+      color="info"
+      horizontal
+      v-model="value"
+      :background-color="color"
+      dark
+    >
+      <v-btn to="/admin/transference_location">
+        <span>รายละเอียดผู้ยืนย้าย </span>
+        <v-icon>mdi-history</v-icon>
+      </v-btn>
+
+      <v-btn to="/admin/transference_personnel">
+        <span>ประมวลผล 1 </span>
+        <v-icon>mdi-calculator</v-icon>
+      </v-btn>
+
+      <v-btn to="/admin/process_transfer">
+        <span>ประมวลผล 2 [ระบบ]</span>
+        <v-icon>mdi-calculator</v-icon>
+      </v-btn>
+
+      <v-btn to="/admin/process_transfer_switch_normal">
+        <span>ประมวลผล 3 [สับเปลี่ยน ปกติ]</span>
+        <v-icon>mdi-calculator</v-icon>
+      </v-btn>
+
+      <v-btn to="/admin/process_transfer_switch">
+        <span>ประมวลผล 4 [สับเปลี่ยน]</span>
+        <v-icon>mdi-calculator</v-icon>
+      </v-btn>
+      <v-btn to="/admin/conditons_transfer_success">
+        <span>สรุปผล</span>
+        <v-icon>mdi-bookmark-check</v-icon>
+      </v-btn>
+    </v-bottom-navigation>
     <v-container>
       <base-material-card
         icon="mdi-clipboard-text"
@@ -24,7 +61,7 @@
               <v-select
                 v-model="times_select"
                 :items="time_ss"
-                item-value="time_ss"                
+                item-value="time_ss"
                 label="ครั้งที่ :"
               ></v-select>
             </v-col>
@@ -32,7 +69,7 @@
               <v-select
                 v-model="years_select"
                 :items="year_ss"
-                item-value="year_ss"                
+                item-value="year_ss"
                 label="ปีที่ :"
               ></v-select>
             </v-col>
@@ -40,7 +77,7 @@
               <v-select
                 v-model="type_name_position"
                 :items="name_position_s"
-                item-value="value"               
+                item-value="value"
                 label="ประเภท :"
               ></v-select>
             </v-col>
@@ -50,58 +87,48 @@
           </v-row>
         </v-card>
         <v-data-table
-         
           color="success"
           :loading="loading"
           :headers="headers"
           :items="conditons_transfer_successs"
           :search="search"
-          
-        >      
-         <template v-slot:[`item.name_s`]="{ item }">    
-           
-           {{ item.title_s + item.frist_name }}
-    </template>
-
-      <template v-slot:[`item.succ_college`]="{ item }">    
-            <v-chip
-        :color="getColor(item.succ_college)"
-        dark
-      >
-       <span style="font-size:16px;"> {{ item.succ_college }}</span>
-      </v-chip>   
-    </template>
-          <template v-slot:[`item.actions`]="{ item }">
-              <v-icon
-              v-if="item.succ_college >= 1"
-              color="red"
-              large
-              @click.stop="deletePosition(item.id_ref)"
-            >mdi-box-cutter-off</v-icon>
-     <v-icon
-          v-else
-              color="yellow"
-              large
-              @click.stop="select_idPosition(item.tid_ref)"
-            >mdi-credit-card-plus</v-icon>
+        >
+          <template v-slot:[`item.college_name_old`]="{ item }">
+            <v-chip color="grey" dark>
+              <span style="font-size:16px;"> {{ item.college_name_old }}</span>
+            </v-chip>
           </template>
+          <template v-slot:[`item.college_name_new`]="{ item }">
+            <v-chip color="green" dark>
+              <span style="font-size:16px;"> {{ item.college_name_new }}</span>
+            </v-chip>
+          </template>
+
           <v-alert
             slot="no-results"
             :value="true"
             color="error"
             icon="mdi-alert"
-          >ไม่พบผลลัพธ์ "{{ search }}" ที่คุณกำลังค้นหา.</v-alert>
+            >ไม่พบผลลัพธ์ "{{ search }}" ที่คุณกำลังค้นหา.</v-alert
+          >
         </v-data-table>
       </base-material-card>
     </v-container>
 
     <v-container fluid>
-      <v-snackbar v-model="snackbar.show" top :timeout="snackbar.timeout" :color="snackbar.color">
-        <v-icon large>{{snackbar.icon}}</v-icon>
-        <v-card-text>{{snackbar.text}}</v-card-text>
+      <v-snackbar
+        v-model="snackbar.show"
+        top
+        :timeout="snackbar.timeout"
+        :color="snackbar.color"
+      >
+        <v-icon large>{{ snackbar.icon }}</v-icon>
+        <v-card-text>{{ snackbar.text }}</v-card-text>
 
         <template v-slot:action="{ attrs }">
-          <v-btn color="red" text v-bind="attrs" @click="snackbar.show = false">Close</v-btn>
+          <v-btn color="red" text v-bind="attrs" @click="snackbar.show = false"
+            >Close</v-btn
+          >
         </template>
       </v-snackbar>
     </v-container>
@@ -111,10 +138,11 @@
 export default {
   data() {
     return {
+      value:6,
       loading: true,
       ApiKey: "HRvec2021",
-       branch_s:[],
-       tid_ref:[],
+      branch_s: [],
+      tid_ref: [],
       valid: true,
       canceldialog: false,
       positiondialog: false,
@@ -127,61 +155,52 @@ export default {
         color: "",
         timeout: 5000,
         icon: "",
-        text: "",
-      },     
+        text: ""
+      },
       time_ss: [1, 2],
       year_ss: [2565, 2566, 2567, 2568, 2569, 2570],
-       name_position_s:[
-          { text:"สายการสอนและสนับสนุนการสอน", value:"ครู"},
-          { text:"สายงานบริหารสถานศึกษา", value:"บริหาร"},
-          ],
+      name_position_s: [
+        { text: "สายการสอนและสนับสนุนการสอน", value: "ครู" },
+        { text: "สายงานบริหารสถานศึกษา", value: "บริหาร" }
+      ],
       conditons_transfer_successs: [],
       editconditons_transfer_success: {},
       search: "",
       pagination: {},
-       singleSelect: false,
-        selected: [],
-      headers: [        
+      singleSelect: false,
+      selected: [],
+      headers: [
         { text: "ครั้งที่", align: "left", value: "time_s" },
         { text: "ปีที่", align: "center", value: "year_s" },
-        { text: "เลขที่ตำแหน่งเดิม", align: "left", value: "id_postion_old" },     
+        { text: "รหัสบัตรประชาชน", align: "center", value: "id_card" },
+        { text: "คำนำหน้าชื่อ", align: "center", value: "title_s" },
+        { text: "ชื่อ", align: "center", value: "frist_name" },
+        { text: "นามสกุล", align: "center", value: "last_name" },
+        { text: "ชื่อตำแหน่ง", align: "center", value: "name_position" },
+        { text: "เลขที่ตำแหน่งเดิม", align: "left", value: "id_postion_old" },
         { text: "สถานศึกษาเดิม", align: "left", value: "college_name_old" },
         { text: "สถานศึกษาแห่งใหม่", align: "left", value: "college_name_new" },
-         { text: "เลขที่ตำแหน่งใหม่", align: "center", value: "id_position" },
+        { text: "เลขที่ตำแหน่งใหม่", align: "center", value: "id_position" },
         { text: "รหัสสาขา", align: "center", value: "id_branch" },
-        { text: "สาขา", align: "center", value: "branch_name" },
-        { text: "รหัสบัตรประชาชน", align: "center", value: "id_card" },       
-        { text: "ชื่อ-นามสกุล", align: "center", value: "name_s" },       
-        { text: "ชื่อตำแหน่ง", align: "center", value: "name_position" }, 
-      ],     
+        { text: "สาขา", align: "center", value: "branch_name" }
+      ],
       rowsperpage: [
         25,
         50,
         100,
         {
           text: "All",
-          value: -1,
-        },
-      ],
-      conditons_transfer_successstatus: [],
-      conditons_transfer_successs_id_ref: [],
+          value: -1
+        }
+      ],    
       conditons_transfer_successs: [],
-      updatepositions_condition:{},
-      transference_locations: [],
-      conditons_transfer_success_del: [],
-      man_powers:[],
-      userstatus: {},
-      updatepositions:{},
-      man_powerss:[],
-      colleges: [],
-      data_select:[],
-      provinces: [],
-      regions: [],
+      updatepositions_condition: {},
+      transference_locations: [],      
+    
     };
   },
- async mounted() {
-           
-    this.conditons_transfer_successQueryAll();   
+  async mounted() {
+    this.conditons_transfer_successQueryAll();
   },
   methods: {
     async searchTimeYear() {
@@ -191,38 +210,38 @@ export default {
           ApiKey: this.ApiKey,
           time_s: this.times_select,
           year_s: this.years_select,
-          name_position: this.type_name_position,
+          name_position: this.type_name_position
         })
         .finally(() => (this.loading = false));
       this.conditons_transfer_successs = result.data;
-      console.log(this.ApiKey)
-      console.log(this.times_select)
-      console.log(this.years_select)
-      console.log(this.type_name_position)
-      console.log(this.conditons_transfer_successs)
-    },   
-        
-    
+      console.log(this.ApiKey);
+      console.log(this.times_select);
+      console.log(this.years_select);
+      console.log(this.type_name_position);
+      console.log(this.conditons_transfer_successs);
+    },
+
     async conditons_transfer_successQueryAll() {
       this.loading = true;
       let result = await this.$http
         .post("conditons_transfer_success.php", {
-          ApiKey: this.ApiKey,
+          ApiKey: this.ApiKey
         })
         .finally(() => (this.loading = false));
       this.conditons_transfer_successs = result.data;
     },
 
-        async clear_data(){
-        this.clear_dataDialog = true;
-        },
-            getColor (calories) {
-            /*  if (calories > 400) return 'red'
+    async clear_data() {
+      this.clear_dataDialog = true;
+    },
+    getColor(calories) {
+      /*  if (calories > 400) return 'red'
                 else if (calories > 200) return 'orange'
-                else return 'green'  */   
-                if (calories > 0) return 'green'       
-                else return ''  
-      },
+                else return 'green'  */
+
+      if (calories > 0) return "green";
+      else return "";
+    }
   },
   computed: {
     pages() {
@@ -236,6 +255,9 @@ export default {
         this.pagination.totalItems / this.pagination.rowsPerPage
       );
     },
-  },
+    color() {
+      return "green darken-4";
+    }
+  }
 };
 </script>

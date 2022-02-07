@@ -1,5 +1,40 @@
 <template>
   <div>
+     <v-bottom-navigation 
+     :value="value" color="info" horizontal
+      v-model="value"
+    :background-color="color"
+    dark    
+     >
+        <v-btn to="/admin/transference_location">
+        <span>รายละเอียดผู้ยืนย้าย </span>
+        <v-icon>mdi-history</v-icon>        
+      </v-btn>
+
+      <v-btn to="/admin/transference_personnel">
+        <span>ประมวลผล 1 </span>
+        <v-icon>mdi-calculator</v-icon>
+      </v-btn>
+
+      <v-btn to="/admin/process_transfer">
+        <span>ประมวลผล 2 [ระบบ]</span>
+        <v-icon>mdi-calculator</v-icon>
+      </v-btn>
+
+       <v-btn to="/admin/process_transfer_switch_normal">
+        <span>ประมวลผล 3 [สับเปลี่ยน ปกติ]</span>
+        <v-icon>mdi-calculator</v-icon>
+      </v-btn>
+
+      <v-btn to="/admin/process_transfer_switch">
+        <span>ประมวลผล 4 [สับเปลี่ยน]</span>
+        <v-icon>mdi-calculator</v-icon>
+      </v-btn>
+       <v-btn to="/admin/conditons_transfer_success">
+        <span>สรุปผล</span>
+        <v-icon>mdi-bookmark-check</v-icon>
+       </v-btn>
+    </v-bottom-navigation>
     <v-container fluid>
       <base-material-card
         icon="mdi-clipboard-text"
@@ -39,16 +74,7 @@
             </v-col>
             <v-col cols="12" md="2">
               <v-btn rounded large block color="success" @click="searchTimeYear()">ค้นหา</v-btn>
-            </v-col>
-             <v-col cols="12" md="2">
-              <v-btn rounded large block color="info" to="/admin/transference_personnel">ประมวลผลแบบที่ 1 </v-btn>
-            </v-col>
-             <v-col cols="12" md="2">
-              <v-btn rounded large block color="info" to="/admin/process_transfer">ประมวลผลแบบที่ 2 </v-btn>
-            </v-col>
-               <v-col cols="12" md="2">
-              <v-btn  rounded large block color="info" to="/admin/process_transfer_switch">ประมวลผลแบบที่ 3 (สับเปลี่ยนตำแหน่ง) </v-btn>
-            </v-col>            
+            </v-col>          
           </v-row>
         </v-card>
         <v-data-table
@@ -133,7 +159,8 @@
 <script>
 export default {
   data() {
-    return {
+    return {   
+     value: "1",     
       loading: true,
       ApiKey: "HRvec2021",
       branch_s: [],
@@ -162,13 +189,17 @@ export default {
       headers: [
         /*  { text: "อ้างอิง", align: "center", value: "tid_ref" }, */
         { text: "รหัสบัตรประชาชน", align: "center", value: "id_card" },
-        { text: "ชื่อ-นามสกุล", align: "center", value: "title_s" },
-        { text: "สถานศึกษาปัจจุบัน", align: "center", value: "college_name_now" },
-        { text: "สถานศึกษาปลายทาง", align: "center", value: "college_name" },        
+        { text: "ชื่อ-นามสกุล", align: "center", value: "title_s" },      
+        { text: "ส.ปัจจุบัน", align: "center", value: "college_code_now" },
+        { text: "ส.ปัจจุบัน", align: "center", value: "college_name_now" },
+
+        { text: "ส.แห่งใหม่", align: "center", value: "college_code_new" },
+        { text: "ส.แห่งใหม่", align: "center", value: "college_name" },        
         { text: "ครั้งที่/ปี", align: "center", value: "time_ss" },
-        { text: "อายุงาน ณ ปัจจุบัน", align: "center", value: "age_app_time" },
-        { text: "วันที่ทำรายการ", align: "center", value: "date_time" },
-        { text: "แห่งใหม่", align: "center", value: "succ_college" },
+        { text: "อายุงาน", align: "center", value: "age_app_time" },
+        { text: "วันที่", align: "center", value: "date_time" },
+
+        { text: "แห่งใหม่ ส.", align: "center", value: "succ_college" },
         { text: "วิทยาลัยแห่งใหม่", align: "left", value: "college_name_suss" },
         { text: "เลขที่", align: "left", value: "id_position_new" },      
       ],
@@ -274,7 +305,10 @@ export default {
       return Math.ceil(
         this.pagination.totalItems / this.pagination.rowsPerPage
       );
-    }
+    },
+     color () {
+       return 'cyan darken-3'      
+      },
   }
 };
 </script>

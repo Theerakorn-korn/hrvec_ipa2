@@ -1,5 +1,42 @@
 <template>
   <div>
+    <v-bottom-navigation
+      :value="value"
+      color="info"
+      horizontal
+      v-model="value"
+      :background-color="color"
+      dark
+    >
+       <v-btn to="/admin/transference_location">
+        <span>รายละเอียดผู้ยืนย้าย </span>
+        <v-icon>mdi-history</v-icon>        
+      </v-btn>
+
+      <v-btn to="/admin/transference_personnel">
+        <span>ประมวลผล 1 </span>
+        <v-icon>mdi-calculator</v-icon>
+      </v-btn>
+
+      <v-btn to="/admin/process_transfer">
+        <span>ประมวลผล 2 [ระบบ]</span>
+        <v-icon>mdi-calculator</v-icon>
+      </v-btn>
+
+       <v-btn to="/admin/process_transfer_switch_normal">
+        <span>ประมวลผล 3 [สับเปลี่ยน ปกติ]</span>
+        <v-icon>mdi-calculator</v-icon>
+      </v-btn>
+
+      <v-btn to="/admin/process_transfer_switch">
+        <span>ประมวลผล 4 [สับเปลี่ยน]</span>
+        <v-icon>mdi-calculator</v-icon>
+      </v-btn>
+       <v-btn to="/admin/conditons_transfer_success">
+        <span>สรุปผล</span>
+        <v-icon>mdi-bookmark-check</v-icon>
+       </v-btn>
+    </v-bottom-navigation>
     <v-container fluid>
       <base-material-card
         icon="mdi-clipboard-text"
@@ -53,34 +90,18 @@
                 large
                 block
                 color="success"
-                @click="showSuccessPosition()"               
+                @click="showSuccessPosition()"
                 >รายการที่สำเร็จแล้ว
               </v-btn>
             </v-col>
-            <v-col cols="12" md="2">
-              <v-btn
-                rounded
-                large
-                block
-                color="info"
-                to="/admin/process_transfer"
-                >ประมวลผลแบบที่ 2
-              </v-btn>
-            </v-col>
-            <v-col cols="12" md="2">
-              <v-btn
-                rounded
-                large
-                block
-                color="info"
-                to="/admin/process_transfer_switch"
-                >ประมวลผลแบบที่ 3 (สับเปลี่ยนตำแหน่ง)
-              </v-btn>
-            </v-col>
-            <v-col cols="12" md="8" class="text-right">
+            <v-col cols="12" md="12" class="text-right">
               <h1 class="text--right">ประมวลผลแบบที่ 1</h1>
               ย้ายครั้งที่ : {{ periods.period_times }} ปี :
-              {{ periods.period_year| moment("add", "543 years")| moment("YYYY")}}
+              {{
+                periods.period_year
+                  | moment("add", "543 years")
+                  | moment("YYYY")
+              }}
             </v-col>
           </v-row>
         </v-card>
@@ -177,13 +198,12 @@
                 <v-container grid-list-md>
                   <v-layout wrap>
                     <v-flex md6>
-
                       <p>
                         รหัสอ้างอิง :
                         {{ transference_personnels_id_ref.id_ref }}
                       </p>
 
-                       <div class="text--center">
+                      <div class="text--center">
                         รหัสบัตรประชาชน :
                         {{ transference_personnels_id_ref.id_card }}
                         ชื่อ-นามสกุล :
@@ -490,7 +510,8 @@
 <script>
 export default {
   data() {
-    return {
+    return {   
+      value:"2",  
       loading: true,
       ApiKey: "HRvec2021",
       position: "ครู",
@@ -551,7 +572,7 @@ export default {
       transference_personnels_id_ref: [],
       conditons_transfer_successs: [],
       updatepositions_condition: {},
-      man_power_cancel:{},
+      man_power_cancel: {},
       addreturn_man_power: {},
       transference_locations: [],
       conditons_transfer_success_del: [],
@@ -559,7 +580,7 @@ export default {
       userstatus: {},
       updatepositions: {},
       man_powerss: [],
-      id_return_man_powers:[],
+      id_return_man_powers: [],
       colleges: [],
       data_select: [],
       provinces: [],
@@ -627,7 +648,7 @@ export default {
           ApiKey: this.ApiKey,
           time_s: this.times_select,
           year_s: this.years_select,
-          success_s: 'ok',
+          success_s: "ok"
         })
         .finally(() => (this.loading = false));
       this.transference_personnels = result.data;
@@ -648,6 +669,8 @@ export default {
       this.updatepositions = {};
       this.positiondialog = true;
     },
+
+    
 
     async transference_personnelQueryAll() {
       this.loading = true;
@@ -686,18 +709,21 @@ export default {
 
         this.addreturn_man_power.ApiKey = this.ApiKey;
         this.addreturn_man_power.college_code = this.transference_personnels_id_ref.college_code;
-        this.addreturn_man_power.id_position = this.transference_personnels_id_ref.id_position;        
+        this.addreturn_man_power.id_position = this.transference_personnels_id_ref.id_position;
         this.addreturn_man_power.position = this.position;
-        this.addreturn_man_power.case_vacancy = 'ย้ายรอบ-' + this.periods.period_times + '/' + this.period_years;
-       
-        let result_man_return = await this.$http.post('man_power.insert.php', this.addreturn_man_power) 
-       
+        this.addreturn_man_power.case_vacancy =
+          "ย้ายรอบ-" + this.periods.period_times + "/" + this.period_years;
+
+        let result_man_return = await this.$http.post(
+          "man_power.insert.php",
+          this.addreturn_man_power
+        );
+
         if (result_man_return.data.status == true) {
           let result_man = await this.$http.post(
             "man_power.update_process.php",
             this.updatepositions_condition
           );
-          
 
           let result = await this.$http.post(
             "conditons_transfer_success.insert.php",
@@ -722,7 +748,6 @@ export default {
     },
 
     async deletePosition(id_ref) {
-
       let result_con = await this.$http.post("transference_personnel.php", {
         ApiKey: this.ApiKey,
         id_ref: id_ref
@@ -734,7 +759,7 @@ export default {
         id_card: this.transference_personnels_id_ref.id_card
       });
       this.man_powerss = result_man.data;
-      
+
       let result_cts = await this.$http.post("conditons_transfer_success.php", {
         ApiKey: this.ApiKey,
         id_ref: id_ref
@@ -753,14 +778,13 @@ export default {
 
         this.man_power_cancel.ApiKey = this.ApiKey;
         this.man_power_cancel.id_position = this.conditons_transfer_successs.id_postion_old;
-        
-       
+
         let result_man = await this.$http.post(
           "man_power.update_process.php",
           this.man_powerss
         );
 
-         let result_man_delete = await this.$http.post(
+        let result_man_delete = await this.$http.post(
           "man_power.delete.php",
           this.man_power_cancel
         );
@@ -770,7 +794,11 @@ export default {
           this.conditons_transfer_successs
         );
 
-        if (result_man.data.status == true && result_cts.data.status == true && result_man_delete.data.status == true) {
+        if (
+          result_man.data.status == true &&
+          result_cts.data.status == true &&
+          result_man_delete.data.status == true
+        ) {
           this.snackbar.icon = "mdi-font-awesome";
           this.snackbar.color = "success";
           this.snackbar.text = "ยกเลิกข้อมูลเรียบร้อย";
@@ -810,6 +838,9 @@ export default {
     period_years() {
       let yyyy = parseInt(this.periods.period_year) + 543;
       return yyyy;
+    },
+    color() {    
+          return "lime darken-4"; 
     }
   }
 };

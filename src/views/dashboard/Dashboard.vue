@@ -187,6 +187,7 @@
 
             <div class="font-weight-light">ข้อมูลสถานศึกษาที่อยู่ในระบบ</div>
           </template>
+          
           <v-card-text>
             <v-data-table :headers="headers" :items="colleges" :search="search">
               <template v-slot:top>

@@ -57,6 +57,7 @@
                   <h2>ครั้งที่ : {{ time_s }} ประจำปี : {{ year_s }}</h2>
                   <h3>เขียนที่ : {{ user.college_name }}</h3>
                   <h3>วันที่ยื่นคำร้อง : {{ date_today }}</h3>
+                  <h3>{{ get_gov_Age_year}} </h3>
                   <hr />
                   <div v-if="user.date_app_now === ''">
                     <v-alert prominent type="error">
@@ -712,7 +713,7 @@
                         item-text="province_name"
                         item-value="province_ID"
                         :disabled="!addtransference_personnel.reason_2"
-                        label="ภูมิลำเนาของคู่สมรส จังหวัด : "
+                        label="ภูมิลำเนาของบิดา มารดา จังหวัด : "
                       ></v-autocomplete>
                     </v-row>
                     <v-row align="center">
@@ -734,7 +735,7 @@
                         item-text="province_name"
                         item-value="province_ID"
                         :disabled="!addtransference_personnel.reason_3"
-                        label="ภูมิลำเนาของคู่สมรส จังหวัด : "
+                        label="ภูมิลำเนาของข้าพเจ้า จังหวัด : "
                       ></v-autocomplete>
                     </v-row>
                     <v-row align="center">
@@ -861,6 +862,9 @@
               </v-row>
             </div>
           </v-card>
+
+
+          
         </base-material-card>
 
         <!--addtransference_locationdialog  -->
@@ -1708,6 +1712,8 @@ export default {
       return age;
     },
 
+
+
     get_gov_Age_year_service() {
       let today = new Date(this.date_today_cal);
       let DOB = new Date(this.addtransference_personnel.ser_date);
@@ -1803,8 +1809,9 @@ export default {
     },
 
     get_gov_Age_year() {
-      let today = new Date(this.date_today_cal);
+       let today = new Date(this.date_month_cal);
       let DOB = new Date(this.user.date_app_now);
+
       let totalMonths =
         (today.getFullYear() - DOB.getFullYear()) * 12 +
         today.getMonth() -
@@ -1849,6 +1856,8 @@ export default {
       return age;
     }
   },
+
+
   watch: {
     async date_transference(newVal, oldVal) {
       await this.transference_personnelAll();

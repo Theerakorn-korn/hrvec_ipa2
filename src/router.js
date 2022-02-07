@@ -223,7 +223,12 @@ export default new Router({
                     component: () =>
                         import ('@/views/dashboard/pages/administrator/process_transfer_switch'),
                 },
-
+                {
+                    name: 'ดำเนินการประมวลผลการย้าย กรณีสับเปลี่ยนแบบปกติ',
+                    path: '/admin/process_transfer_switch_normal',
+                    component: () =>
+                        import ('@/views/dashboard/pages/administrator/process_transfer_switch_normal'),
+                },
                 
                 {
                     name: 'คำสั่งแต่งตั้งรักษาการในตำแหน่ง',
@@ -237,6 +242,7 @@ export default new Router({
                     component: () =>
                         import ('@/views/dashboard/pages/administrator/conditons_transfer_success'),
                 },
+                
                 
                
                 
