@@ -108,8 +108,7 @@
                   <v-layout wrap>
                     <v-flex md12>
                       <v-row>
-                        <v-col cols="12" lg="6">
-                          {{ addpersonnel_education.education_level }}
+                        <v-col cols="12" lg="6">                         
                           <v-combobox
                             v-model="addpersonnel_education.education_level"
                             :items="education_level"
@@ -470,6 +469,7 @@ export default {
       personnel_educations: [],
       personnel_education_sub: [],
       branch_s: [],
+      showbranchdata:[],
       education_level: ["ปริญญาตรี", "ปริญญาโท", "ปริญญาเอก"]
     };
   },

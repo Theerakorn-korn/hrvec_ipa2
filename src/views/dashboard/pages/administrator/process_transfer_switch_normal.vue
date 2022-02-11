@@ -154,8 +154,16 @@
               </span>
             </template>
             <template v-slot:[`item.actions`]="{ item }">
-              <v-icon
-                v-if="item.id_card_a === item.switch_position"
+            <v-chip v-if="item.status_select_a==='demand' || item.status_select_b==='demand'" color="warning" dark>          
+                <span style="font-size:16px;">รับย้าย</span>
+              </v-chip>
+
+              <v-chip v-else-if="item.status_select_a==='agree' || item.status_select_b==='agree'" color="warning" dark>          
+                <span style="font-size:16px;">ปกติ</span>
+              </v-chip>                 
+
+          <v-icon
+                v-else-if="item.id_card_a === item.switch_position"
                 color="red"
                 large
                 >mdi-close-box</v-icon
@@ -675,8 +683,7 @@ export default {
         ApiKey: this.ApiKey,
         id_ref: id_ref
       });
-      this.conditons_transfer_successs = result_cts.data;
-      console.log(result_cts.data);
+      this.conditons_transfer_successs = result_cts.data;    
 
       let result_cts_b = await this.$http.post(
         "conditons_transfer_success.php",
@@ -688,17 +695,14 @@ export default {
         }
       );
       this.conditons_transfer_successs_b = result_cts_b.data;
-      console.log(result_cts_b.data);
-
+   
       this.canceldialog = true;
     },
 
     async cancelSubmit() {
       if (this.$refs.cancelform.validate()) {
         this.conditons_transfer_successs.ApiKey = this.ApiKey;
-        this.conditons_transfer_successs_b.ApiKey = this.ApiKey;
-        console.log(this.conditons_transfer_successs);
-        console.log(this.conditons_transfer_successs_b);
+        this.conditons_transfer_successs_b.ApiKey = this.ApiKey;     
 
         let result_cts = await this.$http.post(
           "conditons_transfer_success.delete.php",
@@ -743,6 +747,7 @@ export default {
         this.updatepositions.college_code = this.personnel_temporarys.college_code;
         this.updatepositions.id_position = this.personnel_temporarys.id_position;
         this.updatepositions.id_branch = this.transference_personnels.id_branch;
+        this.updatepositions.status_select = 'sw_normal';
 
         this.updatepositions_b.ApiKey = this.ApiKey;
         this.updatepositions_b.time_s = this.transference_personnels_b.time_ss;
@@ -755,6 +760,8 @@ export default {
         this.updatepositions_b.college_code = this.transference_personnels.college_code;
         this.updatepositions_b.id_position = this.transference_personnels.id_position;
         this.updatepositions_b.id_branch = this.personnel_educations_b.id_branch;
+        this.updatepositions_b.status_select = 'sw_normal';
+        
 
       let result_a = await this.$http.post(
           "conditons_transfer_success.insert.php",

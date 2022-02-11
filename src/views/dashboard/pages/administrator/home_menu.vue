@@ -485,7 +485,7 @@ export default {
       movement_items: [
         {
           text: "สายงานการสอนและสายสนับสนุนการสอน [ประมวลผลแบบ 1]",
-          icon: "mdi-alarm-light",
+          icon: "mdi-chart-box-outline",
           to: "/admin/transference_personnel"
         },
         {
@@ -516,12 +516,12 @@ export default {
           to: "/admin/process_transfer"
         },
           {
-          text: "ประมวลผลการย้าย สับเปลี่ยน แบบปกติ]",
+          text: "ประมวลผลการย้าย สับเปลี่ยนแบบปกติ แบบที่ 3]",
           icon: "mdi-chart-box-outline",
           to: "/admin/process_transfer_switch_normal"
         },
          {
-          text: "ประมวลผลการย้าย [ประมวลผลแบบ 3 สับเปลี่ยน]",
+          text: "ประมวลผลการย้าย [ประมวลผลแบบ 4 สับเปลี่ยน]",
           icon: "mdi-chart-box-outline",
           to: "/admin/process_transfer_switch"
         },            

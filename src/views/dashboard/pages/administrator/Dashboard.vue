@@ -35,9 +35,9 @@
                 >
               </v-col>
               <v-col cols="12" md="7">
-                <v-alert border="top" colored-border type="info" elevation="2">
-                <h2>จำนวนวิทยาลัยที่ดำเนินการ : {{ conditions_transfers.count_condition }} แห่ง</h2>
-                <h2>ผู้ยื่นย้ายจำนวน : {{ transference_personnels.count_personnel }} คน</h2>
+                <v-alert border="top" colored-border type="info" elevation="2" class="text-center">
+                <h2>จำนวนวิทยาลัยที่ดำเนินการ : {{ conditions_transfers.count_condition }} แห่ง คิดเป็นร้อยละ {{ conditions_transfers.percent_t}}</h2>
+                <h2>ผู้ยื่นย้ายจำนวน : {{ transference_personnels.count_personnel }} คน : คิดเป็นร้อยละ {{ transference_personnels.percent_p}}</h2>
                 </v-alert></v-col
               >
             </v-row>

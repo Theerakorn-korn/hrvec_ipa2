@@ -276,7 +276,7 @@
           <table border="0" width="100%" align="center"> 
           <tr>            
              <td width="10%" colspan="2"><div class="regular16"></div></td>             
-             <td width="35%" colspan="2"><div class="regular16">ภูมิลำเนาของคู่สมรส จังวหวัด </div></td>             
+             <td width="35%" colspan="2"><div class="regular16">ภูมิลำเนาของคู่สมรส จังหวัด </div></td>             
              <td width="55%" colspan="2"><div class="regular16 td_line">{{ province_sh_s.province_name || '-'}} </div></td>             
          </tr>            
           </table>
@@ -299,7 +299,7 @@
                <table border="0" width="100%" align="center"> 
           <tr>            
              <td width="10%" colspan="2"><div class="regular16"></div></td>             
-             <td width="35%" colspan="2"><div class="regular16">ภูมิลำเนาของบิดา มารดา จังวหวัด </div></td>             
+             <td width="35%" colspan="2"><div class="regular16">ภูมิลำเนาของบิดา มารดา จังหวัด </div></td>             
              <td width="55%" colspan="2"><div class="regular16 td_line">{{ province_sh_fm.province_name || '-'}}</div></td>             
          </tr>            
           </table>

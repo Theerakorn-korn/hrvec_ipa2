@@ -319,8 +319,20 @@ export default new Router({
             import ('@/print_condition'),
         },
         {
+            name: 'พิมพ์ บัญชีรายละเอียดการพิจารณาย้าย',
+            path: '/admin/print_report_movement_filter/:id_oa:times_s:year_s:tech',
+            component: () =>
+            import ('@/print_report_movement_filter'),
+        }, 
+        {
+            name: 'พิมพ์ บัญชีรายละเอียดการพิจารณาย้าย อ.ก.ค.ศ.',
+            path: '/admin/print_report_movement_filter_o/:id_oa:times_s:year_s:tech',
+            component: () =>
+            import ('@/print_report_movement_filter_o'),
+        }, 
+        {
             name: 'พิมพ์คำสั่ง แต่งตั้งรักษาการในตำแหน่ง',
-            path: '/admin/print_report_movement/:times_s:year_s',
+            path: '/admin/print_report_movement/:id_oa:times_s:year_s:tech',
             component: () =>
             import ('@/print_report_movement'),
         }, 

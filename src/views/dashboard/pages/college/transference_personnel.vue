@@ -152,12 +152,12 @@ export default {
       search: '',
       pagination: {},      
       headers: [
-        { text: "อ้างอิง", align: "center", value: "id_ref" },                
+        { text: "อ้างอิง", align: "center", value: "tid_ref" },                
         { text: "รหัสบัตรประชาชน", align: "center", value: "id_card" }, 
         { text: "ชื่อ", align: "center", value: "frist_name" },         
         { text: "นามสกุล", align: "center", value: "last_name" },         
-        { text: "ครั้งที่", align: "center", value: "time_s" },         
-        { text: "ปีที่", align: "center", value: "year_s" },         
+        { text: "ครั้งที่", align: "center", value: "time_ss" },         
+        { text: "ปีที่", align: "center", value: "year_ss" },         
         { text: "อายุงาน ณ ปัจจุบัน", align: "center", value: "age_app_time" },         
         { text: "วันที่ทำรายการ", align: "center", value: "date_time" },          
        /*  { text: "แก้ไข", align: "center", value: "actions", icon: "mdi-file-document-edit" },        */

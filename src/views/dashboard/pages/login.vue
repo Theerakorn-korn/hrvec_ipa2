@@ -1,6 +1,20 @@
 <template>
   <v-container id="user-profile" fluid tag="section" class="text_google">
     <v-row justify="center">
+      <v-col cols="12" lg="12">
+        <v-bottom-navigation  v-model="value" :value="value" :background-color="color" horizontal>
+          <v-btn color="primary" max-width="100%"  elevation="3" rounded to="/pages/login">
+           <h3><span>เข้าสู่ระบบ : ข้าราชการครูและบุคลากรทางการศึกษา</span></h3> 
+            <v-icon>mdi-account-key</v-icon>
+          </v-btn>
+
+          <v-btn color="warning" max-width="100%" elevation="3" rounded to="/pages/loginAdmin">
+            <h3><span>เข้าสู่ระบบ : สถานศึกษา</span></h3>
+
+            <v-icon>mdi-login-variant</v-icon>
+          </v-btn>
+        </v-bottom-navigation>
+      </v-col>
       <v-col cols="12" md="8">
         <base-material-card>
           <template v-slot:heading>
@@ -66,7 +80,7 @@
             <p class="font-weight-light black--text">
               เข้าสู่ระบบแล้วให้ดำเนินการเปลี่ยนรหัสผ่านของท่าน
             </p>
-            <v-btn color="success" rounded class="mr-0">คู่มือ</v-btn>
+            <v-btn color="success" to="/news" rounded class="mr-0">คู่มือ</v-btn>
           </v-card-text>
         </base-material-card>
       </v-col>
@@ -131,7 +145,12 @@ export default {
         }
       }
     }
-  }
+  },
+   computed: {
+      color () {
+      return 'green lighten-1'      
+    }
+   }
 };
 </script>
 <style>

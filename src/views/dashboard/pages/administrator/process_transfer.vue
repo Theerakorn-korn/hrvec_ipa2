@@ -77,7 +77,7 @@
               <v-radio-group v-model="row" row>
                 <v-radio label="สถานะ 1 : 1" @click="OnetoOne()"></v-radio>
                 <v-radio
-                  @click="searchTimeYear()"
+                  @click="conditions_transferQueryAll()"
                   label="แสดงทั้งหมด"
                 ></v-radio>
               </v-radio-group>
@@ -185,9 +185,24 @@
                 ></span
               >
             </template>
-            <template v-slot:[`item.actions`]="{ item }">
+            <template v-slot:[`item.actions`]="{ item }">             
+            <v-chip
+              v-if="item.status_select === 'sw_normal'"
+              color="warning"
+              dark
+            >
+              <span style="font-size:16px;">สับเปลี่ยน (3)</span>
+            </v-chip>
+            <v-chip
+              v-else-if="item.status_select === 'sw_agree'"
+              color="warning"
+              dark
+            >
+              <span style="font-size:16px;">แลกเปลี่ยน (4)</span>
+            </v-chip>
+
               <v-icon
-                v-if="item.college_code_susss >= 1"
+                v-else-if="item.college_code_susss >= 1"
                 color="red"
                 large
                 @click.stop="deletePosition(item.id_ref)"
@@ -556,7 +571,7 @@
                         </h4>
                         <h4>
                           รหัสสถานศึกษา :
-                          {{ transference_locations.college_code }}
+                          {{ transference_locations.college_code_new }}
                         </h4>
                       </v-card>
                     </v-col>
@@ -994,11 +1009,13 @@ export default {
         this.updatepositions.year_s = this.transference_personnels.year_ss;
         this.updatepositions.id_postion_old = this.transference_personnels.id_position;
         this.updatepositions.college_code_old = this.transference_personnels.college_code;
-        this.updatepositions.college_code = this.transference_locations.college_code;
+        this.updatepositions.college_code = this.transference_locations.college_code_new;
         this.updatepositions.id_branch = this.conditions_branchs.id_branch;
         this.updatepositions.id_card = this.transference_personnels.id_card;
         this.updatepositions.id_ref = this.transference_personnels.tid_ref;
         this.updatepositions.name_position = "ครู";
+        this.updatepositions.status_select = 'agree';
+
 
         this.updatepositions_condition.ApiKey = this.ApiKey;
         this.updatepositions_condition.id_position = this.updatepositions.id_position;
@@ -1059,10 +1076,10 @@ export default {
         this.man_power_cancel.ApiKey = this.ApiKey;
         this.man_power_cancel.id_position = this.conditons_transfer_successs.id_postion_old;
 
-        console.log(this.man_powerss);
+        /* console.log(this.man_powerss);
         console.log(this.conditons_transfer_successs);
         console.log(this.man_power_cancel);
-
+ */
         let result_man = await this.$http.post(
           "man_power.update_process.php",
           this.man_powerss

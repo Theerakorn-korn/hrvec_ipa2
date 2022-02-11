@@ -169,7 +169,19 @@
                 color="red"
                 large
                 >mdi-close-box</v-icon
-              >
+              > 
+
+              <v-chip v-else-if="item.status_select_a==='demand' || item.status_select_b==='demand'" color="warning" dark>          
+                <span style="font-size:16px;">รับย้าย</span>
+              </v-chip>
+
+              <v-chip v-else-if="item.status_select_a==='agree' || item.status_select_b==='agree'" color="warning" dark>          
+                <span style="font-size:16px;">ปกติ</span>
+              </v-chip>
+               <v-chip v-else-if="item.status_select_a==='sw_normal' || item.status_select_b==='sw_normal'" color="warning" dark>          
+                <span style="font-size:16px;">สับเปลี่ยน</span>
+              </v-chip>              
+
               <v-icon
                 v-else-if="item.college_code_susss >= 1"
                 color="red"
@@ -177,6 +189,7 @@
                 @click.stop="deletePosition(item.id_ref,item.id_ref_b,item.id_branch)"
                 >mdi-delete-circle</v-icon
               >
+             
               <v-icon
                 color="green"
                 large
@@ -503,13 +516,13 @@ export default {
           value: "actions",
           icon: "mdi-file-document-edit"
         },
-        { text: "แห่งใหม่", align: "center", value: "college_code_susss" },
+        { text: "แห่งใหม่ A", align: "center", value: "college_code_susss" },
         /*  {
           text: "สถานศึกษาแห่งใหม่",
           align: "center",
           value: "college_name_suss"
         }, */
-        { text: "เลขที่", align: "center", value: "id_postion_susss" }
+        { text: "เลขที่ A", align: "center", value: "id_postion_susss" }
       ],
       search: "",
       pagination: {},
@@ -774,6 +787,8 @@ export default {
         this.updatepositions.college_code = this.transference_personnels_b.college_code;
         this.updatepositions.id_position = this.transference_personnels_b.id_position;
         this.updatepositions.id_branch = this.branchs.id_branch;
+        this.updatepositions.status_select = 'sw_agree';
+
 
         this.updatepositions_b.ApiKey = this.ApiKey;
         this.updatepositions_b.time_s = this.transference_personnels_b.time_ss;
@@ -786,10 +801,8 @@ export default {
         this.updatepositions_b.college_code = this.transference_personnels.college_code;
         this.updatepositions_b.id_position = this.transference_personnels.id_position;
         this.updatepositions_b.id_branch = this.branchs.id_branch;
-
-        console.log(this.updatepositions);
-        console.log(this.updatepositions_b);
-
+        this.updatepositions_b.status_select = 'sw_agree';
+      
        let result_a = await this.$http.post(
           "conditons_transfer_success.insert.php",
           this.updatepositions

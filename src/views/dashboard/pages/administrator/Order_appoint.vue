@@ -1,5 +1,46 @@
 <template>
   <div>
+    <v-bottom-navigation
+      :value="value"
+      color="info"
+      horizontal
+      v-model="value"
+      :background-color="color"
+      dark
+    >
+      <v-btn to="/admin/transference_location">
+        <span>รายละเอียดผู้ยืนย้าย </span>
+        <v-icon>mdi-history</v-icon>
+      </v-btn>
+
+      <v-btn to="/admin/transference_personnel">
+        <span>ประมวลผล 1 </span>
+        <v-icon>mdi-calculator</v-icon>
+      </v-btn>
+
+      <v-btn to="/admin/process_transfer">
+        <span>ประมวลผล 2 [ระบบ]</span>
+        <v-icon>mdi-calculator</v-icon>
+      </v-btn>
+
+      <v-btn to="/admin/process_transfer_switch_normal">
+        <span>ประมวลผล 3 [สับเปลี่ยน ปกติ]</span>
+        <v-icon>mdi-calculator</v-icon>
+      </v-btn>
+
+      <v-btn to="/admin/process_transfer_switch">
+        <span>ประมวลผล 4 [สับเปลี่ยน]</span>
+        <v-icon>mdi-calculator</v-icon>
+      </v-btn>
+      <v-btn to="/admin/conditons_transfer_success">
+        <span>สรุปผล</span>
+        <v-icon>mdi-bookmark-check</v-icon>
+      </v-btn>
+       <v-btn to="/admin/Order_appoint">
+        <span>พิจารณา</span>
+        <v-icon>mdi-bookmark-check</v-icon>
+      </v-btn>
+    </v-bottom-navigation>
     <v-container>
       <base-material-card
         icon="mdi-clipboard-text"
@@ -40,22 +81,79 @@
           :items="order_appoints"
           :search="search"
         >
-         <template v-slot:[`item.dated_order`]="{ item }">
-            {{ item.dated_order| moment("add","543 years") | moment("Do MMMM YYYY") }}
+          <template v-slot:[`item.dated_order`]="{ item }">
+            {{
+              item.dated_order
+                | moment("add", "543 years")
+                | moment("Do MMMM YYYY")
+            }}
           </template>
 
-<template v-slot:[`item.start_date`]="{ item }">
-            {{ item.start_date| moment("add","543 years") | moment("Do MMMM YYYY") }}
+          <template v-slot:[`item.start_date`]="{ item }">
+            {{
+              item.start_date
+                | moment("add", "543 years")
+                | moment("Do MMMM YYYY")
+            }}
           </template>
 
-              <template v-slot:[`item.print_s`]="{ item }">
-            <v-btn color="info" fab small          
-            :href="'#/admin/print_report_movement/'+item.id_oa+item.year_s" target="_blank"
+          <template v-slot:[`item.print_f`]="{ item }">
+            <v-btn
+              color="red"
+              fab
+              small
+              :href="
+                '#/admin/print_report_movement_filter/' +
+                   item.id_oa +
+                  item.time_s +
+                  item.year_s +
+                  'tech'
+              "
+              target="_blank"
             >
-            <v-icon>
-                  mdi-printer
-            </v-icon>
-            
+              <v-icon>
+                mdi-printer
+              </v-icon>
+            </v-btn>
+          </template>
+
+          <template v-slot:[`item.print_o`]="{ item }">
+            <v-btn
+              color="yellow"
+              fab
+              small
+              :href="
+                '#/admin/print_report_movement_filter_o/' +
+                  item.id_oa +
+                  item.time_s +
+                  item.year_s +
+                  'tech'
+              "
+              target="_blank"
+            >
+              <v-icon>
+                mdi-printer
+              </v-icon>
+            </v-btn>
+          </template>
+
+          <template v-slot:[`item.print_s`]="{ item }">
+            <v-btn
+              color="success"
+              fab
+              small
+              :href="
+                '#/admin/print_report_movement/' +
+                   item.id_oa +
+                  item.time_s +
+                  item.year_s +
+                  'tech'
+              "
+              target="_blank"
+            >
+              <v-icon>
+                mdi-printer
+              </v-icon>
             </v-btn>
           </template>
 
@@ -88,17 +186,14 @@
               title="เพิ่มข้อมูลคำสั่งย้าย"
               class="px-5 py-3 text_google"
             >
-            <div class="text-right">
- วันที่รายการ : {{ date_today }}
-            </div>
-          
+              <div class="text-right">วันที่รายการ : {{ date_today }}</div>
             </base-material-card>
 
             <v-card-text>
               <v-form ref="addorder_appointform" lazy-validation>
                 <v-container grid-list-md>
                   <v-layout wrap>
-                    <v-flex md6>
+                    <v-flex md4>
                       <v-text-field
                         label="หนังสือราชการที่ : ศธ 0618/3994"
                         v-model="addorder_appoint.book_number"
@@ -106,7 +201,7 @@
                         :rules="[v => !!v || '']"
                       ></v-text-field>
                     </v-flex>
-                    <v-flex md6>
+                    <v-flex md4>
                       <v-text-field
                         label="คำสั่งที่ : "
                         v-model="addorder_appoint.order_number"
@@ -114,14 +209,47 @@
                         :rules="[v => !!v || '']"
                       ></v-text-field>
                     </v-flex>
-                    <v-flex md6>
-                      <v-text-field
-                        label="วันที่หนังสือ :"
-                        v-model="addorder_appoint.dated_order"
-                        type="date"
-                        required
-                        :rules="[v => !!v || '']"
-                      ></v-text-field>
+                    <v-flex md4>
+                      <v-menu
+                        ref="menu"
+                        v-model="menu"
+                        :close-on-content-click="false"
+                        :return-value.sync="date"
+                        transition="scale-transition"
+                        offset-y
+                        min-width="auto"
+                      >
+                        <template v-slot:activator="{ on, attrs }">
+                          <v-text-field
+                            v-model="addorder_appoint.dated_order"
+                            label="วันที่หนังสือ : "
+                            prepend-icon="mdi-calendar"
+                            readonly
+                            v-bind="attrs"
+                            v-on="on"
+                            required
+                            :rules="[v => !!v || '']"
+                          ></v-text-field>
+                        </template>
+                        <v-date-picker
+                          v-model="addorder_appoint.dated_order"
+                          no-title
+                          scrollable
+                          locale="th"
+                        >
+                          <v-spacer></v-spacer>
+                          <v-btn text color="primary" @click="menu = false">
+                            Cancel
+                          </v-btn>
+                          <v-btn
+                            text
+                            color="primary"
+                            @click="$refs.menu.save(date)"
+                          >
+                            OK
+                          </v-btn>
+                        </v-date-picker>
+                      </v-menu>
                     </v-flex>
                     <v-flex md6>
                       <v-text-field
@@ -130,6 +258,48 @@
                         required
                         :rules="[v => !!v || '']"
                       ></v-text-field>
+                    </v-flex>
+                    <v-flex md6>
+                      <v-menu
+                        ref="menu1"
+                        v-model="menu1"
+                        :close-on-content-click="false"
+                        :return-value.sync="date"
+                        transition="scale-transition"
+                        offset-y
+                        min-width="auto"
+                      >
+                        <template v-slot:activator="{ on, attrs }">
+                          <v-text-field
+                            v-model="addorder_appoint.meeting_date"
+                            label="วันที่ประชุม : "
+                            prepend-icon="mdi-calendar"
+                            readonly
+                            v-bind="attrs"
+                            v-on="on"
+                            required
+                            :rules="[v => !!v || '']"
+                          ></v-text-field>
+                        </template>
+                        <v-date-picker
+                          v-model="addorder_appoint.meeting_date"
+                          no-title
+                          scrollable
+                          locale="th"
+                        >
+                          <v-spacer></v-spacer>
+                          <v-btn text color="primary" @click="menu1 = false">
+                            Cancel
+                          </v-btn>
+                          <v-btn
+                            text
+                            color="primary"
+                            @click="$refs.menu1.save(date)"
+                          >
+                            OK
+                          </v-btn>
+                        </v-date-picker>
+                      </v-menu>
                     </v-flex>
                     <v-flex md4>
                       <v-select
@@ -160,16 +330,47 @@
                       ></v-select>
                     </v-flex>
                     <v-flex md12>
-                      <v-text-field
-                        label="วันที่เริ่มปฏิบัติงาน"
-                        v-model="addorder_appoint.start_date"
-                        type="date"
-                        required
-                        :rules="[v => !!v || '']"
-                      ></v-text-field>
+                      <v-menu
+                        ref="menu2"
+                        v-model="menu2"
+                        :close-on-content-click="false"
+                        :return-value.sync="date"
+                        transition="scale-transition"
+                        offset-y
+                        min-width="auto"
+                      >
+                        <template v-slot:activator="{ on, attrs }">
+                          <v-text-field
+                            v-model="addorder_appoint.start_date"
+                            label="วันที่เริ่มปฏิบัติงาน : "
+                            prepend-icon="mdi-calendar"
+                            readonly
+                            v-bind="attrs"
+                            v-on="on"
+                            required
+                            :rules="[v => !!v || '']"
+                          ></v-text-field>
+                        </template>
+                        <v-date-picker
+                          v-model="addorder_appoint.start_date"
+                          no-title
+                          scrollable
+                          locale="th"
+                        >
+                          <v-spacer></v-spacer>
+                          <v-btn text color="primary" @click="menu2 = false">
+                            Cancel
+                          </v-btn>
+                          <v-btn
+                            text
+                            color="primary"
+                            @click="$refs.menu2.save(date)"
+                          >
+                            OK
+                          </v-btn>
+                        </v-date-picker>
+                      </v-menu>
                     </v-flex>
-                    
-                   
                   </v-layout>
                 </v-container>
               </v-form>
@@ -219,9 +420,9 @@
                     <v-container grid-list-md>
                       <v-layout wrap>
                         <v-flex xs12>
-                          ยืนยันการลบข้อมูลคำสั่งย้ายเอก
-                         หนังสือราชการที่ : {{ editorder_appoint.book_number }}
-                         คำสั่งที่ : {{ editorder_appoint.order_number }}
+                          ยืนยันการลบข้อมูลคำสั่งย้ายเอก หนังสือราชการที่ :
+                          {{ editorder_appoint.book_number }} คำสั่งที่ :
+                          {{ editorder_appoint.order_number }}
                         </v-flex>
                       </v-layout>
                     </v-container>
@@ -260,8 +461,10 @@
             <v-card-text>
               <v-form ref="editorder_appointform" lazy-validation>
                 <v-container grid-list-md>
-                  <v-layout wrap>                                     
-                   <v-flex md6>
+                  <v-layout wrap>                 
+
+
+               <v-flex md4>
                       <v-text-field
                         label="หนังสือราชการที่ : ศธ 0618/3994"
                         v-model="editorder_appoint.book_number"
@@ -269,7 +472,7 @@
                         :rules="[v => !!v || '']"
                       ></v-text-field>
                     </v-flex>
-                    <v-flex md6>
+                    <v-flex md4>
                       <v-text-field
                         label="คำสั่งที่ : "
                         v-model="editorder_appoint.order_number"
@@ -277,14 +480,47 @@
                         :rules="[v => !!v || '']"
                       ></v-text-field>
                     </v-flex>
-                    <v-flex md6>
-                      <v-text-field
-                        label="วันที่หนังสือ :"
-                        v-model="editorder_appoint.dated_order"
-                        type="date"
-                        required
-                        :rules="[v => !!v || '']"
-                      ></v-text-field>
+                    <v-flex md4>
+                      <v-menu
+                        ref="menu_a"
+                        v-model="menu_a"
+                        :close-on-content-click="false"
+                        :return-value.sync="date"
+                        transition="scale-transition"
+                        offset-y
+                        min-width="auto"
+                      >
+                        <template v-slot:activator="{ on, attrs }">
+                          <v-text-field
+                            v-model="editorder_appoint.dated_order"
+                            label="วันที่หนังสือ : "
+                            prepend-icon="mdi-calendar"
+                            readonly
+                            v-bind="attrs"
+                            v-on="on"
+                            required
+                            :rules="[v => !!v || '']"
+                          ></v-text-field>
+                        </template>
+                        <v-date-picker
+                          v-model="editorder_appoint.dated_order"
+                          no-title
+                          scrollable
+                          locale="th"
+                        >
+                          <v-spacer></v-spacer>
+                          <v-btn text color="primary" @click="menu_a = false">
+                            Cancel
+                          </v-btn>
+                          <v-btn
+                            text
+                            color="primary"
+                            @click="$refs.menu_a.save(date)"
+                          >
+                            OK
+                          </v-btn>
+                        </v-date-picker>
+                      </v-menu>
                     </v-flex>
                     <v-flex md6>
                       <v-text-field
@@ -293,6 +529,48 @@
                         required
                         :rules="[v => !!v || '']"
                       ></v-text-field>
+                    </v-flex>
+                    <v-flex md6>
+                      <v-menu
+                        ref="menu_1"
+                        v-model="menu_1"
+                        :close-on-content-click="false"
+                        :return-value.sync="date"
+                        transition="scale-transition"
+                        offset-y
+                        min-width="auto"
+                      >
+                        <template v-slot:activator="{ on, attrs }">
+                          <v-text-field
+                            v-model="editorder_appoint.meeting_date"
+                            label="วันที่ประชุม : "
+                            prepend-icon="mdi-calendar"
+                            readonly
+                            v-bind="attrs"
+                            v-on="on"
+                            required
+                            :rules="[v => !!v || '']"
+                          ></v-text-field>
+                        </template>
+                        <v-date-picker
+                          v-model="editorder_appoint.meeting_date"
+                          no-title
+                          scrollable
+                          locale="th"
+                        >
+                          <v-spacer></v-spacer>
+                          <v-btn text color="primary" @click="menu_1 = false">
+                            Cancel
+                          </v-btn>
+                          <v-btn
+                            text
+                            color="primary"
+                            @click="$refs.menu_1.save(date)"
+                          >
+                            OK
+                          </v-btn>
+                        </v-date-picker>
+                      </v-menu>
                     </v-flex>
                     <v-flex md4>
                       <v-select
@@ -323,19 +601,47 @@
                       ></v-select>
                     </v-flex>
                     <v-flex md12>
-                      <v-text-field
-                        label="วันที่เริ่มปฏิบัติงาน"
-                        v-model="editorder_appoint.start_date"
-                        type="date"
-                        required
-                        :rules="[v => !!v || '']"
-                      ></v-text-field>
+                      <v-menu
+                        ref="menu_2"
+                        v-model="menu_2"
+                        :close-on-content-click="false"
+                        :return-value.sync="date"
+                        transition="scale-transition"
+                        offset-y
+                        min-width="auto"
+                      >
+                        <template v-slot:activator="{ on, attrs }">
+                          <v-text-field
+                            v-model="editorder_appoint.start_date"
+                            label="วันที่เริ่มปฏิบัติงาน : "
+                            prepend-icon="mdi-calendar"
+                            readonly
+                            v-bind="attrs"
+                            v-on="on"
+                            required
+                            :rules="[v => !!v || '']"
+                          ></v-text-field>
+                        </template>
+                        <v-date-picker
+                          v-model="editorder_appoint.start_date"
+                          no-title
+                          scrollable
+                          locale="th"
+                        >
+                          <v-spacer></v-spacer>
+                          <v-btn text color="primary" @click="menu_2 = false">
+                            Cancel
+                          </v-btn>
+                          <v-btn
+                            text
+                            color="primary"
+                            @click="$refs.menu_2.save(date)"
+                          >
+                            OK
+                          </v-btn>
+                        </v-date-picker>
+                      </v-menu>
                     </v-flex>
-
-
-
-
-
                   </v-layout>
                 </v-container>
               </v-form>
@@ -406,32 +712,50 @@ export default {
       editorder_appoint: {},
       search: "",
       pagination: {},
-      time_ss:[1,2],
-      year_ss:[2565,2566,2567,2568,2569,2570],
-      name_position_s:[
-          { text:"สายการสอนและสนับสนุนการสอน", value:"ครู"},
-          { text:"สายงานบริหารสถานศึกษา", value:"บริหาร"},
-          ],
+      time_ss: [1, 2],
+      year_ss: [2565, 2566, 2567, 2568, 2569, 2570],
+      name_position_s: [
+        { text: "สายการสอนและสนับสนุนการสอน", value: "ครู" },
+        { text: "สายงานบริหารสถานศึกษา", value: "บริหาร" }
+      ],
       headers: [
         { text: "หนังสือราชการที่", align: "center", value: "book_number" },
         { text: "คำสั่งที่", align: "center", value: "order_number" },
         { text: "วันที่หนังสือ", align: "left", value: "dated_order" },
         { text: "ประชุมครั้งที่", align: "left", value: "meeting_no" },
+        { text: "วันที่ประชุม", align: "left", value: "meeting_date" },
         { text: "ครั้งที่", align: "left", value: "time_s" },
         { text: "ปีที่", align: "left", value: "year_s" },
         { text: "วันที่เริ่มปฏิบัติงาน", align: "left", value: "start_date" },
         { text: "วันที่รายการ", align: "left", value: "date_time" },
         { text: "ตำแหน่ง", align: "left", value: "name_position" },
-        { text: "พิมพ์", align: "center", value: "print_s", icon: "mdi-printer" },
+        {
+          text: "กลั่นกรอง",
+          align: "center",
+          value: "print_f",
+          icon: "mdi-printer"
+        },
+        {
+          text: "อ.ก.ค.ศ.",
+          align: "center",
+          value: "print_o",
+          icon: "mdi-printer"
+        },
+        {
+          text: "พิมพ์คำสั่ง",
+          align: "center",
+          value: "print_s",
+          icon: "mdi-printer"
+        },
         {
           text: "แก้ไข",
           align: "center",
-          value: "actions",         
+          value: "actions"
         },
         {
           text: "ลบ",
           align: "center",
-          value: "action_s",        
+          value: "action_s"
         }
       ],
       rowsperpage: [
@@ -443,7 +767,16 @@ export default {
           value: -1
         }
       ],
-      order_appointstatus: []
+      order_appointstatus: [],
+      date: new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
+        .toISOString()
+        .substr(0, 10),
+      menu: false,
+      menu1: false,
+      menu2: false,
+       menu_a: false,
+      menu_1: false,
+      menu_2: false
     };
   },
   async mounted() {
@@ -468,7 +801,7 @@ export default {
         this.addorder_appoint.ApiKey = this.ApiKey;
         this.addorder_appoint.date_time = this.date_today;
 
-        console.log(this.addorder_appoint)
+        console.log(this.addorder_appoint);
         let result = await this.$http.post(
           "order_appoint.insert.php",
           this.addorder_appoint
@@ -565,29 +898,42 @@ export default {
         this.pagination.totalItems / this.pagination.rowsPerPage
       );
     },
-     date_today() {
-            let today = new Date();
-            let dd = String(today.getDate()).padStart(2, '0');
-            let mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-            let yyyy = today.getFullYear()+543;
+    date_today() {
+      let today = new Date();
+      let dd = String(today.getDate()).padStart(2, "0");
+      let mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
+      let yyyy = today.getFullYear() + 543;
 
-            today = dd + '/' + mm + '/' + yyyy;
-            return today
-          },
-          date_tims_ch(){
-            let monthNames = [
-        "","มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน",
-        "พฤษภาคม", "มิถุนายน", "กรกฎาคม", "สิงหาคม",
-        "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"
-    ];
-            let day = this.order_appoints.date_time.slice(0,2);
-            let month = monthNames[parseInt(this.order_appoints.date_time.slice(3,5))];
-            let year = this.order_appoints.date_time.slice(6);
-            let years = parseInt(year);
-            let today = day + ' ' + month + ' ' + years;
-            return today
-          },
-          
+      today = dd + "/" + mm + "/" + yyyy;
+      return today;
+    },
+    date_tims_ch() {
+      let monthNames = [
+        "",
+        "มกราคม",
+        "กุมภาพันธ์",
+        "มีนาคม",
+        "เมษายน",
+        "พฤษภาคม",
+        "มิถุนายน",
+        "กรกฎาคม",
+        "สิงหาคม",
+        "กันยายน",
+        "ตุลาคม",
+        "พฤศจิกายน",
+        "ธันวาคม"
+      ];
+      let day = this.order_appoints.date_time.slice(0, 2);
+      let month =
+        monthNames[parseInt(this.order_appoints.date_time.slice(3, 5))];
+      let year = this.order_appoints.date_time.slice(6);
+      let years = parseInt(year);
+      let today = day + " " + month + " " + years;
+      return today;
+    },
+      color() {
+      return "green darken-4";
+    },
   }
 };
 </script>

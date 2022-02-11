@@ -32,7 +32,7 @@
     </table>
       <table border="0" width="100%" align="center">
         <tr>
-            <td width="100%" class="regular16">เพื่อใช้ประกอบการพิจารณาย้ายข้าราชการครู ประจำปี {{ conditions_transfers.year_s }} ครั้งที่ {{ conditions_transfers.time_s }} นั้น วิทยาลัย{{ colleges_user.college_name }} ได้จัดประชุมคณะกรรมการบริหารสถานศึกษาแล้ว มีมติให้จัดความต้องการครูในสาขาวิชา เรียงลำดับดังต่อไปนี้  </td>
+            <td width="100%" class="regular16">เพื่อใช้ประกอบการพิจารณาย้ายข้าราชการครู ประจำปี {{ conditions_transfers.year_s }} ครั้งที่ {{ conditions_transfers.time_s }} นั้น {{ colleges_user.college_name }} ได้จัดประชุมคณะกรรมการบริหารสถานศึกษาแล้ว มีมติให้จัดความต้องการครูในสาขาวิชา เรียงลำดับดังต่อไปนี้  </td>
         </tr>
     </table>
      <table width="100%" align="center" class="table">

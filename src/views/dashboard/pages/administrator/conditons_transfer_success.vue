@@ -36,8 +36,12 @@
         <span>สรุปผล</span>
         <v-icon>mdi-bookmark-check</v-icon>
       </v-btn>
+       <v-btn to="/admin/Order_appoint">
+        <span>พิจารณา</span>
+        <v-icon>mdi-bookmark-check</v-icon>
+      </v-btn>
     </v-bottom-navigation>
-    <v-container>
+    <v-container fluid>
       <base-material-card
         icon="mdi-clipboard-text"
         title="ข้อมูลสรุปผลการประมวลผลการย้าย"
@@ -98,12 +102,53 @@
               <span style="font-size:16px;"> {{ item.college_name_old }}</span>
             </v-chip>
           </template>
+
           <template v-slot:[`item.college_name_new`]="{ item }">
             <v-chip color="green" dark>
               <span style="font-size:16px;"> {{ item.college_name_new }}</span>
             </v-chip>
           </template>
 
+          <template v-slot:[`item.service_status`]="{ item }">
+            <v-chip v-if="item.service_status === 'service'" color="yellow">
+              <span style="font-size:16px;"> <v-icon>mdi-check</v-icon></span>
+            </v-chip>
+          </template>
+
+          <template v-slot:[`item.demand_college`]="{ item }">
+            <v-chip v-if="item.status_select === 'demand'" color="yellow">
+              <span style="font-size:16px;"> <v-icon>mdi-check</v-icon></span>
+            </v-chip>
+          </template>
+
+          <template v-slot:[`item.status_select`]="{ item }">
+            <v-chip color="green" dark>
+              <span
+                style="font-size:16px;"
+                v-if="item.status_select === 'demand'"
+              >
+                ว.ประสงค์รับ</span
+              >
+              <span
+                style="font-size:16px;"
+                v-if="item.status_select === 'agree'"
+              >
+                ปกติ</span
+              >
+              <span
+                style="font-size:16px;"
+                v-if="item.status_select === 'sw_normal'"
+              >
+                สับเปลี่ยน</span
+              >
+              <span
+                style="font-size:16px;"
+                v-if="item.status_select === 'sw_agree'"
+              >
+                (แลกเปลี่ยน)</span
+              >
+            </v-chip>
+          </template>
           <v-alert
             slot="no-results"
             :value="true"
@@ -138,7 +183,8 @@
 export default {
   data() {
     return {
-      value:6,
+      i:0,
+      value: 6,
       loading: true,
       ApiKey: "HRvec2021",
       branch_s: [],
@@ -172,17 +218,43 @@ export default {
       headers: [
         { text: "ครั้งที่", align: "left", value: "time_s" },
         { text: "ปีที่", align: "center", value: "year_s" },
+        { text: "สังกัด", align: "left", value: "college_name_new" },
+        { text: "เลขที่", align: "center", value: "id_position" },
+        { text: "ตำแหน่ง", align: "center", value: "name_position" },
+        { text: "รหัสสาขา", align: "center", value: "id_branch" },
+        { text: "เงื่อนไข", align: "center", value: "branch_name" },
         { text: "รหัสบัตรประชาชน", align: "center", value: "id_card" },
         { text: "คำนำหน้าชื่อ", align: "center", value: "title_s" },
         { text: "ชื่อ", align: "center", value: "frist_name" },
         { text: "นามสกุล", align: "center", value: "last_name" },
-        { text: "ชื่อตำแหน่ง", align: "center", value: "name_position" },
-        { text: "เลขที่ตำแหน่งเดิม", align: "left", value: "id_postion_old" },
-        { text: "สถานศึกษาเดิม", align: "left", value: "college_name_old" },
-        { text: "สถานศึกษาแห่งใหม่", align: "left", value: "college_name_new" },
-        { text: "เลขที่ตำแหน่งใหม่", align: "center", value: "id_position" },
-        { text: "รหัสสาขา", align: "center", value: "id_branch" },
-        { text: "สาขา", align: "center", value: "branch_name" }
+         { text: "ตำแหน่ง", align: "center", value: "name_position" },
+        { text: "เลขที่", align: "left", value: "id_postion_old" },
+        { text: "สังกัดเดิม", align: "left", value: "college_name_old" },
+        {
+          text: "จำนวนผู้ขอย้ายรวม",
+          align: "left",
+          value: "personnel_num_all"
+        },
+        { text: "วุฒิตรง(อันดับ)", align: "left", value: "personnel_num_ed" },
+        {
+          text: "จำนวนผู้ขอย้ายในสาขาเดียวกัน",
+          align: "left",
+          value: "personnel_num_branch"
+        },
+        { text: "ลำดับที่ขอย้าย", align: "left", value: "sequence_n" },
+        {
+          text: "อายุราชการในสถานศึกษาปัจจุบัน",
+          align: "left",
+          value: "age_app_cal"
+        },
+        { text: "อายุราชการตั้งแต่บรรจุ", align: "left", value: "age_app" },
+        { text: "ช่วยปฏิบัติราชการ", align: "left", value: "service_status" },
+        {
+          text: "วิทยาลัยประสงค์รับย้าย",
+          align: "left",
+          value: "demand_college"
+        },
+        { text: "สถานะ", align: "left", value: "status_select" }
       ],
       rowsperpage: [
         25,
@@ -192,11 +264,10 @@ export default {
           text: "All",
           value: -1
         }
-      ],    
+      ],
       conditons_transfer_successs: [],
       updatepositions_condition: {},
-      transference_locations: [],      
-    
+      transference_locations: []
     };
   },
   async mounted() {
@@ -257,6 +328,15 @@ export default {
     },
     color() {
       return "green darken-4";
+    },
+    date_today_cal() {
+      let today = new Date();
+      let dd = String(today.getDate()).padStart(2, "0");
+      let mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
+      let yyyy = today.getFullYear();
+
+      today = yyyy + "-" + mm + "-" + dd;
+      return today;
     }
   }
 };

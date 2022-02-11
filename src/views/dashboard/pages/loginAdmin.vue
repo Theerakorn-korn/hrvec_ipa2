@@ -1,6 +1,20 @@
 <template>
   <v-container id="user-profile" fluid tag="section" class="text_google">
     <v-row justify="center">
+      <v-col cols="12" lg="12">
+        <v-bottom-navigation  v-model="value" :value="value" :background-color="color" horizontal>
+          <v-btn color="primary" max-width="100%"  elevation="3" rounded to="/pages/login">
+           <h3><span>เข้าสู่ระบบ : ข้าราชการครูและบุคลากรทางการศึกษา</span></h3> 
+            <v-icon>mdi-account-key</v-icon>
+          </v-btn>
+
+          <v-btn color="warning" max-width="100%" elevation="3" rounded to="/pages/loginAdmin">
+            <h3><span>เข้าสู่ระบบ : สถานศึกษา</span></h3>
+
+            <v-icon>mdi-login-variant</v-icon>
+          </v-btn>
+        </v-bottom-navigation>
+      </v-col>
       <v-col cols="12" md="8">
         <base-material-card color="warning">
           <template v-slot:heading>
@@ -63,7 +77,7 @@
               กลุ่มงานจัดการงานบุคคล
             </h4>
             <hr class="mb-4" />
-            <v-btn color="success" rounded class="mr-0">
+            <v-btn color="success" rounded class="mr-0" to="/news">
               คู่มือใช้งานระบบ
             </v-btn>
           </v-card-text>
@@ -133,7 +147,12 @@ export default {
         }
       }
     }
-  }
+  },
+  computed: {
+      color () {
+      return 'orange lighten-1'      
+    }
+   }
 };
 </script>
 <style>
