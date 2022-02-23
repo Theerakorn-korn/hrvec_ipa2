@@ -22,6 +22,7 @@
             </v-col>
             <v-col cols="12" lg="6" class="text-right">
               <v-btn
+                v-if="periods.period_enable === '1'"
                 large
                 right
                 depressed
@@ -30,6 +31,11 @@
               >
                 <v-icon>mdi-plus-circle-outline</v-icon>เพิ่มรายการ
               </v-btn>
+              <v-alert v-else prominent type="error">
+                <h3>
+                  อยู่ระหว่างพิจารณาย้าย ไม่สามารถปรับปรุงข้อมูลวุฒิการศึกษาได้
+                </h3>
+              </v-alert>
             </v-col>
           </v-row>
         </v-card>
@@ -41,21 +47,36 @@
           :items="personnel_educations"
           :search="search"
         >
-          <template v-slot:[`item.actions`]="{ item }">
-            <v-icon
-              color="yellow"
-              @click.stop="personnel_educationEdit(item.id_red)"
-            >
-              mdi-pencil
-            </v-icon>
-          </template>
-          <template v-slot:[`item.action_s`]="{ item }">
-            <v-icon
-              color="red"
-              @click.stop="personnel_educationDelete(item.id_red)"
-            >
-              mdi-delete
-            </v-icon>
+          <template v-slot:[`item`]="{ item, index }">
+            <tr>
+              <td>{{ index + 1 }}</td>
+              <td>{{ item.id_branch }}</td>
+              <td>{{ item.name_branch }}</td>
+              <td>{{ item.education_level }}</td>
+              <td>{{ item.faculty_name }}</td>
+              <td>{{ item.branch_name }}</td>
+              <td>{{ item.academy_name }}</td>
+              <td>{{ item.year_finish }}</td>
+              <td>{{ item.academic_results }}</td>
+              <td>
+                <v-icon
+                  color="yellow"
+                  @click.stop="personnel_educationEdit(item.id_red)"
+                  v-if="periods.period_enable === '1'"
+                >
+                  mdi-pencil
+                </v-icon>
+              </td>
+              <td>
+                <v-icon
+                  color="red"
+                  @click.stop="personnel_educationDelete(item.id_red)"
+                  v-if="periods.period_enable === '1'"
+                >
+                  mdi-delete
+                </v-icon>
+              </td>
+            </tr>
           </template>
           <v-alert
             slot="no-results"
@@ -108,7 +129,7 @@
                   <v-layout wrap>
                     <v-flex md12>
                       <v-row>
-                        <v-col cols="12" lg="6">                         
+                        <v-col cols="12" lg="6">
                           <v-combobox
                             v-model="addpersonnel_education.education_level"
                             :items="education_level"
@@ -418,6 +439,8 @@ export default {
       editpersonnel_educationdialog: false,
       deletepersonnel_educationdialog: false,
       showimagedialog: false,
+      periods: [],
+      period_enable: "1",
       snackbar: {
         show: false,
         color: "",
@@ -427,10 +450,11 @@ export default {
       },
       currentPK: null,
       headers: [
-        { text: "รหัสประเภทสาขา", align: "left", value: "id_branch" },
+        { text: "#", align: "center", value: "number_row" },
+        { text: "รหัสประเภทสาขา", align: "center", value: "id_branch" },
         { text: "ประเภทสาขาวิชา", align: "left", value: "name_branch" },
-        { text: "ระดับการศึกษา", align: "left", value: "education_level" },
-        { text: "คณะวิชา", align: "left", value: "faculty_name" },
+        { text: "ระดับการศึกษา", align: "center", value: "education_level" },
+        { text: "คณะวิชา", align: "center", value: "faculty_name" },
         { text: "สาขาวิชา", align: "center", value: "branch_name" },
         { text: "จบจาก", align: "center", value: "academy_name" },
         { text: "ปีที่จบ", align: "center", value: "year_finish" },
@@ -469,7 +493,7 @@ export default {
       personnel_educations: [],
       personnel_education_sub: [],
       branch_s: [],
-      showbranchdata:[],
+      showbranchdata: [],
       education_level: ["ปริญญาตรี", "ปริญญาโท", "ปริญญาเอก"]
     };
   },
@@ -480,6 +504,13 @@ export default {
       ApiKey: this.ApiKey
     });
     this.branch_s = result_branch.data;
+
+    let result_period;
+    result_period = await this.$http.post("period.php", {
+      ApiKey: this.ApiKey,
+      period_enable: this.period_enable
+    });
+    this.periods = result_period.data;
 
     this.personnel_educationsQueryAll();
     this.getAllbranchdata();
@@ -622,3 +653,8 @@ export default {
   }
 };
 </script>
+<style>
+.v-data-table thead th {
+  font-size: 16px !important;
+}
+</style>

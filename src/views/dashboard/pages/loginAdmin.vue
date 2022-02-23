@@ -2,7 +2,7 @@
   <v-container id="user-profile" fluid tag="section" class="text_google">
     <v-row justify="center">
       <v-col cols="12" lg="12">
-        <v-bottom-navigation  v-model="value" :value="value" :background-color="color" horizontal>
+        <v-bottom-navigation :background-color="color" horizontal>
           <v-btn color="primary" max-width="100%"  elevation="3" rounded to="/pages/login">
            <h3><span>เข้าสู่ระบบ : ข้าราชการครูและบุคลากรทางการศึกษา</span></h3> 
             <v-icon>mdi-account-key</v-icon>

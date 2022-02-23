@@ -1,5 +1,21 @@
 <template>
   <div>
+   <v-bottom-navigation    
+      color="info"
+      horizontal    
+      :background-color="color"
+      dark
+    >
+      <v-btn to="/admin/conditions_branch">
+        <span>รายละเอียดเงือนไขสาขาวิชา </span>
+        <v-icon>mdi-source-branch</v-icon>
+      </v-btn>
+
+      <v-btn to="/admin/conditions_transfer">
+        <span>รายการเงือนไขสาขาวิชา</span>
+        <v-icon>mdi-source-branch</v-icon>
+      </v-btn>
+    </v-bottom-navigation>
     <v-bottom-navigation
       :value="value"
       color="info"
@@ -8,9 +24,13 @@
       :background-color="color"
       dark
     >
+      <v-btn to="/admin/transference_location_detail">
+        <span>รายละเอียดผู้ยืนย้าย ประกอบพิจารณา </span>
+        <v-icon>mdi-details</v-icon>
+      </v-btn>
       <v-btn to="/admin/transference_location">
         <span>รายละเอียดผู้ยืนย้าย </span>
-        <v-icon>mdi-history</v-icon>
+        <v-icon>mdi-details</v-icon>
       </v-btn>
 
       <v-btn to="/admin/transference_personnel">
@@ -146,10 +166,10 @@
             </template>
 
             <template v-slot:[`item.personnel_num_s`]="{ item }">
-              <v-chip color="yellow" v-if="item.personnel_num_s >= '2'">
+              <v-chip color="green" v-if="item.personnel_num_s <= item.quantity_n" dark>
                 <span style="font-size:16px;"> {{ item.personnel_num_s }}</span>
               </v-chip>
-              <v-chip v-else color="green" dark>
+              <v-chip v-else color="yellow" dark>
                 <span style="font-size:16px;"> {{ item.personnel_num_s }}</span>
               </v-chip>
             </template>
@@ -174,7 +194,7 @@
 
             <template v-slot:[`item.status_process`]="{ item }">
               <span
-                v-if="item.personnel_num_s <= 1 && item.condition_edu === item.personnel_edu">
+                v-if="item.personnel_num_s <= item.quantity_n && item.condition_edu === item.personnel_edu">
                                    <v-icon large color="green darken-2"
                   >mdi-clipboard-check</v-icon
                 ></span
@@ -285,19 +305,7 @@
                 @click="transference_locationDelete()"
                 ><v-icon>mdi-format-clear</v-icon>
                 ลบข้อมูลการย้ายที่ไม่ได้กดบันทึกเสนอ</v-btn
-              >
-              <v-btn
-                class="ma-1"
-                elevation="2"
-                rounded
-                color="info"
-                dark
-                x-large
-                :href="'#/admin/print_report_movement/' + times_s + year_s"
-                target="_blank"
-                ><v-icon>mdi-printer</v-icon> พิมพ์คำสั่ง
-                แต่งตั้งผู้รักษาการในตำแหน่ง</v-btn
-              >
+              >             
             </v-col>
           </v-row>
         </v-card>
@@ -1028,11 +1036,7 @@ export default {
         this.addreturn_man_power.case_vacancy =
           "ย้ายรอบ-" + this.periods.period_times + "/" + this.period_years;
 
-        /* console.log(this.updatepositions)
-       console.log(this.updatepositions_condition)
-       console.log(this.addreturn_man_power)
- */
-
+      
         let result_man_return = await this.$http.post(
           "man_power.insert.php",
           this.addreturn_man_power
@@ -1136,7 +1140,7 @@ export default {
       return yyyy;
     },
     color() {
-      return "orange darken-4";
+      return "light-green darken-4";
     }
   }
 };

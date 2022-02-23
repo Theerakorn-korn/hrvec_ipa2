@@ -1,16 +1,34 @@
 <template>
   <div>
-    <v-bottom-navigation
-      :value="value"
+    <v-bottom-navigation      
       color="info"
-      horizontal
-      v-model="value"
+      horizontal    
       :background-color="color"
       dark
     >
+      <v-btn to="/admin/conditions_branch">
+        <span>รายละเอียดเงือนไขสาขาวิชา </span>
+        <v-icon>mdi-source-branch</v-icon>
+      </v-btn>
+
+      <v-btn to="/admin/conditions_transfer">
+        <span>รายการเงือนไขสาขาวิชา</span>
+        <v-icon>mdi-source-branch</v-icon>
+      </v-btn>
+    </v-bottom-navigation>
+    <v-bottom-navigation      
+      color="info"
+      horizontal     
+      :background-color="color"
+      dark
+    >
+      <v-btn to="/admin/transference_location_detail">
+        <span>รายละเอียดผู้ยืนย้าย ประกอบพิจารณา </span>
+        <v-icon>mdi-details</v-icon>
+      </v-btn>
       <v-btn to="/admin/transference_location">
         <span>รายละเอียดผู้ยืนย้าย </span>
-        <v-icon>mdi-history</v-icon>
+        <v-icon>mdi-details</v-icon>
       </v-btn>
 
       <v-btn to="/admin/transference_personnel">
@@ -40,11 +58,11 @@
     <v-container fluid>
       <base-material-card
         icon="mdi-clipboard-text"
-        title="ข้อมูลการย้าย สายการสอนและสายสนับสนุน (ประมวลผลแบบที่ 1)"
+        title="รายละเอียดผู้ยืนย้าย (ประมวลผลแบบที่ 1)"
       >
         <v-card class="mb-4 pa-2">
           <v-row>
-            <v-col cols="12" md="6" class="text-right">
+            <v-col cols="12" md="2" class="text-right">
               <v-text-field
                 v-model="search"
                 append-icon="mdi-magnify"
@@ -54,6 +72,19 @@
                 dense
                 filled
                 class="mb-2"
+              />
+            </v-col>
+            <v-col cols="12" md="2">
+              <v-text-field
+                v-model="search_college"
+                append-icon="mdi-magnify"
+                label="ค้นหา"
+                single-line
+                hide-details
+                dense
+                filled
+                class="mb-2"
+                readonly
               />
             </v-col>
             <v-col cols="12" md="2">
@@ -84,6 +115,27 @@
                 >ค้นหา</v-btn
               >
             </v-col>
+
+            <v-col cols="12" md="2">
+              <v-btn
+                rounded
+                large
+                block
+                color="info"
+                @click="search_college_submit()"
+                >ค้นหาระบุปลายทาง</v-btn
+              >
+            </v-col>
+              <v-col cols="12" md="2">
+              <v-btn
+                rounded
+                large
+                block
+                color="warning"
+                @click="search_not_confirm_submit()"
+                >ไม่ได้บันทึกรายการ</v-btn
+              >
+            </v-col>
           </v-row>
         </v-card>
         <v-data-table
@@ -91,69 +143,107 @@
           :headers="headers"
           :items="transference_locations"
           :search="search"
-        >       
-       
-   
-
-                <template v-slot:[`item.college_name`]="{ item }">
-            <v-chip color="">
-              <span style="font-size:16px;"> {{ item.college_name }}</span>
-            </v-chip>
-          </template>
-
-          <template v-slot:[`item.time_ys`]="{ item }">
-            {{ item.time_ss + "/" + item.year_ss }}
-          </template>
-
-          <template v-slot:[`item.succ_college`]="{ item }">
-            <v-chip :color="getColor(item.succ_college)" dark>
-              <span style="font-size:16px;"> {{ item.succ_college }}</span>
-            </v-chip>
-          </template>
-
-          <template v-slot:[`item.college_name_suss`]="{ item }">
-            <v-chip v-if="item.college_name_suss === ''"> </v-chip>
-            <v-chip
-              v-else-if="item.college_name_suss !== ''"
-              color="green"
-              dark
-            >
-              <span style="font-size:16px;"> {{ item.college_name_suss }}</span>
-            </v-chip>
-          </template>
-
-          <template v-slot:[`item.actions`]="{ item }">
-            <v-chip v-if="item.status_select === 'agree'" color="warning" dark>
-              <span style="font-size:16px;">ปกติ (2)</span>
-            </v-chip>
-            <v-chip
-              v-else-if="item.status_select === 'sw_normal'"
-              color="warning"
-              dark
-            >
-              <span style="font-size:16px;">สับเปลี่ยน (3)</span>
-            </v-chip>
-            <v-chip
-              v-else-if="item.status_select === 'sw_agree'"
-              color="warning"
-              dark
-            >
-              <span style="font-size:16px;">แลกเปลี่ยน (4)</span>
-            </v-chip>
-            <v-icon
-              v-else-if="item.succ_college >= 1"
-              color="red"
-              large
-              @click.stop="deletePosition(item.tid_ref)"
-              >mdi-delete-circle</v-icon
-            >
-            <v-icon
-              v-else
-              color="yellow"
-              large
-              @click.stop="select_idPosition(item.tid_ref, item.id_tfl)"
-              >mdi-credit-card-plus</v-icon
-            >
+        >
+          <template v-slot:[`item`]="{ item, index }">
+            <tr>
+              <td class="text-center">
+                <v-checkbox
+                  v-model="search_college"
+                  :value="item.college_code_new"
+                ></v-checkbox>
+              </td>
+              <td class="text-center">{{ index + 1 }}</td>
+              <td class="text-center">{{ item.id_card }}</td>
+              <td class="text-center">{{ item.title_s }}</td>
+              <td class="text-center">{{ item.frist_name }}</td>
+              <td class="text-center">{{ item.last_name }}</td>
+              <td class="text-center">{{ item.college_code_now }}</td>
+              <td class="text-center">{{ item.college_name_now }}</td>
+              <td class="text-center">{{ item.college_code_new }}</td>
+              <td class="text-center">
+                <v-chip
+                  v-if="item.status_position == null"
+                  color="red"
+                  dark
+                >
+                <v-icon>mdi-close</v-icon>
+                </v-chip>
+                <v-chip v-else color="green" dark>
+                  <span style="font-size:16px;">{{
+                    item.status_position
+                  }}</span>
+                </v-chip>
+              </td>
+              <td class="text-center">
+                <v-chip color="">
+                  <span style="font-size:16px;"> {{ item.college_name }}</span>
+                </v-chip>
+              </td>
+              <td class="text-center">
+                {{ item.time_ss + "/" + item.year_ss }}
+              </td>
+              <td class="text-center">{{ item.age_app_time }}</td>
+              <td class="text-center">{{ item.date_time }}</td>
+              <td class="text-center">
+                <v-chip
+                  v-if="item.status_select === 'agree'"
+                  color="warning"
+                  dark
+                >
+                  <span style="font-size:16px;">ปกติ (2)</span>
+                </v-chip>
+                <v-chip
+                  v-else-if="item.status_select === 'sw_normal'"
+                  color="warning"
+                  dark
+                >
+                  <span style="font-size:16px;">สับเปลี่ยน (3)</span>
+                </v-chip>
+                <v-chip
+                  v-else-if="item.status_select === 'sw_agree'"
+                  color="warning"
+                  dark
+                >
+                  <span style="font-size:16px;">แลกเปลี่ยน (4)</span>
+                </v-chip>
+                <v-icon
+                  v-else-if="item.succ_college >= 1"
+                  color="red"
+                  large
+                  @click.stop="deletePosition(item.tid_ref)"
+                  >mdi-delete-circle</v-icon
+                >
+                <v-icon
+                  v-else
+                  color="yellow"
+                  large
+                  @click.stop="select_idPosition(item.tid_ref, item.id_tfl)"
+                  >mdi-credit-card-plus</v-icon
+                >
+              </td>
+              <td class="text-center">
+                <v-chip :color="getColor(item.succ_college)" dark>
+                  <span style="font-size:16px;"> {{ item.succ_college }}</span>
+                </v-chip>
+              </td>
+              <td class="text-center">
+                <v-chip :color="getColor(item.succ_college)" dark>
+                  <span style="font-size:16px;">
+                    <v-chip v-if="item.college_name_suss === ''"> </v-chip>
+                    <v-chip
+                      v-else-if="item.college_name_suss !== ''"
+                      color="green"
+                      dark
+                    >
+                      <span style="font-size:16px;">
+                        {{ item.college_name_suss }}</span
+                      >
+                    </v-chip>
+                  </span>
+                </v-chip>
+              </td>
+              <td class="text-center">{{ item.id_position_new }}</td>
+            </tr>
           </template>
 
           <v-alert
@@ -337,8 +427,9 @@
                       <v-flex md12>
                         <div class="text-center">
                           <h2>
-                            {{ transference_location_s.id_branch_s }} สาขาวิชาเอก
-                            : {{ transference_location_s.name_branch }}
+                            {{ transference_location_s.id_branch_s }}
+                            สาขาวิชาเอก :
+                            {{ transference_location_s.name_branch }}
                           </h2>
 
                           <h2>
@@ -400,23 +491,24 @@
               <div class="text-right"></div>
             </base-material-card>
             <v-card-text>
-              <v-form ref="cancelform" lazy-validation>                
+              <v-form ref="cancelform" lazy-validation>
                 <v-container grid-list-md>
                   <v-layout wrap>
                     <v-flex md6>
-                     
-                         <h3>รหัสอ้างอิง :
-                      {{ transference_personnels_id_ref.id_ref }}</h3> 
-                      
+                      <h3>
+                        รหัสอ้างอิง :
+                        {{ transference_personnels_id_ref.id_ref }}
+                      </h3>
 
                       <div class="text--center">
                         รหัสบัตรประชาชน :
                         {{ transference_personnels_id_ref.id_card }}
-                       <h3> ชื่อ-นามสกุล :
-                        {{ transference_personnels_id_ref.title_s
-                        }}{{ transference_personnels_id_ref.frist_name }}
-                        {{ transference_personnels_id_ref.last_name }}
-                         </h3> 
+                        <h3>
+                          ชื่อ-นามสกุล :
+                          {{ transference_personnels_id_ref.title_s
+                          }}{{ transference_personnels_id_ref.frist_name }}
+                          {{ transference_personnels_id_ref.last_name }}
+                        </h3>
 
                         สถานศึกษาปัจจุบัน :
                         {{ transference_personnels_id_ref.college_name }}
@@ -502,34 +594,42 @@ export default {
       transference_locations: [],
       edittransference_location: {},
       search: "",
+      search_college: "",
       pagination: {},
       singleSelect: false,
       selected: [],
       headers: [
-        /*  { text: "อ้างอิง", align: "center", value: "id_ref" }, */       
+        /*  { text: "อ้างอิง", align: "center", value: "id_ref" }, */
+        { text: "เลือก", align: "left", value: "select_item" },
+        { text: "#", align: "center", value: "index" },
         { text: "รหัสบัตรประชาชน", align: "center", value: "id_card" },
-        { text: "คำนำหน้า", align: "left", value: "title_s" },
-        { text: "ชื่อ", align: "left", value: "frist_name" },
-        { text: "นามสกุล", align: "left", value: "last_name" },
-
+        { text: "คำนำหน้า", align: "center", value: "title_s" },
+        { text: "ชื่อ", align: "center", value: "frist_name" },
+        { text: "นามสกุล", align: "center", value: "last_name" },
         { text: "ส.ปัจจุบัน", align: "center", value: "college_code_now" },
-        { text: "ส.ปัจจุบัน", align: "left", value: "college_name_now" },
-
+        { text: "ส.ปัจจุบัน", align: "center", value: "college_name_now" },
         { text: "ส.แห่งใหม่", align: "center", value: "college_code_new" },
-        { text: "ส.แห่งใหม่", align: "left", value: "college_name" },
+        { text: "On/Off.", align: "center", value: "status_position" },
+
+        { text: "ส.แห่งใหม่", align: "center", value: "college_name" },
         { text: "ครั้งที่/ปี", align: "center", value: "time_ys" },
         { text: "อายุงาน", align: "center", value: "age_app_time" },
         { text: "วันที่", align: "center", value: "date_time" },
         { text: "ย้ายแบบที่ 1", align: "center", value: "actions" },
         { text: "แห่งใหม่ ส.", align: "center", value: "succ_college" },
-        { text: "วิทยาลัยแห่งใหม่", align: "left", value: "college_name_suss" },
-        { text: "เลขที่", align: "left", value: "id_position_new" }
+
+        {
+          text: "วิทยาลัยแห่งใหม่",
+          align: "center",
+          value: "college_name_suss"
+        },
+        { text: "เลขที่", align: "center", value: "id_position_new" }
       ],
       header_trans: [
         { text: "ลำดับ", align: "center", value: "sequence_n" },
         { text: "รหัสอ้างอิง", align: "center", value: "id_ref" },
         { text: "สาขาวิชา", align: "center", value: "name_branch" },
-        { text: "วิทยาลัย", align: "left", value: "college_name" }
+        { text: "วิทยาลัย", align: "center", value: "college_name" }
       ],
 
       rowsperpage: [
@@ -562,7 +662,7 @@ export default {
       period_enable: "1",
       addreturn_man_power: {},
       position: "ครู",
-      man_power_cancel:{},
+      man_power_cancel: {}
     };
   },
   async mounted() {
@@ -618,6 +718,42 @@ export default {
       this.transference_locations = result.data;
     },
 
+    async search_college_submit() {
+      if (
+        this.search_college === "" ||
+        this.times_select === "" ||
+        this.years_select === ""
+      ) {
+        this.snackbar.icon = "mdi-font-awesome";
+        this.snackbar.color = "red";
+        this.snackbar.text = "เลือกรายการ กำหนดครั้งที่และปีให้ถูกต้อง";
+        this.snackbar.show = true;
+      } else {
+        this.loading = true;
+        let result = await this.$http
+          .post("transference_location.php", {
+            ApiKey: this.ApiKey,
+            time_s: this.times_select,
+            year_s: this.years_select,
+            college_code: this.search_college
+          })
+          .finally(() => (this.loading = false));
+        this.transference_locations = result.data;
+      }
+    },
+
+
+ async search_not_confirm_submit() {
+      this.loading = true;
+      let result = await this.$http
+        .post("transference_location.php", {
+          ApiKey: this.ApiKey,
+          not_confirm:'ok',
+        })
+        .finally(() => (this.loading = false));
+      this.transference_locations = result.data;
+    },
+
     async transference_locationQueryAll() {
       this.loading = true;
       let result = await this.$http
@@ -634,15 +770,12 @@ export default {
         id_ref: tid_ref
       });
       this.transference_personnels_id_ref = result_con.data;
-    
 
       let result = await this.$http.post("transference_location.php", {
         ApiKey: this.ApiKey,
         id_tfl: id_tfl
       });
       this.transference_location_s = result.data;
-     /*  console.log(result.data)
- */
 
       this.updatepositions = {};
       this.man_powerQuery();
@@ -720,7 +853,7 @@ export default {
       }
     },
     async deletePosition(tid_ref) {
-       let result_con = await this.$http.post("transference_personnel.php", {
+      let result_con = await this.$http.post("transference_personnel.php", {
         ApiKey: this.ApiKey,
         id_ref: tid_ref
       });
@@ -743,7 +876,7 @@ export default {
 
     async cancelSubmit() {
       if (this.$refs.cancelform.validate()) {
-         this.man_powerss.ApiKey = this.ApiKey;
+        this.man_powerss.ApiKey = this.ApiKey;
         this.man_powerss.status_booking = "";
 
         this.conditons_transfer_successs.ApiKey = this.ApiKey;
@@ -751,7 +884,7 @@ export default {
         this.man_power_cancel.ApiKey = this.ApiKey;
         this.man_power_cancel.id_position = this.conditons_transfer_successs.id_postion_old;
 
-      /*  console.log(this.man_powerss)
+        /*  console.log(this.man_powerss)
        console.log(this.conditons_transfer_successs)
        console.log(this.man_power_cancel) */
         let result_man = await this.$http.post(
@@ -794,7 +927,7 @@ export default {
         else if (calories > 200) return 'orange'
         else return 'green'  */
 
-     return "green";     
+      return "green";
     }
   },
   computed: {
@@ -812,10 +945,10 @@ export default {
     color() {
       return "cyan darken-3";
     },
-     period_years() {
+    period_years() {
       let yyyy = parseInt(this.periods.period_year) + 543;
       return yyyy;
-    },
+    }
   }
 };
 </script>

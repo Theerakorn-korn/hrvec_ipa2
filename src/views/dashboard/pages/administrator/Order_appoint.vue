@@ -1,6 +1,24 @@
 <template>
   <div>
-    <v-bottom-navigation
+     <v-bottom-navigation
+      :value="value"
+      color="info"
+      horizontal
+      v-model="value"
+      :background-color="color"
+      dark
+    >
+      <v-btn to="/admin/conditions_branch">
+        <span>รายละเอียดเงือนไขสาขาวิชา </span>
+        <v-icon>mdi-history</v-icon>
+      </v-btn>
+
+      <v-btn to="/admin/conditions_transfer">
+        <span>รายการเงือนไขสาขาวิชา</span>
+        <v-icon>mdi-calculator</v-icon>
+      </v-btn>
+    </v-bottom-navigation>
+      <v-bottom-navigation
       :value="value"
       color="info"
       horizontal
@@ -34,10 +52,6 @@
       </v-btn>
       <v-btn to="/admin/conditons_transfer_success">
         <span>สรุปผล</span>
-        <v-icon>mdi-bookmark-check</v-icon>
-      </v-btn>
-       <v-btn to="/admin/Order_appoint">
-        <span>พิจารณา</span>
         <v-icon>mdi-bookmark-check</v-icon>
       </v-btn>
     </v-bottom-navigation>
@@ -799,9 +813,7 @@ export default {
     async addorder_appointSubmit() {
       if (this.$refs.addorder_appointform.validate()) {
         this.addorder_appoint.ApiKey = this.ApiKey;
-        this.addorder_appoint.date_time = this.date_today;
-
-        console.log(this.addorder_appoint);
+        this.addorder_appoint.date_time = this.date_today;     
         let result = await this.$http.post(
           "order_appoint.insert.php",
           this.addorder_appoint

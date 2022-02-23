@@ -40,27 +40,62 @@
           :headers="headers"
           :items="personnel_work_historys"
           :search="search"
+          class="table"
         >
-          <template v-slot:[`item.government_status`]="{ item }">
-            <span v-if="item.government_status === '0'">ไม่ได้ช่วยราชการ</span>
-            <span v-if="item.government_status === '1'">ช่วยราชการ</span>
-          </template>
-
-          <template v-slot:[`item.actions`]="{ item }">
-            <v-icon
-              color="yellow"
-              @click.stop="personnel_work_historyEdit(item.id_rh)"
-            >
-              mdi-pencil
-            </v-icon>
-          </template>
-          <template v-slot:[`item.action_s`]="{ item }">
-            <v-icon
-              color="red"
-              @click.stop="personnel_work_historyDelete(item.id_rh)"
-            >
-              mdi-delete
-            </v-icon>
+          <template v-slot:[`item`]="{ item, index }">
+            <tr>
+              <td class="text-center">
+                {{ index + 1 }}
+              </td>
+              <td class="text-center">
+                {{ item.id_position_old }}
+              </td>
+              <td>
+                <span v-if="item.government_status === '0'"
+                  >ไม่ได้ช่วยราชการ</span
+                >
+                <span v-if="item.government_status === '1'">ช่วยราชการ</span>
+              </td>
+              <td>
+                {{
+                  item.date_begin
+                    | moment("add", "543 years")
+                    | moment("D MMMM YYYY")
+                }}
+              </td>
+              <td>
+                {{ item.college_name_work }}
+              </td>
+              <td>
+                {{
+                  item.date_end
+                    | moment("add", "543 years")
+                    | moment("D MMMM YYYY")
+                }}
+              </td>
+              <td>
+                {{ item.position_s }}
+              </td>
+              <td>
+                {{ item.special_duty }}
+              </td>
+              <td>
+                <v-icon
+                  color="yellow"
+                  @click.stop="personnel_work_historyEdit(item.id_rh)"
+                >
+                  mdi-pencil
+                </v-icon>
+              </td>
+              <td>
+                <v-icon
+                  color="red"
+                  @click.stop="personnel_work_historyDelete(item.id_rh)"
+                >
+                  mdi-delete
+                </v-icon>
+              </td>
+            </tr>
           </template>
           <v-alert
             slot="no-results"
@@ -136,21 +171,21 @@
                           ></v-text-field>
                         </v-col>
                         <v-col cols="12" lg="6">
-                            <v-text-field
-                                v-model="addpersonnel_work_history.date_begin"
-                                label="วันที่เริ่ม"
-                                prepend-icon="mdi-calendar"
-                             type="date"
-                              ></v-text-field>
+                          <v-text-field
+                            v-model="addpersonnel_work_history.date_begin"
+                            label="วันที่เริ่ม"
+                            prepend-icon="mdi-calendar"
+                            type="date"
+                          ></v-text-field>
                         </v-col>
 
                         <v-col cols="12" lg="6">
-                         <v-text-field
-                                v-model="addpersonnel_work_history.date_end"
-                                label="วันที่สิ้นสุด"
-                                prepend-icon="mdi-calendar"
-                               type="date"
-                              ></v-text-field>
+                          <v-text-field
+                            v-model="addpersonnel_work_history.date_end"
+                            label="วันที่สิ้นสุด"
+                            prepend-icon="mdi-calendar"
+                            type="date"
+                          ></v-text-field>
                         </v-col>
                         <v-col cols="12" lg="12">
                           <v-text-field
@@ -467,7 +502,7 @@ export default {
       },
       currentPK: null,
       headers: [
-        { text: "ลำดับ", align: "center", value: "id_rh" },
+        { text: "#", align: "center", value: "number_row" },
         { text: "เลขที่ตำแหน่ง", align: "center", value: "id_position_old" },
         { text: "สถานะช่วยราชการ", align: "left", value: "government_status" },
         { text: "วันที่", align: "left", value: "date_begin" },
@@ -674,3 +709,8 @@ export default {
   }
 };
 </script>
+<style>
+.v-data-table thead th {
+  font-size: 18px !important;
+}
+</style>

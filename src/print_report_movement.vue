@@ -36,7 +36,9 @@
             src="~../src/assets/krud.jpg"
           ></v-img>
           <div class="head">คำสั่งสำนักงานคณะกรรมการการอาชีวศึกษา</div>
-          <div class="head">ที่ {{ thaiNumber(order_appoints.order_number) }}</div>
+          <div class="head">
+            ที่ {{ thaiNumber(order_appoints.order_number) }}
+          </div>
           <div class="head">เรื่่อง แต่งตั้งผู้รักษาการในตำแหน่ง</div>
           <div class="head">___________________________</div>
           <br />
@@ -53,19 +55,23 @@
             <td colspan="2" width="100%">
               และบุคลากรทางการศึกษา พ.ศ.๒๕๔๗ และที่แก้ไขเพิ่มเติม (ฉบับที่ ๒)
               พ.ศ.๒๕๕๑ โดยอนุมัติ อ.ก.ค.ศ.สำนักงานคณะกรรมการการอาชีวศึกษา
-              ในการประชุมครั้งที่ {{ thaiNumber(order_appoints.meeting_no) }} เมื่อวันที่
+              ในการประชุมครั้งที่
+              {{ thaiNumber(order_appoints.meeting_no) }} เมื่อวันที่
+
               {{
-                order_appoints.meeting_date
-                  | moment("add", "543 years")
-                  | moment("D MMMM YYYY")
-              }}
+                thaiNumber(meeting_dates) +
+                  " " +
+                  meeting_month +
+                  " " +
+                  thaiNumber(meeting_year)
+              }}             
               มีมติอนุมัติให้ย้ายข้าราชการครูและบุคลากรทางการศึกษา ตำแหน่งครู
               จำนวน {{ thaiNumber(order_appoints.count_personnel) }} ราย
               จึงแต่งตั้งข้าราชการครูและบุคลากรทางการศึกษา ตำแหน่งครู
               ไปแต่งตั้งให้ดำรงตำแหน่งเดิมในสถานศึกษาแห่งใหม่ จำนวน
               {{ thaiNumber(order_appoints.count_personnel) }} ราย ดังนี้
             </td>
-          </tr>         
+          </tr>
         </table>
 
         <table
@@ -77,30 +83,40 @@
           <tr>
             <td width="10%"></td>
             <td width="90%" class="regular16 text_j">
-              {{ thaiNumber(index + 1) }}. {{ item.title_s }}{{ item.frist_name }}
-              {{ item.last_name }} ตำแหน่ง{{ item.name_position }} ตำแหน่งเลขที่
-              {{ item.id_postion_old }}
-              {{ item.college_name_old }} 
-            </td>            
+              {{ thaiNumber(index + 1) }}. {{ item.title_s
+              }}{{ item.frist_name }} {{ item.last_name }} ตำแหน่ง{{
+                item.name_position
+              }}
+              ตำแหน่งเลขที่
+              {{ thaiNumber(item.id_postion_old) }}
+              {{ item.college_name_old }}
+            </td>
           </tr>
           <tr>
             <td colspan="2">
-ให้รักษาการในตำแหน่ง{{
-                item.name_position
-              }}
-              ตำแหน่งเลขที่ {{ item.id_position }} {{ item.college_name_new }}
+              ให้รักษาการในตำแหน่ง{{ item.name_position }} ตำแหน่งเลขที่
+              {{ thaiNumber(item.id_position) }} {{ item.college_name_new }}
             </td>
           </tr>
         </table>
 
         <table class="" width="100%">
-           <tr>
+          <tr>
             <td width="10%" colspan="2"></td>
-            <td width="90%">ทั้งนี้ ตั้งแต่วันที่ 1 ตุลาคม 2564 เป็นต้นไป</td>
-          </tr>         
+            <td width="90%">ทั้งนี้ ตั้งแต่วันที่ 
+              {{
+                thaiNumber(dated_orders) +
+                  " " +
+                  dated_order_month +
+                  " " +
+                  thaiNumber(dated_order_year)
+              }}      
+               เป็นต้นไป</td>
+          </tr>
         </table>
-          <table class="" width="100%">          
-          <tr>           
+
+        <table class="" width="100%">
+          <tr>
             <td width="20%"></td>
             <td width="80%">สั่ง ณ วันที่</td>
           </tr>
@@ -117,8 +133,7 @@ export default {
     ApiKey: "HRvec2021",
     valid: true,
     order_appoints: [],
-    conditons_transfer_successs: [],
-   
+    conditons_transfer_successs: []
   }),
 
   async mounted() {
@@ -165,14 +180,25 @@ export default {
         .finally(() => (this.loading = false));
       this.conditons_transfer_successs = result.data;
     },
-    thaiNumber(num){
- var array = {"1":"๑", "2":"๒", "3":"๓", "4" : "๔", "5" : "๕", "6" : "๖", "7" : "๗", "8" : "๘", "9" : "๙", "0" : "๐"};
- var str = num.toString();
- for (var val in array) {
-  str = str.split(val).join(array[val]);
- }
- return str;
-},
+    thaiNumber(num) {
+      var array = {
+        "1": "๑",
+        "2": "๒",
+        "3": "๓",
+        "4": "๔",
+        "5": "๕",
+        "6": "๖",
+        "7": "๗",
+        "8": "๘",
+        "9": "๙",
+        "0": "๐"
+      };
+      var str = num.toString();
+      for (var val in array) {
+        str = str.split(val).join(array[val]);
+      }
+      return str;
+    },
 
     Export2Doc(element, filename) {
       var preHtml =
@@ -234,8 +260,75 @@ export default {
       return result;
     },
     id_url() {
-      let result = this.url_result.slice(1);
+      let result = this.url_result;
       return result[1];
+    },
+
+    meeting_dates() {
+      let day = this.order_appoints.meeting_date.slice(8);
+      let today = day;
+      return today;
+    },
+     dated_orders() {
+      let day = this.order_appoints.dated_order.slice(8);
+      let today = day;
+      return today;
+    },
+
+    meeting_month() {
+      let monthNames = [
+        "",
+        "มกราคม",
+        "กุมภาพันธ์",
+        "มีนาคม",
+        "เมษายน",
+        "พฤษภาคม",
+        "มิถุนายน",
+        "กรกฎาคม",
+        "สิงหาคม",
+        "กันยายน",
+        "ตุลาคม",
+        "พฤศจิกายน",
+        "ธันวาคม"
+      ];
+      let month =
+        monthNames[parseInt(this.order_appoints.meeting_date.slice(3, 5))];
+      let today = month;
+      return today;
+    },
+    dated_order_month() {
+      let monthNames = [
+        "",
+        "มกราคม",
+        "กุมภาพันธ์",
+        "มีนาคม",
+        "เมษายน",
+        "พฤษภาคม",
+        "มิถุนายน",
+        "กรกฎาคม",
+        "สิงหาคม",
+        "กันยายน",
+        "ตุลาคม",
+        "พฤศจิกายน",
+        "ธันวาคม"
+      ];
+      let month =
+        monthNames[parseInt(this.order_appoints.dated_order.slice(3, 5))];
+      let today = month;
+      return today;
+    },
+
+    meeting_year() {   
+      let year = this.order_appoints.meeting_date.slice(0, 4);
+      let years = parseInt(year)+543;
+      let today = years;
+      return today;
+    },
+    dated_order_year() {   
+      let year = this.order_appoints.dated_order.slice(0, 4);
+      let years = parseInt(year)+543;
+      let today = years;
+      return today;
     }
   }
 };
@@ -319,9 +412,9 @@ tfoot td {
   margin-bottom: 0cm;
   margin-left: auto;
   padding-top: 1.5cm;
-  padding-right: 2cm;
+  padding-right: 1.5cm;
   padding-bottom: 1.75cm;
-  padding-left: 3cm;
+  padding-left: 2cm;
 }
 
 .head {
@@ -343,7 +436,7 @@ tfoot td {
 
 .bold16 {
   font-family: "TH SarabunIT๙", "TH SarabunPSK", "Angsana New", AngsanaUPC;
-  font-size: 18pt;
+  font-size: 16pt;
   font-weight: bold;
 }
 
@@ -360,7 +453,7 @@ tfoot td {
 
 .blackBold18 {
   font-family: "TH SarabunIT๙", "TH SarabunPSK", "Angsana New", AngsanaUPC;
-  font-size: 20pt;
+  font-size: 18pt;
   font-weight: bold;
 }
 
@@ -409,7 +502,7 @@ tfoot td {
 
   .head {
     font-family: "TH SarabunIT๙", "TH SarabunPSK", "Angsana New", AngsanaUPC;
-    font-size: 22pt;
+    font-size: 18pt;
     font-weight: bold;
   }
 
@@ -442,7 +535,7 @@ tfoot td {
 
   .blackBold18 {
     font-family: "TH SarabunIT๙", "TH SarabunPSK", "Angsana New", AngsanaUPC;
-    font-size: 22pt;
+    font-size: 18pt;
     font-weight: bold;
   }
 

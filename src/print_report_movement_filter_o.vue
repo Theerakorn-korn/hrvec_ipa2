@@ -245,7 +245,7 @@ export default {
       return result;
     },
     id_url() {
-      let result = this.url_result.slice(1);
+       let result = this.url_result;
       return result[1];
     },
 

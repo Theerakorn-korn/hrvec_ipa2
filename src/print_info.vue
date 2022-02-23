@@ -19,7 +19,8 @@
        <span class="white--text" hidden> {{ transference_personnels.time_s }} - {{ day_tims }}- {{ transference_personnels.year_s }}   </span>
                <hr>
      </div>
-     <table border="0" width="100%">
+     <br>
+     <table class="text_j" border="0" width="100%">
          <tr>
              <td width="50%"></td>
              <td width="15%"><div class="regular16">เขียนที่</div></td>
@@ -47,19 +48,19 @@
          </tr>
         </table>
 
-         <table border="0" width="100%" align="center">       
+         <table class="text_j" border="0" width="100%" align="center">       
             <tr>            
              <td width="30%"><div class="regular16">วิทยฐานะ (กรณีข้าราชการครู)</div></td>
              <td width="70%"><div class="regular16 td_line" align="center">{{ personnel_temporarys.rang_name || '-' }}</div></td>
          </tr>
          </table>
-         <table border="0" width="100%" align="center">    
+         <table class="text_j" border="0" width="100%" align="center">    
          <tr>            
              <td width="20%"><div class="regular16">สังกัด (สถานศึกษา)</div></td>
              <td width="80%"><div class="regular16 td_line" align="center">{{ personnel_temporarys.college_name }} </div></td>
          </tr>        
          </table>
-         <table border="0" width="100%" align="center">      
+         <table class="text_j" border="0" width="100%" align="center">      
           <tr>            
              <td width="35%"><div class="regular16">เลขประจำตัวประชาชน 13 หลัก  </div></td>
              <td width="65%"><div class="regular16 td_line" align="center">{{ personnel_temporarys.id_card }} </div></td>
@@ -71,7 +72,7 @@
              <td width="65%"><div class="regular16 td_line" align="center">{{ date_appoin_ch }}</div></td>
          </tr>
          </table>
-          <table border="0" width="100%" align="center"> 
+          <table class="text_j" border="0" width="100%" align="center"> 
           <tr>            
              <td width="45%"><div class="regular16">ระยะเวลาตั้งแต่บรรจุเข้ารับราชการ เป็นเวลา </div></td>
              <td width="55%"><div class="regular16 td_line" align="center"> {{ get_gov_Age }} </div></td>
@@ -87,13 +88,13 @@
          </tr>
           </table>
 
-            <table border="0" width="100%" align="center"> 
+            <table class="text_j" border="0" width="100%" align="center"> 
            <tr>            
              <td width="55%"><div class="regular16">ปฏิบัติหน้าที่ในสถานศึกษา/หน่วยงานปัจจุบัน เป็นเวลา</div></td>
              <td width="45%"><div class="regular16 td_line" align="center"> {{ transference_personnels.age_app_time }} </div></td>
          </tr>
             </table>
-          <table border="0" width="100%" align="center">
+          <table class="text_j" border="0" width="100%" align="center">
          <tr>            
              <td><div class="regular12" align="center">(การย้ายครั้งที่ 1 นับถึงวันที่ 31 มีนาคมของปีเดียวกัน / การย้ายครั้งที่ 2 นับถึงวันที่ 30 กันยายนของปีเดียวกัน)</div></td>
          </tr>
@@ -111,7 +112,7 @@
              <td><div class="regular16"><span class="bold16">4.ประวัติการศึกษา</span></div></td>             
          </tr>         
          </table>
-          <table border="0" width="100%" align="center"
+          <table class="text_j" border="0" width="100%" align="center"
            v-for="item in personnel_educations"
                             :key="item.id_red"                           
                             small
@@ -129,7 +130,7 @@
              <td width="100%" colspan="2"><div class="regular16"><span class="bold16">5.ปัจจุบันปฏิบัติการสอน</span>  <input type="checkbox" name="" checked v-if="transference_personnels.teaching_status ==='no_tech'" class="largerCheckbox" disabled> <input type="checkbox" name="" id="" v-else class="largerCheckbox" disabled> ไม่ได้ทำการสอน  <input type="checkbox" name="" checked v-if="transference_personnels.teaching_status ==='tech'" class="largerCheckbox" disabled> <input type="checkbox" name="" id="" v-else class="largerCheckbox" disabled>  ทำการสอน ดังนี้</div></td>             
          </tr>   
           </table>
-           <table border="0" width="100%" align="center" v-if="transference_personnels.teaching_status ==='tech'">
+           <table class="text_j" border="0" width="100%" align="center" v-if="transference_personnels.teaching_status ==='tech'">
         <tr>
             <td width="5%"></td>
             <td width="20%"><div class="regular16">5.1 ทำการสอนวิชา</div></td>          
@@ -151,7 +152,7 @@
            <td><div class="regular16 td_line" align="left">{{ transference_personnels.subject_4 || '-'}}</div></td>                
         </tr>
            </table>
-         <table border="0" width="100%" align="center" v-if="transference_personnels.teaching_status ==='tech'">
+         <table class="text_j" border="0" width="100%" align="center" v-if="transference_personnels.teaching_status ==='tech'">
          <tr>
             <td width="5%"></td>
           <td width="25%"><div class="regular16">5.5 หน้าที่อื่นๆ (ถ้ามี) </div></td>                
@@ -203,7 +204,7 @@
          </tr>   
           </table>
 
-           <table border="0" width="100%" align="center"
+           <table class="text_j" border="0" width="100%" align="center"
              v-for="item in transference_locations"
                             :key="item.id_tfl"                           
                             small
@@ -216,14 +217,14 @@
             <td width="60%"><div class="regular16 td_line">{{ item.college_name }} </div></td>   
         </tr>  
           </table>
-          <table border="0" width="100%" align="center">
+          <table class="text_j" border="0" width="100%" align="center">
              <tr>
             <td width="5%"></td>
             <td width="55%" colspan="2"><div class="regular16">9.4 ขอย้ายสับเปลี่ยนตำแหน่งกับ (นาย/นาง/นางสาว)</div></td>   
             <td width="40%" colspan="2"><div class="regular16 td_line"> {{ personnel_temporarys_switch.title_s || ''}}{{ personnel_temporarys_switch.frist_name || ''}} {{ personnel_temporarys_switch.last_name || ''}} </div></td>   
         </tr>
           </table>
-         <table border="0" width="100%" align="center">
+         <table class="text_j" border="0" width="100%" align="center">
            <tr>
             <td width="5%"></td>
             <td width="15%"><div class="regular16">ตำแหน่ง</div></td>          
@@ -232,7 +233,7 @@
             <td width="40%"><div class="regular16 td_line">{{ personnel_temporarys_switch.rang_name || '-'}}</div></td>     
         </tr>
          </table>
-         <table border="0" width="100%" align="center">
+         <table class="text_j" border="0" width="100%" align="center">
         <tr>
             <td width="5%"></td>
             <td width="15%"><div class="regular16">เลขที่ตำแหน่ง</div></td>          
@@ -246,34 +247,34 @@
              <td width="100%" colspan="2"><div class="regular16"><span class="bold16">10. เหตุผลการขอย้าย</span></div></td>             
          </tr>            
           </table>
-          <table border="0" width="100%" align="center">
+          <table class="text_j" border="0" width="100%" align="center">
         <tr>            
              <td width="5%" colspan="2"><div class="regular16"></div></td>             
              <td width="95%" colspan="2"><div class="regular16"><input type="checkbox" name="" checked v-if="transference_personnels.reason_1 ==='1'" class="largerCheckbox" disabled> <input type="checkbox" name="" id="" v-else class="largerCheckbox" disabled>  ย้ายเพื่อยู่ร่วมคู่สมรส</div></td>             
          </tr>            
           </table>
-           <table border="0" width="100%" align="center">
+           <table class="text_j" border="0" width="100%" align="center">
         <tr>            
              <td width="10%" colspan="2"><div class="regular16"></div></td>             
              <td width="15%" colspan="2"><div class="regular16">คู่สมรสชื่อ </div></td>             
              <td width="75%" colspan="2"><div class="regular16 td_line"> {{ transference_personnels.reason_1_spouse || '-'}}</div></td>             
          </tr>   
            </table>
-          <table border="0" width="100%" align="center">
+          <table class="text_j" border="0" width="100%" align="center">
           <tr>            
              <td width="10%" colspan="2"><div class="regular16"></div></td>             
              <td width="25%" colspan="2"><div class="regular16">คู่สมรสประกอบอาชีพ </div></td>             
              <td width="65%" colspan="2"><div class="regular16 td_line"> {{ transference_personnels.reason_1_occupation || '-'}}</div></td>             
          </tr>
           </table>
-          <table border="0" width="100%" align="center">   
+          <table class="text_j" border="0" width="100%" align="center">   
           <tr>            
              <td width="10%" colspan="2"><div class="regular16"></div></td>             
              <td width="35%" colspan="2"><div class="regular16">สถานที่ประกอบอาชีพของคู่สมรส </div></td>             
              <td width="55%" colspan="2"><div class="regular16 td_line"> {{ transference_personnels.reason_1_location || '-'}}</div></td>             
          </tr>   
           </table>
-          <table border="0" width="100%" align="center"> 
+          <table class="text_j" border="0" width="100%" align="center"> 
           <tr>            
              <td width="10%" colspan="2"><div class="regular16"></div></td>             
              <td width="35%" colspan="2"><div class="regular16">ภูมิลำเนาของคู่สมรส จังหวัด </div></td>             
@@ -281,13 +282,13 @@
          </tr>            
           </table>
 
-          <table border="0" width="100%" align="center">
+          <table class="text_j" border="0" width="100%" align="center">
         <tr>            
              <td width="5%" colspan="2"><div class="regular16"></div></td>             
              <td width="95%" colspan="2"><div class="regular16"><input type="checkbox" name="" checked v-if="transference_personnels.reason_2 ==='1'" class="largerCheckbox" disabled> <input type="checkbox" name="" id="" v-else class="largerCheckbox" disabled> ย้ายเพื่อดูแลบิดา มารดา</div></td>             
          </tr>            
           </table>
-           <table border="0" width="100%" align="center">
+           <table class="text_j" border="0" width="100%" align="center">
         <tr>            
              <td width="10%" colspan="2"><div class="regular16"></div></td>             
              <td width="20%" colspan="2"><div class="regular16">อายุของบิดา </div></td>             
@@ -296,7 +297,7 @@
              <td width="20%" colspan="2"><div class="regular16 td_line">{{ transference_personnels.reason_2_myear || '-'}} ปี</div></td>             
          </tr>  
            </table>
-               <table border="0" width="100%" align="center"> 
+               <table class="text_j" border="0" width="100%" align="center"> 
           <tr>            
              <td width="10%" colspan="2"><div class="regular16"></div></td>             
              <td width="35%" colspan="2"><div class="regular16">ภูมิลำเนาของบิดา มารดา จังหวัด </div></td>             
@@ -304,14 +305,14 @@
          </tr>            
           </table>
 
-           <table border="0" width="100%" align="center">
+           <table class="text_j" border="0" width="100%" align="center">
         <tr>            
              <td width="5%" colspan="2"><div class="regular16"></div></td>             
              <td width="50%" colspan="2"><div class="regular16"><input type="checkbox" name="" checked v-if="transference_personnels.reason_3 ==='1'" class="largerCheckbox" disabled> <input type="checkbox" name="" id="" v-else class="largerCheckbox" disabled> ย้ายกลับภูมิลำเนาของข้าพเจ้า จังหวัด</div></td>             
              <td width="45%" colspan="2"><div class="regular16 td_line">{{ province_sh_m.province_name || '-'}}</div></td>             
          </tr>            
           </table>
-          <table border="0" width="100%" align="center">
+          <table class="text_j" border="0" width="100%" align="center">
         <tr>            
              <td width="5%" colspan="2"><div class="regular16"></div></td>             
              <td width="25%" colspan="2"><div class="regular16"><input type="checkbox" name="" checked v-if="transference_personnels.reason_4 ==='1'" class="largerCheckbox" disabled> <input type="checkbox" name="" id="" v-else class="largerCheckbox" disabled> เหตุผลอื่น (ระบุ)</div></td>             
@@ -319,7 +320,7 @@
         
          </tr>            
           </table>
-          <table border="0" width="100%" align="center">
+          <table  border="0" width="100%" align="center">
         <tr>            
              <td width="5%" colspan="2"><div class="regular16"></div></td>             
              <td width="95%" colspan="2"><div class="bold16">เอกสารประกอบการพิจารณา</div></td>             
@@ -349,14 +350,14 @@
              <td width="95%" colspan="2"><div class="regular16"><input type="checkbox" name="" checked v-if="transference_personnels.evidence_info_6 ==='1'" class="largerCheckbox" disabled> <input type="checkbox" name="" id="" v-else class="largerCheckbox" disabled> สำเนาคำสั่งย้ายไปดำรงตำแหน่งใหม่ของคู่สมรส</div></td>             
          </tr>           
           </table>
-          <table border="0" width="100%" align="center">
+          <table  border="0" width="100%" align="center">
         <tr>            
              <td width="50%" colspan="2"><div class="regular16"><span class="bold16">11. เบอร์โทรศัพท์ที่สามารถติดต่อได้โดยตรง</span></div></td>             
              <td width="50%" colspan="2"><div class="regular16 td_line" align="center">{{ personnel_temporarys.tel_p || '-'}}</div></td>             
          </tr>            
           </table>
 
-            <table border="0" width="100%" align="center">
+            <table class="text_j" border="0" width="100%" align="center">
         <tr>            
              <td width="20%"></td>             
              <td width="80%"><div class="regular16"><span class="regular16">ขอรับรองว่าข้อความข้างต้นเป็นความจริงทุกประการ</span></div></td>             
@@ -378,12 +379,12 @@
          </tr>            
           </table>
               
-        <table border="0" width="100%" align="center">
+        <table class="text_j" border="0" width="100%" align="center">
         <tr>            
              <td width="100%" colspan="2"><div class="regular16"><span class="bold16">12. ความเห็นของผู้บริหารสถานศึกษา/ผู้อำนวยการสำนัก/ผู้อำนวยการศูนย์ฯ</span></div></td>             
          </tr>            
           </table>
- <table border="0" width="100%" align="center">
+ <table class="text_j" border="0" width="100%" align="center">
         <tr>            
              <td width="5%"><div class="regular16"></div></td>             
              <td width="65%"><div class="regular16">1.ปัจจุบันสถานศึกษามีครูผู้สอนในสาขาวิชาเดียวกับผู้ขอย้าย</div></td>             
@@ -413,14 +414,14 @@
          </tr>   
           </table>
 
-          <table border="0" width="100%" align="center">
+          <table class="text_j" border="0" width="100%" align="center">
              <tr>            
              <td width="5%"><div class="regular16"></div></td>             
              <td width="95%" colspan="2"><div class="regular16">4.ความเห็นในการขอย้าย</div></td> 
          </tr> 
           </table>
 
-          <table border="0" width="100%" align="center">
+          <table class="text_j" border="0" width="100%" align="center">
               <tr>            
              <td width="10%"><div class="regular16"></div></td>             
              <td width="55%" colspan="2"><div class="regular16"><input type="checkbox" name="" id="" class="largerCheckbox" disabled>  ให้ย้าย ขอรับย้ายหรือบรรจุ ผู้สำเร็จการศึกษา วุฒิ</div></td>  
@@ -428,7 +429,7 @@
          
          </tr> 
           </table>
-          <table border="0" width="100%" align="center">  
+          <table class="text_j" border="0" width="100%" align="center">  
           <tr>            
              <td width="10%"><div class="regular16"></div></td>             
              <td width="20%" align="right"><div class="regular16">สาขาวิชา</div></td>  
@@ -436,7 +437,7 @@
              <td width="10%"><div class="regular16">ทดแทน</div></td>    
          </tr>  
           </table>
-         <table border="0" width="100%" align="center">  
+         <table class="text_j" border="0" width="100%" align="center">  
           <tr>            
              <td width="10%"><div class="regular16"></div></td>             
              <td width="30%" colspan="2"><div class="regular16"><input type="checkbox" name="" id="" class="largerCheckbox" disabled>  ไม่สมควรให้ย้ายเนื่องจาก</div></td>  
@@ -444,7 +445,7 @@
          
          </tr>   
           </table>
-          <table border="0" width="100%" align="center">
+          <table class="text_j" border="0" width="100%" align="center">
         <tr>            
              <td width="60%"></td>             
              <td width="40%"><div class="regular16"><span class="regular16">ลงชื่อ....................................................</span></div></td>             
@@ -468,21 +469,21 @@
              <td width="100%" colspan="2"><div class="regular16"><span class="bold16">13. กรณีผู้ขอย้ายปฏิบัติหน้าที่ในสถานศึกษาที่สังกัดสถาบันการอาชีวศึกษา</span></div></td>             
          </tr>            
           </table>
-           <table border="0" width="100%" align="center">
+           <table class="text_j" border="0" width="100%" align="center">
         <tr>            
              <td width="5%"><div class="regular16"></div></td>             
              <td width="95%"><div class="regular16">ความเห็นของผู้อำนวยการสถาบันการอาชีวศึกษา</div></td>          
                        
          </tr>  
            </table>
-           <table border="0" width="100%" align="center">
+           <table class="text_j" border="0" width="100%" align="center">
         <tr>            
              <td width="10%"><div class="regular16"></div></td>             
              <td width="95%"><div class="regular16">1.ปัจจุบันผู้ขอย้ายเป็นอาจารย์ประจำหลักสูตรหรือไม่</div></td>         
                        
          </tr>  
            </table>
-            <table border="0" width="100%" align="center">
+            <table class="text_j" border="0" width="100%" align="center">
         <tr>    
              <td width="10%"><div class="regular16"></div></td>
              <td width="40%"><div class="regular16"><input type="checkbox" name="" id="" class="largerCheckbox" disabled> เป็น</div></td>             
@@ -491,14 +492,14 @@
          </tr>  
            </table>
 
-           <table border="0" width="100%" align="center">
+           <table class="text_j" border="0" width="100%" align="center">
         <tr>            
              <td width="10%"><div class="regular16"></div></td>             
              <td width="95%"><div class="regular16">2.ผู้ขอย้ายปฏิบัติการสอนระดับปริญญาตรีของสถาบันการอาชีวศึกษาหรือไม่</div></td>         
                        
          </tr>  
            </table>
-            <table border="0" width="100%" align="center">
+            <table class="text_j" border="0" width="100%" align="center">
         <tr> 
               <td width="10%"><div class="regular16"></div></td>
              <td width="40%"><div class="regular16"><input type="checkbox" name="" id="" class="largerCheckbox" disabled> ปฏิบัติการสอน</div></td>             
@@ -506,40 +507,40 @@
                        
          </tr>  
            </table>
-           <table border="0" width="100%" align="center">
+           <table class="text_j" border="0" width="100%" align="center">
         <tr>            
              <td width="10%"><div class="regular16"></div></td>             
              <td width="95%"><div class="regular16">3.หากผู้ขอย้ายได้ย้ายไปปฏิบัติหน้าที่แห่งใหม่</div></td>         
                        
          </tr>  
            </table>
-            <table border="0" width="100%" align="center">
+            <table class="text_j" border="0" width="100%" align="center">
           <tr>            
              <td width="15%" colspan="2"><div class="regular16"></div></td>  
              <td width="85%" colspan="2"><div class="regular16">3.1 มีครูผู้สอนทดแทนหรือไม่</div></td>  
          </tr>
            </table>
-            <table border="0" width="100%" align="center">
+            <table class="text_j" border="0" width="100%" align="center">
         <tr>            
              <td width="50%"><div class="regular16" align="center"><input type="checkbox" name="" id="" class="largerCheckbox" disabled> มี</div></td>             
              <td width="50%"><div class="regular16"><input type="checkbox" name="" id="" class="largerCheckbox" disabled> ไม่มี</div></td>         
                        
          </tr>  
            </table>
-            <table border="0" width="100%" align="center">
+            <table class="text_j" border="0" width="100%" align="center">
           <tr>            
              <td width="15%" colspan="2"><div class="regular16"></div></td>  
              <td width="85%" colspan="2"><div class="regular16">3.2 มีอาจารย์ประจำหลักสูตรทดแทนหรือไม่</div></td>  
          </tr>
            </table>
-            <table border="0" width="100%" align="center">
+            <table class="text_j" border="0" width="100%" align="center">
         <tr>            
              <td width="50%"><div class="regular16" align="center"><input type="checkbox" name="" id="" class="largerCheckbox" disabled> มี</div></td>             
              <td width="50%"><div class="regular16"><input type="checkbox" name="" id="" class="largerCheckbox" disabled> ไม่มี</div></td>         
                        
          </tr>  
            </table>
-            <table border="0" width="100%" align="center">
+            <table class="text_j" border="0" width="100%" align="center">
         <tr>            
              <td width="10%"><div class="regular16"></div></td>             
              <td width="95%"><div class="regular16">4. ความเห็นในการย้าย</div></td>         
@@ -547,7 +548,7 @@
          </tr> 
            </table>
 
-           <table border="0" width="100%" align="center">
+           <table class="text_j" border="0" width="100%" align="center">
          <tr>            
              <td width="15%"><div class="regular16"></div></td>             
              <td width="85%"><div class="regular16"><input type="checkbox" name="" id="" class="largerCheckbox" disabled> สมควรให้ย้าย</div></td>         
@@ -555,7 +556,7 @@
          </tr> 
            </table>
          
-            <table border="0" width="100%" align="center">
+            <table class="text_j" border="0" width="100%" align="center">
           <tr>            
              <td width="15%"><div class="regular16"></div></td>             
              <td width="35%"><div class="regular16"><input type="checkbox" name="" id="" class="largerCheckbox" disabled> ไม่เห็นสมควรให้ย้าย เนื่องจาก</div></td>         
@@ -564,7 +565,7 @@
          </tr>  
            </table>
            <br>
-           <table border="0" width="100%" align="center">
+           <table class="text_j" border="0" width="100%" align="center">
         <tr>            
              <td width="60%"></td>             
              <td width="40%"><div class="regular16"><span class="regular16">ลงชื่อ.........................................................</span></div></td>             
@@ -849,8 +850,7 @@ return result
           ApiKey: this.ApiKey,
           id_ref: this.url_result 
         }).finally(() => this.loading = false)
-        this.transference_personnels = result.data 
-        console.log(result.data)
+        this.transference_personnels = result.data       
       }, 
 
   async personnel_educationsQueryAll() {  
@@ -937,170 +937,170 @@ return result
   }
 </script>
 <style>
-  @import url(https://fonts.googleapis.com/css?family=Prompt:400,300|Roboto:400,300&subset=latin,thai);
+@import url(https://fonts.googleapis.com/css?family=Prompt:400,300|Roboto:400,300&subset=latin,thai);
 
-  body {
-    font-family: "TH SarabunIT๙", "TH SarabunPSK", "Angsana New", AngsanaUPC;
-    font-size: 16px;
-    font-weight: 250;
-  }
-
-  u {    
-    border-bottom: 1px dotted #000;
-    text-decoration: none;
+body {
+  font-family: "TH SarabunIT๙", "TH SarabunPSK", "Angsana New", AngsanaUPC;
+  font-size: 16px;
+  font-weight: 250;
 }
 
-  * {
-    font-family: "TH SarabunIT๙", "TH SarabunPSK", "Angsana New", AngsanaUPC;
-    box-sizing: border-box;
-    -moz-box-sizing: border-box;
-  }
+u {
+  border-bottom: 1px dotted #000;
+  text-decoration: none;
+}
 
-  /* table {
-    border-top-width: 1px;
-    border-right-width: 1px;
-    border-bottom-width: 1px;
-    border-left-width: 1px;
-    border-top-style: solid;
-    border-right-style: solid;
-    border-bottom-style: solid;
-    border-left-style: solid;
-  } */
+* {
+  font-family: "TH SarabunIT๙", "TH SarabunPSK", "Angsana New", AngsanaUPC;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+}
 
-  tfoot tr:hover {
-    background-color: initial;
-  }
+.table,
+.th,
+.td {
+  border-bottom: 0.5px solid black;
+  border-top: 1px solid black;
+  border-left: 1px solid black;
+  border-right: 1px solid black;
+  border-collapse: collapse;
+}
 
-  tbody tr:hover {
-    background-color: inherit;
-  }
+.text_j {
+  border-collapse: collapse;
+  text-align: justify;
+  text-justify: inter-word;
+  line-height: 1;
+}
 
-  td,
-  th {
-    font-family: "TH SarabunIT๙", "TH SarabunPSK", "Angsana New", AngsanaUPC;
-    padding: 1px;
-    height: initial;
-   
-  }
+tfoot tr:hover {
+  background-color: initial;
+}
 
-  tfoot td {
-    font-family: "TH SarabunIT๙", "TH SarabunPSK", "Angsana New", AngsanaUPC;
-    font-weight: bold;
-   
-  }
+tbody tr:hover {
+  background-color: inherit;
+}
 
-  #verticaltext {
-    writing-mode: tb-rl;
-    filter: flipv fliph;
-    -webkit-transform: rotate(-90deg);
-    white-space: nowrap;
-    display: block;
-    overflow: hidden;
-    padding: 0;
-  }
+td,
+th {
+  font-family: "TH SarabunIT๙", "TH SarabunPSK", "Angsana New", AngsanaUPC;
+}
 
-  .page {
-    font-family: "TH SarabunIT๙", "TH SarabunPSK", "Angsana New", AngsanaUPC;
-    font-size: 16pt;
-    width: 21cm;
-    min-height: 29.7cm;
-    border: 1px #D3D3D3 solid;
-    border-radius: 5px;
-    background: white;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-    margin-top: 0cm;
-    margin-right: auto;
-    margin-bottom: 0cm;
-    margin-left: auto;
-    padding-top: 0.5cm;
-    padding-right: 1cm;
-    padding-bottom: 1cm;
-    padding-left: 2cm;
-  }
+tfoot td {
+  font-family: "TH SarabunIT๙", "TH SarabunPSK", "Angsana New", AngsanaUPC;
+  font-weight: bold;
+}
 
-  .head {
-    font-family: "TH SarabunIT๙", "TH SarabunPSK", "Angsana New", AngsanaUPC;
-    font-size: 18t;
-    font-weight: bold;
-  }
+#verticaltext {
+  writing-mode: tb-rl;
+  filter: flipv fliph;
+  -webkit-transform: rotate(-90deg);
+  white-space: nowrap;
+  display: block;
+  overflow: hidden;
+  padding: 0;
+}
 
-  .regular12 {
-    font-family: "TH SarabunIT๙", "TH SarabunPSK", "Angsana New", AngsanaUPC;
-    font-size: 14pt;
-  }
+.page {
+  font-family: "TH SarabunIT๙", "TH SarabunPSK", "Angsana New", AngsanaUPC;
+  font-size: 16pt;
+  width: 21cm;
+  min-height: 29.7cm;
+  border: 1px #d3d3d3 solid;
+  border-radius: 5px;
+  background: white;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  margin-top: 0cm;
+  margin-right: auto;
+  margin-bottom: 0cm;
+  margin-left: auto;
+  padding-top: 1.5cm;
+  padding-right: 1.5cm;
+  padding-bottom: 1.75cm;
+  padding-left: 2cm;
+}
 
-  .regular16 {
-    font-family: "TH SarabunIT๙", "TH SarabunPSK", "Angsana New", AngsanaUPC;
-    font-size: 16pt;
-  }
+.head {
+  font-family: "TH SarabunIT๙", "TH SarabunPSK", "Angsana New", AngsanaUPC;
+  font-size: 16pt;
+  font-weight: bold;
+  line-height: 1;
+}
 
-  .bold16 {
-    font-family: "TH SarabunIT๙", "TH SarabunPSK", "Angsana New", AngsanaUPC;
-    font-size: 16pt;
-    font-weight: bold;
-  }
+.regular12 {
+  font-family: "TH SarabunIT๙", "TH SarabunPSK", "Angsana New", AngsanaUPC;
+  font-size: 14pt;
+}
 
-  .blod12 {
-    font-family: "TH SarabunIT๙", "TH SarabunPSK", "Angsana New", AngsanaUPC;
-    font-size: 12pt;
-    font-weight: bold;
-  }
+.regular16 {
+  font-family: "TH SarabunIT๙", "TH SarabunPSK", "Angsana New", AngsanaUPC;
+  font-size: 16pt;
+}
 
-  .blackRegula10 {
-    font-family: "TH SarabunIT๙", "TH SarabunPSK", "Angsana New", AngsanaUPC;
-    font-size: 10pt;
-  }
+.bold16 {
+  font-family: "TH SarabunIT๙", "TH SarabunPSK", "Angsana New", AngsanaUPC;
+  font-size: 16pt;
+  font-weight: bold;
+}
 
-  .blackBold18 {
-    font-family: "TH SarabunIT๙", "TH SarabunPSK", "Angsana New", AngsanaUPC;
-    font-size: 18pt;
-    font-weight: bold;
-  }
+.blod12 {
+  font-family: "TH SarabunIT๙", "TH SarabunPSK", "Angsana New", AngsanaUPC;
+  font-size: 14pt;
+  font-weight: bold;
+}
 
-   .largerCheckbox {
-            width: 30px;
-            height: 30px;
-            color: blue;
-           
-        }
- .td_line{
-    border-bottom:1pt dotted black;
-  }
-  /*.subpage {
+.blackRegula10 {
+  font-family: "TH SarabunIT๙", "TH SarabunPSK", "Angsana New", AngsanaUPC;
+  font-size: 12pt;
+}
+
+.blackBold18 {
+  font-family: "TH SarabunIT๙", "TH SarabunPSK", "Angsana New", AngsanaUPC;
+  font-size: 18pt;
+  font-weight: bold;
+}
+
+.largerCheckbox {
+  width: 30px;
+  height: 30px;
+  color: blue;
+}
+.td_line {
+  border-bottom: 1pt dotted black;
+}
+/*.subpage {
     height: 247mm;
   }*/
 
-  .BlackBold10 {
-    font-weight: bold;
-  }
+.BlackBold10 {
+  font-weight: bold;
+}
 
-  #content {
-    display: table;
-  }
+#content {
+  display: table;
+}
 
-  #pageFooter {
-    display: table-footer-group;
-  }
+#pageFooter {
+  display: table-footer-group;
+}
 
-  #pageFooter:after {
-    counter-increment: page;
-    content: counter(page);
-  }
+#pageFooter:after {
+  counter-increment: page;
+  content: counter(page);
+}
 
-  
-
-  @media print {
-    .page {
+@media print {
+  .page {
     font-family: "TH SarabunIT๙", "TH SarabunPSK", "Angsana New", AngsanaUPC;
     font-size: 16pt;
     border: initial;
-      border-radius: initial;
-      /* width: initial; */
-      min-height: initial;
-      box-shadow: initial;
-      background: initial;
-      padding: initial;
-      page-break-after: always;
+    border-radius: initial;
+    /* width: initial; */
+    min-height: initial;
+    box-shadow: initial;
+    background: initial;
+    padding: initial;
+    page-break-after: always;
   }
 
   .head {
@@ -1111,7 +1111,7 @@ return result
 
   .regular12 {
     font-family: "TH SarabunIT๙", "TH SarabunPSK", "Angsana New", AngsanaUPC;
-    font-size: 12pt;
+    font-size: 16pt;
   }
 
   .regular16 {
@@ -1141,9 +1141,8 @@ return result
     font-size: 18pt;
     font-weight: bold;
   }
- 
 
-    /* .head {
+  /* .head {
       font-size: 18px;
       font-weight: bold;
     }
@@ -1157,10 +1156,8 @@ return result
     .blackRegula8 {
       font-size: 8px;
     } */
-    .noprint {
-      display: none;
-    }
-   
+  .noprint {
+    display: none;
   }
-
+}
 </style>

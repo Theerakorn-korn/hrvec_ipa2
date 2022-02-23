@@ -54,6 +54,12 @@ export default new Router({
                     path: 'pages/loginAdmin',
                     component: () =>
                         import ('@/views/dashboard/pages/loginAdmin'),
+                }, 
+                {
+                    name: 'report chart',
+                    path: 'pages/chart_report',
+                    component: () =>
+                        import ('@/views/dashboard/pages/chart_report'),
                 },              
             ],
         },
@@ -134,10 +140,16 @@ export default new Router({
                         import ('@/views/dashboard/pages/administrator/collegetype'),
                 },
                 {
-                    name: 'ข้อมูลรอบปี',
+                    name: 'กำหนดรอบการย้ายข้าราชการครูและบุคลากรทางการศึกษา',
                     path: '/admin/period',
                     component: () =>
                         import ('@/views/dashboard/pages/administrator/period'),
+                },
+                {
+                    name: 'กำหนดการสถานศึกษา',
+                    path: '/admin/period_college',
+                    component: () =>
+                        import ('@/views/dashboard/pages/administrator/period_college'),
                 },
                 {
                     name: 'ข้อมูลบุคคลใช้งานระบบ',
@@ -157,6 +169,13 @@ export default new Router({
                     component: () =>
                         import ('@/views/dashboard/pages/administrator/branch'),
                 },
+                {
+                    name: 'สาขางาน',
+                    path: '/admin/branch_sub',
+                    component: () =>
+                        import ('@/views/dashboard/pages/administrator/branch_sub'),
+                },
+                
                 {
                     name: 'อัตรากำลัง',
                     path: '/admin/man_power',
@@ -188,17 +207,26 @@ export default new Router({
                         import ('@/views/dashboard/pages/administrator/conditions_branch'),
                 },
                 {
-                    name: 'สายงานการสอนและสายสนับสนุนการสอน',
+                    name: 'สายงานสอนและสายสนับสนุนการสอน',
                     path: '/admin/transference_personnel',
                     component: () =>
                         import ('@/views/dashboard/pages/administrator/transference_personnel'),
                 },
                 {
-                    name: 'สายงานการสอนและสายสนับสนุนการสอน รายละเอียด',
+                    name: 'สายงานสอนและสายสนับสนุนการสอน รายละเอียด ประมวผลผลแบบที่ 1',
                     path: '/admin/transference_location',
                     component: () =>
                         import ('@/views/dashboard/pages/administrator/transference_location'),
                 },
+
+                {
+                    name: 'สายงานสอนและสายสนับสนุนการสอน ประกอบการพิจารณา',
+                    path: '/admin/transference_location_detail',
+                    component: () =>
+                        import ('@/views/dashboard/pages/administrator/transference_location_detail'),
+                },
+
+
                 {
                     name: 'ข่าวสาร',
                     path: '/admin/news_s',
@@ -242,6 +270,8 @@ export default new Router({
                     component: () =>
                         import ('@/views/dashboard/pages/administrator/conditons_transfer_success'),
                 },
+
+
                 
                 
                
@@ -336,6 +366,13 @@ export default new Router({
             component: () =>
             import ('@/print_report_movement'),
         }, 
+        {
+            name: 'พิมพ์รายงาน การเขียนย้ายออนไลน์ประกอบการพิจารณา',
+            path: '/admin/print_report_movement_online/:times_s/:year_s/:teach',
+            component: () =>
+            import ('@/print_report_movement_online'),
+        }, 
+        
         
         
         {
@@ -435,6 +472,18 @@ export default new Router({
                     component: () =>
                         import ('@/views/dashboard/pages/college/transference_personnel'),
                 },   
+                {
+                    name: 'รายงานข้อมูลสถานศึกษา (อัตรากำลัง)',
+                    path: '/college/rate_workforce',
+                    component: () =>
+                        import ('@/views/dashboard/pages/college/rate_workforce'),
+                },   
+                {
+                    name: 'ข้อมูลหมวดวิชา',
+                    path: '/college/rate_workforce_course/:rate_work_course_id',                    
+                    component: () =>
+                    import ('@/views/dashboard/pages/college/rate_workforce_course'),
+                }, 
                             
                 
 

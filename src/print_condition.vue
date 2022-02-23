@@ -15,26 +15,27 @@
       <div align="center">
           <v-img max-height="30mm" max-width="25mm" src="~../src/assets/krud.jpg"></v-img>
        <div class="head"> แบบรายงานข้อมูลเงื่อนไขสาขาวิชาเอก ประกอบการพิจารณาย้ายข้าราชการ ประจำปี {{ conditions_transfers.year_s }} ครั้งที่ {{ conditions_transfers.time_s }} </div>
-       <div class="head"> ส่งมาพร้อมกับหนังสือ {{ colleges_user.college_name }} ที่  ลงวันที่ ..............................</div>
+       <div class="head"> ส่งมาพร้อมกับหนังสือ {{ colleges_user.college_name }} ที่...........................ลงวันที่ ..................................</div>
      <div>___________________________</div>
       </div>
     <table border="0" width="100%" align="center">
         <tr>
-            <td width="10%" class="regular16">เรียน</td>
-            <td width="90%" class="regular16">เลขาธิการคณะกรรมการการอาชีวศึกษา</td>
+            <td width="5%" class="regular16">เรียน</td>
+            <td width="95%" class="regular16">เลขาธิการคณะกรรมการการอาชีวศึกษา</td>
         </tr>
     </table>
-     <table border="0" width="100%" align="center">
+     <table class="text_j" border="0" width="100%" align="center">
         <tr>
             <td width="20%" class="regular16"></td>
             <td width="80%" class="regular16">ตามที่สำนักงานคณะกรรมการการอาชีวศึกษา ขอทราบข้อมูลเงื่อนไขสาขาวิชาเอก</td>
         </tr>
     </table>
-      <table border="0" width="100%" align="center">
+      <table class="text_j" border="0" width="100%" align="center">
         <tr>
             <td width="100%" class="regular16">เพื่อใช้ประกอบการพิจารณาย้ายข้าราชการครู ประจำปี {{ conditions_transfers.year_s }} ครั้งที่ {{ conditions_transfers.time_s }} นั้น {{ colleges_user.college_name }} ได้จัดประชุมคณะกรรมการบริหารสถานศึกษาแล้ว มีมติให้จัดความต้องการครูในสาขาวิชา เรียงลำดับดังต่อไปนี้  </td>
         </tr>
     </table>
+    <br>
      <table width="100%" align="center" class="table">
         <tr>
             <th width="7%" class="regular16 th" align="center">อันดับ</th>
@@ -307,169 +308,175 @@ return result
   }
 </script>
 <style>
-  @import url(https://fonts.googleapis.com/css?family=Prompt:400,300|Roboto:400,300&subset=latin,thai);
+@import url(https://fonts.googleapis.com/css?family=Prompt:400,300|Roboto:400,300&subset=latin,thai);
 
-  body {
-    font-family: "TH SarabunIT๙", "TH SarabunPSK", "Angsana New", AngsanaUPC;
-    font-size: 16px;
-    font-weight: 250;
-  }
-
-  u {    
-    border-bottom: 1px dotted #000;
-    text-decoration: none;
+body {
+  font-family: "TH SarabunIT๙", "TH SarabunPSK", "Angsana New", AngsanaUPC;
+  font-size: 16px;
+  font-weight: 250;
 }
 
-  * {
-    font-family: "TH SarabunIT๙", "TH SarabunPSK", "Angsana New", AngsanaUPC;
-    box-sizing: border-box;
-    -moz-box-sizing: border-box;
-  }
+u {
+  border-bottom: 1px dotted #000;
+  text-decoration: none;
+}
 
-  .table, .th, .td {
-    border-bottom: 0.5px solid black;
-    border-top: 1px solid black;
-    border-left: 1px solid black;
-    border-right: 1px solid black;
+* {
+  font-family: "TH SarabunIT๙", "TH SarabunPSK", "Angsana New", AngsanaUPC;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+}
+
+.table,
+.th,
+.td {
+  border-bottom: 0.5px solid black;
+  border-top: 1px solid black;
+  border-left: 1px solid black;
+  border-right: 1px solid black;
   border-collapse: collapse;
-  }
+}
 
-  tfoot tr:hover {
-    background-color: initial;
-  }
+.text_j {
+  border-collapse: collapse;
+  text-align: justify;
+  text-justify: inter-word;
+  line-height: 1;
+}
 
-  tbody tr:hover {
-    background-color: inherit;
-  }
+tfoot tr:hover {
+  background-color: initial;
+}
 
-  td,
-  th {
-    font-family: "TH SarabunIT๙", "TH SarabunPSK", "Angsana New", AngsanaUPC;   
-  }
+tbody tr:hover {
+  background-color: inherit;
+}
 
-  tfoot td {
-    font-family: "TH SarabunIT๙", "TH SarabunPSK", "Angsana New", AngsanaUPC;
-    font-weight: bold;
-   
-  }
+td,
+th {
+  font-family: "TH SarabunIT๙", "TH SarabunPSK", "Angsana New", AngsanaUPC;
+}
 
-  #verticaltext {
-    writing-mode: tb-rl;
-    filter: flipv fliph;
-    -webkit-transform: rotate(-90deg);
-    white-space: nowrap;
-    display: block;
-    overflow: hidden;
-    padding: 0;
-  }
+tfoot td {
+  font-family: "TH SarabunIT๙", "TH SarabunPSK", "Angsana New", AngsanaUPC;
+  font-weight: bold;
+}
 
-  .page {
-    font-family: "TH SarabunIT๙", "TH SarabunPSK", "Angsana New", AngsanaUPC;
-    font-size: 16pt;
-    width: 21cm;
-    min-height: 29.7cm;
-    border: 1px #D3D3D3 solid;
-    border-radius: 5px;
-    background: white;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-    margin-top: 0cm;
-    margin-right: auto;
-    margin-bottom: 0cm;
-    margin-left: auto;
-    padding-top: 0.5cm;
-    padding-right: 1cm;
-    padding-bottom: 1cm;
-    padding-left: 1cm;
-  }
+#verticaltext {
+  writing-mode: tb-rl;
+  filter: flipv fliph;
+  -webkit-transform: rotate(-90deg);
+  white-space: nowrap;
+  display: block;
+  overflow: hidden;
+  padding: 0;
+}
 
-  .head {
-    font-family: "TH SarabunIT๙", "TH SarabunPSK", "Angsana New", AngsanaUPC;
-    font-size: 16pt;
-    font-weight: bold;
-  }
+.page {
+  font-family: "TH SarabunIT๙", "TH SarabunPSK", "Angsana New", AngsanaUPC;
+  font-size: 16pt;
+  width: 21cm;
+  min-height: 29.7cm;
+  border: 1px #d3d3d3 solid;
+  border-radius: 5px;
+  background: white;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  margin-top: 0cm;
+  margin-right: auto;
+  margin-bottom: 0cm;
+  margin-left: auto;
+  padding-top: 1.5cm;
+  padding-right: 1.5cm;
+  padding-bottom: 1.75cm;
+  padding-left: 2cm;
+}
 
-  .regular12 {
-    font-family: "TH SarabunIT๙", "TH SarabunPSK", "Angsana New", AngsanaUPC;
-    font-size: 14pt;
-  }
+.head {
+  font-family: "TH SarabunIT๙", "TH SarabunPSK", "Angsana New", AngsanaUPC;
+  font-size: 16pt;
+  font-weight: bold;
+  line-height: 1;
+}
 
-  .regular16 {
-    font-family: "TH SarabunIT๙", "TH SarabunPSK", "Angsana New", AngsanaUPC;
-    font-size: 16pt;
-  }
+.regular12 {
+  font-family: "TH SarabunIT๙", "TH SarabunPSK", "Angsana New", AngsanaUPC;
+  font-size: 14pt;
+}
 
-  .bold16 {
-    font-family: "TH SarabunIT๙", "TH SarabunPSK", "Angsana New", AngsanaUPC;
-    font-size: 16pt;
-    font-weight: bold;
-  }
+.regular16 {
+  font-family: "TH SarabunIT๙", "TH SarabunPSK", "Angsana New", AngsanaUPC;
+  font-size: 16pt;
+}
 
-  .blod12 {
-    font-family: "TH SarabunIT๙", "TH SarabunPSK", "Angsana New", AngsanaUPC;
-    font-size: 14pt;
-    font-weight: bold;
-  }
+.bold16 {
+  font-family: "TH SarabunIT๙", "TH SarabunPSK", "Angsana New", AngsanaUPC;
+  font-size: 16pt;
+  font-weight: bold;
+}
 
-  .blackRegula10 {
-    font-family: "TH SarabunIT๙", "TH SarabunPSK", "Angsana New", AngsanaUPC;
-    font-size: 12pt;
-  }
+.blod12 {
+  font-family: "TH SarabunIT๙", "TH SarabunPSK", "Angsana New", AngsanaUPC;
+  font-size: 14pt;
+  font-weight: bold;
+}
 
-  .blackBold18 {
-    font-family: "TH SarabunIT๙", "TH SarabunPSK", "Angsana New", AngsanaUPC;
-    font-size: 18pt;
-    font-weight: bold;
-  }
+.blackRegula10 {
+  font-family: "TH SarabunIT๙", "TH SarabunPSK", "Angsana New", AngsanaUPC;
+  font-size: 12pt;
+}
 
-   .largerCheckbox {
-            width: 30px;
-            height: 30px;
-            color: blue;
-           
-        }
- .td_line{
-    border-bottom:1pt dotted black;
-  }
-  /*.subpage {
+.blackBold18 {
+  font-family: "TH SarabunIT๙", "TH SarabunPSK", "Angsana New", AngsanaUPC;
+  font-size: 18pt;
+  font-weight: bold;
+}
+
+.largerCheckbox {
+  width: 30px;
+  height: 30px;
+  color: blue;
+}
+.td_line {
+  border-bottom: 1pt dotted black;
+}
+/*.subpage {
     height: 247mm;
   }*/
 
-  .BlackBold10 {
-    font-weight: bold;
-  }
+.BlackBold10 {
+  font-weight: bold;
+}
 
-  #content {
-    display: table;
-  }
+#content {
+  display: table;
+}
 
-  #pageFooter {
-    display: table-footer-group;
-  }
+#pageFooter {
+  display: table-footer-group;
+}
 
-  #pageFooter:after {
-    counter-increment: page;
-    content: counter(page);
-  }
+#pageFooter:after {
+  counter-increment: page;
+  content: counter(page);
+}
 
-  
-
-  @media print {
-    .page {
+@media print {
+  .page {
     font-family: "TH SarabunIT๙", "TH SarabunPSK", "Angsana New", AngsanaUPC;
     font-size: 16pt;
     border: initial;
-      border-radius: initial;
-      /* width: initial; */
-      min-height: initial;
-      box-shadow: initial;
-      background: initial;
-      padding: initial;
-      page-break-after: always;
+    border-radius: initial;
+    /* width: initial; */
+    min-height: initial;
+    box-shadow: initial;
+    background: initial;
+    padding: initial;
+    page-break-after: always;
   }
 
   .head {
     font-family: "TH SarabunIT๙", "TH SarabunPSK", "Angsana New", AngsanaUPC;
-    font-size: 20pt;
+    font-size: 18pt;
     font-weight: bold;
   }
 
@@ -505,9 +512,8 @@ return result
     font-size: 18pt;
     font-weight: bold;
   }
- 
 
-    /* .head {
+  /* .head {
       font-size: 18px;
       font-weight: bold;
     }
@@ -521,10 +527,8 @@ return result
     .blackRegula8 {
       font-size: 8px;
     } */
-    .noprint {
-      display: none;
-    }
-   
+  .noprint {
+    display: none;
   }
-
+}
 </style>

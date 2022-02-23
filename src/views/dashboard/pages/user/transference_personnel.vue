@@ -1208,11 +1208,30 @@ export default {
         .substr(0, 10),
       menu: false,
       modal: false,
-      menu2: false
+      menu2: false,
+      periods: [],
+      period_enable: "1",
     };
   },
 
   async mounted() {
+
+ let result_period;
+    result_period = await this.$http.post("period.php", {
+      ApiKey: this.ApiKey,
+       period_enable: this.period_enable     
+    });
+    this.periods = result_period.data;
+      console.log(result_period.data)
+      if (this.periods.period_enable === '1' && this.periods.period_type === 'teacher')
+      {
+      
+      }else{
+            this.$router.push('/user')           
+      }
+
+
+
     let userSession = JSON.parse(sessionStorage.getItem("user")) || 0;
     let result_branch;
     result_branch = await this.$http.post("branch.php", {
@@ -1302,9 +1321,7 @@ export default {
           id_ref: this.id_ref
         })
         .finally(() => (this.loading = false));
-      this.transference_personnels = result.data;
-      console.log(result.data);
-      console.log(this.id_ref);
+      this.transference_personnels = result.data;     
     },
     async transference_locationQueryAll() {
       let result = await this.$http.post("transference_location.php", {

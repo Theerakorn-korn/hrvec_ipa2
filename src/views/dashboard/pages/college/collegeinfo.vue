@@ -243,8 +243,7 @@
         college_ID: userSession.college_ID,
         ApiKey: 'HRvec2021'
       })
-      this.college = result.data     
-    console.log(this.college)
+      this.college = result.data 
       await this.collegeinfoQuery()
     },
 
@@ -266,7 +265,7 @@
           this.editcollegeinfo.collegeinfo_fax = this.collegeinfo.collegeinfo_fax
           this.editcollegeinfo.collegeinfo_email = this.collegeinfo.collegeinfo_email    
           this.collegeinfodialog1 = true
-          console.log( this.editcollegeinfo)
+         
       },
     
     async  collegeinfoEditpic() {      
@@ -283,7 +282,7 @@
         async editcollegeinfoSubmit1() {          
           if (this.$refs.form1.validate()) {
           this.editcollegeinfo.ApiKey = this.ApiKey;   
-          console.log(this.editcollegeinfo)   
+         
           let result = await this.$http.post('collegeinfo.update.php', this.editcollegeinfo)
            if (result.data.status == true) {
             this.editcollegeinfo = result.data

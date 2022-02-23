@@ -1,6 +1,7 @@
 <template>
   <v-container id="dashboard" fluid tag="section">
     <v-row>
+      
       <v-col cols="12" lg="12">
         <v-bottom-navigation  v-model="value" :value="value" :background-color="color" horizontal>
           <v-btn color="primary" max-width="100%"  elevation="3" rounded to="/pages/login">
@@ -231,9 +232,10 @@
 </template>
 
 <script>
+import { Bar } from 'vue-chartjs'
 export default {
   name: "DashboardDashboard",
-
+ extends: Bar,
   data() {
     return {
       value: 1,

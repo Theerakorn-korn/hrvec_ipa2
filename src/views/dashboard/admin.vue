@@ -35,3 +35,12 @@ export default {
     }
 };
 </script>
+<style>
+.text_google {
+  font-family: "Kanit", sans-serif;
+}
+.v-data-table thead th {
+  font-size: 16px !important;
+}
+
+</style>

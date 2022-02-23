@@ -1,6 +1,16 @@
 <template>
   <div>
-      
+       <v-bottom-navigation color="info" horizontal :background-color="color" dark>
+      <v-btn to="/admin/branch">
+        <span>สาขาวิชาเอก </span>
+        <v-icon>mdi-source-commit</v-icon>
+      </v-btn>
+
+      <v-btn to="/admin/branch_sub">
+        <span>สาขางาน</span>
+        <v-icon>mdi-source-branch</v-icon>
+      </v-btn>
+    </v-bottom-navigation>
     <v-container>
     <base-material-card
         icon="mdi-clipboard-text"
@@ -402,7 +412,10 @@ async mounted() {
         ) return 0
 
         return Math.ceil(this.pagination.totalItems / this.pagination.rowsPerPage)
-      }
+      },
+        color() {
+      return "blue darken-4";
+    }
     },
 
   

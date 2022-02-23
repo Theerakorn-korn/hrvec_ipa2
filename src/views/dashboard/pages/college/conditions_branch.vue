@@ -58,11 +58,13 @@
               </v-col>
             </v-row>
           </v-card>
-         <!--  {{ periods.period_enable }} -->
           <v-form
             ref="addconditions_transferform"
             lazy-validation
-            v-if="periods.period_enable === '1'"
+            v-if="
+              period_colleges.period_college_enable === '1' &&
+                period_colleges.period_college_type === 'movement_college'
+            "
           >
             <v-card class="pa-2 ma-2">
               <v-card-title>
@@ -187,7 +189,7 @@
                 elevation="2"
               >
                 <h1 class="text-center red--text">
-                  ยังไม่ถึงกำหนดการการยืนเงื่อนไขการรับย้าย
+                  ปิดรับการยืนเงื่อนไขการรับย้าย
                 </h1>
               </v-alert>
             </v-card>
@@ -195,7 +197,10 @@
 
           <v-card
             class="pa-1 d-flex justify-center"
-            v-if="periods.period_enable === '1'"
+            v-if="
+              period_colleges.period_college_enable === '1' &&
+                period_colleges.period_college_type === 'movement_college'
+            "
           >
             <div>
               <v-row>
@@ -247,7 +252,7 @@
           <v-dialog
             v-model="addconditions_branchdialog"
             persistent
-            max-width="80%"
+            max-width="60%"
           >
             <v-card class="mx-auto pa-5">
               <base-material-card
@@ -267,34 +272,49 @@
                           :items="order_need"
                           outlined
                           label="ลำดับที่ :"
+                          prepend-icon="mdi-numeric"
+                          request
+                          :rules="[v => !!v || '']"
                         >
                         </v-select>
                       </v-flex>
-                      <v-flex md6>
+                      <v-flex md5>
                         <v-autocomplete
                           :items="branch_s"
                           item-text="name_branch"
                           item-value="id_branch"
                           outlined
-                          label="สาขาวิชา :"
-                          prepend-icon="mdi-account-details"
+                          label="สาขาวิชาเอก :"
+                          prepend-icon="mdi-source-commit"
                           request
                           v-model="addconditions_branch.id_branch"
                           :rules="[v => !!v || '']"
+                          @change="branch_sub_dQueryAll()"
                         ></v-autocomplete>
                       </v-flex>
-                      <v-flex md4>
+                      <v-flex md5>
+                        <v-autocomplete
+                          :items="branch_sub_ds"
+                          item-text="name_sub_branch"
+                          item-value="id_branch_sub"
+                          outlined
+                          label="สาขางานวุฒิการศึกษาที่ประสงค์รับ : ระบุหรือไม่ระบุก็ได้"
+                          prepend-icon="mdi-source-branch"
+                          v-model="addconditions_branch.con_id_branch_sub"
+                        ></v-autocomplete>
+                      </v-flex>
+                      <v-flex md6>
                         <v-text-field
                           v-model="addconditions_branch.quantity_n"
                           type="number"
                           outlined
-                          label="จำนวน :"
-                          prepend-icon="mdi-flag-letiant"
+                          label="จำนวนประสงค์รับย้าย :"
+                          prepend-icon="mdi-account-multiple-plus"
                           request
                           :rules="[v => !!v || '']"
                         ></v-text-field>
                       </v-flex>
-                      <v-flex md12>
+                      <v-flex md6>
                         <v-select
                           v-model="addconditions_branch.educational_level"
                           type="number"
@@ -303,10 +323,18 @@
                           item-value="title"
                           outlined
                           label="ระดับการศึกษา :"
-                          prepend-icon="mdi-flag-letiant"
+                          prepend-icon="mdi-school"
                           request
                           :rules="[v => !!v || '']"
                         ></v-select>
+                      </v-flex>
+                      <v-flex md12>
+                        <v-text-field
+                          v-model="addconditions_branch.con_datail_branch"
+                          outlined
+                          label="คุณลักษณะทางการศึกษา อื่น ๆ เพิ่มเติม :"
+                          prepend-icon="mdi-school"
+                        ></v-text-field>
                       </v-flex>
                     </v-layout>
                   </v-container>
@@ -493,7 +521,7 @@ export default {
       prefectures: [],
       district: [],
       district_post_s: [],
-      periods: [],
+      period_colleges: [],
       snackbar: {
         show: false,
         color: "",
@@ -506,6 +534,7 @@ export default {
         { text: "ลำดับ", align: "center", value: "sequence_n" },
         { text: "รหัสอ้างอิง", align: "center", value: "id_ref" },
         { text: "สาขาวิชา", align: "left", value: "name_branch" },
+        { text: "วุฒิการศึกษา", align: "left", value: "name_sub_branch" },
         { text: "ระดับการศึกษา", align: "center", value: "educational_level" },
         { text: "จำนวน", align: "center", value: "quantity_n" },
         { text: "ยกเลิก", align: "center", value: "action" }
@@ -538,18 +567,18 @@ export default {
           value: -1
         }
       ],
-      period_enable: "1"
+      period_college_enable: "1",
+      branch_sub_ds: []
     };
   },
 
   async mounted() {
-    let result_period;
-    result_period = await this.$http.post("period.php", {
+    let result_period_college;
+    result_period_college = await this.$http.post("period_college.php", {
       ApiKey: this.ApiKey,
-      period_enable: this.period_enable
+      period_college_enable: this.period_college_enable
     });
-    this.periods = result_period.data;
-    console.log(result_period.data);
+    this.period_colleges = result_period_college.data;
 
     let result_branch;
     result_branch = await this.$http.post("branch.php", {
@@ -616,6 +645,17 @@ export default {
       this.conditions_branchs = result.data;
     },
 
+    async branch_sub_dQueryAll() {
+      this.loading = true;
+      let result = await this.$http
+        .post("branch_sub_d.php", {
+          ApiKey: this.ApiKey,
+          id_main_branch: this.addconditions_branch.id_branch
+        })
+        .finally(() => (this.loading = false));
+      this.branch_sub_ds = result.data;
+    },
+
     async conditions_transferQueryAll() {
       this.loading = true;
       let result = await this.$http
@@ -629,6 +669,7 @@ export default {
 
     //First >> Insert transference Location
     async addconditions_branchForm() {
+      this.addconditions_branch={};
       this.addconditions_branchdialog = true;
     },
 

@@ -42,23 +42,17 @@
     </v-alert>
     <v-row>
       <v-col cols="12" md="12">
-        <v-alert shaped dense dark color="amber lighten-1">
+        <v-alert text dense color="teal" icon="mdi-clock-fast" border="left">
           <h2>ส่วนหลักของระบบ</h2>
         </v-alert>
       </v-col>
-      <v-col cols="12" md="12">
-        <v-alert
-          border="left"
-          colored-border
-          type="error"
-          elevation="2"
-          icon="mdi-account-cog"
-        >
-          <v-card-title>ผู้ใช้งานระบบ</v-card-title>
+      <v-col cols="12" md="4">
+        <v-card>
+          <v-card-title>ตั้งค่ากำหนดการ</v-card-title>
           <v-list>
             <v-list-item-group>
               <v-list-item
-                v-for="(item, i) in user_system_items"
+                v-for="(item, i) in period_config"
                 :key="i"
                 :to="item.to"
               >
@@ -71,16 +65,8 @@
               </v-list-item>
             </v-list-item-group>
           </v-list>
-        </v-alert>
-      </v-col>
-      <v-col cols="12" md="12">
-        <v-alert
-          border="left"
-          colored-border
-          type="error"
-          elevation="2"
-          icon="mdi-account-cog"
-        >
+        </v-card>
+        <v-card>
           <v-card-title>ข้อมูลสถานศึกษา</v-card-title>
           <v-list>
             <v-list-item-group>
@@ -98,17 +84,33 @@
               </v-list-item>
             </v-list-item-group>
           </v-list>
-        </v-alert>
+        </v-card>
       </v-col>
 
-      <v-col cols="12" md="12">
-        <v-alert
-          border="left"
-          colored-border
-          type="error"
-          elevation="2"
-          icon="mdi-account-details"
-        >
+      <v-col cols="12" md="4">
+        <v-card>
+          <v-card-title>ผู้ใช้งานระบบ</v-card-title>
+          <v-list>
+            <v-list-item-group>
+              <v-list-item
+                v-for="(item, i) in user_system_items"
+                :key="i"
+                :to="item.to"
+              >
+                <v-list-item-icon>
+                  <v-icon v-text="item.icon"></v-icon>
+                </v-list-item-icon>
+                <v-list-item-content>
+                  <v-list-item-title v-text="item.text"></v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
+            </v-list-item-group>
+          </v-list>
+        </v-card>
+      </v-col>
+
+      <v-col cols="12" md="4">
+        <v-card>
           <v-card-title>ข้อมูลงานบุคคล</v-card-title>
           <v-list>
             <v-list-item-group>
@@ -126,23 +128,47 @@
               </v-list-item>
             </v-list-item-group>
           </v-list>
+        </v-card>
+      </v-col>
+
+      <v-col cols="12" md="12">
+        <v-alert text dense color="teal" icon="mdi-clock-fast" border="left">
+          <h2>สาขาวิชา</h2>
         </v-alert>
       </v-col>
 
       <v-col cols="12" md="12">
-        <v-alert shaped dense dark type="amber lighten-1">
+        <v-card>
+          <v-card-title>จัดการสาขาวิชา</v-card-title>
+          <v-list>
+            <v-list-item-group>
+              <!-- <v-list-item v-for="(item, i) in prepare_items" :key="i" :to="item.to"> -->
+              <v-list-item
+                v-for="(item, i) in about_brach"
+                :key="i"
+                :to="item.to"
+              >
+                <v-list-item-icon>
+                  <v-icon v-text="item.icon"></v-icon>
+                </v-list-item-icon>
+                <v-list-item-content>
+                  <v-list-item-title v-text="item.text"></v-list-item-title>
+                  <v-list-item-title v-text="item.to"></v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
+            </v-list-item-group>
+          </v-list>
+        </v-card>
+      </v-col>
+
+      <v-col cols="12" md="12">
+        <v-alert text dense color="teal" icon="mdi-clock-fast" border="left">
           <h2>ส่วนเงือนไขการย้ายและการย้าย</h2>
         </v-alert>
       </v-col>
 
-      <v-col cols="12" md="12">
-        <v-alert
-          border="left"
-          colored-border
-          type="info"
-          elevation="2"
-          icon="mdi-account-convert"
-        >
+      <v-col cols="12" md="4">
+        <v-card>
           <v-card-title
             >ระบบการย้ายข้าราชการครูและบุคลากรทางการศึกษา</v-card-title
           >
@@ -162,16 +188,10 @@
               </v-list-item>
             </v-list-item-group>
           </v-list>
-        </v-alert>
+        </v-card>
       </v-col>
-      <v-col cols="12" md="12">
-        <v-alert
-          border="left"
-          colored-border
-          type="info"
-          elevation="2"
-          icon="mdi-source-branch"
-        >
+      <v-col cols="12" md="4">
+        <v-card>
           <v-card-title>เงือนไขสาขาวิชาสถานศึกษา</v-card-title>
           <v-list>
             <v-list-item-group>
@@ -189,16 +209,10 @@
               </v-list-item>
             </v-list-item-group>
           </v-list>
-        </v-alert>
+        </v-card>
       </v-col>
-      <v-col cols="12" md="12">
-        <v-alert
-          border="left"
-          colored-border
-          type="info"
-          elevation="2"
-          icon="mdi-source-branch"
-        >
+      <v-col cols="12" md="4">
+        <v-card>
           <v-card-title>หนังสือราชการ</v-card-title>
           <v-list>
             <v-list-item-group>
@@ -216,21 +230,16 @@
               </v-list-item>
             </v-list-item-group>
           </v-list>
-        </v-alert>
+        </v-card>
       </v-col>
       <v-col cols="12" md="12">
-        <v-alert shaped dense dark type="amber lighten-1">
+        <v-alert text dense color="teal" icon="mdi-clock-fast" border="left">
           <h2>งานอัตรากำลัง</h2>
         </v-alert>
       </v-col>
       <v-col cols="12" md="12">
-        <v-alert
-          border="left"
-          colored-border
-          color="orange darken-4"
-          elevation="2"
-          icon="mdi-human"
-          ><v-card-title>ระบบอัตรากำลัง</v-card-title>
+        <v-card>
+          <v-card-title>ระบบอัตรากำลัง</v-card-title>
           <v-list>
             <v-list-item-group>
               <v-list-item
@@ -248,23 +257,17 @@
               </v-list-item>
             </v-list-item-group>
           </v-list>
-        </v-alert>
+        </v-card>
       </v-col>
 
       <v-col cols="12" md="12">
-        <v-alert shaped dense dark type="amber lighten-1">
+        <v-alert text dense color="teal" icon="mdi-clock-fast" border="left">
           <h2>ครูผู้ช่วย</h2>
         </v-alert>
       </v-col>
 
       <v-col cols="12" md="12">
-        <v-alert
-          border="left"
-          colored-border
-          color="yellow accent-4"
-          elevation="2"
-          icon="mdi-human-male-male"
-        >
+        <v-card>
           <v-card-title>ระบบครูผู้ช่วย</v-card-title>
           <v-list>
             <v-list-item-group>
@@ -280,21 +283,15 @@
               </v-list-item>
             </v-list-item-group>
           </v-list>
-        </v-alert>
+        </v-card>
       </v-col>
       <v-col cols="12" md="12">
-        <v-alert shaped dense dark type="amber lighten-1">
+        <v-alert text dense color="teal" icon="mdi-clock-fast" border="left">
           <h2>ข่าวสารและคู่มือระบบ</h2>
         </v-alert>
       </v-col>
       <v-col cols="12" md="12">
-        <v-alert
-          border="left"
-          colored-border
-          color="green"
-          elevation="2"
-          icon="mdi-human-male-male"
-        >
+        <v-card>
           <v-card-title>ข่าวและคู่มือใช้งานระบบ</v-card-title>
           <v-list>
             <v-list-item-group>
@@ -313,7 +310,7 @@
               </v-list-item>
             </v-list-item-group>
           </v-list>
-        </v-alert>
+        </v-card>
       </v-col>
     </v-row>
     <!-- V-model userdialog -->
@@ -450,6 +447,15 @@ export default {
         }
       ],
 
+      period_config: [
+        { text: "กำหนดการย้าย", icon: "mdi-calendar", to: "/admin/period" },
+        {
+          text: "กำหนดการสถานศึกษา",
+          icon: "mdi-calendar",
+          to: "/admin/period_college"
+        }
+      ],
+
       user_items: [
         {
           text: "ข้อมูลเกี่ยวกับบุคคล",
@@ -475,31 +481,51 @@ export default {
           text: "ข้อมูลผลงาน รางวัล",
           icon: "mdi-trophy-award",
           to: "/admin/personnel_award"
-        },
-        {
+        }
+        /*   {
           text: "ข้อมูลโทษ วินัย",
           icon: "mdi-alarm-light",
           to: "/admin/personnel_discipline"
+        } */
+      ],
+
+      about_brach: [
+        {
+          text: "สาขาวิชาเอก",
+          icon: "mdi-office-building",
+          to: "/admin/branch"
+        },
+        {
+          text: "สาขางาน",
+          icon: "mdi-calendar",
+          to: "/admin/branch_sub"
         }
       ],
+
       movement_items: [
+        
+         {
+          text: "สายงานสอนและสายสนับสนุนการสอน ประกอบการพิจารณา",
+          icon: "mdi-chart-box-outline",
+          to: "/admin/transference_location_detail"
+        },
+          {
+          text: "สายงานการสอนและสายสนับสนุนการสอน รายละเอียด",
+          icon: "mdi-alarm-light",
+          to: "/admin/transference_location"
+        },
         {
           text: "สายงานการสอนและสายสนับสนุนการสอน [ประมวลผลแบบ 1]",
           icon: "mdi-chart-box-outline",
           to: "/admin/transference_personnel"
         },
-        {
-          text: "สายงานการสอนและสายสนับสนุนการสอน รายละเอียด",
-          icon: "mdi-alarm-light",
-          to: "/admin/transference_location"
-        },
+      
 
         /*   { text: "สายงานบริหารสถานศึกษา", icon: "mdi-alarm-light", to: "/Dashboard" },
           { text: "การย้ายกรณีพิเศษ", icon: "mdi-alarm-light", to: "/Dashboard" }, */
       ],
 
       condition_items: [
-        { text: "สาขาวิชาเอก", icon: "mdi-basket-plus", to: "/admin/branch" },
         {
           text: "เงือนไขการรับย้ายของสถานศึกษา",
           icon: "mdi-basket-plus",
@@ -515,16 +541,16 @@ export default {
           icon: "mdi-chart-box-outline",
           to: "/admin/process_transfer"
         },
-          {
+        {
           text: "ประมวลผลการย้าย สับเปลี่ยนแบบปกติ แบบที่ 3]",
           icon: "mdi-chart-box-outline",
           to: "/admin/process_transfer_switch_normal"
         },
-         {
+        {
           text: "ประมวลผลการย้าย [ประมวลผลแบบ 4 สับเปลี่ยน]",
           icon: "mdi-chart-box-outline",
           to: "/admin/process_transfer_switch"
-        },            
+        },
         {
           text: "สรุปผลการย้าย",
           icon: "mdi-chart-box-outline",
