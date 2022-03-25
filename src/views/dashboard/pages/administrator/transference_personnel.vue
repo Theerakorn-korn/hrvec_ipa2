@@ -1,11 +1,6 @@
 <template>
   <div>
-      <v-bottom-navigation    
-      color="info"
-      horizontal    
-      :background-color="color"
-      dark
-    >
+    <v-bottom-navigation color="info" horizontal :background-color="color" dark>
       <v-btn to="/admin/conditions_branch">
         <span>รายละเอียดเงือนไขสาขาวิชา </span>
         <v-icon>mdi-source-branch</v-icon>
@@ -134,9 +129,8 @@
           item-key="tid_ref"
         >
           <template v-slot:[`item.select_item`]="{ item }">
-              <v-checkbox v-model="search" :value="item.id_card"></v-checkbox>
-            </template>
-
+            <v-checkbox v-model="search" :value="item.id_card"></v-checkbox>
+          </template>
 
           <template v-slot:[`item.college_name`]="{ item }">
             <v-chip color="">
@@ -167,29 +161,60 @@
 
           <template v-slot:[`item.comment_dr_c`]="{ item }">
             <v-chip
-            v-if="item.comment_dr_c==='approp'"
-              color="green"              
+              class="ma-1"
+              v-if="item.comment_dr_c === 'approp'"
+              color="green"
               @click.stop="comment_idPosition(item.tid_ref)"
               dark
               >เห็นควร</v-chip
             >
             <v-chip
-            v-else-if="item.comment_dr_c==='inapprop'"
-              color="red"
+              v-else-if="item.comment_dr_c === 'inapprop'"
+              color="warning"
               dark
               @click.stop="comment_idPosition(item.tid_ref)"
               >ไม่เห็นควร</v-chip
             >
-             <v-icon
-             large
-            v-else
-              color="info"              
+
+            <v-chip
+              v-else-if="item.comment_dr_c === 'suspend'"
+              color="red"
+              dark
+              @click.stop="comment_idPosition(item.tid_ref)"
+              >ระงับย้าย</v-chip
+            >
+
+            <v-icon
+              large
+              v-else
+              color="info"
               @click.stop="comment_idPosition(item.tid_ref)"
               >mdi-comment-processing</v-icon
             >
-            
+          </template>
 
-
+          <template v-slot:[`item.status_document`]="{ item }">
+            <v-chip
+              v-if="item.status_document === 'complete'"
+              color="green"
+              @click.stop="comment_idPosition(item.tid_ref)"
+              dark
+              >ถูกต้องสมบูรณ์</v-chip
+            >
+            <v-chip
+              v-else-if="item.status_document === 'incomplete'"
+              color="warning"
+              dark
+              @click.stop="comment_idPosition(item.tid_ref)"
+              >ไม่สมบูรณ์</v-chip
+            >
+            <v-chip
+              v-else-if="item.status_document === 'do_not'"
+              color="red"
+              dark
+              @click.stop="comment_idPosition(item.tid_ref)"
+              >ไม่จัดส่ง</v-chip
+            >
           </template>
 
           <template v-slot:[`item.actions`]="{ item }">
@@ -338,27 +363,11 @@
                         {{ transference_personnels_id_ref.id_position }}
                       </h3>
                       <h4>
-                        ย้ายครั้งที่ : {{ periods.period_times }} ปี :
+                        ย้ายครั้งที่ : {{ transference_personnels_id_ref.time_ss }} ปี :
                         {{
-                          periods.period_year
-                            | moment("add", "543 years")
-                            | moment("YYYY")
+                          this.transference_personnels_id_ref.year_ss
                         }}
-                      </h4>
-                      <h4>
-                        รอบการย้าย :
-                        {{
-                          periods.period_start
-                            | moment("add", "543 years")
-                            | moment("D MMMM YYYY")
-                        }}
-                        -
-                        {{
-                          periods.period_stop
-                            | moment("add", "543 years")
-                            | moment("D MMMM YYYY")
-                        }}
-                      </h4>
+                      </h4>                     
                       <h4>
                         คำนวณอายุงาน ณ สถานศึกษาปัจจุบัน โดยใช้วันที่ :
                         {{
@@ -582,28 +591,12 @@
                         เลขที่ตำแหน่งปัจจุบัน :
                         {{ transference_personnels_id_ref.id_position }}
                       </h3>
-                      <h4>
-                        ย้ายครั้งที่ : {{ periods.period_times }} ปี :
+                       <h4>
+                        ย้ายครั้งที่ : {{ transference_personnels_id_ref.time_ss }} ปี :
                         {{
-                          periods.period_year
-                            | moment("add", "543 years")
-                            | moment("YYYY")
+                          this.transference_personnels_id_ref.year_ss
                         }}
-                      </h4>
-                      <h4>
-                        รอบการย้าย :
-                        {{
-                          periods.period_start
-                            | moment("add", "543 years")
-                            | moment("D MMMM YYYY")
-                        }}
-                        -
-                        {{
-                          periods.period_stop
-                            | moment("add", "543 years")
-                            | moment("D MMMM YYYY")
-                        }}
-                      </h4>
+                      </h4>      
                       <h4>
                         คำนวณอายุงาน ณ สถานศึกษาปัจจุบัน โดยใช้วันที่ :
                         {{
@@ -620,54 +613,112 @@
                         colored-border
                         type="info"
                         elevation="2"
-                        
                       >
-                      <h2>ความคิดเห็น </h2>
-                      <h2>
-                        <v-radio-group
-                          v-model="transference_personnels_id_ref.comment_dr_c"
-                          row
-                          required
-                          :rules="[v => !!v || '']"
-                          align="center"
-                        >
-                          <v-radio value="approp">
-                            <template v-slot:label>
-                              <div>
-                                <strong class="primary--text"
-                                  >เห็นควรให้ย้าย</strong
-                                >
-                              </div>
-                            </template>
-                          </v-radio>
-                          <v-radio value="inapprop">
-                            <template v-slot:label>
-                              <div>
-                                <strong class="warning--text"
-                                  >ไม่เห็นควรให้ย้าย</strong
-                                >
-                              </div>
-                            </template>
-                          </v-radio>
-                        </v-radio-group>
+                        <h2>ความคิดเห็น</h2>
+                        <h2>
+                          <v-radio-group
+                            v-model="
+                              transference_personnels_id_ref.comment_dr_c
+                            "
+                            row
+                            required
+                            :rules="[v => !!v || '']"
+                            align="center"
+                          >
+                            <v-radio value="approp">
+                              <template v-slot:label>
+                                <div>
+                                  <strong class="primary--text"
+                                    >เห็นควรให้ย้าย</strong
+                                  >
+                                </div>
+                              </template>
+                            </v-radio>
+                            <v-radio value="inapprop">
+                              <template v-slot:label>
+                                <div>
+                                  <strong class="warning--text"
+                                    >ไม่เห็นควรให้ย้าย</strong
+                                  >
+                                </div>
+                              </template>
+                            </v-radio>
+                            <v-radio value="suspend">
+                              <template v-slot:label>
+                                <div>
+                                  <strong class="red--text">ระงับย้าย</strong>
+                                </div>
+                              </template>
+                            </v-radio>
+                          </v-radio-group>
                         </h2>
                       </v-alert>
                     </v-col>
 
+                    <v-col cols="12" md="12">
+                      <v-alert
+                        class="mx-auto text-center pa-2 ma-2"
+                        border="top"
+                        colored-border
+                        type="info"
+                        elevation="2"
+                      >
+                        <h2>สถานะการยืนเสนอเอกสารประกอบการพิจารณา</h2>
+                        <h2>
+                          <v-radio-group
+                            v-model="
+                              transference_personnels_id_ref.status_document
+                            "
+                            row
+                            required
+                            :rules="[v => !!v || '']"
+                            align="center"
+                          >
+                            <v-radio value="complete">
+                              <template v-slot:label>
+                                <div>
+                                  <strong class="primary--text"
+                                    >ถูกต้องสมบูรณ์</strong
+                                  >
+                                </div>
+                              </template>
+                            </v-radio>
+                            <v-radio value="incomplete">
+                              <template v-slot:label>
+                                <div>
+                                  <strong class="warning--text"
+                                    >ไม่ถูกต้องไม่สมบูรณ์</strong
+                                  >
+                                </div>
+                              </template>
+                            </v-radio>
+                            <v-radio value="do_not">
+                              <template v-slot:label>
+                                <div>
+                                  <strong class="red--text"
+                                    >ไม่จัดส่งเอกสาร</strong
+                                  >
+                                </div>
+                              </template>
+                            </v-radio>
+                          </v-radio-group>
+                        </h2>
+                      </v-alert>
+                    </v-col>
                     <v-col cols="12" md="6">
                       <v-autocomplete
                         :items="branch_s"
                         item-text="name_branch"
                         item-value="id_branch"
                         outlined
-                        label="สาขาวิชารับย้าย :"                       
-                        v-model="transference_personnels_id_ref.id_branch"
+                        label="สาขาวิชารับย้าย :"
+                        v-model="transference_personnels_id_ref.id_branch_tan"
                       ></v-autocomplete>
                     </v-col>
                     <v-col cols="12" md="6">
                       <v-text-field
                         outlined
-                        label=" ไม่เห็นควรให้ย้ายเนื่องจาก:"                      
+                        label=" ไม่เห็นควรให้ย้ายเนื่องจาก:"
                         v-model="transference_personnels_id_ref.detail_comment"
                       ></v-text-field>
                     </v-col>
@@ -755,6 +806,7 @@ export default {
         { text: "ครั้งที่/ปี", align: "center", value: "time_ss" },
         { text: "อายุงาน ณ ปัจจุบัน", align: "center", value: "age_app_time" },
         { text: "ความคิดเห็น ผอ.", align: "center", value: "comment_dr_c" },
+        { text: "เอกสาร", align: "center", value: "status_document" },
         { text: "วันที่ทำรายการ", align: "center", value: "date_time" },
         { text: "ย้ายแบบที่ 1", align: "center", value: "actions" },
         { text: "แห่งใหม่", align: "center", value: "succ_college" },
@@ -795,7 +847,7 @@ export default {
       provinces: [],
       regions: [],
       periods: [],
-      period_enable: "1",
+      period_enable_process: "1",
       updatecomment: {}
     };
   },
@@ -834,7 +886,7 @@ export default {
       let result_period;
       result_period = await this.$http.post("period.php", {
         ApiKey: this.ApiKey,
-        period_enable: this.period_enable
+        period_enable_process: this.period_enable_process
       });
       this.periods = result_period.data;
     },
@@ -908,33 +960,33 @@ export default {
     },
 
     async updatecommentSubmit() {
-       if (this.$refs.updatecommentform.validate()) {
+      if (this.$refs.updatecommentform.validate()) {
         this.updatecomment.ApiKey = this.ApiKey;
-        this.updatecomment.id_tfp = this.transference_personnels_id_ref.id_tfp;       
+        this.updatecomment.id_tfp = this.transference_personnels_id_ref.id_tfp;
         this.updatecomment.comment_dr_c = this.transference_personnels_id_ref.comment_dr_c;
-        this.updatecomment.id_branch = this.transference_personnels_id_ref.id_branch;
-        this.updatecomment.detail_comment = this.transference_personnels_id_ref.detail_comment;     
+        this.updatecomment.id_branch = this.transference_personnels_id_ref.id_branch_tan;
+        this.updatecomment.detail_comment = this.transference_personnels_id_ref.detail_comment;
+        this.updatecomment.status_document = this.transference_personnels_id_ref.status_document;
 
-         let result = await this.$http.post(
-            "transference_personnel.update.php",
-            this.updatecomment
-          );
+        let result = await this.$http.post(
+          "transference_personnel.update.php",
+          this.updatecomment
+        );
 
-          if (result.data.status == true) {
-            this.snackbar.icon = "mdi-font-awesome";
-            this.snackbar.color = "success";
-            this.snackbar.text = "บันทึกข้อมูลเรียบร้อย";
-            this.snackbar.show = true;
-            this.transference_personnelQueryAll();
-          }
-         else {
+        if (result.data.status == true) {
+          this.snackbar.icon = "mdi-font-awesome";
+          this.snackbar.color = "success";
+          this.snackbar.text = "บันทึกข้อมูลเรียบร้อย";
+          this.snackbar.show = true;
+          this.transference_personnelQueryAll();
+        } else {
           this.snackbar.icon = "mdi-close-network";
           this.snackbar.color = "red";
           this.snackbar.text = "บันทึกข้อมูลผิดพลาด";
           this.snackbar.show = true;
         }
         this.commentDrdialog = false;
-       }
+      }
     },
 
     /// updatepositionSubmit
@@ -959,7 +1011,7 @@ export default {
         this.addreturn_man_power.id_position = this.transference_personnels_id_ref.id_position;
         this.addreturn_man_power.position = this.position;
         this.addreturn_man_power.case_vacancy =
-          "ย้ายรอบ-" + this.periods.period_times + "/" + this.period_years;
+          "ย้ายรอบ-" + this.transference_personnels_id_ref.time_ss + "/" + this.transference_personnels_id_ref.year_ss;
 
         let result_man_return = await this.$http.post(
           "man_power.insert.php",

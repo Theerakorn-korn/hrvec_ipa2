@@ -270,14 +270,33 @@ export default new Router({
                     component: () =>
                         import ('@/views/dashboard/pages/administrator/conditons_transfer_success'),
                 },
+                {
+                    name: 'ศูนย์กลางส่งออกเอกสาร ประกอบการพิจารณาย้าย',
+                    path: '/admin/transference_export_report',
+                    component: () =>
+                        import ('@/views/dashboard/pages/administrator/transference_export_report'),
+                },
+                
 
+                {
+                    name: 'ครูผู้ช่วย',
+                    path: '/admin/assistant_teacher',                    
+                    component: () =>
+                    import ('@/views/dashboard/pages/administrator/assistant_teacher'),
+                }, 
+                {
+                    name: 'รายละเอียดการประเมินครูผู้ช่วย',
+                    path: '/admin/assistant_teacher_detail',                    
+                    component: () =>
+                    import ('@/views/dashboard/pages/administrator/assistant_teacher_detail'),
+                }, 
 
-                
-                
-               
-                
-                
-                
+                {
+                    name: 'ประเภทวิชา/หมวดวิชา/สาขาวิชา',
+                    path: '/admin/rate_work_course_std',                    
+                    component: () =>
+                    import ('@/views/dashboard/pages/administrator/rate_work_course_std'),
+                }, 
 
             ]
         },
@@ -355,6 +374,13 @@ export default new Router({
             import ('@/print_report_movement_filter'),
         }, 
         {
+            name: 'พิมพ์ บัญชีรายละเอียดการพิจารณาย้าย แบบที่ 2 ',
+            path: '/admin/print_report_movement_filter_2/:id_oa:times_s:year_s:tech',
+            component: () =>
+            import ('@/print_report_movement_filter_2'),
+        },       
+        
+        {
             name: 'พิมพ์ บัญชีรายละเอียดการพิจารณาย้าย อ.ก.ค.ศ.',
             path: '/admin/print_report_movement_filter_o/:id_oa:times_s:year_s:tech',
             component: () =>
@@ -367,13 +393,53 @@ export default new Router({
             import ('@/print_report_movement'),
         }, 
         {
-            name: 'พิมพ์รายงาน การเขียนย้ายออนไลน์ประกอบการพิจารณา',
+            name: 'พิมพ์รายงาน การเขียนย้ายออนไลน์ประกอบการพิจารณา แบบที่ 1',
             path: '/admin/print_report_movement_online/:times_s/:year_s/:teach',
             component: () =>
             import ('@/print_report_movement_online'),
         }, 
-        
-        
+        {
+            name: 'พิมพ์รายงาน การเขียนย้ายออนไลน์ประกอบการพิจารณา แบบที่ 2',
+            path: '/admin/print_report_movement_online_2/:times_s/:year_s/:teach',
+            component: () =>
+            import ('@/print_report_movement_online_2'),
+        },  
+        {
+            name: 'พิมพ์รายงาน การเขียนย้ายออนไลน์ประกอบการพิจารณา แบบที่ 3',
+            path: '/admin/print_report_movement_online_3/:times_s/:year_s/:teach',
+            component: () =>
+            import ('@/print_report_movement_online_3'),
+        },   
+        {
+            name: 'พิมพ์รายงาน การเขียนย้ายออนไลน์ประกอบการพิจารณา(ค้างพิจารณา) แบบที่ 4',
+            path: '/admin/print_report_movement_online_4/:id_oa/:times_s/:year_s/:teach',
+            component: () =>
+            import ('@/print_report_movement_online_4'),
+        },   
+        {
+            name: 'พิมพ์รายงาน ผู้เสนอย้ายไม่บันทึกข้อมูล',
+            path: '/admin/print_report_personnel_can/',
+            component: () =>
+            import ('@/print_report_personnel_can'),
+        },  
+        {
+            name: 'พิมพ์รายงาน สรุปตำแหน่งว่าง',
+            path: '/admin/print_report_manpower',
+            component: () =>
+            import ('@/print_report_manpower'),
+        },
+        {
+            name: 'พิมพ์รายงาน สถานศึกษาไม่ดำเนินการบันทึกเงือนไขสาขาวิชา',
+            path: '/admin/print_report_college_condition/:times_s/:year_s',
+            component: () =>
+            import ('@/print_report_college_condition'),
+        },  
+        {
+            name: 'พิมพ์รายงาน ข้อมูลผู้เสนอย้าย และเงินเดือน',
+            path: '/admin/print_report_movement_filter_salary/:id_oa/:times_s/:year_s/:teach',
+            component: () =>
+            import ('@/print_report_movement_filter_salary'),
+        },         
         
         {
             path: "/college",
@@ -471,7 +537,13 @@ export default new Router({
                     path: '/college/transference_personnel',
                     component: () =>
                         import ('@/views/dashboard/pages/college/transference_personnel'),
-                },   
+                }, 
+                {
+                    name: 'ข้อมูลทั่วไป',
+                    path: '/college/rate_workforce_g',
+                    component: () =>
+                        import ('@/views/dashboard/pages/college/rate_workforce_g'),
+                },     
                 {
                     name: 'รายงานข้อมูลสถานศึกษา (อัตรากำลัง)',
                     path: '/college/rate_workforce',
@@ -479,10 +551,29 @@ export default new Router({
                         import ('@/views/dashboard/pages/college/rate_workforce'),
                 },   
                 {
+                    name: 'รายงานข้อมูลสถานศึกษา (อัตรากำลัง) สรุป',
+                    path: '/college/rate_workforce_pro',
+                    component: () =>
+                        import ('@/views/dashboard/pages/college/rate_workforce_pro'),
+                },   
+                
+                {
                     name: 'ข้อมูลหมวดวิชา',
                     path: '/college/rate_workforce_course/:rate_work_course_id',                    
                     component: () =>
                     import ('@/views/dashboard/pages/college/rate_workforce_course'),
+                }, 
+                {
+                    name: 'ประมวลผลอัตรากำลัง',
+                    path: '/college/rate_workforce_cal',                    
+                    component: () =>
+                    import ('@/views/dashboard/pages/college/rate_workforce_cal'),
+                }, 
+                {
+                    name: 'ครูผู้ช่วย',
+                    path: '/college/assistant_teacher',                    
+                    component: () =>
+                    import ('@/views/dashboard/pages/college/assistant_teacher'),
                 }, 
                             
                 

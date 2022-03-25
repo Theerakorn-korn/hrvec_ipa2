@@ -16,11 +16,9 @@
         <v-icon>mdi-source-branch</v-icon>
       </v-btn>
     </v-bottom-navigation>
-    <v-bottom-navigation
-      :value="value"
+    <v-bottom-navigation     
       color="info"
-      horizontal
-      v-model="value"
+      horizontal    
       :background-color="color"
       dark
     >
@@ -55,6 +53,10 @@
       <v-btn to="/admin/conditons_transfer_success">
         <span>สรุปผล</span>
         <v-icon>mdi-bookmark-check</v-icon>
+      </v-btn>
+      <v-btn to="/admin/Order_appoint">
+        <span>รายงาน</span>
+        <v-icon>mdi-printer</v-icon>
       </v-btn>
     </v-bottom-navigation>
     <v-container fluid>
@@ -301,6 +303,10 @@ export default {
         })
         .finally(() => (this.loading = false));
       this.conditons_transfer_successs = result.data;     
+      console.log(result.data)
+      console.log(this.times_select)
+      console.log(this.years_select)
+      console.log(this.type_name_position)
     },
 
     async conditons_transfer_successQueryAll() {

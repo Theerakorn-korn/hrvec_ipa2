@@ -152,8 +152,7 @@
                   <v-icon v-text="item.icon"></v-icon>
                 </v-list-item-icon>
                 <v-list-item-content>
-                  <v-list-item-title v-text="item.text"></v-list-item-title>
-                  <v-list-item-title v-text="item.to"></v-list-item-title>
+                  <v-list-item-title v-text="item.text"></v-list-item-title>                 
                 </v-list-item-content>
               </v-list-item>
             </v-list-item-group>
@@ -272,7 +271,7 @@
           <v-list>
             <v-list-item-group>
               <!-- <v-list-item v-for="(item, i) in prepare_items" :key="i" :to="item.to"> -->
-              <v-list-item v-for="(item, i) in prepare_items" :key="i">
+              <v-list-item v-for="(item, i) in prepare_items" :key="i" :to="item.to">
                 <v-list-item-icon>
                   <v-icon v-text="item.icon"></v-icon>
                 </v-list-item-icon>
@@ -430,7 +429,7 @@ export default {
           icon: "mdi-account-cog",
           to: "/admin/user_status"
         },
-        { text: "ข้อมูลรอบปี", icon: "mdi-calendar", to: "/admin/period" }
+       /*  { text: "ข้อมูลรอบปี", icon: "mdi-calendar", to: "/admin/period" } */
       ],
 
       college_items: [
@@ -439,10 +438,10 @@ export default {
           icon: "mdi-office-building",
           to: "/admin/collegetype"
         },
-        { text: "ข้อมูลสถานศึกษา", icon: "mdi-calendar", to: "/admin/college" },
+        { text: "ข้อมูลสถานศึกษา", icon: "mdi-office-building", to: "/admin/college" },
         {
           text: "ข้อมูลรายละเอียดสถานศึกษา",
-          icon: "mdi-calendar",
+          icon: "mdi-office-building",
           to: "/admin/collegeinfo"
         }
       ],
@@ -492,31 +491,37 @@ export default {
       about_brach: [
         {
           text: "สาขาวิชาเอก",
-          icon: "mdi-office-building",
+          icon: "mdi-source-branch",
           to: "/admin/branch"
         },
         {
           text: "สาขางาน",
-          icon: "mdi-calendar",
+          icon: "mdi-source-branch",
           to: "/admin/branch_sub"
-        }
+        },
+          {
+          text: "ประเภทวิชา/หมวดวิชา/สาขาวิชา",
+          icon: "mdi-source-branch",
+          to: "/admin/rate_work_course_std"
+        },
+        
       ],
 
       movement_items: [
         
          {
           text: "สายงานสอนและสายสนับสนุนการสอน ประกอบการพิจารณา",
-          icon: "mdi-chart-box-outline",
+          icon: "mdi-account-switch",
           to: "/admin/transference_location_detail"
         },
           {
           text: "สายงานการสอนและสายสนับสนุนการสอน รายละเอียด",
-          icon: "mdi-alarm-light",
+          icon: "mdi-account-switch",
           to: "/admin/transference_location"
         },
         {
           text: "สายงานการสอนและสายสนับสนุนการสอน [ประมวลผลแบบ 1]",
-          icon: "mdi-chart-box-outline",
+          icon: "mdi-calculator",
           to: "/admin/transference_personnel"
         },
       
@@ -528,32 +533,32 @@ export default {
       condition_items: [
         {
           text: "เงือนไขการรับย้ายของสถานศึกษา",
-          icon: "mdi-basket-plus",
+          icon: "mdi-checkbox-multiple-marked-outline",
           to: "/admin/conditions_transfer"
         },
         {
           text: "เงือนไขการรับย้ายสาขาวิชา",
-          icon: "mdi-alarm-light",
+          icon: "mdi-checkbox-multiple-marked-outline",
           to: "/admin/conditions_branch"
         },
         {
           text: "ประมวลผลการย้าย [ประมวลผลแบบ 2]",
-          icon: "mdi-chart-box-outline",
+          icon: "mdi-calculator",
           to: "/admin/process_transfer"
         },
         {
           text: "ประมวลผลการย้าย สับเปลี่ยนแบบปกติ แบบที่ 3]",
-          icon: "mdi-chart-box-outline",
+          icon: "mdi-calculator",
           to: "/admin/process_transfer_switch_normal"
         },
         {
           text: "ประมวลผลการย้าย [ประมวลผลแบบ 4 สับเปลี่ยน]",
-          icon: "mdi-chart-box-outline",
+          icon: "mdi-calculator",
           to: "/admin/process_transfer_switch"
         },
         {
           text: "สรุปผลการย้าย",
-          icon: "mdi-chart-box-outline",
+          icon: "mdi-newspaper",
           to: "/admin/conditons_transfer_success"
         }
       ],
@@ -561,37 +566,43 @@ export default {
       official_book: [
         {
           text: "คำสั่งแต่งตั้งรักษาการในตำแหน่ง",
-          icon: "mdi-basket-plus",
+          icon: "mdi-bookmark-check",
           to: "/admin/Order_appoint"
+        },
+        {
+          text: "ศูนย์กลางส่งออกเอกสาร ประกอบการพิจารณาย้าย",
+          icon: "mdi-bookmark-check",
+          to: "/admin/transference_export_report"
         }
+
       ],
 
       human_items: [
         {
           text: "ข้อมูลอัตรากำลังสถานศึกษา",
-          icon: "mdi-basket-plus",
+          icon: "mdi-account-multiple",
           to: "/admin/man_power"
         }
         /*  { text: "ข้อมูลเชิงปริมาณ", icon: "mdi-chart-box-outline", to: "/Dashboard" },        
           { text: "ข้อมูลเชิงปริมาณ", icon: "mdi-chart-box-outline", to: "/Dashboard" },   */
       ],
       prepare_items: [
-        { text: "ข้อมูลครูผู้ช่วย", icon: "mdi-basket-plus", to: "/Dashboard" },
+        { text: "ข้อมูลครูผู้ช่วย", icon: "mdi-account-settings", to: "/admin/assistant_teacher" },
         {
-          text: "ประเมินครูผู้ช่วย",
-          icon: "mdi-chart-box-outline",
-          to: "/Dashboard"
+          text: "รายละเอียดการประเมินครูผู้ช่วย",
+          icon: "mdi-account-star",
+          to: "/admin/assistant_teacher_detail"
         },
-        { text: "รายงาน", icon: "mdi-chart-box-outline", to: "/Dashboard" }
+       /*  { text: "รายงาน", icon: "mdi-chart-box-outline", to: "/Dashboard" } */
       ],
       news_manual: [
-        { text: "ข่าวสาร", icon: "mdi-basket-plus", to: "/admin/news_s" },
+        { text: "ข่าวสาร", icon: "mdi-book", to: "/admin/news_s" },
         {
           text: "คู่มือใช้งาน",
-          icon: "mdi-chart-box-outline",
+          icon: "mdi-book-open-page-variant",
           to: "/admin/manual_s"
         },
-        { text: "กระดานสนทนา", icon: "mdi-chart-box-outline", to: "" }
+      /*   { text: "กระดานสนทนา", icon: "mdi-chart-box-outline", to: "" } */
       ]
     };
   },

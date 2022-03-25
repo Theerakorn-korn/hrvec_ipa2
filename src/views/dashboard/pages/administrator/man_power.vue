@@ -10,7 +10,7 @@
       >
         <v-card class="mb-4 pa-2">
           <v-row>
-            <v-col cols="12" lg="6" class="text-right">
+            <v-col cols="12" md="6" class="text-right">
               <v-text-field
                 v-model="search"
                 append-icon="mdi-magnify"
@@ -23,7 +23,19 @@
                 class="mb-2"
               />
             </v-col>
-            <v-col cols="12" lg="6" class="text-right">
+            <v-col cols="12" md="2"><v-btn
+              color="info"   
+              :href="
+                '#/admin/print_report_manpower'                
+              "              target="_blank"
+            
+            >
+              <v-icon   class="pa-1">
+                mdi-printer
+              </v-icon>
+              รายงานตำแหน่งว่างคงเหลือ
+            </v-btn></v-col>
+            <v-col cols="12" md="4" class="text-right">
               <v-btn
                 
                 large
@@ -44,6 +56,14 @@
           :items="man_powers"
           :search="search"          
        > 
+         <template v-slot:[`item.status_booking`]="{ item }">
+           <v-chip dark color="warning" v-if="item.status_booking">
+               {{ item.status_booking }}
+           </v-chip>
+           <v-chip dark color="green" v-else>
+             ว่าง
+           </v-chip>
+          </template>
 
          <template v-slot:[`item.actions`]="{ item }">
             <v-icon
@@ -280,6 +300,7 @@ export default {
         { text: "รหัสตำแหน่ง", align: "left", value: "id_position" }, 
         { text: "ตำแหน่ง", align: "left", value: "position" }, 
         { text: "กรณี", align: "left", value: "case_vacancy" },       
+        { text: "จอง", align: "left", value: "status_booking" },       
         { text: "แก้ไข", align: "center", value: "actions", icon: "mdi-file-document-edit" },
         { text: "ลบ", align: "center", value: "action_s" , icon: "mdi-delete-forever" },
       ],

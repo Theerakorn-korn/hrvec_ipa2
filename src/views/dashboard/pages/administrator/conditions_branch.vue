@@ -2,29 +2,33 @@
   <div>
     <v-bottom-navigation      
       color="info"
-      horizontal     
+      horizontal    
       :background-color="color"
       dark
     >
       <v-btn to="/admin/conditions_branch">
         <span>รายละเอียดเงือนไขสาขาวิชา </span>
-        <v-icon>mdi-history</v-icon>
+        <v-icon>mdi-source-branch</v-icon>
       </v-btn>
 
       <v-btn to="/admin/conditions_transfer">
         <span>รายการเงือนไขสาขาวิชา</span>
-        <v-icon>mdi-calculator</v-icon>
+        <v-icon>mdi-source-branch</v-icon>
       </v-btn>
     </v-bottom-navigation>
-    <v-bottom-navigation     
+    <v-bottom-navigation      
       color="info"
       horizontal     
       :background-color="color"
       dark
     >
+      <v-btn to="/admin/transference_location_detail">
+        <span>รายละเอียดผู้ยืนย้าย ประกอบพิจารณา </span>
+        <v-icon>mdi-details</v-icon>
+      </v-btn>
       <v-btn to="/admin/transference_location">
         <span>รายละเอียดผู้ยืนย้าย </span>
-        <v-icon>mdi-history</v-icon>
+        <v-icon>mdi-details</v-icon>
       </v-btn>
 
       <v-btn to="/admin/transference_personnel">
@@ -120,7 +124,7 @@
               </v-icon>
             </v-btn>
             <v-chip color="green" dark v-else @click="detail_select(item.id_cb)">
-              {{ item.con_datail_branch }}
+             <h2>{{ item.con_datail_branch }}</h2> 
               
             </v-chip>
           </template>
@@ -274,7 +278,8 @@ export default {
         .post("conditions_transfer.php", {
           ApiKey: this.ApiKey,
           time_s: this.times_select,
-          year_s: this.years_select
+          year_s: this.years_select,
+          search: "ok"
         })
         .finally(() => (this.loading = false));
       this.conditions_transfers = result.data;

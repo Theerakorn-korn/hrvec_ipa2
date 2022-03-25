@@ -84,8 +84,7 @@
               </div>
             </template>
             <v-card
-              class="elevation-6"
-              style="border-radius: 10px; border: solid 2px green"
+              class="elevation-6"           
               width="100%"
             >
               <v-form>
@@ -107,7 +106,7 @@
                         </v-alert>
                       </dir>
                       <div v-else>
-                        <v-alert shaped outlined type="success">
+                        <v-alert outlined type="success">
                           <v-col cols="12">
                             <v-alert
                               outlined
@@ -127,7 +126,7 @@
                           <v-col
                             cols="12"
                             md="12"
-                            class="text-right"
+                            class="text-center"
                             v-if="
                               periods.period_enable === '1' &&
                                 user.user_status === 'tech' &&
@@ -135,6 +134,7 @@
                             "
                           >
                             <v-btn
+                              rounded
                               prominent
                               color="primary"
                               border="bottom"
@@ -194,63 +194,63 @@
                       </div>
                     </v-col>
 
-                    <v-col cols="12" md="6">
+                    <v-col cols="12" md="4">
                       <v-icon large>mdi-menu-right</v-icon> สังกัด :
                       {{ user.college_name }}
                     </v-col>
-                    <v-col cols="12" md="6">
+                    <v-col cols="12" md="4">
                       <v-icon large left>mdi-menu-right</v-icon> รหัสบัตรประชาชน
                       : {{ user.id_card }}
                     </v-col>
-                    <v-col cols="12" md="6">
+                    <v-col cols="12" md="4">
                       <v-icon large left>mdi-menu-right</v-icon> ตำแหน่ง :
                       {{ user.position_name }}
                     </v-col>
-                    <v-col cols="12" md="6">
+                    <v-col cols="12" md="4">
                       <v-icon large left>mdi-menu-right</v-icon> เลขที่ตำแหน่ง :
                       {{ user.id_position }}
                     </v-col>
-                    <v-col cols="12" md="6">
+                    <v-col cols="12" md="4">
                       <v-icon large left>mdi-menu-right</v-icon> วิทยฐานะ :
                       {{ user.rang_name }}
                     </v-col>
-                    <v-col cols="12" md="6">
+                    <v-col cols="12" md="4">
                       <v-icon large left>mdi-menu-right</v-icon> ระดับ :
                       {{ user.rang_level }}
                     </v-col>
-                    <v-col cols="12" md="6">
+                    <v-col cols="12" md="4">
                       <v-icon large left>mdi-menu-right</v-icon> คุณวุฒิ :
                       {{ user.ed_abb }}
                     </v-col>
-                    <v-col cols="12" md="6">
+                    <v-col cols="12" md="4">
                       <v-icon large left>mdi-menu-right</v-icon> สาขาวิชาเอก :
                       {{ user.ed_name }}
                     </v-col>
-                    <v-col cols="12" md="6">
+                    <v-col cols="12" md="4">
                       <v-icon large left>mdi-menu-right</v-icon> วันเดือนปี เกิด
                       : {{ user.brith_day }}/{{ user.brith_month }}/{{
                         user.brith_year
                       }}
                     </v-col>
-                    <v-col cols="12" md="6">
+                    <v-col cols="12" md="4">
                       <v-icon large left>mdi-menu-right</v-icon> วันเดือนปี
                       บรรจุ : {{ user.appoin_day }}/{{ user.appoin_month }}/{{
                         user.appoin_year
                       }}
                     </v-col>
-                    <v-col cols="12" md="6">
+                    <v-col cols="12" md="4">
                       <v-icon large left>mdi-menu-right</v-icon> เกษียณ :
                       {{ user.retrire_year }}
                     </v-col>
-                    <v-col cols="12" md="6">
+                    <v-col cols="12" md="4">
                       <v-icon large left>mdi-menu-right</v-icon> เบอร์โทรติดต่อ
                       : {{ user.tel_p }}
                     </v-col>
-                    <v-col cols="12" md="12">
+                    <v-col cols="12" md="4">
                       <v-icon large left>mdi-menu-right</v-icon> E-mail :
                       {{ user.e_mail }}
                     </v-col>
-                    <v-col cols="12" md="12">
+                    <v-col cols="12" md="4">
                       <v-icon large left>mdi-menu-right</v-icon> สถานภาพสมรส :
                       {{ marital_status }}
                     </v-col>
@@ -263,7 +263,7 @@
                         </h2>
                       </div>
                     </v-col>
-                    <v-col cols="12" md="6" class="text-left">
+                    <v-col cols="12" md="12" class="text-right">
                       <v-btn
                         elevation="2"
                         x-large
@@ -275,7 +275,7 @@
                         <v-icon>mdi-pencil</v-icon> แก้ไขข้อมูลเบื้องต้น</v-btn
                       >
                     </v-col>
-                    <v-col cols="12" md="6" class="text-left">
+                    <v-col cols="12" md="12" class="text-right">
                       <v-btn
                         elevation="2"
                         x-large
@@ -292,8 +292,48 @@
                 </v-container>
               </v-form>
             </v-card>
+             <v-card>
+          <v-data-table
+            color="success"
+            :loading="loading"
+            :headers="headers"
+            :items="transference_personnels"
+          >
+            <template v-slot:[`item`]="{ item, index }">
+              <tr>
+                <td class="text-center">{{ index + 1 }}</td>
+                <td class="text-center">{{ item.tid_ref }}</td>
+                <td class="text-center">{{ item.id_card }}</td>
+                <td class="text-center">{{ item.frist_name }}</td>
+                <td class="text-center">{{ item.last_name }}</td>
+                <td class="text-center">{{ item.time_ss }}</td>
+                <td class="text-center">{{ item.year_ss }}</td>
+                <td class="text-center">{{ item.age_app_time }}</td>
+                <td class="text-center">{{ item.date_time }}</td>
+                <td class="text-center">
+                  <v-chip
+                    v-if="item.comment_dr_c === 'approp'"
+                    color="green"
+                    dark
+                    >เห็นควร</v-chip
+                  >
+                  <v-chip
+                    v-else-if="item.comment_dr_c === 'inapprop'"
+                    color="red"
+                    dark
+                    >ไม่เห็นควร</v-chip
+                  >
+                  <v-icon large v-else color="info"
+                    >mdi-comment-processing</v-icon
+                  >
+                </td>
+              </tr>
+            </template>
+          </v-data-table>
+        </v-card>           
           </base-material-card>
         </v-col>
+       
       </v-row>
 
       <!-- V-model userdialog -->
@@ -316,9 +356,9 @@
               <v-form ref="personnelform" lazy-validation>
                 <v-container grid-list-md>
                   <v-layout wrap>
-                    <v-flex md6>
+                    <v-flex md2>
                       <v-select
-                        outlinedd
+                        outlined
                         label="สถานภาพสมรส"
                         :items="user_marital_status"
                         item-text="title"
@@ -327,14 +367,14 @@
                       ></v-select>
                     </v-flex>
                     <v-flex
-                      md6
+                      md3
                       v-if="
                         user.marital_status == 'married' ||
                           user.marital_status == 'separate'
                       "
                     >
                       <v-text-field
-                        outlinedd
+                        outlined
                         label="รหัสบัตรประชาชนคู่สมรส :"
                         v-model="user.id_card_m"
                         required
@@ -349,7 +389,7 @@
                       "
                     >
                       <v-text-field
-                        outlinedd
+                        outlined
                         label="คำนำหน้าชื่อ :"
                         v-model="user.title_sm"
                         required
@@ -357,14 +397,14 @@
                       ></v-text-field>
                     </v-flex>
                     <v-flex
-                      md5
+                      md3
                       v-if="
                         user.marital_status == 'married' ||
                           user.marital_status == 'separate'
                       "
                     >
                       <v-text-field
-                        outlinedd
+                        outlined
                         label="ชื่อ :"
                         v-model="user.frist_namem"
                         required
@@ -372,14 +412,14 @@
                       ></v-text-field>
                     </v-flex>
                     <v-flex
-                      md5
+                      md2
                       v-if="
                         user.marital_status == 'married' ||
                           user.marital_status == 'separate'
                       "
                     >
                       <v-text-field
-                        outlinedd
+                        outlined
                         label="นามสกุล :"
                         v-model="user.last_namem"
                         required
@@ -387,14 +427,14 @@
                       ></v-text-field>
                     </v-flex>
                     <v-flex
-                      md6
+                      md4
                       v-if="
                         user.marital_status == 'married' ||
                           user.marital_status == 'separate'
                       "
                     >
                       <v-text-field
-                        outlinedd
+                        outlined
                         label="อาชีพ :"
                         v-model="user.occupation_sm"
                         required
@@ -402,14 +442,14 @@
                       ></v-text-field>
                     </v-flex>
                     <v-flex
-                      md6
+                      md4
                       v-if="
                         user.marital_status == 'married' ||
                           user.marital_status == 'separate'
                       "
                     >
                       <v-text-field
-                        outlinedd
+                        outlined
                         label="สถานที่ทำงาน :"
                         v-model="user.work_placem"
                         required
@@ -417,7 +457,7 @@
                       ></v-text-field>
                     </v-flex>
                     <v-flex
-                      md6
+                      md4
                       v-if="
                         user.marital_status == 'married' ||
                           user.marital_status == 'separate'
@@ -429,11 +469,12 @@
                         item-value="province_ID"
                         label="ภูมิลำเนาของคู่สมรส จังหวัด : "
                         required
+                        outlined
                         :rules="[v => !!v || '']"
                         v-model="user.province_IDm"
                       ></v-autocomplete>
                     </v-flex>
-                      <v-flex xs12>
+                    <v-flex xs12>
                       <v-divider></v-divider>
                     </v-flex>
                     <v-flex md6>
@@ -455,7 +496,6 @@
                     </v-flex>
                   </v-layout>
                 </v-container>
-                <small>* จำเป็น</small>
               </v-form>
             </v-card-text>
             <v-card-actions>
@@ -498,7 +538,7 @@
                   <v-layout wrap>
                     <v-flex md6>
                       <v-text-field
-                        outlinedd
+                        outlined
                         label="Password"
                         v-model="user.p_word"
                         type="password"
@@ -508,7 +548,7 @@
                     </v-flex>
                     <v-flex md6>
                       <v-text-field
-                        outlinedd
+                        outlined
                         label="Confirm Password"
                         v-model="user.user_confirmpassword"
                         type="password"
@@ -657,6 +697,7 @@ export default {
       personnel_temporary_pic_dialog: false,
       deletefiledialog: false,
       passwoorddialog: false,
+      transference_personnels: [],
       valid: true,
       user: {},
       user: {},
@@ -683,7 +724,28 @@ export default {
         .substr(0, 10),
       menu: false,
       modal: false,
-      menu2: false
+      menu2: false,
+      headers: [
+        { text: "#", align: "center", value: "index" },
+        { text: "อ้างอิง", align: "center", value: "tid_ref" },
+        { text: "รหัสบัตรประชาชน", align: "center", value: "id_card" },
+        { text: "ชื่อ", align: "center", value: "frist_name" },
+        { text: "นามสกุล", align: "center", value: "last_name" },
+        { text: "ครั้งที่", align: "center", value: "time_ss" },
+        { text: "ปีที่", align: "center", value: "year_ss" },
+        { text: "อายุงาน ณ ปัจจุบัน", align: "center", value: "age_app_time" },
+        { text: "วันที่ทำรายการ", align: "center", value: "date_time" },
+        { text: "ความคิดเห็นผู้อำนวยการ", align: "center", value: "actions" }
+      ],
+      rowsperpage: [
+        25,
+        50,
+        100,
+        {
+          text: "All",
+          value: -1
+        }
+      ]
     };
   },
   async mounted() {
@@ -712,6 +774,7 @@ export default {
     this.periods = result_period.data;
 
     await this.personnelQuery();
+    await this.transference_personnelQueryAll();
   },
 
   methods: {
@@ -747,6 +810,18 @@ export default {
       this.updateuser.personnel_temporary_pic = this.user.personnel_temporary_pic;
       this.updateuser.id_card = this.user.id_card;
       this.deletefiledialog = true;
+    },
+
+    async transference_personnelQueryAll() {
+      this.loading = true;
+      let userSession = JSON.parse(sessionStorage.getItem("user")) || 0;
+      let result = await this.$http
+        .post("transference_personnel.php", {
+          ApiKey: this.ApiKey,
+          id_card: userSession.id_card
+        })
+        .finally(() => (this.loading = false));
+      this.transference_personnels = result.data;
     },
 
     async personnelSubmit() {

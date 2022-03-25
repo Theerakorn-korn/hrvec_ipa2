@@ -158,9 +158,9 @@ export default {
       {
         action: "mdi-account-supervisor-circle",
         items: [
-          { title: "ข้อมูลครูผู้ช่วย", action: "mdi-basket-plus", to: "" },        
-          { title: "ประเมินครูผู้ช่วย", action: "mdi-chart-box-outline", to: "" },        
-          { title: "รายงาน", action: "mdi-chart-box-outline", to: "" },        
+          { title: "ข้อมูลครูผู้ช่วย", action: "mdi-basket-plus", to: "/admin/assistant_teacher" },        
+ /*          { title: "ประเมินครูผู้ช่วย", action: "mdi-chart-box-outline", to: "" },        
+          { title: "รายงาน", action: "mdi-chart-box-outline", to: "" },  */       
         ],
         title: "ระบบครูผู้ช่วย",
       },

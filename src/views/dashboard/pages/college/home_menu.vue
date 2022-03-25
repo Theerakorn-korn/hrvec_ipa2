@@ -20,17 +20,7 @@
             </h3>
           </div>
           <h3>สถานะ : {{ user.user_status_name }}</h3>
-        </v-col>
-        <!--  <v-col cols="12" md="3">
-       <v-btn rounded
-      color="primary"
-      dark
-      x-large
-      @click.native="userUpdate()"
-      >
-         Update Password
-       </v-btn>
-      </v-col> -->
+        </v-col>       
         <v-col cols="12" md="3"> </v-col>
       </v-row>
     </v-alert>
@@ -189,8 +179,7 @@
                   <v-icon v-text="item.icon"></v-icon>
                 </v-list-item-icon>
                 <v-list-item-content>
-                  <v-list-item-title v-text="item.text"></v-list-item-title>
-                  <v-list-item-title v-text="item.to"></v-list-item-title>
+                  <v-list-item-title v-text="item.text"></v-list-item-title>               
                 </v-list-item-content>
               </v-list-item>
             </v-list-item-group>
@@ -207,15 +196,13 @@
         >
           <v-card-title>ระบบครูผู้ช่วย</v-card-title>
           <v-list>
-            <v-list-item-group>
-              <!--  <v-list-item v-for="(item, i) in prepare_items" :key="i" :to="item.to"> -->
-              <v-list-item v-for="(item, i) in prepare_items" :key="i">
+            <v-list-item-group>            
+              <v-list-item v-for="(item, i) in prepare_items" :key="i" :to="item.to">
                 <v-list-item-icon>
                   <v-icon v-text="item.icon"></v-icon>
                 </v-list-item-icon>
                 <v-list-item-content>
-                  <v-list-item-title v-text="item.text"></v-list-item-title>
-                  <v-list-item-title v-text="item.to"></v-list-item-title>
+                  <v-list-item-title v-text="item.text"></v-list-item-title>            
                 </v-list-item-content>
               </v-list-item>
             </v-list-item-group>
@@ -223,6 +210,7 @@
         </v-alert>
       </v-col>
     </v-row>
+
     <!-- V-model userdialog -->
     <v-layout row justify-center>
       <v-dialog v-model="adduserdialog" persistent max-width="80%">
@@ -329,7 +317,7 @@ export default {
       college_items: [
         {
           text: "ข้อมูลรายละเอียดสถานศึกษา",
-          icon: "mdi-calendar",
+          icon: "mdi-information",
           to: "/college/collegeinfo"
         }
       ],
@@ -353,7 +341,7 @@ export default {
       movement_items: [
         {
           text: "สายการสอนและสายสนับสนุน",
-          icon: "mdi-alarm-light",
+          icon: "mdi-account-circle",
           to: "/college/transference_personnel"
         }
         /*  { text: "สายงานบริหารสถานศึกษา", icon: "mdi-alarm-light", to: "/Dashboard" }, */
@@ -362,25 +350,28 @@ export default {
       condition_items: [
         {
           text: "ข้อมูลเงือนไขสาขาวิชาเอก",
-          icon: "mdi-basket-plus",
+          icon: "mdi-source-branch",
           to: "/college/conditions_branch"
         },
         {
           text: "ประวัติข้อมูลเงืนอไขสาขาวิชาเอก",
-          icon: "mdi-basket-plus",
+          icon: "mdi-source-branch",
           to: "/college/history_conditions"
         }
       ],
 
       human_items: [
-         { text: "ข้อมูลอัตรากำลังสถานศึกษา", icon: "mdi-basket-plus", to: "/college/rate_workforce" },        
+         { text: "ข้อมูลทั่วไป", icon: "mdi-account-multiple", to: "/college/rate_workforce_g" },        
+         { text: "ข้อมูลอัตรากำลังสถานศึกษา", icon: "mdi-account-multiple", to: "/college/rate_workforce" },
+         { text: "ข้อมูลอัตรากำลังสถานศึกษาสรุป", icon: "mdi-account-multiple", to: "/college/rate_workforce_pro" },
+                 
         /*  { text: "ข้อมูลเชิงปริมาณ", icon: "mdi-chart-box-outline", to: "/Dashboard" },        
           { text: "ข้อมูลเชิงปริมาณ", icon: "mdi-chart-box-outline", to: "/Dashboard" },   */
       ],
 
       prepare_items: [
-        /*  { text: "ข้อมูลครูผู้ช่วย", icon: "mdi-basket-plus", to: "/Dashboard" },        
-          { text: "ประเมินครูผู้ช่วย", icon: "mdi-chart-box-outline", to: "/Dashboard" },        
+         { text: "ข้อมูลครูผู้ช่วย", icon: "mdi-account-star", to: "/college/assistant_teacher" },        
+         /*  { text: "ประเมินครูผู้ช่วย", icon: "mdi-chart-box-outline", to: "/Dashboard" },        
           { text: "รายงาน", icon: "mdi-chart-box-outline", to: "/Dashboard" },         */
       ]
     };

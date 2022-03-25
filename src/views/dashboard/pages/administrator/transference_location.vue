@@ -659,7 +659,7 @@ export default {
       periods: [],
       transference_location_s: [],
       periods: [],
-      period_enable: "1",
+      period_enable_process: "1",
       addreturn_man_power: {},
       position: "ครู",
       man_power_cancel: {}
@@ -701,7 +701,7 @@ export default {
       let result_period;
       result_period = await this.$http.post("period.php", {
         ApiKey: this.ApiKey,
-        period_enable: this.period_enable
+        period_enable_process: this.period_enable_process
       });
       this.periods = result_period.data;
     },
@@ -815,8 +815,7 @@ export default {
         this.addreturn_man_power.id_position = this.transference_personnels_id_ref.id_position;
         this.addreturn_man_power.position = this.position;
         this.addreturn_man_power.case_vacancy =
-          "ย้ายรอบ-" + this.periods.period_times + "/" + this.period_years;
-
+          "ย้ายรอบ-" + this.transference_personnels_id_ref.time_ss + "/" + this.transference_personnels_id_ref.year_ss;
         /* console.log(this.updatepositions);
         console.log(this.updatepositions_condition);
         console.log(this.addreturn_man_power); */

@@ -19,7 +19,7 @@
         </v-btn>
         <v-btn
           @click.stop="Export2Doc('exportContent', 'word-content')"
-          class="title elevation-0"
+          class="title elevation-0 mr-2"
           color="grey darken-1"
           x-large
         >
@@ -35,74 +35,133 @@
         </v-btn>
       </v-toolbar-items>
     </v-system-bar>
-  
+
     <div id="exportContent" style="mso-page-orientation: landscape;">
       <div class="page">
         <div align="center">
           <div class="head">
-           เอกสารประกอบการพิจารณาการย้ายสายการสอน 
-            ครั้งที่ {{ time_result }}/{{ year_result }}
-           
-          </div>         
-        </div>                
+            เอกสารประกอบการพิจารณาการย้ายสายการสอน ครั้งที่ {{ time_result }}/{{
+              year_result
+            }}
+          </div>
+        </div>
         <table class="table" border="1" width="100%" align="center">
           <tr>
             <td width="5%" class="bold16" rowspan="2" align="center">ที่</td>
-            <td width="45%" class="bold16" colspan="6" align="center">
+            <td width="45%" class="bold16" colspan="4" align="center">
               สถานศึกษาที่ต้องการย้ายไป
             </td>
-            <td width="50%" class="bold16" colspan="5" align="center">
+            <td width="50%" class="bold16" colspan="12" align="center">
               ข้อมูลผู้เสนอย้าย
-            </td>           
+            </td>
           </tr>
           <tr>
             <td class="regular16 pa-1" align="center">สถานศึกษา</td>
             <td class="regular16 pa-1" align="center">ตำแหน่งว่าง</td>
+            <td class="regular16 pa-1" align="center">สาขารับย้าย</td>
+            <td class="regular16 pa-1" align="center">เลขที่ตำแหน่งว่าง</td>  
+             <td class="regular16 pa-1" align="center">เปิดรับ/ไม่เปิดรับ</td>        
             <td class="regular16 pa-1" align="center">ลำดับที่</td>
-            <td class="regular16 pa-1" align="center">รหัสสาขา</td>
-            <td class="regular16 pa-1" align="center">เปิดรับ/ไม่เปิดรับ</td>
+            <td class="regular16 pa-1" align="center">รหัสสาขา</td>           
             <td class="regular16 pa-1" align="center">สาขา</td>
             <td class="regular16 pa-1" align="center">ชื่อ-นามสกุล</td>
             <td class="regular16 pa-1" align="center">ตำแหน่ง</td>
-            <td class="regular16 pa-1" align="center">เลขที่ตำแหน่ง</td>          
-            <td class="regular16 pa-1" align="center">สังกัด</td>          
-            <td class="regular16 pa-1" align="center">ความคิดเห็น</td>          
-          </tr>
-          
-           <tr   v-for="(item, index) in transference_locations"
-                            :key="item.id_cts"     >
-            <td class="regular16" align="center">{{ index+1 }}</td>
-            <td class="regular16 pa-1" align="left">{{ item.new_college }}</td>
-            <td class="regular16 pa-1" align="center">{{ item.count_manpower }}</td>
-            <td class="regular16 pa-1" align="center">{{ item.sequence_n }}</td>
-            <td class="regular16 pa-1" align="center">{{ item.id_branch_tran }}</td>
-            <td class="regular16 pa-1" align="center">
-             <v-chip v-if="item.status_position === item.id_branch_tran " color="green" dark> 
-                  เปิดรับ
-                </v-chip>               
-                 <v-chip v-else color="red" dark> 
-                  ไม่เปิดรับ
-                </v-chip>  
-              </td>
-            <td class="regular16 pa-1" align="left">{{ item.name_branch }}</td>
-            <td class="regular16 pa-1" align="left">{{ item.frist_lastname }}</td>
-            <td class="regular16 pa-1" align="center">{{ item.position_name }}</td>
-            <td class="regular16 pa-1" align="center">{{ item.id_postion }}</td>
-            <td class="regular16 pa-1" align="left">{{ item.old_college }}</td>
-            <td class="regular16 pa-1" align="center">
-               <v-chip v-if="item.comment_dr === 'approp'" color="green" dark> 
-                  เห็นควร
-                </v-chip>
-                 <v-chip v-else-if="item.comment_dr === 'inapprop'" color="red" dark> 
-                  ไม่เห็นควร
-                </v-chip>
-                 <v-chip v-else color="info" dark> 
-                  ยังไม่ได้บันทึกข้อมูล
-                </v-chip>  
-              </td>          
-                
+            <td class="regular16 pa-1" align="center">เลขที่ตำแหน่ง</td>
+            <td class="regular16 pa-1" align="center">สังกัด</td>
+            <td class="regular16 pa-1" align="center">เหตุผล</td>
+            <td class="regular16 pa-1" align="center">ความคิดเห็น ผอ.</td>
+            <td class="regular16 pa-1" align="center">ความคิดเห็น ผอ.เนื่องจาก</td>
+            <td class="regular16 pa-1" align="center">สถานะเอกสาร</td>
           </tr>
 
+          <tr
+            v-for="(item, index) in transference_locations"
+            :key="item.id_cts"
+          >
+            <td class="regular16" align="center">{{ index + 1 }}</td>
+            <td class="regular16 pa-1" align="left">{{ item.new_college }}</td>
+            <td class="regular16 pa-1" align="center">
+              {{ item.count_manpower }}
+            </td>
+            <td class="regular16 pa-1" align="center">
+              {{ item.name_branch_all }}
+            </td>
+            <td class="regular16 pa-1" align="center">
+              {{ item.id_position_all }}
+            </td>
+             <td class="regular16 pa-1" align="center">
+              <v-chip
+                v-if="item.status_position === item.id_branch_tran"
+                color="green"
+                dark
+              >
+                เปิดรับ
+              </v-chip>
+              <v-chip v-else color="red" dark>
+                ไม่เปิดรับ
+              </v-chip>
+            </td>
+
+            <td class="regular16 pa-1" align="center">{{ item.sequence_n }}</td>
+            <td class="regular16 pa-1" align="center">
+              {{ item.id_branch_tran }}
+            </td>
+           
+            <td class="regular16 pa-1" align="left">{{ item.name_branch }}</td>
+            <td class="regular16 pa-1" align="left">
+              {{ item.frist_lastname }}
+            </td>
+            <td class="regular16 pa-1" align="center">
+              {{ item.position_name }}
+            </td>
+            <td class="regular16 pa-1" align="center">{{ item.id_postion }}</td>
+            <td class="regular16 pa-1" align="left">{{ item.old_college }}</td>
+            <td class="regular16 pa-1" align="left">{{ item.reason }}</td>
+
+            <td class="regular16 pa-1" align="center">
+              <v-chip v-if="item.comment_dr === 'approp'" color="green" dark>
+                เห็นควร
+              </v-chip>
+              <v-chip
+                v-else-if="item.comment_dr === 'inapprop'"
+                color="warning"
+                dark
+              >
+                ไม่เห็นควร
+              </v-chip>
+              <v-chip v-else-if="item.comment_dr === 'suspend'" color="red" dark
+                > ระงับย้าย </v-chip
+              >
+
+              <v-chip v-else color="info" dark>
+                ยังไม่ได้บันทึกข้อมูล
+              </v-chip>
+             
+            </td>
+            <td class="regular16 pa-1" align="left">
+              {{ item.detail_comment }}
+            </td>
+             <td class="regular16 pa-1" align="center">
+ <v-chip
+                v-if="item.status_document === 'complete'"
+                color="green"
+                dark
+                >เอกสารถูกต้องสมบูรณ์</v-chip
+              >
+              <v-chip
+                v-else-if="item.status_document === 'incomplete'"
+                color="warning"
+                dark
+                >เอกสารไม่สมบูรณ์</v-chip
+              >
+              <v-chip
+                v-else-if="item.status_document === 'do_not'"
+                color="red"
+                dark
+                >ไม่จัดส่งเอกสาร</v-chip
+              >
+             </td>
+          </tr>
         </table>
       </div>
     </div>
@@ -113,13 +172,13 @@
 export default {
   name: "App",
   data: () => ({
-    ApiKey: "HRvec2021",  
-   transference_locations:[],
-    valid: true  
+    ApiKey: "HRvec2021",
+    transference_locations: [],
+    valid: true
   }),
 
-  async mounted() {   
-   await this.searchTimeYear();
+  async mounted() {
+    await this.searchTimeYear();
   },
 
   methods: {
@@ -134,8 +193,6 @@ export default {
         .finally(() => (this.loading = false));
       this.transference_locations = result.data;
     },
-
-    
 
     Export2Doc(element, filename) {
       var preHtml =
@@ -176,9 +233,9 @@ export default {
       document.body.removeChild(downloadLink);
     },
 
-     exportToExcel (element, filename) {    
-       var preHtml =
-        "<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:excel' xmlns='http://www.w3.org/TR/REC-html40'><head><meta charset='utf-8'><title>Export HTML To Doc</title></head><body>";
+    exportToExcel(element, filename) {
+      var preHtml =
+        "<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:excel' xmlns='http://www.w3.org/TR/REC-html40'><head><meta charset='utf-8'><title>Export HTML To Excel</title></head><body>";
       var postHtml = "</body></html>";
       var html =
         preHtml + document.getElementById(element).innerHTML + postHtml;
@@ -213,11 +270,7 @@ export default {
         downloadLink.click();
       }
       document.body.removeChild(downloadLink);
-    },
-
-
-
-
+    }
   },
   props: {
     source: String
@@ -232,29 +285,29 @@ export default {
 
     year_result() {
       let result = window.location.href;
-      let split_s = result.split("/");    
-    
+      let split_s = result.split("/");
+
       return split_s[7];
     },
-   
+
     type_result() {
       let result = window.location.href;
       let split_s = result.split("/");
-     let type_r = split_s[8];
-      if(type_r=='teach'){
-        type_r='ครู'
-      }else{
-        type_r='บริหาร'
+      let type_r = split_s[8];
+      if (type_r == "teach") {
+        type_r = "ครู";
+      } else {
+        type_r = "บริหาร";
       }
       return type_r;
-    },
-   
-
+    }
   }
 };
 </script>
 <style>
-@import url(https://fonts.googleapis.com/css?family=Prompt:400,300|Roboto:400,300&subset=latin,thai);
+@import url(
+  https://fonts.googleapis.com/css?family=Prompt:400,300|Roboto:400,300&subset=latin,thai
+);
 
 body {
   font-family: "TH SarabunIT๙", "TH SarabunPSK", "Angsana New", AngsanaUPC;
@@ -294,7 +347,7 @@ u {
   border-left: 1px solid black;
   border-right: 1px solid black;
   border-collapse: collapse;
-   line-height: 1;
+  line-height: 1;
 }
 
 tfoot tr:hover {
@@ -328,8 +381,8 @@ tfoot td {
 .page {
   font-family: "TH SarabunIT๙", "TH SarabunPSK", "Angsana New", AngsanaUPC;
   font-size: 16pt;
-  width: 29.7cm;
-  min-height: 21cm;
+  width: 42cm;
+  min-height: 29.7cm;
   border: 1px #d3d3d3 solid;
   border-radius: 5px;
   background: white;
@@ -348,7 +401,7 @@ tfoot td {
   font-family: "TH SarabunIT๙", "TH SarabunPSK", "Angsana New", AngsanaUPC;
   font-size: 16pt;
   font-weight: bold;
-   line-height: 1;
+  line-height: 1;
 }
 
 .regular12 {

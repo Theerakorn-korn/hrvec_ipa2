@@ -43,4 +43,8 @@ export default {
   font-size: 16px !important;
 }
 
+.table thead th {
+  font-size: 16px !important;
+}
+
 </style>

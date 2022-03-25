@@ -624,7 +624,8 @@ export default {
         })
         .finally(() => (this.loading = false));
       this.personnel_educations_b = result_education_b.data;
-
+        console.log(result_education_b.data)
+        
       let result_tran_b = await this.$http
         .post("transference_personnel.php", {
           ApiKey: this.ApiKey,

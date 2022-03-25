@@ -37,7 +37,7 @@
           ></v-img>
           <div class="head">คำสั่งสำนักงานคณะกรรมการการอาชีวศึกษา</div>
           <div class="head">
-            ที่ {{ thaiNumber(order_appoints.order_number) }}
+            ที่ ........................................
           </div>
           <div class="head">เรื่่อง แต่งตั้งผู้รักษาการในตำแหน่ง</div>
           <div class="head">___________________________</div>
@@ -56,15 +56,9 @@
               และบุคลากรทางการศึกษา พ.ศ.๒๕๔๗ และที่แก้ไขเพิ่มเติม (ฉบับที่ ๒)
               พ.ศ.๒๕๕๑ โดยอนุมัติ อ.ก.ค.ศ.สำนักงานคณะกรรมการการอาชีวศึกษา
               ในการประชุมครั้งที่
-              {{ thaiNumber(order_appoints.meeting_no) }} เมื่อวันที่
+             ........................... เมื่อวันที่...................................................
 
-              {{
-                thaiNumber(meeting_dates) +
-                  " " +
-                  meeting_month +
-                  " " +
-                  thaiNumber(meeting_year)
-              }}             
+                    
               มีมติอนุมัติให้ย้ายข้าราชการครูและบุคลากรทางการศึกษา ตำแหน่งครู
               จำนวน {{ thaiNumber(order_appoints.count_personnel) }} ราย
               จึงแต่งตั้งข้าราชการครูและบุคลากรทางการศึกษา ตำแหน่งครู
@@ -84,7 +78,7 @@
             <td width="10%"></td>
             <td width="90%" class="regular16 text_j">
               {{ thaiNumber(index + 1) }}. {{ item.title_s
-              }}{{ item.frist_name }} {{ item.last_name }} ตำแหน่ง{{
+              }}{{ item.frist_name + "  " + " " + item.last_name }} &ensp;&ensp; ตำแหน่ง{{
                 item.name_position
               }}
               ตำแหน่งเลขที่
@@ -95,7 +89,7 @@
           <tr>
             <td colspan="2">
               ให้รักษาการในตำแหน่ง{{ item.name_position }} ตำแหน่งเลขที่
-              {{ thaiNumber(item.id_position) }} {{ item.college_name_new }}
+              {{ thaiNumber(item.new_id_position) }} {{ item.college_name_new }}
             </td>
           </tr>
         </table>
@@ -171,14 +165,18 @@ export default {
     async conditons_transfer_successQueryAll() {
       this.loading = true;
       let result = await this.$http
-        .post("conditons_transfer_success.php", {
+        .post("conditons_transfer_success_directions.php", {
           ApiKey: this.ApiKey,
           time_s: this.order_appoints.time_s,
           year_s: this.order_appoints.year_s,
-          name_position: this.position_url
+          name_position: this.position_url,
+          directions: "ok"          
         })
         .finally(() => (this.loading = false));
       this.conditons_transfer_successs = result.data;
+      console.log(this.order_appoints.time_s)
+      console.log(this.order_appoints.year_s)
+      console.log(this.position_url)     
     },
     thaiNumber(num) {
       var array = {
@@ -252,7 +250,7 @@ export default {
 
     position_url() {
       let result = this.url_result.slice(6);
-      if (result == "tech") {
+      if (result == "teach") {
         result = "ครู";
       } else {
         result = "บริหาร";

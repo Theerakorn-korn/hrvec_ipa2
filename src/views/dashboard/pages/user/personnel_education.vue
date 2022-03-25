@@ -52,6 +52,7 @@
               <td>{{ index + 1 }}</td>
               <td>{{ item.id_branch }}</td>
               <td>{{ item.name_branch }}</td>
+              <td>{{ item.name_sub_branch }}</td>              
               <td>{{ item.education_level }}</td>
               <td>{{ item.faculty_name }}</td>
               <td>{{ item.branch_name }}</td>
@@ -127,88 +128,106 @@
               <v-form ref="addpersonnel_educationform" lazy-validation>
                 <v-container grid-list-md>
                   <v-layout wrap>
-                    <v-flex md12>
-                      <v-row>
-                        <v-col cols="12" lg="6">
-                          <v-combobox
-                            v-model="addpersonnel_education.education_level"
-                            :items="education_level"
-                            item-value="education_level"
-                            label="ระดับการศึกษา"
-                            dense
-                            :rules="[v => !!v || '']"
-                          ></v-combobox>
-                        </v-col>
+                    <v-row>
+                      <v-col cols="12" md="3">
+                        <v-combobox
+                          v-model="addpersonnel_education.education_level"
+                          :items="education_level"
+                          item-value="education_level"
+                          label="ระดับการศึกษา"
+                          dense
+                          :rules="[v => !!v || '']"
+                          filled
+                          prepend-icon="mdi-school"
+                        ></v-combobox>
+                      </v-col>
 
-                        <v-col cols="12" lg="6">
-                          <v-autocomplete
-                            :items="branch_s"
-                            item-text="name_branch"
-                            item-value="id_branch"
-                            label="ประเภท :"
-                            prepend-icon="mdi-account-details"
-                            request
-                            v-model="addpersonnel_education.id_branch"
-                            :rules="[v => !!v || '']"
-                          ></v-autocomplete>
-                        </v-col>
+                      <v-col cols="12" md="4">
+                        <v-autocomplete
+                          :items="branch_s"
+                          item-text="name_branch"
+                          item-value="id_branch"
+                          label="ประเภทสาขาวิชา ที่สอดคล้องกับ สอศ:"
+                          prepend-icon="mdi-school"
+                          request
+                          v-model="addpersonnel_education.id_branch"
+                          :rules="[v => !!v || '']"
+                          filled
+                          @change="branch_sub_dQueryAll()"
+                        ></v-autocomplete>
+                      </v-col>
 
-                        <v-col cols="12" lg="6">
-                          <v-text-field
-                            v-model="addpersonnel_education.faculty_name"
-                            dense
-                            label="วุฒิการศึกษา ตัวอย่าง บธ.บ. : "
-                            item-value="cat_name"
-                            prepend-icon="mdi-barcode"
-                            request
-                            :rules="[v => !!v || '']"
-                          ></v-text-field>
-                        </v-col>
-                        <v-col cols="12" lg="6">
-                          <v-text-field
-                            v-model="addpersonnel_education.branch_name"
-                            dense
-                            label="สาขาวิชา : ระบบสารสนเทศทางคอมพิวเตอร์"
-                            item-value="cat_name"
-                            prepend-icon="mdi-barcode"
-                            request
-                            :rules="[v => !!v || '']"
-                          ></v-text-field>
-                        </v-col>
-                        <v-col cols="12" lg="6">
-                          <v-text-field
-                            v-model="addpersonnel_education.academy_name"
-                            dense
-                            label="สถานศึกษาที่จบ : มหาวิทยาลัย"
-                            item-value="cat_name"
-                            prepend-icon="mdi-barcode"
-                            request
-                            :rules="[v => !!v || '']"
-                          ></v-text-field>
-                        </v-col>
-                        <v-col cols="12" lg="6">
-                          <v-text-field
-                            v-model="addpersonnel_education.year_finish"
-                            label="สำเร็จปีการศึกษา : 2553"
-                            prepend-icon="mdi-calendar"
-                          ></v-text-field>
-                        </v-col>
+                      <v-col cols="12" md="5">
+                        <v-autocomplete
+                          :items="branch_sub_ds"
+                          item-text="name_sub_branch"
+                          item-value="id_branch_sub"
+                          label="กลุ่ม วุฒิการศึกษา ที่สอดคล้องกับระบบ :"
+                          prepend-icon="mdi-school"
+                          request
+                          v-model="addpersonnel_education.ed_id_branch_sub"
+                          :rules="[v => !!v || '']"
+                          filled
+                        ></v-autocomplete>
+                      </v-col>
 
-                        <v-col cols="12" lg="6">
-                          <v-text-field
-                            v-model="addpersonnel_education.academic_results"
-                            dense
-                            label="ผลการเรียนเรียน : 4.00"
-                            item-value="cat_name"
-                            prepend-icon="mdi-barcode"
-                            request
-                            :rules="[v => !!v || '']"
-                          ></v-text-field>
-                        </v-col>
-                      </v-row>
-                    </v-flex>
+                      <v-col cols="12" md="3">
+                        <v-text-field
+                          v-model="addpersonnel_education.faculty_name"
+                          dense
+                          label="วุฒิการศึกษา ตัวอย่าง บธ.บ. : "
+                          item-value="cat_name"
+                          prepend-icon="mdi-school"
+                          request
+                          :rules="[v => !!v || '']"
+                          filled
+                        ></v-text-field>
+                      </v-col>
+                      <v-col cols="12" md="4">
+                        <v-text-field
+                          v-model="addpersonnel_education.branch_name"
+                          dense
+                          label="สาขาวิชา : ระบบสารสนเทศทางคอมพิวเตอร์"
+                          item-value="cat_name"
+                          prepend-icon="mdi-school"
+                          request
+                          :rules="[v => !!v || '']"
+                          filled
+                        ></v-text-field>
+                      </v-col>
+                      <v-col cols="12" md="5">
+                        <v-text-field
+                          v-model="addpersonnel_education.academy_name"
+                          dense
+                          label="สถานศึกษาที่จบ : มหาวิทยาลัย"
+                          item-value="cat_name"
+                          prepend-icon="mdi-city"
+                          request
+                          :rules="[v => !!v || '']"
+                          filled
+                        ></v-text-field>
+                      </v-col>
+                      <v-col cols="12" md="3">
+                        <v-text-field
+                          v-model="addpersonnel_education.year_finish"
+                          label="สำเร็จปีการศึกษา : 2553"
+                          prepend-icon="mdi-calendar"
+                          filled
+                        ></v-text-field>
+                      </v-col>
+
+                      <v-col cols="12" md="3">
+                        <v-text-field
+                          v-model="addpersonnel_education.academic_results"
+                          dense
+                          label="ผลการเรียนเรียน : 4.00"
+                          item-value="cat_name"
+                          prepend-icon="mdi-barcode"
+                          filled
+                        ></v-text-field>
+                      </v-col>
+                    </v-row>
                   </v-layout>
-                  <v-spacer></v-spacer>
                   <v-row>
                     <v-col cols="12" lg="12" class="text-right">
                       <v-btn
@@ -304,85 +323,105 @@
               <v-form ref="editpersonnel_educationform" lazy-validation>
                 <v-container grid-list-md>
                   <v-layout wrap>
-                    <v-flex md12>
-                      <v-row>
-                        <v-col cols="12" lg="6">
-                          <v-combobox
-                            v-model="editpersonnel_education.education_level"
-                            :items="education_level"
-                            label="ระดับการศึกษา"
-                            dense
-                            :rules="[v => !!v || '']"
-                          ></v-combobox>
-                        </v-col>
-                        <v-col cols="12" lg="6">
-                          <v-combobox
-                            v-model="
-                              editpersonnel_education.personnel_id_branch
-                            "
-                            :items="branch_s"
-                            item-text="name_branch"
-                            item-value="id_branch"
-                            label="ประเภท"
-                            dense
-                            :rules="[v => !!v || '']"
-                          ></v-combobox>
-                        </v-col>
+                    <v-row>
+                      <v-col cols="12" md="3">
+                        <v-combobox
+                          v-model="editpersonnel_education.education_level"
+                          :items="education_level"
+                          item-value="education_level"
+                          label="ระดับการศึกษา"
+                          dense
+                          :rules="[v => !!v || '']"
+                          filled
+                          prepend-icon="mdi-school"
+                        ></v-combobox>
+                      </v-col>
 
-                        <v-col cols="12" lg="6">
-                          <v-text-field
-                            v-model="editpersonnel_education.faculty_name"
-                            dense
-                            label="คณะวิชา : "
-                            item-value="cat_name"
-                            prepend-icon="mdi-barcode"
-                            request
-                            :rules="[v => !!v || '']"
-                          ></v-text-field>
-                        </v-col>
-                        <v-col cols="12" lg="6">
-                          <v-text-field
-                            v-model="editpersonnel_education.branch_name"
-                            dense
-                            label="สาขาวิชา : "
-                            item-value="cat_name"
-                            prepend-icon="mdi-barcode"
-                            request
-                            :rules="[v => !!v || '']"
-                          ></v-text-field>
-                        </v-col>
-                        <v-col cols="12" lg="6">
-                          <v-text-field
-                            v-model="editpersonnel_education.academy_name"
-                            dense
-                            label="สถานศึกษาที่จบ : "
-                            item-value="cat_name"
-                            prepend-icon="mdi-barcode"
-                            request
-                            :rules="[v => !!v || '']"
-                          ></v-text-field>
-                        </v-col>
-                        <v-col cols="12" lg="6">
-                          <v-text-field
-                            v-model="editpersonnel_education.year_finish"
-                            label="ปีการศึกษาที่จบ :"
-                            prepend-icon="mdi-calendar"
-                          ></v-text-field>
-                        </v-col>
+                      <v-col cols="12" md="4">
+                        <v-autocomplete
+                          :items="branch_s"
+                          item-text="name_branch"
+                          item-value="id_branch"
+                          label="ประเภทสาขาวิชา ที่สอดคล้องกับ สอศ:"
+                          prepend-icon="mdi-school"
+                          request
+                          v-model="editpersonnel_education.id_branch"
+                          :rules="[v => !!v || '']"
+                          filled
+                          @change="branch_sub_d_editQueryAll()"
+                        ></v-autocomplete>
+                      </v-col>
 
-                        <v-col cols="12" lg="6">
-                          <v-text-field
-                            v-model="editpersonnel_education.academic_results"
-                            dense
-                            label="ผลการเรียนเรียน : "
-                            item-value="cat_name"
-                            prepend-icon="mdi-barcode"
-                            request
-                            :rules="[v => !!v || '']"
-                          ></v-text-field>
-                        </v-col>
-                      </v-row>
-                    </v-flex>
+                      <v-col cols="12" md="5">
+                        <v-autocomplete
+                          :items="branch_sub_ds"
+                          item-text="name_sub_branch"
+                          item-value="id_branch_sub"
+                          label="กลุ่ม วุฒิการศึกษา ที่สอดคล้องกับระบบ :"
+                          prepend-icon="mdi-school"
+                          request
+                          v-model="editpersonnel_education.ed_id_branch_sub"
+                          :rules="[v => !!v || '']"
+                          filled
+                        ></v-autocomplete>
+                      </v-col>
+
+                      <v-col cols="12" md="3">
+                        <v-text-field
+                          v-model="editpersonnel_education.faculty_name"
+                          dense
+                          label="วุฒิการศึกษา ตัวอย่าง บธ.บ. : "
+                          item-value="cat_name"
+                          prepend-icon="mdi-school"
+                          request
+                          :rules="[v => !!v || '']"
+                          filled
+                        ></v-text-field>
+                      </v-col>
+                      <v-col cols="12" md="4">
+                        <v-text-field
+                          v-model="editpersonnel_education.branch_name"
+                          dense
+                          label="สาขาวิชา : ระบบสารสนเทศทางคอมพิวเตอร์"
+                          item-value="cat_name"
+                          prepend-icon="mdi-school"
+                          request
+                          :rules="[v => !!v || '']"
+                          filled
+                        ></v-text-field>
+                      </v-col>
+                      <v-col cols="12" md="5">
+                        <v-text-field
+                          v-model="editpersonnel_education.academy_name"
+                          dense
+                          label="สถานศึกษาที่จบ : มหาวิทยาลัย"
+                          item-value="cat_name"
+                          prepend-icon="mdi-city"
+                          request
+                          :rules="[v => !!v || '']"
+                          filled
+                        ></v-text-field>
+                      </v-col>
+                      <v-col cols="12" md="3">
+                        <v-text-field
+                          v-model="editpersonnel_education.year_finish"
+                          label="สำเร็จปีการศึกษา : 2553"
+                          prepend-icon="mdi-calendar"
+                          filled
+                        ></v-text-field>
+                      </v-col>
+
+                      <v-col cols="12" md="3">
+                        <v-text-field
+                          v-model="editpersonnel_education.academic_results"
+                          dense
+                          label="ผลการเรียนเรียน : 4.00"
+                          item-value="cat_name"
+                          prepend-icon="mdi-barcode"
+                          filled
+                        ></v-text-field>
+                      </v-col>
+                    </v-row>
                   </v-layout>
                 </v-container>
               </v-form>
@@ -452,10 +491,11 @@ export default {
       headers: [
         { text: "#", align: "center", value: "number_row" },
         { text: "รหัสประเภทสาขา", align: "center", value: "id_branch" },
-        { text: "ประเภทสาขาวิชา", align: "left", value: "name_branch" },
+        { text: "ประเภทสาขาวิชา สอศ", align: "left", value: "name_branch" },
+        { text: "วุฒิการศึกษาตรงตามระบบ", align: "left", value: "name_sub_branch" },
         { text: "ระดับการศึกษา", align: "center", value: "education_level" },
         { text: "คณะวิชา", align: "center", value: "faculty_name" },
-        { text: "สาขาวิชา", align: "center", value: "branch_name" },
+        { text: "สาขาวิชาที่จบการศึกษา", align: "center", value: "branch_name" },
         { text: "จบจาก", align: "center", value: "academy_name" },
         { text: "ปีที่จบ", align: "center", value: "year_finish" },
         { text: "ผลการเรียน", align: "center", value: "academic_results" },
@@ -494,6 +534,7 @@ export default {
       personnel_education_sub: [],
       branch_s: [],
       showbranchdata: [],
+      branch_sub_ds: [],
       education_level: ["ปริญญาตรี", "ปริญญาโท", "ปริญญาเอก"]
     };
   },
@@ -517,6 +558,22 @@ export default {
   },
 
   methods: {
+    async branch_sub_dQueryAll() {
+      let result = await this.$http.post("branch_sub_d.php", {
+        ApiKey: this.ApiKey,
+        id_main_branch: this.addpersonnel_education.id_branch
+      });
+      this.branch_sub_ds = result.data;
+    },
+
+      async branch_sub_d_editQueryAll() {
+      let result = await this.$http.post("branch_sub_d.php", {
+        ApiKey: this.ApiKey,
+        id_main_branch: this.editpersonnel_education.id_branch
+      });
+      this.branch_sub_ds = result.data;
+    },
+
     async personnel_educationsQueryAll() {
       this.loading = true;
       let userSession = JSON.parse(sessionStorage.getItem("user")) || 0;

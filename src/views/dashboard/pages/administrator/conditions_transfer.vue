@@ -1,20 +1,34 @@
 <template>
   <div>
-    <v-bottom-navigation color="info" horizontal :background-color="color" dark>
+   <v-bottom-navigation      
+      color="info"   
+      horizontal    
+      :background-color="color"
+      dark
+    >
       <v-btn to="/admin/conditions_branch">
         <span>รายละเอียดเงือนไขสาขาวิชา </span>
-        <v-icon>mdi-history</v-icon>
+        <v-icon>mdi-source-branch</v-icon>
       </v-btn>
 
       <v-btn to="/admin/conditions_transfer">
         <span>รายการเงือนไขสาขาวิชา</span>
-        <v-icon>mdi-calculator</v-icon>
+        <v-icon>mdi-source-branch</v-icon>
       </v-btn>
     </v-bottom-navigation>
-    <v-bottom-navigation color="info" horizontal :background-color="color" dark>
+    <v-bottom-navigation      
+      color="info"
+      horizontal     
+      :background-color="color"
+      dark
+    >
+      <v-btn to="/admin/transference_location_detail">
+        <span>รายละเอียดผู้ยืนย้าย ประกอบพิจารณา </span>
+        <v-icon>mdi-details</v-icon>
+      </v-btn>
       <v-btn to="/admin/transference_location">
         <span>รายละเอียดผู้ยืนย้าย </span>
-        <v-icon>mdi-history</v-icon>
+        <v-icon>mdi-details</v-icon>
       </v-btn>
 
       <v-btn to="/admin/transference_personnel">

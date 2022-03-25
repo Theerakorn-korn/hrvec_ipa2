@@ -68,17 +68,14 @@
     <v-list> </v-list>
     <v-card>
       <div align="center">
-      <!-- <v-img
+        <!-- <v-img
         width="120"
         src="http://localhost:8080/HRvecfiles/ipa2.jpg"
       ></v-img> -->
-       <v-img
-        width="120"
-        src="/HRvecfiles/ipa2.jpg"
-      ></v-img>
-      <v-card-title class="text-center">
-         Line Group : กจ2
-      </v-card-title> 
+        <v-img width="120" src="/HRvecfiles/ipa2.jpg"></v-img>
+        <v-card-title class="text-center">
+          Line Group : กจ2
+        </v-card-title>
       </div>
     </v-card>
   </v-navigation-drawer>
@@ -168,7 +165,7 @@ export default {
         items: [
           {
             title: "สายการสอนและสายสนับสนุน",
-            action: "mdi-alarm-light",
+            action: "mdi-account-circle",
             to: "/college/transference_personnel"
           }
           /* { title: "สายงานบริหารสถานศึกษา", action: "mdi-alarm-light", to: "/Dashboard" },
@@ -181,31 +178,39 @@ export default {
         items: [
           {
             title: "ข้อมูลเงื่อนไขสาขาวิชาเอก",
-            action: "mdi-basket-plus",
+            action: "mdi-source-branch",
             to: "/college/conditions_branch"
+          },
+          {
+            title: "ประวัติข้อมูลเงืนอไขสาขาวิชาเอก",
+            action: "mdi-source-branch",
+            to: "/college/history_conditions"
           }
-          /*   { title: "สถิติเงื่อนไขสาขาวิชา", action: "mdi-chart-box-outline", to: "/Dashboard" },    */
         ],
         title: "ระบบเงื่อนไขสาขาวิชาเอก"
-      }
-      /*  {
+      },
+       {
         action: "mdi-human",
         items: [
-          { title: "ข้อมูลอัตรากำลังสถานศึกษา", action: "mdi-basket-plus", to: "/Dashboard" },        
+          { title: "ข้อมูลอัตรากำลังสถานศึกษา", action: "mdi-account-multiple", to: "/college/rate_workforce" },        
+        /*   { title: "ข้อมูลเชิงปริมาณ", action: "mdi-chart-box-outline", to: "/Dashboard" },        
           { title: "ข้อมูลเชิงปริมาณ", action: "mdi-chart-box-outline", to: "/Dashboard" },        
-          { title: "ข้อมูลเชิงปริมาณ", action: "mdi-chart-box-outline", to: "/Dashboard" },        
-        ],
+      */   ],
         title: "ระบบอัตรากำลัง",
-      }, */
-      /* {
+      },
+      {
         action: "mdi-account-supervisor-circle",
         items: [
-          { title: "ข้อมูลครูผู้ช่วย", action: "mdi-basket-plus", to: "/Dashboard" },        
-          { title: "ประเมินครูผู้ช่วย", action: "mdi-chart-box-outline", to: "/Dashboard" },        
-          { title: "รายงาน", action: "mdi-chart-box-outline", to: "/Dashboard" },        
+          {
+            title: "ข้อมูลครูผู้ช่วย",
+            action: "mdi-account-star",
+            to: "/college/assistant_teacher"
+          }
+          /*   { title: "ประเมินครูผู้ช่วย", action: "mdi-chart-box-outline", to: "/Dashboard" },        
+          { title: "รายงาน", action: "mdi-chart-box-outline", to: "/Dashboard" },         */
         ],
-        title: "ระบบครูผู้ช่วย",
-      }, */
+        title: "ระบบครูผู้ช่วย"
+      }
     ]
   }),
 

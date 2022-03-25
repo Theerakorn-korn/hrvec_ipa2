@@ -1,34 +1,24 @@
 <template>
   <div>
-     <v-bottom-navigation
-      :value="value"
-      color="info"
-      horizontal
-      v-model="value"
-      :background-color="color"
-      dark
-    >
+    <v-bottom-navigation color="info" horizontal :background-color="color" dark>
       <v-btn to="/admin/conditions_branch">
         <span>รายละเอียดเงือนไขสาขาวิชา </span>
-        <v-icon>mdi-history</v-icon>
+        <v-icon>mdi-source-branch</v-icon>
       </v-btn>
 
       <v-btn to="/admin/conditions_transfer">
         <span>รายการเงือนไขสาขาวิชา</span>
-        <v-icon>mdi-calculator</v-icon>
+        <v-icon>mdi-source-branch</v-icon>
       </v-btn>
     </v-bottom-navigation>
-      <v-bottom-navigation
-      :value="value"
-      color="info"
-      horizontal
-      v-model="value"
-      :background-color="color"
-      dark
-    >
+    <v-bottom-navigation color="info" horizontal :background-color="color" dark>
+      <v-btn to="/admin/transference_location_detail">
+        <span>รายละเอียดผู้ยืนย้าย ประกอบพิจารณา </span>
+        <v-icon>mdi-details</v-icon>
+      </v-btn>
       <v-btn to="/admin/transference_location">
         <span>รายละเอียดผู้ยืนย้าย </span>
-        <v-icon>mdi-history</v-icon>
+        <v-icon>mdi-details</v-icon>
       </v-btn>
 
       <v-btn to="/admin/transference_personnel">
@@ -54,8 +44,12 @@
         <span>สรุปผล</span>
         <v-icon>mdi-bookmark-check</v-icon>
       </v-btn>
+      <v-btn to="/admin/Order_appoint">
+        <span>รายงาน</span>
+        <v-icon>mdi-printer</v-icon>
+      </v-btn>
     </v-bottom-navigation>
-    <v-container>
+    <v-container fluid>
       <base-material-card
         icon="mdi-clipboard-text"
         title="คำสั่งย้าย"
@@ -86,12 +80,31 @@
                 <v-icon>mdi-plus-circle-outline</v-icon>เพิ่มรายการ
               </v-btn>
             </v-col>
+            <v-col cols="12" md="12">
+              <v-select
+                v-model="selectedHeaders"
+                :items="headers"
+                label="เลือกคอลัมน์ที่ต้องการแสดง"
+                multiple
+                outlined
+                return-object
+              >
+                <template v-slot:selection="{ item, index }">
+                  <v-chip v-if="index < 6">
+                    <span>{{ item.text }}</span>
+                  </v-chip>
+                  <span v-if="index === 6" class="grey--text caption"
+                    >(+{{ selectedHeaders.length - 6 }} คอลัมน์)</span
+                  >
+                </template>
+              </v-select>
+            </v-col>
           </v-row>
         </v-card>
         <v-data-table
           color="success"
           :loading="loading"
-          :headers="headers"
+          :headers="showHeaders"
           :items="order_appoints"
           :search="search"
         >
@@ -111,17 +124,54 @@
             }}
           </template>
 
+          <template v-slot:[`item.print_manpower`]="{}">
+            <v-btn
+              color="info"
+              fab
+              small
+              :href="'#/admin/print_report_manpower'"
+              target="_blank"
+            >
+              <v-icon>
+                mdi-printer
+              </v-icon>
+            </v-btn>
+          </template>
+
+          <template v-slot:[`item.print_move_can`]="{ item }">
+            <v-btn
+              color="warning"
+              fab
+              small
+              :href="
+                '#/admin/print_report_movement_online_4/' +
+                  item.id_oa +
+                  '/' +
+                  item.time_s +
+                  '/' +
+                  item.year_s +
+                  '/' +
+                  'teach'
+              "
+              target="_blank"
+            >
+              <v-icon>
+                mdi-printer
+              </v-icon>
+            </v-btn>
+          </template>
+
           <template v-slot:[`item.print_f`]="{ item }">
             <v-btn
               color="red"
               fab
               small
               :href="
-                '#/admin/print_report_movement_filter/' +
-                   item.id_oa +
+                '#/admin/print_report_movement_filter_2/' +
+                  item.id_oa +
                   item.time_s +
                   item.year_s +
-                  'tech'
+                  'teach'
               "
               target="_blank"
             >
@@ -141,7 +191,7 @@
                   item.id_oa +
                   item.time_s +
                   item.year_s +
-                  'tech'
+                  'teach'
               "
               target="_blank"
             >
@@ -158,15 +208,48 @@
               small
               :href="
                 '#/admin/print_report_movement/' +
-                   item.id_oa +
+                  item.id_oa +
                   item.time_s +
                   item.year_s +
-                  'tech'
+                  'teach'
               "
               target="_blank"
             >
               <v-icon>
                 mdi-printer
+              </v-icon>
+            </v-btn>
+          </template>
+
+          <template v-slot:[`item.approve_movement`]="{ item }">
+            <v-btn
+              color="success"
+              fab
+              small
+              @click.stop="approve_movement_dialog(item.id_oa)"
+            >
+              <v-icon>
+                mdi-account-check
+              </v-icon>
+            </v-btn>
+          </template>
+
+          <template v-slot:[`item.movement_salary`]="{ item }">
+           <v-btn
+              color="success"
+              fab
+              small
+              :href="
+                '#/admin/print_report_movement_filter_salary/' +              
+                  item.id_oa  + '/' +
+                  item.time_s  + '/' +
+                  item.year_s  + '/' +
+                  'teach'
+              "
+              target="_blank"
+            >
+              <v-icon>
+               mdi-cash
               </v-icon>
             </v-btn>
           </template>
@@ -191,6 +274,17 @@
         </v-data-table>
       </base-material-card>
 
+      <v-layout row justify-center>
+        <v-dialog v-model="loading_dialog" persistent max-width="50%">
+          <v-card class="mx-auto pa-5">
+            <v-progress-circular
+              :size="50"
+              color="primary"
+              indeterminate
+            ></v-progress-circular>
+          </v-card>
+        </v-dialog>
+      </v-layout>
       <!--addorder_appointdialog  -->
       <v-layout row justify-center>
         <v-dialog v-model="addorder_appointdialog" persistent max-width="50%">
@@ -211,16 +305,12 @@
                       <v-text-field
                         label="หนังสือราชการที่ : ศธ 0618/3994"
                         v-model="addorder_appoint.book_number"
-                        require
-                        :rules="[v => !!v || '']"
                       ></v-text-field>
                     </v-flex>
                     <v-flex md4>
                       <v-text-field
                         label="คำสั่งที่ : "
                         v-model="addorder_appoint.order_number"
-                        required
-                        :rules="[v => !!v || '']"
                       ></v-text-field>
                     </v-flex>
                     <v-flex md4>
@@ -241,8 +331,6 @@
                             readonly
                             v-bind="attrs"
                             v-on="on"
-                            required
-                            :rules="[v => !!v || '']"
                           ></v-text-field>
                         </template>
                         <v-date-picker
@@ -269,8 +357,6 @@
                       <v-text-field
                         label="ประชุมครั้งที่ : 1/2565"
                         v-model="addorder_appoint.meeting_no"
-                        required
-                        :rules="[v => !!v || '']"
                       ></v-text-field>
                     </v-flex>
                     <v-flex md6>
@@ -291,8 +377,6 @@
                             readonly
                             v-bind="attrs"
                             v-on="on"
-                            required
-                            :rules="[v => !!v || '']"
                           ></v-text-field>
                         </template>
                         <v-date-picker
@@ -475,23 +559,17 @@
             <v-card-text>
               <v-form ref="editorder_appointform" lazy-validation>
                 <v-container grid-list-md>
-                  <v-layout wrap>                 
-
-
-               <v-flex md4>
+                  <v-layout wrap>
+                    <v-flex md4>
                       <v-text-field
                         label="หนังสือราชการที่ : ศธ 0618/3994"
                         v-model="editorder_appoint.book_number"
-                        require
-                        :rules="[v => !!v || '']"
                       ></v-text-field>
                     </v-flex>
                     <v-flex md4>
                       <v-text-field
                         label="คำสั่งที่ : "
                         v-model="editorder_appoint.order_number"
-                        required
-                        :rules="[v => !!v || '']"
                       ></v-text-field>
                     </v-flex>
                     <v-flex md4>
@@ -512,8 +590,6 @@
                             readonly
                             v-bind="attrs"
                             v-on="on"
-                            required
-                            :rules="[v => !!v || '']"
                           ></v-text-field>
                         </template>
                         <v-date-picker
@@ -540,8 +616,6 @@
                       <v-text-field
                         label="ประชุมครั้งที่ : 1/2565"
                         v-model="editorder_appoint.meeting_no"
-                        required
-                        :rules="[v => !!v || '']"
                       ></v-text-field>
                     </v-flex>
                     <v-flex md6>
@@ -562,8 +636,6 @@
                             readonly
                             v-bind="attrs"
                             v-on="on"
-                            required
-                            :rules="[v => !!v || '']"
                           ></v-text-field>
                         </template>
                         <v-date-picker
@@ -681,6 +753,334 @@
           </v-card>
         </v-dialog>
       </v-layout>
+
+      <!-- V-model approve_movement_dialog -->
+      <v-layout>
+        <v-dialog v-model="approve_movement_dialogs" persistent max-width="90%">
+          <v-card class="mx-auto pa-5">
+            <base-material-card
+              color="green"
+              icon="mdi-content-paste"
+              title="ข้อมูลการย้ายข้าราชการครู"
+              class="px-5 py-3 text_google"
+            >
+            </base-material-card>
+
+            <v-card-text class="text_google">
+              <v-card class="pa-1">
+                เลขที่หนังสือ : {{ editorder_appoint.book_number }} คำสั่งที่ :
+                {{ editorder_appoint.order_number }} วันที่เริ่มปฏิบัติงาน :
+                {{
+                  editorder_appoint.start_date
+                    | moment("add", "543 years")
+                    | moment("D MMMM YYYY")
+                }}
+
+                <v-card-title>
+                  <v-text-field
+                    v-model="search_condition"
+                    append-icon="mdi-magnify"
+                    label="Search"
+                    single-line
+                    hide-details
+                  ></v-text-field>
+                </v-card-title>
+                <v-card-text>
+                  <v-form ref="approve_movement_dialogsform" lazy-validation>
+                    <v-container grid-list-md>
+                      <v-data-table
+                        color="success"
+                        :loading="loading"
+                        :headers="header_condition"
+                        :items="conditons_transfer_successs"
+                        :search="search_condition"
+                      >
+                        <template v-slot:[`item.college_name_old`]="{ item }">
+                          <v-chip color="grey" dark>
+                            <span style="font-size:16px;">
+                              {{ item.college_name_old }}</span
+                            >
+                          </v-chip>
+                        </template>
+
+                        <template v-slot:[`item.college_name_new`]="{ item }">
+                          <v-chip color="green" dark>
+                            <span style="font-size:16px;">
+                              {{ item.college_name_new }}</span
+                            >
+                          </v-chip>
+                        </template>
+                        <template v-slot:[`item.title_s`]="{ item }">
+                          <span>
+                            {{
+                              item.title_s +
+                                item.frist_name +
+                                " " +
+                                item.last_name
+                            }}
+                          </span>
+                        </template>
+
+                        <template v-slot:[`item.approve_movements`]="{ item }">
+                          <v-btn
+                            v-if="item.id_position_check === item.id_position"
+                            rounded
+                            dark
+                            color="info"
+                          >
+                            <v-icon color="yellow" class="pa-1">
+                              mdi-checkbox-marked-circle
+                            </v-icon>
+                            ย้ายสำเร็จ
+                          </v-btn>
+                          <v-btn
+                            v-else
+                            rounded
+                            dark
+                            color="green"
+                            @click.stop="
+                              approve_movement_personnel(item.id_cts)
+                            "
+                          >
+                            <v-icon color="yellow" class="pa-1">
+                              mdi-checkbox-marked-circle
+                            </v-icon>
+                            อนุมัติ
+                          </v-btn>
+                        </template>
+
+                        <v-alert
+                          slot="no-results"
+                          :value="true"
+                          color="error"
+                          icon="mdi-alert"
+                          >ไม่พบผลลัพธ์ "{{ search }}"
+                          ที่คุณกำลังค้นหา.</v-alert
+                        >
+                      </v-data-table>
+                    </v-container>
+                  </v-form>
+                </v-card-text>
+              </v-card>
+            </v-card-text>
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn large @click.stop="approve_movement_dialogs = false"
+                ><v-icon dark>mdi-close</v-icon>ยกเลิก</v-btn
+              >
+              <v-btn
+                large
+                color="green"
+                @click.stop="approve_movement_dialogs_allSubmit()"
+                dark
+              >
+                <v-icon class="pa-1" dark>mdi-content-save</v-icon
+                >&nbsp;อนุมัติย้ายทั้งหมด
+              </v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
+      </v-layout>
+
+      <!-- V-model conditons_transfer_successs_personnel_dialog -->
+      <v-layout>
+        <v-dialog
+          v-model="conditons_transfer_successs_personnel_dialog"
+          persistent
+          max-width="80%"
+        >
+          <v-card class="mx-auto pa-5">
+            <base-material-card
+              color="green"
+              icon="mdi-content-paste"
+              title="อนุมัติการย้าย"
+              class="px-5 py-3 text_google"
+            >
+            </base-material-card>
+
+            <v-card-text class="text_google">
+              <v-card>
+                <v-card-text>
+                  <v-form
+                    ref="conditons_transfer_successs_personnel_dialogform"
+                    lazy-validation
+                  >
+                    <v-container grid-list-md>
+                      <table width="100%">
+                        <tr>
+                          <td class="text-center">
+                            สถานศึกษาแห่งใหม่
+                          </td>
+                          <td class="text-center">
+                            เลขที่ตำแหน่งใหม่
+                          </td>
+                          <td class="text-center">
+                            รหัสสาขาวิชา
+                          </td>
+                          <td class="text-center">
+                            สาขาวิชา
+                          </td>
+                          <td class="text-center">
+                            ชื่อ-นามสกุล
+                          </td>
+                          <td class="text-center">
+                            เลขที่ตำแหน่งเดิม
+                          </td>
+                          <td class="text-center">
+                            สถานศึกษาเดิม
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="text-center">
+                            {{
+                              conditons_transfer_successs_personnel.college_name_new
+                            }}
+                          </td>
+                          <td class="text-center">
+                            {{
+                              conditons_transfer_successs_personnel.id_position
+                            }}
+                          </td>
+                          <td class="text-center">
+                            {{
+                              conditons_transfer_successs_personnel.id_branch
+                            }}
+                          </td>
+                          <td class="text-center">
+                            {{
+                              conditons_transfer_successs_personnel.branch_name
+                            }}
+                          </td>
+                          <td class="text-center">
+                            {{
+                              conditons_transfer_successs_personnel.title_s +
+                                conditons_transfer_successs_personnel.frist_name +
+                                " " +
+                                conditons_transfer_successs_personnel.last_name
+                            }}
+                          </td>
+                          <td class="text-center">
+                            {{
+                              conditons_transfer_successs_personnel.id_postion_old
+                            }}
+                          </td>
+                          <td class="text-center">
+                            {{
+                              conditons_transfer_successs_personnel.college_name_old
+                            }}
+                          </td>
+                        </tr>
+                      </table>
+                    </v-container>
+                  </v-form>
+                </v-card-text>
+              </v-card>
+            </v-card-text>
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn
+                large
+                @click.stop="
+                  conditons_transfer_successs_personnel_dialog = false
+                "
+                ><v-icon dark>mdi-close</v-icon>ยกเลิก</v-btn
+              >
+              <v-btn
+                large
+                color="green"
+                @click.stop="
+                  conditons_transfer_successs_personnel_dialogSubmit()
+                "
+                dark
+              >
+                <v-icon class="pa-1" dark>mdi-content-save</v-icon
+                >&nbsp;อนุมัติย้าย
+              </v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
+      </v-layout>
+
+      <!-- V-model approve_movement_dialogs_all_dialog -->
+      <v-layout>
+        <v-dialog
+          v-model="approve_movement_dialogs_all_dialog"
+          persistent
+          max-width="60%"
+        >
+          <v-card class="mx-auto pa-5">
+            <base-material-card
+              color="green"
+              icon="mdi-content-paste"
+              title="อนุมัติการย้ายทั้งหมด"
+              class="px-5 py-3 text_google"
+            >
+            </base-material-card>
+
+            <v-card-text class="text_google">
+              <v-card>
+                <v-card-text>
+                  <v-form
+                    ref="approve_movement_dialogs_all_dialogform"
+                    lazy-validation
+                  >
+                    <v-container grid-list-md>
+                      <v-row>
+                        <v-col cols="12" md="6">
+                          หนังสือราชการที่ : {{ editorder_appoint.book_number }}
+                        </v-col>
+                        <v-col cols="12" md="6">
+                          คำสั่งที่ : {{ editorder_appoint.order_number }}
+                        </v-col>
+                        <v-col cols="12" md="6">
+                          วันที่หนังสือ : {{ editorder_appoint.dated_order }}
+                        </v-col>
+                        <v-col cols="12" md="6">
+                          ประชุมครั้งที่ : {{ editorder_appoint.meeting_no }}
+                        </v-col>
+                        <v-col cols="12" md="6">
+                          วันที่ประชุม : {{ editorder_appoint.meeting_date }}
+                        </v-col>
+                        <v-col cols="12" md="6">
+                          การย้ายครั้งที่ : {{ editorder_appoint.time_s }}
+                        </v-col>
+                        <v-col cols="12" md="6">
+                          การย้ายปีที่ : {{ editorder_appoint.year_s }}
+                        </v-col>
+                        <v-col cols="12" md="6">
+                          วันที่เริ่มปฏิบัติงาน :
+                          {{ editorder_appoint.start_date }}
+                        </v-col>
+                        <v-col cols="12" md="6">
+                          ตำแหน่ง :
+                          {{ editorder_appoint.name_position }}
+                        </v-col>
+                      </v-row>
+                    </v-container>
+                  </v-form>
+                </v-card-text>
+              </v-card>
+            </v-card-text>
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn
+                large
+                @click.stop="approve_movement_dialogs_all_dialog = false"
+                ><v-icon dark>mdi-close</v-icon>ยกเลิก</v-btn
+              >
+              <v-btn
+                large
+                color="green"
+                @click.stop="approve_movement_dialogs_all_dialogSubmit()"
+                dark
+              >
+                <v-icon class="pa-1" dark>mdi-content-save</v-icon
+                >&nbsp;อนุมัติย้าย
+              </v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
+      </v-layout>
     </v-container>
 
     <v-container fluid>
@@ -714,6 +1114,10 @@ export default {
       addorder_appointdialog: false,
       editorder_appointdialog: false,
       deleteorder_appointdialog: false,
+      approve_movement_dialogs: false,
+      conditons_transfer_successs_personnel_dialog: false,
+      approve_movement_dialogs_all_dialog: false,
+      loading_dialog: false,
       snackbar: {
         show: false,
         color: "",
@@ -725,6 +1129,7 @@ export default {
       addorder_appoint: {},
       editorder_appoint: {},
       search: "",
+      search_condition: "",
       pagination: {},
       time_ss: [1, 2],
       year_ss: [2565, 2566, 2567, 2568, 2569, 2570],
@@ -732,7 +1137,21 @@ export default {
         { text: "สายการสอนและสนับสนุนการสอน", value: "ครู" },
         { text: "สายงานบริหารสถานศึกษา", value: "บริหาร" }
       ],
-      headers: [
+      header_condition: [
+        { text: "ครั้งที่", align: "center", value: "time_s" },
+        { text: "ปีที่", align: "center", value: "year_s" },
+        { text: "สังกัด", align: "center", value: "college_name_new" },
+        { text: "เลขที่", align: "center", value: "id_position" },
+        { text: "ชื่อ-นามสกุล", align: "center", value: "title_s" },
+        { text: "ตำแหน่ง", align: "center", value: "name_position" },
+        { text: "เลขที่", align: "center", value: "id_postion_old" },
+        { text: "สังกัดเดิม", align: "center", value: "college_name_old" },
+        { text: "อนุมัติ", align: "center", value: "approve_movements" }
+      ],
+
+      headers: [],
+      selectedHeaders: [],
+      headersMap: [
         { text: "หนังสือราชการที่", align: "center", value: "book_number" },
         { text: "คำสั่งที่", align: "center", value: "order_number" },
         { text: "วันที่หนังสือ", align: "left", value: "dated_order" },
@@ -743,6 +1162,18 @@ export default {
         { text: "วันที่เริ่มปฏิบัติงาน", align: "left", value: "start_date" },
         { text: "วันที่รายการ", align: "left", value: "date_time" },
         { text: "ตำแหน่ง", align: "left", value: "name_position" },
+        {
+          text: "ตำแหน่งว่าง",
+          align: "center",
+          value: "print_manpower",
+          icon: "mdi-printer"
+        },
+        {
+          text: "การย้ายคงค้าง",
+          align: "center",
+          value: "print_move_can",
+          icon: "mdi-printer"
+        },
         {
           text: "กลั่นกรอง",
           align: "center",
@@ -756,9 +1187,21 @@ export default {
           icon: "mdi-printer"
         },
         {
-          text: "พิมพ์คำสั่ง",
+          text: "คำสั่งย้าย",
           align: "center",
           value: "print_s",
+          icon: "mdi-printer"
+        },
+        {
+          text: "อนุมัติย้าย",
+          align: "center",
+          value: "approve_movement",
+          icon: "mdi-printer"
+        },
+         {
+          text: "ตารางเงินเดือน",
+          align: "center",
+          value: "movement_salary",
           icon: "mdi-printer"
         },
         {
@@ -788,10 +1231,18 @@ export default {
       menu: false,
       menu1: false,
       menu2: false,
-       menu_a: false,
+      menu_a: false,
       menu_1: false,
-      menu_2: false
+      menu_2: false,
+      conditons_transfer_successs: [],
+      conditons_transfer_successs_personnel: [],
+      transfer_approves: {},
+      approve_movement_all_dialog: {}
     };
+  },
+  async created() {
+    this.headers = Object.values(this.headersMap);
+    this.selectedHeaders = this.headers;
   },
   async mounted() {
     this.order_appointQueryAll();
@@ -813,7 +1264,7 @@ export default {
     async addorder_appointSubmit() {
       if (this.$refs.addorder_appointform.validate()) {
         this.addorder_appoint.ApiKey = this.ApiKey;
-        this.addorder_appoint.date_time = this.date_today;     
+        this.addorder_appoint.date_time = this.date_today;
         let result = await this.$http.post(
           "order_appoint.insert.php",
           this.addorder_appoint
@@ -896,6 +1347,104 @@ export default {
         }
         this.deleteorder_appointdialog = false;
       }
+    },
+    async approve_movement_dialog(id_oa) {
+      let result_oa = await this.$http.post("order_appoint.php", {
+        ApiKey: this.ApiKey,
+        id_oa: id_oa
+      });
+      this.editorder_appoint = result_oa.data;
+
+      this.loading = true;
+      let result = await this.$http
+        .post("conditons_transfer_success.php", {
+          ApiKey: this.ApiKey,
+          transfer_approve: "ok"
+        })
+        .finally(() => (this.loading = false));
+      this.conditons_transfer_successs = result.data;
+      this.approve_movement_dialogs = true;     
+    },
+    async approve_movement_personnel(id_cts) {
+      let result = await this.$http.post("conditons_transfer_success.php", {
+        ApiKey: this.ApiKey,
+        id_cts: id_cts
+      });
+      this.conditons_transfer_successs_personnel = result.data;
+      this.conditons_transfer_successs_personnel_dialog = true;
+    },
+    async conditons_transfer_successs_personnel_dialogSubmit() {
+      if (
+        this.$refs.conditons_transfer_successs_personnel_dialogform.validate()
+      ) {
+        this.transfer_approves.ApiKey = this.ApiKey;
+        this.transfer_approves.college_code = this.conditons_transfer_successs_personnel.college_code;
+        this.transfer_approves.id_card = this.conditons_transfer_successs_personnel.id_card;
+        this.transfer_approves.id_position = this.conditons_transfer_successs_personnel.id_position;
+        this.transfer_approves.order_app_now = this.editorder_appoint.order_number;
+        this.transfer_approves.date_app_now = this.editorder_appoint.start_date;
+        console.log(this.transfer_approves);
+        let result = await this.$http.post(
+          "transference_approve.update.php",
+          this.transfer_approves
+        );
+        if (result.data.status == true) {
+          this.loading = true;
+          let result = await this.$http
+            .post("conditons_transfer_success.php", {
+              ApiKey: this.ApiKey,
+              transfer_approve: "ok"
+            })
+            .finally(() => (this.loading = false));
+          this.conditons_transfer_successs = result.data;
+
+          this.snackbar.icon = "mdi-font-awesome";
+          this.snackbar.color = "success";
+          this.snackbar.text = "บันทึกข้อมูลเรียบร้อย";
+          this.snackbar.show = true;       
+        } else {
+          this.snackbar.icon = "mdi-close-network";
+          this.snackbar.color = "red";
+          this.snackbar.text = "บันทึกข้อมูลผิดพลาด";
+          this.snackbar.show = true;
+        }
+        this.conditons_transfer_successs_personnel_dialog = false;
+      }
+    },
+    async approve_movement_dialogs_allSubmit() {
+      this.approve_movement_dialogs_all_dialog = true;
+    },
+    async approve_movement_dialogs_all_dialogSubmit() {
+      this.approve_movement_all_dialog.ApiKey = this.ApiKey;
+      this.approve_movement_all_dialog.time_s = this.editorder_appoint.time_s;
+      this.approve_movement_all_dialog.year_s = this.editorder_appoint.year_s;
+      this.approve_movement_all_dialog.name_position = "ครู";
+      console.log(this.approve_movement_all_dialog);
+      let result = await this.$http.post(
+          "transference_approve_all.update.php",
+          this.approve_movement_all_dialog
+        );
+        if (result.data.status == true) {
+          this.loading = true;
+          let result = await this.$http
+            .post("conditons_transfer_success.php", {
+              ApiKey: this.ApiKey,
+              transfer_approve: "ok"
+            })
+            .finally(() => (this.loading = false));
+          this.conditons_transfer_successs = result.data;
+
+          this.snackbar.icon = "mdi-font-awesome";
+          this.snackbar.color = "success";
+          this.snackbar.text = "บันทึกข้อมูลเรียบร้อย";
+          this.snackbar.show = true;         
+        } else {
+          this.snackbar.icon = "mdi-close-network";
+          this.snackbar.color = "red";
+          this.snackbar.text = "บันทึกข้อมูลผิดพลาด";
+          this.snackbar.show = true;
+        }
+        this.approve_movement_dialogs_all_dialog = false;
     }
   },
   computed: {
@@ -943,9 +1492,12 @@ export default {
       let today = day + " " + month + " " + years;
       return today;
     },
-      color() {
+    color() {
       return "green darken-4";
     },
+    showHeaders() {
+      return this.headers.filter(s => this.selectedHeaders.includes(s));
+    }
   }
 };
 </script>
