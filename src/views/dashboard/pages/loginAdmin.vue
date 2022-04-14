@@ -79,6 +79,7 @@
             <hr class="mb-4" />
             <v-btn color="success" rounded class="mr-0" to="/news">
               คู่มือใช้งานระบบ
+             
             </v-btn>
           </v-card-text>
         </base-material-card>
@@ -102,7 +103,9 @@
 export default {
   data() {
     return {
+       ApiKey: 'HRvec2021',
       show1: false,
+      data_syslog:{},
       user_name: "",
       user_password: "",
       dialog: false,
@@ -125,6 +128,16 @@ export default {
           user.system_lock = false;
           sessionStorage.setItem("user", JSON.stringify(user));
           if (user.user_status == "A") {
+          
+          this.data_syslog.ApiKey = this.ApiKey;
+          this.data_syslog.user_account = this.user_name;
+          this.data_syslog.event_log = "login-admin";
+          this.data_syslog.page_log = "loginAdmin";
+          this.data_syslog.table_log = "";
+          this.data_syslog.date_times = this.date_today_log;          
+
+          await this.$http.post('data_syslog.insert.php', this.data_syslog)
+
             sessionStorage.setItem("user", JSON.stringify(user));
             this.$router.push("/admin");
           }
@@ -151,7 +164,16 @@ export default {
   computed: {
       color () {
       return 'orange lighten-1'      
-    }
+    },
+     date_today_log() {
+      let today = new Date();
+      let dd = String(today.getDate()).padStart(2, "0");
+      let mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
+      let yyyy = today.getFullYear() + 543;
+let time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+      today = dd + "/" + mm + "/" + yyyy + "/" + time;
+      return today;
+    },
    }
 };
 </script>

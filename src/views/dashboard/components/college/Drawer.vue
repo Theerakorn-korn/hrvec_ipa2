@@ -142,7 +142,7 @@ export default {
             to: "/college/personnel_experience"
           },
           {
-            title: "ข้อมูลประวัติการทำงาน",
+            title: "ข้อมูลประวัติการรับราชการ",
             action: "mdi-access-point-network",
             to: "/college/personnel_work_history"
           },
@@ -192,7 +192,7 @@ export default {
        {
         action: "mdi-human",
         items: [
-          { title: "ข้อมูลอัตรากำลังสถานศึกษา", action: "mdi-account-multiple", to: "/college/rate_workforce" },        
+          { title: "ข้อมูลอัตรากำลังสถานศึกษา", action: "mdi-account-multiple", to: "/college/rate_workforce_g" },        
         /*   { title: "ข้อมูลเชิงปริมาณ", action: "mdi-chart-box-outline", to: "/Dashboard" },        
           { title: "ข้อมูลเชิงปริมาณ", action: "mdi-chart-box-outline", to: "/Dashboard" },        
       */   ],

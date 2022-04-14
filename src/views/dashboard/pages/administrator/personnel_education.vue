@@ -22,7 +22,7 @@
                 class="mb-2"
               />
             </v-col>
-           <!--  <v-col cols="12" lg="6" class="text-right">
+            <v-col cols="12" lg="6" class="text-right">
               <v-btn
                 
                 large
@@ -33,7 +33,7 @@
               >
                 <v-icon>mdi-plus-circle-outline</v-icon>เพิ่มรายการ
               </v-btn>
-            </v-col> -->
+            </v-col>
           </v-row>
         </v-card>
 
@@ -73,7 +73,7 @@
       </base-material-card>
 
       <!--addpersonnel_educationdialog  -->
-     <!--  <v-layout row justify-center>
+      <v-layout row justify-center>
         <v-dialog v-model="addpersonnel_educationdialog" persistent max-width="80%" overlay-opacity="0.6">
           <v-card class="mx-auto pa-5" >
             <base-material-card
@@ -197,7 +197,7 @@
       </v-layout> -->
 
       <!-- V-model deletepersonnel_educationdialog -->
-      <!-- <v-layout>
+       <v-layout>
         <v-dialog v-model="deletepersonnel_educationdialog" persistent max-width="40%">
           <v-card class="mx-auto pa-5" >
             <base-material-card
@@ -232,10 +232,10 @@
             </v-card-actions>
           </v-card>
         </v-dialog>
-      </v-layout> -->
+      </v-layout> 
 
       <!-- V-model editpersonnel_educationdialog -->
-      <!-- <v-layout row justify-center>
+      <v-layout row justify-center>
         <v-dialog v-model="editpersonnel_educationdialog" persistent max-width="80%">
           <v-card class="mx-auto pa-5" >
             <base-material-card
@@ -345,7 +345,7 @@
             </v-card-actions>
           </v-card>
         </v-dialog>
-      </v-layout> -->
+      </v-layout>
     </v-container>
     <v-container fluid>
       <v-snackbar

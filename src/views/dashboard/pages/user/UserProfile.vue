@@ -83,10 +83,7 @@
                 </h2>
               </div>
             </template>
-            <v-card
-              class="elevation-6"           
-              width="100%"
-            >
+            <v-card class="elevation-6" width="100%">
               <v-form>
                 <v-container>
                   <v-row>
@@ -122,7 +119,7 @@
                                 ระหว่างวันที่ 1 - 15 ส.ค.
                               </h4>
                             </v-alert>
-                          </v-col>
+                          </v-col>                          
                           <v-col
                             cols="12"
                             md="12"
@@ -162,7 +159,7 @@
                               border="bottom"
                               x-large
                               dark
-                              to="/transference_personnel"
+                              to="/transference_manage"
                             >
                               <v-icon>mdi-pencil</v-icon>
                               การย้ายสายงานบริหารสถานศึกษา</v-btn
@@ -184,7 +181,7 @@
                               border="bottom"
                               x-large
                               dark
-                              to="/transference_personnel"
+                              to="/transference_manage"
                             >
                               <v-icon>mdi-pencil</v-icon>
                               การย้ายสายงานบริหารสถานศึกษา</v-btn
@@ -292,48 +289,47 @@
                 </v-container>
               </v-form>
             </v-card>
-             <v-card>
-          <v-data-table
-            color="success"
-            :loading="loading"
-            :headers="headers"
-            :items="transference_personnels"
-          >
-            <template v-slot:[`item`]="{ item, index }">
-              <tr>
-                <td class="text-center">{{ index + 1 }}</td>
-                <td class="text-center">{{ item.tid_ref }}</td>
-                <td class="text-center">{{ item.id_card }}</td>
-                <td class="text-center">{{ item.frist_name }}</td>
-                <td class="text-center">{{ item.last_name }}</td>
-                <td class="text-center">{{ item.time_ss }}</td>
-                <td class="text-center">{{ item.year_ss }}</td>
-                <td class="text-center">{{ item.age_app_time }}</td>
-                <td class="text-center">{{ item.date_time }}</td>
-                <td class="text-center">
-                  <v-chip
-                    v-if="item.comment_dr_c === 'approp'"
-                    color="green"
-                    dark
-                    >เห็นควร</v-chip
-                  >
-                  <v-chip
-                    v-else-if="item.comment_dr_c === 'inapprop'"
-                    color="red"
-                    dark
-                    >ไม่เห็นควร</v-chip
-                  >
-                  <v-icon large v-else color="info"
-                    >mdi-comment-processing</v-icon
-                  >
-                </td>
-              </tr>
-            </template>
-          </v-data-table>
-        </v-card>           
+            <v-card>
+              <v-data-table
+                color="success"
+                :loading="loading"
+                :headers="headers"
+                :items="transference_personnels"
+              >
+                <template v-slot:[`item`]="{ item, index }">
+                  <tr>
+                    <td class="text-center">{{ index + 1 }}</td>
+                    <td class="text-center">{{ item.tid_ref }}</td>
+                    <td class="text-center">{{ item.id_card }}</td>
+                    <td class="text-center">{{ item.frist_name }}</td>
+                    <td class="text-center">{{ item.last_name }}</td>
+                    <td class="text-center">{{ item.time_ss }}</td>
+                    <td class="text-center">{{ item.year_ss }}</td>
+                    <td class="text-center">{{ item.age_app_time }}</td>
+                    <td class="text-center">{{ item.date_time }}</td>
+                    <td class="text-center">
+                      <v-chip
+                        v-if="item.comment_dr_c === 'approp'"
+                        color="green"
+                        dark
+                        >เห็นควร</v-chip
+                      >
+                      <v-chip
+                        v-else-if="item.comment_dr_c === 'inapprop'"
+                        color="red"
+                        dark
+                        >ไม่เห็นควร</v-chip
+                      >
+                      <v-icon large v-else color="info"
+                        >mdi-comment-processing</v-icon
+                      >
+                    </td>
+                  </tr>
+                </template>
+              </v-data-table>
+            </v-card>
           </base-material-card>
         </v-col>
-       
       </v-row>
 
       <!-- V-model userdialog -->
@@ -765,19 +761,24 @@ export default {
       ApiKey: this.ApiKey
     });
     this.provices_sh = result_provice.data;
-
-    let result_period;
-    result_period = await this.$http.post("period.php", {
-      ApiKey: this.ApiKey,
-      period_enable: this.period_enable
-    });
-    this.periods = result_period.data;
-
+   
     await this.personnelQuery();
     await this.transference_personnelQueryAll();
+    await this.periodQuery();
   },
 
   methods: {
+
+    async periodQuery() {
+       let result_period;
+    result_period = await this.$http.post("period.php", {
+      ApiKey: this.ApiKey,
+      period_enable: this.period_enable,
+      period_type: this.user_status_type
+    });
+    this.periods = result_period.data;    
+    },
+
     async personnelQuery() {
       this.loading = true;
       let result = await this.$http
@@ -981,6 +982,19 @@ export default {
       const d = new Date();
       let time = Math.floor(d.getTime() / 1000);
       return time;
+    },
+    user_status_type() {
+      let user_status = this.user.user_status;
+      let result;
+      if (user_status == "tech") {
+        result = "teacher";
+      } else if (user_status == "director"){
+        result = "manage";
+      }
+      else if (user_status == "se_director"){
+        result = "manage";
+      }
+      return result;
     }
   }
 };

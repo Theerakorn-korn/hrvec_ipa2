@@ -1679,8 +1679,8 @@ export default {
       this.addrate_work_g.sumall =
         this.addrate_work_g.rate_work_g_dr +
         this.addrate_work_g.rate_work_g_sedr +
-        this.addrate_work_g.rate_work_g_pte_ta +
-        this.addrate_work_g.rate_work_g_pte_tb +
+        this.addrate_work_g.rate_work_g_sup_ta +
+        this.addrate_work_g.rate_work_g_sup_tb +
         this.addrate_work_g.sumteach_a +
         this.addrate_work_g.sumteach_b;
     },
@@ -1785,8 +1785,8 @@ export default {
       this.addrate_work_g.sumall =
         this.addrate_work_g.rate_work_g_dr +
         this.addrate_work_g.rate_work_g_sedr +
-        this.addrate_work_g.rate_work_g_pte_ta +
-        this.addrate_work_g.rate_work_g_pte_tb +
+        this.addrate_work_g.rate_work_g_sup_ta +
+        this.addrate_work_g.rate_work_g_sup_tb +
         this.addrate_work_g.sumteach_a +
         this.addrate_work_g.sumteach_b;
     },

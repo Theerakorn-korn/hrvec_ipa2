@@ -196,10 +196,7 @@
           <v-card-text>
             <v-form ref="editcollegeform" lazy-validation>
               <v-container grid-list-md>
-                <v-layout wrap>               
-                                       <v-flex md12>
-                    <v-text-field label="รหัสสถานศึกษา" v-model="editcollege.college_code" required :rules="[v => !!v || '']"></v-text-field>
-                  </v-flex>
+                <v-layout wrap>      
                    <v-flex md12>
                     <v-text-field label="ชื่อสถานศึกษา" v-model="editcollege.college_name" required :rules="[v => !!v || '']"></v-text-field>
                   </v-flex>                  
@@ -303,7 +300,9 @@ export default {
      collgegs: [],
      collegestatus:[],
       regions: [],
-      region_ena: true
+      region_ena: true,
+      user_update:{},
+      collegeinfo_update:{},
     };
   },
 async mounted() {
@@ -388,8 +387,18 @@ async mounted() {
       async editcollegeSubmit() {
         if (this.$refs.editcollegeform.validate()) {
           this.editcollege.ApiKey = this.ApiKey;         
+          this.user_update.ApiKey = this.ApiKey;         
+          this.user_update.user_code = this.editcollege.college_code;  
+          this.user_update.user_firstname = this.editcollege.college_name;         
+          this.collegeinfo_update.ApiKey = this.ApiKey; 
+          this.collegeinfo_update.collegeinfo_code = this.editcollege.college_code; 
+          this.collegeinfo_update.collegeinfo_name = this.editcollege.college_name; 
+                  
+          
           let result = await this.$http.post('college.update.php', this.editcollege)
-          if (result.data.status == true) {
+          let result_user = await this.$http.post('user.update.code.php', this.user_update)
+          let result_collegeinfo = await this.$http.post('collegeinfo.update.code.php', this.collegeinfo_update)
+          if (result.data.status == true && result_user.data.status == true && result_collegeinfo.data.status == true) {
             this.college = result.data
             this.snackbar.icon = 'mdi-font-awesome'
             this.snackbar.color = 'success'

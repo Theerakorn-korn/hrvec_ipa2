@@ -196,7 +196,7 @@
                             <template v-slot:activator="{ on, attrs }">
                               <v-text-field
                                 v-model="addpersonnel_experience.date_time_end"
-                                label="วันที่เริ่ม"
+                                label="วันที่สิ้นสุด"
                                 prepend-icon="mdi-calendar"
                                 readonly
                                 v-bind="attrs"

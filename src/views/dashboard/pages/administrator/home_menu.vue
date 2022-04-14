@@ -472,7 +472,7 @@ export default {
           to: "/admin/personnel_experience"
         },
         {
-          text: "ข้อมูลประวัติการทำงาน",
+          text: "ข้อมูลประวัติการรับราชการ",
           icon: "mdi-access-point-network",
           to: "/admin/personnel_work_history"
         },
@@ -578,6 +578,11 @@ export default {
       ],
 
       human_items: [
+         {
+          text: "รายงานอัตรากำลังประจำปี สถานศึกษา",
+          icon: "mdi-account-multiple",
+          to: "/admin/rate_work_g"
+        },
         {
           text: "ข้อมูลอัตรากำลังสถานศึกษา",
           icon: "mdi-account-multiple",

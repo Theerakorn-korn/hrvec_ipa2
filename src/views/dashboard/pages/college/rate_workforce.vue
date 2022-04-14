@@ -13,7 +13,7 @@
         <span>ประมวลผลห้องเรียน </span>
         <v-icon>mdi-numeric-3-box</v-icon>
       </v-btn>
-      <v-btn to="/college/rate_workforce_pro">
+      <v-btn to="/college/rate_workforce_cal">
         <span>ประมวลผลอัตรากำลัง </span>
         <v-icon>mdi-numeric-4-box</v-icon>
       </v-btn>
@@ -2759,16 +2759,11 @@ async editrate_work_sc_submit(){
           cal_room_23 +
           cal_room_24 +
           cal_room_25;
-
-        if (this.user.college_id_code_type_manpower === "6") {
+       
           this.sum_room = sum_rooms;
           let hours = this.addrate_work_sc.hours_teaching;
           let cal_hours = sum_rooms * hours;
-          this.sum_hours = cal_hours;
-        } else {
-          this.sum_room = 0;
-          this.sum_hours = 0;
-        }
+          this.sum_hours = cal_hours;          
       }
     },
 

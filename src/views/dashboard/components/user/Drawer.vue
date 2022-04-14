@@ -82,7 +82,7 @@ export default {
         to: "/personnel_experience",
       },
       {
-        title: "ข้อมูลประวัติการทำงาน",
+        title: "ข้อมูลประวัติการรับราชการ",
         icon: "mdi-access-point-network",
         to: "/personnel_work_history",
       },

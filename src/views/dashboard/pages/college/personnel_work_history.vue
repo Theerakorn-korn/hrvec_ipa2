@@ -3,7 +3,7 @@
     <v-container class="text_google">
       <base-material-card
         icon="mdi-clipboard-text"
-        title="ประวัติการทำงาน"
+        title="ประวัติการรับราชการ"
         class="px-5 py-3"
       >
         <v-card class="mb-4 pa-2">
@@ -80,7 +80,7 @@
           <v-card class="mx-auto pa-5" >
             <base-material-card
               icon="mdi-clipboard-text"
-              title="เพิ่มประวัติการทำงาน"
+              title="เพิ่มประวัติการรับราชการ"
               class="px-5 py-3 text_google"
               
             ></base-material-card>

@@ -21,8 +21,7 @@
               />
             </v-col>
             <v-col cols="12" lg="6" class="text-right">
-              <v-btn
-                v-if="periods.period_enable === '1'"
+              <v-btn             
                 large
                 right
                 depressed
@@ -30,12 +29,7 @@
                 @click.native="personnel_educationAdd()"
               >
                 <v-icon>mdi-plus-circle-outline</v-icon>เพิ่มรายการ
-              </v-btn>
-              <v-alert v-else prominent type="error">
-                <h3>
-                  อยู่ระหว่างพิจารณาย้าย ไม่สามารถปรับปรุงข้อมูลวุฒิการศึกษาได้
-                </h3>
-              </v-alert>
+              </v-btn>             
             </v-col>
           </v-row>
         </v-card>
@@ -55,7 +49,7 @@
               <td>{{ item.name_sub_branch }}</td>              
               <td>{{ item.education_level }}</td>
               <td>{{ item.faculty_name }}</td>
-              <td>{{ item.branch_name }}</td>
+              <td>{{ item.branch_name }}</td>         
               <td>{{ item.academy_name }}</td>
               <td>{{ item.year_finish }}</td>
               <td>{{ item.academic_results }}</td>
@@ -63,7 +57,7 @@
                 <v-icon
                   color="yellow"
                   @click.stop="personnel_educationEdit(item.id_red)"
-                  v-if="periods.period_enable === '1'"
+                 
                 >
                   mdi-pencil
                 </v-icon>
@@ -72,7 +66,7 @@
                 <v-icon
                   color="red"
                   @click.stop="personnel_educationDelete(item.id_red)"
-                  v-if="periods.period_enable === '1'"
+                
                 >
                   mdi-delete
                 </v-icon>
@@ -107,6 +101,24 @@
                 class="mx-4"
               ></v-text-field>
             </template>
+             <template v-slot:[`item.actions`]="{ item }">
+            <v-icon
+              color="yellow"
+              
+              @click.stop="personnel_educationEdit(item.id_red)"
+            >
+              mdi-pencil
+            </v-icon>          
+          </template>
+            <template v-slot:[`item.action_s`]="{ item }">            
+            <v-icon
+              color="red"
+              
+              @click.stop="personnel_educationDelete(item.id_red)"
+            >
+              mdi-delete
+            </v-icon>
+          </template>      
           </v-data-table>
         </v-card-text>
       </base-material-card>
@@ -154,6 +166,7 @@
                           :rules="[v => !!v || '']"
                           filled
                           @change="branch_sub_dQueryAll()"
+                          @select="branch_sub_dQueryAll()"
                         ></v-autocomplete>
                       </v-col>
 
@@ -479,7 +492,7 @@ export default {
       deletepersonnel_educationdialog: false,
       showimagedialog: false,
       periods: [],
-      period_enable: "1",
+      period_enable: "",
       snackbar: {
         show: false,
         color: "",
@@ -495,7 +508,7 @@ export default {
         { text: "วุฒิการศึกษาตรงตามระบบ", align: "left", value: "name_sub_branch" },
         { text: "ระดับการศึกษา", align: "center", value: "education_level" },
         { text: "คณะวิชา", align: "center", value: "faculty_name" },
-        { text: "สาขาวิชาที่จบการศึกษา", align: "center", value: "branch_name" },
+        { text: "สาขาวิชาที่จบการศึกษา", align: "center", value: "branch_name" },      
         { text: "จบจาก", align: "center", value: "academy_name" },
         { text: "ปีที่จบ", align: "center", value: "year_finish" },
         { text: "ผลการเรียน", align: "center", value: "academic_results" },
@@ -549,10 +562,10 @@ export default {
     let result_period;
     result_period = await this.$http.post("period.php", {
       ApiKey: this.ApiKey,
-      period_enable: this.period_enable
+      period_enable: "Ok"
     });
     this.periods = result_period.data;
-
+    console.log(result_period.data)
     this.personnel_educationsQueryAll();
     this.getAllbranchdata();
   },
@@ -602,6 +615,9 @@ export default {
           this.addpersonnel_education
         );
 
+
+      console.log(this.addpersonnel_education)
+      console.log(result.data)
         if (result.data.status == true) {
           this.personnel_education = result.data;
           this.snackbar.icon = "mdi-font-awesome";

@@ -231,6 +231,7 @@ export default {
   data() {
     return {
        loading: true,
+       data_syslog:{},
      ApiKey: 'HRvec2021',
       valid: true,
       adduser_statusdialog: false,
@@ -293,6 +294,15 @@ async mounted() {
             this.snackbar.text = 'บันทึกข้อมูลเรียบร้อย'
             this.snackbar.show = true
             this.user_statusQueryAll()
+             let userSession = JSON.parse(sessionStorage.getItem("user")) || 0;
+          this.data_syslog.ApiKey = this.ApiKey;
+          this.data_syslog.user_account = userSession.user_name;
+          this.data_syslog.event_log = "insert";
+          this.data_syslog.page_log = "user_status";
+          this.data_syslog.table_log = "user_status";
+          this.data_syslog.detail_log = this.adduser_status.user_status_name;
+          this.data_syslog.date_times = this.date_today_log;
+          await this.$http.post("data_syslog.insert.php", this.data_syslog);
           } else {           
             this.snackbar.icon = 'mdi-close-network'
             this.snackbar.color = 'red'
@@ -323,6 +333,15 @@ async mounted() {
             this.snackbar.text = 'แก้ไขข้อมูลเรียบร้อย'
             this.snackbar.show = true
             this.user_statusQueryAll()
+              let userSession = JSON.parse(sessionStorage.getItem("user")) || 0;
+          this.data_syslog.ApiKey = this.ApiKey;
+          this.data_syslog.user_account = userSession.user_name;
+          this.data_syslog.event_log = "update";
+          this.data_syslog.page_log = "user_status";
+          this.data_syslog.table_log = "user_status";
+          this.data_syslog.detail_log = this.edituser_status.user_status_name;
+          this.data_syslog.date_times = this.date_today_log;
+          await this.$http.post("data_syslog.insert.php", this.data_syslog);
           } else {
             this.snackbar.icon = 'mdi-close-network'
             this.snackbar.color = 'red'
@@ -352,6 +371,15 @@ async mounted() {
             this.snackbar.text = 'ลบข้อมูลเรียบร้อย'
             this.snackbar.show = true
             this.user_statusQueryAll()
+              let userSession = JSON.parse(sessionStorage.getItem("user")) || 0;
+          this.data_syslog.ApiKey = this.ApiKey;
+          this.data_syslog.user_account = userSession.user_name;
+          this.data_syslog.event_log = "delete";
+          this.data_syslog.page_log = "user_status";
+          this.data_syslog.table_log = "user_status";
+          this.data_syslog.detail_log = this.edituser_status.user_status_name;
+          this.data_syslog.date_times = this.date_today_log;
+          await this.$http.post("data_syslog.insert.php", this.data_syslog);
           } else {
             this.snackbar.icon = 'mdi-close-network'
             this.snackbar.color = 'red'
@@ -369,7 +397,16 @@ async mounted() {
         ) return 0
 
         return Math.ceil(this.pagination.totalItems / this.pagination.rowsPerPage)
-      }
+      },
+      date_today_log() {
+      let today = new Date();
+      let dd = String(today.getDate()).padStart(2, "0");
+      let mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
+      let yyyy = today.getFullYear() + 543;
+let time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+      today = dd + "/" + mm + "/" + yyyy + "/" + time;
+      return today;
+    },
     },
 
   

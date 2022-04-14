@@ -15,7 +15,7 @@
                     <v-card-text class="text-xs-left pl-5">
                       <div>ชื่อสถานศึกษา</div>
                       
-                      <div class="pl-4 grey--text">{{ collegeinfo.college_ID }} {{ collegeinfo.collegeinfo_name }}</div>
+                      <div class="pl-4 grey--text">{{ collegeinfo.college_ID }} : {{ collegeinfo.collegeinfo_code }} {{ collegeinfo.collegeinfo_name }}</div>
                     </v-card-text>
                     <v-card-text class="text-xs-left pl-5">
                       <div>ที่อยู่</div>
@@ -234,7 +234,9 @@
       college: {},
       collegeinfo: {},
       editcollegeinfo: {},     
-      period_year: ''
+      period_year: '',
+      user_update:{},
+      college_update:{},
     }),
     async mounted() {
       let result = {}
@@ -282,9 +284,16 @@
         async editcollegeinfoSubmit1() {          
           if (this.$refs.form1.validate()) {
           this.editcollegeinfo.ApiKey = this.ApiKey;   
-         
+          this.user_update.ApiKey = this.ApiKey;   
+          this.user_update.user_code = this.collegeinfo.collegeinfo_code   
+          this.user_update.user_firstname = this.editcollegeinfo.collegeinfo_name;   
+          this.college_update.ApiKey = this.ApiKey;   
+          this.college_update.college_code  = this.collegeinfo.collegeinfo_code  
+          this.college_update.college_name = this.editcollegeinfo.collegeinfo_name;   
           let result = await this.$http.post('collegeinfo.update.php', this.editcollegeinfo)
-           if (result.data.status == true) {
+          let result_user = await this.$http.post('user.update.code.php', this.user_update)
+          let result_college = await this.$http.post('college.update.code.php', this.college_update)
+           if (result.data.status == true && result_user.data.status == true && result_college.data.status == true) {
             this.editcollegeinfo = result.data
             this.snackbar.icon = 'mdi-font-awesome'
             this.snackbar.color = 'success'

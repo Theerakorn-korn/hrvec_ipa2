@@ -384,8 +384,8 @@
                           </tbody>
                         </v-simple-table>
                       </v-card>
-
-                      <v-card v-if="user.college_id_code_type_manpower === '6'">
+                        <!-- v-if="user.college_id_code_type_manpower === '6'" -->
+                      <v-card>
                         <v-card-title>
                           <h3>
                             รวมผู้เรียนหลักสูตรระยะสั้น

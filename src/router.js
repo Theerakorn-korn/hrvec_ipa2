@@ -104,7 +104,7 @@ export default new Router({
                         import ('@/views/dashboard/pages/administrator/personnel_experience'),
                 },
                 {
-                    name: 'ข้อมูลประวัติการทำงาน',
+                    name: 'ข้อมูลประวัติการรับราชการ',
                     path: '/admin/personnel_work_history',
                     component: () =>
                         import ('@/views/dashboard/pages/administrator/personnel_work_history'),
@@ -175,13 +175,20 @@ export default new Router({
                     component: () =>
                         import ('@/views/dashboard/pages/administrator/branch_sub'),
                 },
-                
+                {
+                    name: 'รายงานอัตรากำลังประจำปี สถานศึกษา',
+                    path: '/admin/rate_work_g',
+                    component: () =>
+                        import ('@/views/dashboard/pages/administrator/rate_work_g'),
+                },
                 {
                     name: 'อัตรากำลัง',
                     path: '/admin/man_power',
                     component: () =>
                         import ('@/views/dashboard/pages/administrator/man_power'),
                 },
+
+                
                 {
                     name: 'สถานศึกษา',
                     path: '/admin/college',
@@ -330,7 +337,7 @@ export default new Router({
                         import ('@/views/dashboard/pages/user/personnel_experience'),
                 }, 
                 {
-                    name: 'ข้อมูลประวัติการทำงาน',
+                    name: 'ข้อมูลประวัติการรับราชการ',
                     path: '/personnel_work_history',
                     component: () =>
                         import ('@/views/dashboard/pages/user/personnel_work_history'),
@@ -353,6 +360,13 @@ export default new Router({
                     component: () =>
                         import ('@/views/dashboard/pages/user/transference_personnel'),
                 }, 
+                {
+                    name: 'การย้ายสายบริหาร',
+                    path: '/transference_manage',
+                    component: () =>
+                        import ('@/views/dashboard/pages/user/transference_manage'),
+                }, 
+                
             ] 
         },
         {
@@ -360,7 +374,16 @@ export default new Router({
             path: '/user/print_info/:id_ref',
             component: () =>
             import ('@/print_info'),
-        },    
+        },   
+        {
+            name: 'พิมพ์แบบแสดงความประสงค์ขอย้าย สายงานบริหารสถานศึกษา',
+            path: '/user/print_info_manage/:manage_id_ref',
+            component: () =>
+            import ('@/print_info_manage'),
+        },  
+
+        
+
         {
             name: 'พิมพ์แบบรายงานเงือนไขสาขาวิชา',
             path: '/college/print_condition/:id_ref',
@@ -439,7 +462,35 @@ export default new Router({
             path: '/admin/print_report_movement_filter_salary/:id_oa/:times_s/:year_s/:teach',
             component: () =>
             import ('@/print_report_movement_filter_salary'),
+        },  
+        {
+            name: 'พิมพ์รายงานข้อมูลอัตรากำลัง',
+            path: '/admin/print_report_rate_work_g/:year_s',
+            component: () =>
+            import ('@/print_report_rate_work_g'),
         },         
+        {
+            name: 'พิมพ์รายงานข้อมูลอัตรากำลัง ครูผู้สอน',
+            path: '/admin/print_report_rate_work_g_teach/:year_s',
+            component: () =>
+            import ('@/print_report_rate_work_g_teach'),
+        },  
+        {
+            name: 'พิมพ์รายงานข้อมูลอัตรากำลัง ผู้บริหาร',
+            path: '/admin/print_report_rate_work_g_dr/:year_s',
+            component: () =>
+            import ('@/print_report_rate_work_g_dr'),
+        }, 
+         {
+            name: 'พิมพ์รายงานข้อมูลอัตรากำลังสายสนับสนุนการสอน',
+            path: '/admin/print_report_rate_work_g_sup/:year_s',
+            component: () =>
+            import ('@/print_report_rate_work_g_sup'),
+        },      
+        
+        
+        
+        
         
         {
             path: "/college",
@@ -489,7 +540,7 @@ export default new Router({
                         import ('@/views/dashboard/pages/college/personnel_experience'),
                 },
                 {
-                    name: 'ข้อมูลประวัติการทำงาน',
+                    name: 'ข้อมูลประวัติการรับราชการ',
                     path: '/college/personnel_work_history',
                     component: () =>
                         import ('@/views/dashboard/pages/college/personnel_work_history'),

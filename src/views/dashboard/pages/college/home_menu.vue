@@ -334,7 +334,7 @@ export default {
           to: "/college/personnel_education"
         }
         /*  { text: "ข้อมูลประสบการณ์", icon: "mdi-airplane", to: "/college/personnel_experience" },
-          { text: "ข้อมูลประวัติการทำงาน", icon: "mdi-access-point-network", to: "/college/personnel_work_history" },
+          { text: "ข้อมูลประวัติการรับราชการ", icon: "mdi-access-point-network", to: "/college/personnel_work_history" },
           { text: "ข้อมูลผลงาน รางวัล", icon: "mdi-trophy-award", to: "/college/personnel_award" },
           { text: "ข้อมูลโทษ วินัย", icon: "mdi-alarm-light", to: "/college/personnel_discipline" }, */
       ],

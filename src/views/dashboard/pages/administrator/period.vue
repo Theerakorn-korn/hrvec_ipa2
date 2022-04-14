@@ -73,7 +73,7 @@
             >
           </template>
 
-           <template v-slot:[`item.period_enable_process`]="{ item }">
+          <template v-slot:[`item.period_enable_process`]="{ item }">
             <v-icon
               large
               color="green darken-2"
@@ -84,9 +84,6 @@
               >mdi-alarm-light-outline</v-icon
             >
           </template>
-
-
-
 
           <template v-slot:[`item.period_type`]="{ item }">
             <span v-if="item.period_type === 'teacher'"
@@ -196,12 +193,8 @@
                         v-model="addperiod.period_enable_sw"
                         label="เปิดใช้ระบบย้าย"
                       ></v-switch>
-
-
-
-
                     </v-flex>
-                     <v-flex xs12 md6>
+                    <v-flex xs12 md6>
                       <v-switch
                         v-model="addperiod.period_enable_sw_process"
                         label="เปิดใช้ระบบประมวลผล"
@@ -498,7 +491,8 @@ export default {
           value: "2027",
           text: "2570"
         }
-      ]
+      ],
+      data_syslog: {}
     };
   },
   async mounted() {
@@ -520,7 +514,7 @@ export default {
       this.addperiod.period_start = new Date().toISOString().substr(0, 10);
       this.addperiod.period_stop = new Date().toISOString().substr(0, 10);
       this.addperiod.period_enable_sw = false;
-      this.addperiod.period_enable_sw_process = false;      
+      this.addperiod.period_enable_sw_process = false;
 
       this.adddialog = true;
       this.addperioddialog = true;
@@ -530,13 +524,13 @@ export default {
         this.addperiod.period_enable = "1";
       else this.addperiod.period_enable = "0";
 
-       if (this.addperiod.period_enable_sw_process == true)
+      if (this.addperiod.period_enable_sw_process == true)
         this.addperiod.period_enable_process = "1";
       else this.addperiod.period_enable_process = "0";
 
-
       this.addperiod.ApiKey = this.ApiKey;
       let result = await this.$http.post("period.insert.php", this.addperiod);
+      console.log(this.addperiod)
 
       if (result.data.status == true) {
         this.period = result.data;
@@ -545,6 +539,14 @@ export default {
         this.snackbar.text = "บันทึกข้อมูลเรียบร้อย";
         this.snackbar.show = true;
         this.periodQueryAll();
+        let userSession = JSON.parse(sessionStorage.getItem("user")) || 0;
+        this.data_syslog.ApiKey = this.ApiKey;
+        this.data_syslog.user_account = userSession.user_name;
+        this.data_syslog.event_log = "insert";
+        this.data_syslog.page_log = "period";
+        this.data_syslog.table_log = "period";
+        this.data_syslog.date_times = this.date_today_log;
+        await this.$http.post("data_syslog.insert.php", this.data_syslog);
       } else {
         this.snackbar.icon = "mdi-close-network";
         this.snackbar.color = "red";
@@ -554,7 +556,6 @@ export default {
       }
       this.addperioddialog = false;
     },
-
 
     async periodEdit(id_pr) {
       let result = await this.$http.post("period.php", {
@@ -567,8 +568,8 @@ export default {
         this.editperiod.period_enable_sw = true;
       else this.editperiod.period_enable_sw = false;
 
-  if (this.editperiod.period_enable_process == true)
-     this.editperiod.period_enable_sw_process = true;
+      if (this.editperiod.period_enable_process == true)
+        this.editperiod.period_enable_sw_process = true;
       else this.editperiod.period_enable_sw_process = false;
 
       this.editperioddialog = true;
@@ -578,7 +579,7 @@ export default {
         this.editperiod.period_enable = "1";
       else this.editperiod.period_enable = "0";
 
-  if (this.editperiod.period_enable_sw_process == true)
+      if (this.editperiod.period_enable_sw_process == true)
         this.editperiod.period_enable_process = "1";
       else this.editperiod.period_enable_process = "0";
 
@@ -591,6 +592,14 @@ export default {
         this.snackbar.text = "แก้ไขข้อมูลเรียบร้อย";
         this.snackbar.show = true;
         this.periodQueryAll();
+         let userSession = JSON.parse(sessionStorage.getItem("user")) || 0;
+        this.data_syslog.ApiKey = this.ApiKey;
+        this.data_syslog.user_account = userSession.user_name;
+        this.data_syslog.event_log = "update";
+        this.data_syslog.page_log = "period";
+        this.data_syslog.table_log = "period";
+        this.data_syslog.date_times = this.date_today_log;
+        await this.$http.post("data_syslog.insert.php", this.data_syslog);
       } else {
         this.snackbar.icon = "mdi-close-network";
         this.snackbar.color = "red";
@@ -622,6 +631,14 @@ export default {
           this.snackbar.text = "ลบข้อมูลเรียบร้อย";
           this.snackbar.show = true;
           this.periodQueryAll();
+            let userSession = JSON.parse(sessionStorage.getItem("user")) || 0;
+        this.data_syslog.ApiKey = this.ApiKey;
+        this.data_syslog.user_account = userSession.user_name;
+        this.data_syslog.event_log = "delete";
+        this.data_syslog.page_log = "period";
+        this.data_syslog.table_log = "period";
+        this.data_syslog.date_times = this.date_today_log;
+        await this.$http.post("data_syslog.insert.php", this.data_syslog);
         } else {
           this.snackbar.icon = "mdi-close-network";
           this.snackbar.color = "red";
@@ -643,7 +660,16 @@ export default {
       return Math.ceil(
         this.pagination.totalItems / this.pagination.rowsPerPage
       );
-    }
+    },
+    date_today_log() {
+      let today = new Date();
+      let dd = String(today.getDate()).padStart(2, "0");
+      let mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
+      let yyyy = today.getFullYear() + 543;
+let time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+      today = dd + "/" + mm + "/" + yyyy + "/" + time;
+      return today;
+    },
   }
 };
 </script>

@@ -75,7 +75,8 @@
                   <div v-else>
                     <h3>
                       วันที่เริ่มปฏิบัติหน้าที่ในสถานศึกษาปัจจุบัน :
-                      {{ date_appoin_ch_app }}
+                      {{ user.date_app_now | moment("add", "543 years")
+                          | moment("D MMMM YYYY") }}
                     </h3>
                     <h2>ปฏิบัติหน้าที่เป็นเวลา : {{ get_Appoint_Age }}</h2>
                   </div>
@@ -350,7 +351,7 @@
                           item-text="college_name"
                           item-value="college_ID"
                           v-model="addtransference_personnel.ser_college_code"
-                          label="College"
+                          label="สถานศึกษา"
                           prepend-icon="mdi-office-building-marker"
                         />
                       </v-col>
@@ -379,6 +380,7 @@
                               readonly
                               v-bind="attrs"
                               v-on="on"
+                              outlined
                             ></v-text-field>
                           </template>
                           <v-date-picker
@@ -663,7 +665,7 @@
                       <v-text-field
                         v-model="addtransference_personnel.reason_1_spouse"
                         :disabled="!addtransference_personnel.reason_1"
-                        label="คู่สมรสชื่อ : "
+                        label="คู่สมรสชื่อ : "                        
                       ></v-text-field>
                       <v-text-field
                         v-model="addtransference_personnel.reason_1_occupation"
@@ -1156,9 +1158,9 @@ export default {
       order_need: [1, 2, 3],
       header_trans: [
         { text: "ลำดับ", align: "center", value: "sequence_n" },
-        { text: "รหัสอ้างอิง", align: "center", value: "id_ref" },
-        { text: "สาขาวิชา", align: "center", value: "name_branch" },
-        { text: "วิทยาลัย", align: "center", value: "college_name" },
+        { text: "รหัสอ้างอิง", align: "center", value: "tid_ref" },
+        { text: "สาขาวิชา", align: "left", value: "name_branch" },
+        { text: "วิทยาลัย", align: "left", value: "college_name" },
         { text: "ยกเลิก", align: "center", value: "action" }
       ],
       education_s: [
@@ -1216,22 +1218,6 @@ export default {
 
   async mounted() {
 
- let result_period;
-    result_period = await this.$http.post("period.php", {
-      ApiKey: this.ApiKey,
-       period_enable: this.period_enable     
-    });
-    this.periods = result_period.data;
-      console.log(result_period.data)
-      if (this.periods.period_enable === '1' && this.periods.period_type === 'teacher')
-      {
-      
-      }else{
-            this.$router.push('/user')           
-      }
-
-
-
     let userSession = JSON.parse(sessionStorage.getItem("user")) || 0;
     let result_branch;
     result_branch = await this.$http.post("branch.php", {
@@ -1280,6 +1266,24 @@ export default {
   },
 
   methods: {
+ async periodQueryAll() {
+    let result_period;
+    result_period = await this.$http.post("period.php", {
+      ApiKey: this.ApiKey,
+       period_enable: "OK",
+       period_type: this.user_status_type    
+    });
+    this.periods = result_period.data;
+      console.log(result_period.data)
+      if (this.periods.period_enable === '1' && this.periods.period_type === 'teacher')
+      {
+      
+      }else{
+            this.$router.push('/UserProfile')           
+      }
+ },   
+
+
     async personnel_educationsQueryAll() {
       this.loading = true;
       let userSession = JSON.parse(sessionStorage.getItem("user")) || 0;
@@ -1416,6 +1420,7 @@ export default {
         this.addtransference_personnel.year_s = this.year_s;
         this.addtransference_personnel.id_card = this.user.id_card;
         this.addtransference_personnel.date_time = this.date_today;
+        this.addtransference_personnel.age_time = this.get_gov_Age;        
         this.addtransference_personnel.age_app_time = this.get_Appoint_Age;
         this.addtransference_personnel.transfer_status = "send";
         this.addtransference_personnel.ser_time_year = this.get_gov_Age_year_service;
@@ -1471,6 +1476,19 @@ export default {
     }
   },
   computed: {
+    user_status_type() {
+      let user_status = this.user.user_status;
+      let result;
+      if (user_status == "tech") {
+        result = "teacher";
+      } else if (user_status == "director"){
+        result = "manage";
+      }
+      else if (user_status == "se_director"){
+        result = "manage";
+      }
+      return result;
+    },
     pages() {
       if (
         this.pagination.rowsPerPage == null ||
@@ -1525,8 +1543,7 @@ export default {
       let today = new Date();
       let dd = String(today.getDate()).padStart(2, "0");
       let mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
-      let yyyy = today.getFullYear() + 543;
-
+      let yyyy = today.getFullYear() + 543;      
       today = dd + "/" + mm + "/" + yyyy;
       return today;
     },
@@ -1561,31 +1578,7 @@ export default {
       let years = parseInt(year);
       let today = day + " " + month + " " + years;
       return today;
-    },
-
-    date_appoin_ch_app() {
-      let monthNames = [
-        "",
-        "มกราคม",
-        "กุมภาพันธ์",
-        "มีนาคม",
-        "เมษายน",
-        "พฤษภาคม",
-        "มิถุนายน",
-        "กรกฎาคม",
-        "สิงหาคม",
-        "กันยายน",
-        "ตุลาคม",
-        "พฤศจิกายน",
-        "ธันวาคม"
-      ];
-      let day = parseInt(this.user.date_app_now.slice(8));
-      let month = monthNames[parseInt(this.user.date_app_now.slice(5, 7))];
-      let year = this.user.date_app_now.slice(0, 4);
-      let years = parseInt(year) + 543;
-      let today = day + " " + month + " " + years;
-      return today;
-    },
+    },   
 
     cal_age_gov() {
       const today = new Date();
@@ -1883,4 +1876,4 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+
