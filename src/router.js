@@ -214,20 +214,26 @@ export default new Router({
                         import ('@/views/dashboard/pages/administrator/conditions_branch'),
                 },
                 {
-                    name: 'สายงานสอนและสายสนับสนุนการสอน',
+                    name: 'สายงานการสอน',
                     path: '/admin/transference_personnel',
                     component: () =>
                         import ('@/views/dashboard/pages/administrator/transference_personnel'),
                 },
                 {
-                    name: 'สายงานสอนและสายสนับสนุนการสอน รายละเอียด ประมวผลผลแบบที่ 1',
+                    name: 'สายงานการสอน กรณีพิเศษ',
+                    path: '/admin/transference_personnel_sp',
+                    component: () =>
+                        import ('@/views/dashboard/pages/administrator/transference_personnel_sp'),
+                },
+                {
+                    name: 'สายงานการสอน รายละเอียด ประมวผลผลแบบที่ 1',
                     path: '/admin/transference_location',
                     component: () =>
                         import ('@/views/dashboard/pages/administrator/transference_location'),
                 },
 
                 {
-                    name: 'สายงานสอนและสายสนับสนุนการสอน ประกอบการพิจารณา',
+                    name: 'สายงานการสอน ประกอบการพิจารณา',
                     path: '/admin/transference_location_detail',
                     component: () =>
                         import ('@/views/dashboard/pages/administrator/transference_location_detail'),
@@ -304,6 +310,32 @@ export default new Router({
                     component: () =>
                     import ('@/views/dashboard/pages/administrator/rate_work_course_std'),
                 }, 
+                {
+                    name: 'สายงานบริหารสถานศึกษา ประกอบการพิจารณา',
+                    path: '/admin/transference_manage_location_detail',                    
+                    component: () =>
+                    import ('@/views/dashboard/pages/administrator/transference_manage_location_detail'),
+                }, 
+                {
+                    name: 'สายงานบริหารสถานศึกษา รายละเอียด',
+                    path: '/admin/transference_manage_location',                    
+                    component: () =>
+                    import ('@/views/dashboard/pages/administrator/transference_manage_location'),
+                }, 
+                {
+                    name: 'สายงานบริหารสถานศึกษา [ประมวลผลแบบ 1]',
+                    path: '/admin/transference_manage',                    
+                    component: () =>
+                    import ('@/views/dashboard/pages/administrator/transference_manage'),
+                }, 
+                {
+                    name: 'ประวัติการเข้าใช้งานระบบ',
+                    path: '/admin/data_syslog',                    
+                    component: () =>
+                    import ('@/views/dashboard/pages/administrator/data_syslog'),
+                }, 
+                
+                
 
             ]
         },
@@ -361,11 +393,19 @@ export default new Router({
                         import ('@/views/dashboard/pages/user/transference_personnel'),
                 }, 
                 {
+                    name: 'การย้ายสายการสอนกรณีพิเศษ',
+                    path: '/transference_personnel_sp',
+                    component: () =>
+                        import ('@/views/dashboard/pages/user/transference_personnel_sp'),
+                }, 
+                {
                     name: 'การย้ายสายบริหาร',
                     path: '/transference_manage',
                     component: () =>
                         import ('@/views/dashboard/pages/user/transference_manage'),
                 }, 
+
+                
                 
             ] 
         },
@@ -374,22 +414,34 @@ export default new Router({
             path: '/user/print_info/:id_ref',
             component: () =>
             import ('@/print_info'),
-        },   
+        },
+        {
+            name: 'พิมพ์แบบแสดงความประสงค์ขอย้าย',
+            path: '/user/print_info_sp/:id_ref',
+            component: () =>
+            import ('@/print_info_sp'),
+        },
         {
             name: 'พิมพ์แบบแสดงความประสงค์ขอย้าย สายงานบริหารสถานศึกษา',
             path: '/user/print_info_manage/:manage_id_ref',
             component: () =>
             import ('@/print_info_manage'),
-        },  
-
-        
+        },         
 
         {
             name: 'พิมพ์แบบรายงานเงือนไขสาขาวิชา',
             path: '/college/print_condition/:id_ref',
             component: () =>
             import ('@/print_condition'),
-        },
+        },  
+        {
+            name: 'ฟอร์มนำเข้าข้อมูลบุคคล',
+            path: '/college/personnel_form_import/',
+            component: () =>
+            import ('@/personnel_form_import'),
+        },   
+        
+
         {
             name: 'พิมพ์ บัญชีรายละเอียดการพิจารณาย้าย',
             path: '/admin/print_report_movement_filter/:id_oa:times_s:year_s:tech',
@@ -486,12 +538,20 @@ export default new Router({
             path: '/admin/print_report_rate_work_g_sup/:year_s',
             component: () =>
             import ('@/print_report_rate_work_g_sup'),
-        },      
-        
-        
-        
-        
-        
+        },  
+        {
+            name: 'พิมพ์รายงานข้อมูลเงือนไขสายการสอน',
+            path: '/admin/print_report_condition_all/:times_s/:year_s',
+            component: () =>
+            import ('@/print_report_condition_all'),
+        },  
+        {
+            name: 'พิมพ์รายงานข้อมูลผู้ขอย้ายถูกระงับย้าย',
+            path: '/admin/print_report_transference_suspend/:times_s/:year_s',
+            component: () =>
+            import ('@/print_report_transference_suspend'),
+        },         
+            
         {
             path: "/college",
             component: () =>
@@ -607,6 +667,13 @@ export default new Router({
                     component: () =>
                         import ('@/views/dashboard/pages/college/rate_workforce_pro'),
                 },   
+                {
+                    name: 'รายงานอัตรากำลังสถานศึกษา',
+                    path: '/college/rate_workforce_report',
+                    component: () =>
+                        import ('@/views/dashboard/pages/college/rate_workforce_report'),
+                }, 
+                
                 
                 {
                     name: 'ข้อมูลหมวดวิชา',
@@ -626,7 +693,13 @@ export default new Router({
                     component: () =>
                     import ('@/views/dashboard/pages/college/assistant_teacher'),
                 }, 
-                            
+                {
+                    name: 'ข้อมูล ลูกจ้างประจำ พนักงานราชการ ครูอัตราจ้างหรือลูกจ้างชั่วคราว',
+                    path: '/college/personnel_etc',                    
+                    component: () =>
+                    import ('@/views/dashboard/pages/college/personnel_etc'),
+                }, 
+                     
                 
 
             ]

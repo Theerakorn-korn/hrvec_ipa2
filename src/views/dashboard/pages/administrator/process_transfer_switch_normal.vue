@@ -17,10 +17,10 @@
       </v-btn>
     </v-bottom-navigation>
     <v-bottom-navigation
-      :value="value"
+      
       color="info"
       horizontal
-      v-model="value"
+      
       :background-color="color"
       dark
     >
@@ -461,7 +461,7 @@ export default {
       singleSelect: true,
       selected: [],
       value: "4",
-      loading: true,
+      loading: false,
       ApiKey: "HRvec2021",
       process_transfer: {},
       valid: true,
@@ -530,7 +530,7 @@ export default {
   },
 
   async mounted() {
-    await this.Switch_personnelAll();
+    /* await this.Switch_personnelAll(); */
     await this.period_QueryAll();
     await this.man_powerQuery();
   },
@@ -580,6 +580,7 @@ export default {
         })
         .finally(() => (this.loading = false));
       this.conditions_transfers = result.data;
+      console.log(result.data)
     },
 
     async period_QueryAll() {

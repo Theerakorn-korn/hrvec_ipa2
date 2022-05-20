@@ -41,7 +41,7 @@
               </v-select>
             </v-col>
             <v-col cols="12" md="2">
-              <v-btn large block @click="searchTimeYear()"> ค้นหา</v-btn>
+              <v-btn color="info" large block @click="searchTimeYear()"> <v-icon>mdi-account-search</v-icon> ค้นหา</v-btn>
             </v-col>
           </v-row>
         </v-card>
@@ -438,7 +438,7 @@ export default {
         { text: "ปีที่", align: "center", value: "year_ss" },
         { text: "อายุงาน ณ ปัจจุบัน", align: "center", value: "age_app_time" },
         { text: "วันที่ทำรายการ", align: "center", value: "date_time" },
-        { text: "ดำเนินการ", align: "center", value: "actions" }
+        { text: "ความคิดเห็น ผอ ดำเนินการ", align: "center", value: "actions" }
       ],
       rowsperpage: [
         25,

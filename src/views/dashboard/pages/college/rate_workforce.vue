@@ -17,6 +17,10 @@
         <span>ประมวลผลอัตรากำลัง </span>
         <v-icon>mdi-numeric-4-box</v-icon>
       </v-btn>
+       <v-btn to="/college/rate_workforce_report">
+        <span>รายงานผลอัตรากำลัง </span>
+        <v-icon>mdi-numeric-5-box</v-icon>
+      </v-btn>
     </v-bottom-navigation>
 
     <v-container id="upgrade" fluid tag="section" class="text_google">
@@ -52,7 +56,7 @@
                                     rate_work_collegeQuery_30(),
                                     rate_work_collegeQuery_all()
                                 "
-                                label="เลือกปี : "
+                                label="เลือกปีเพื่อแสดงข้อมูลที่เคยได้บันทึกรายการ : "
                               >
                               </v-select>
                             </h2>
@@ -60,6 +64,7 @@
                         </v-col>
                         <v-col cols="12" md="6" class="text-right">
                           <v-btn
+                          v-if="period_colleges.period_college_enable ==='1' && period_colleges.period_college_type ==='update_college'"
                             large
                             right
                             depressed
@@ -369,6 +374,7 @@
                         <v-row>
                           <v-col cols="12" md="12" class="text-right">
                             <v-btn
+                            v-if="period_colleges.period_college_enable ==='1' && period_colleges.period_college_type ==='update_college'"
                               large
                               right
                               depressed
@@ -537,6 +543,16 @@
                               :search="search"
                               :items-per-page="200"
                             >
+
+                            <template v-slot:[`item.year_course`]="{ item }">
+                             
+                                <v-chip v-if="item.year_course === 'ปวช.62'" color="info" dark>
+                                   <h3> ปวช.</h3>
+                                </v-chip>
+                                <v-chip v-else color="blue darken-4" dark>
+                                     <h3>ปวส.</h3> 
+                                </v-chip>
+                            </template>
                               <template v-slot:[`item.actions`]="{ item }">
                                 <v-chip
                                   v-if="item.rate_id_course_branch === null"
@@ -1389,6 +1405,7 @@
                       >
                       </v-text-field>
                     </v-flex>
+                    *หากระดับชั้นใดไม่มีนักเรียน ให้ระบุ 0
                   </v-layout>
                 </v-container>
               </v-form>
@@ -1473,6 +1490,7 @@
                       >
                       </v-text-field>
                     </v-flex>
+                      *หากระดับชั้นใดไม่มีนักศึกษา ให้ระบุ 0
                   </v-layout>
                 </v-container>
               </v-form>
@@ -1736,7 +1754,7 @@ export default {
         text: ""
       },
       headers_course: [
-        { text: "หลักสูตรปีการศึกษา", align: "center", value: "year_course" },
+        { text: "หลักสูตร", align: "center", value: "year_course" },
         { text: "รหัสประเภทวิชา", align: "center", value: "id_type_course" },
         { text: "ประเภทวิชา", align: "left", value: "type_course" },
         { text: "รหัสสาขาวิชา", align: "left", value: "id_course_branch" },
@@ -1952,7 +1970,8 @@ export default {
       sum_room: [],
       sum_hours: [],
       editrate_work_sc: {},
-      deleterate_work_sc_dialog: false
+      deleterate_work_sc_dialog: false,
+       period_colleges:[],
     };
   },
 
@@ -1964,6 +1983,7 @@ export default {
       user_ID: userSession.user_ID
     });
     this.user = result.data;
+    await this.period_collegeQuery();
     await this.rate_work_collegeQuery_20();
     await this.rate_work_collegeQuery_30();
     await this.rate_work_course_stdQueryAll();
@@ -1974,6 +1994,17 @@ export default {
   },
 
   methods: {
+     async period_collegeQuery() {
+       let result_period_college;
+    result_period_college = await this.$http.post("period_college.php", {
+      ApiKey: this.ApiKey,
+      period_college_enable: "1",
+      period_college_type: "update_college"
+    });
+    this.period_colleges = result_period_college.data;    
+    console.log(result_period_college.data)
+    },
+
     async field_study_lavel_update(rate_work_college_id) {
       let result = await this.$http.post("rate_work_college.php", {
         ApiKey: this.ApiKey,

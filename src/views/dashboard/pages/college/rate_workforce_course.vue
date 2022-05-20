@@ -1,10 +1,10 @@
 <template>
   <div>
     <v-bottom-navigation
-      :value="value"
+      
       color="info"
       horizontal
-      v-model="value"
+      
       :background-color="color"
       dark
     >

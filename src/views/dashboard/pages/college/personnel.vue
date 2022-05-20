@@ -200,7 +200,8 @@ export default {
       ],
 
       personnel_temporarystatus: [],
-      userstatus: {}
+      userstatus: {},
+      data_syslog:{},
     };
   },
   async mounted() {
@@ -261,6 +262,18 @@ export default {
           this.snackbar.color = "success";
           this.snackbar.text = "แก้ไขข้อมูลเรียบร้อย";
           this.snackbar.show = true;
+
+          let userSession = JSON.parse(sessionStorage.getItem("user")) || 0;
+          this.data_syslog.ApiKey = this.ApiKey;
+          this.data_syslog.user_account = userSession.user_name;
+          this.data_syslog.event_log = "update_password";
+          this.data_syslog.page_log = "personnel";
+          this.data_syslog.table_log = "personnel_temporary";
+          this.data_syslog.detail_log = this.editpersonnel_temporary.id_card;
+          this.data_syslog.date_times = this.date_today_log;
+          await this.$http.post("data_syslog.insert.php", this.data_syslog);
+
+
           this.personnel_temporaryQueryAll();
         } else {
           this.snackbar.icon = "mdi-close-network";
@@ -283,7 +296,16 @@ export default {
       return Math.ceil(
         this.pagination.totalItems / this.pagination.rowsPerPage
       );
-    }
+    },
+    date_today_log() {
+      let today = new Date();
+      let dd = String(today.getDate()).padStart(2, "0");
+      let mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
+      let yyyy = today.getFullYear() + 543;
+let time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+      today = dd + "/" + mm + "/" + yyyy + "/" + time;
+      return today;
+    },
   }
 };
 </script>

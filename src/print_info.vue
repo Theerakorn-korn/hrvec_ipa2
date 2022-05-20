@@ -696,7 +696,7 @@
             </td>
             <td width="65%" colspan="2">
               <div class="regular16 td_line">
-                {{ province_sh_s.province_name || "-" }}
+                {{ transference_personnels.r1_province || "-" }}
               </div>
             </td>
           </tr>
@@ -752,7 +752,7 @@
             </td>
             <td width="60%" colspan="2">
               <div class="regular16 td_line">
-                {{ province_sh_fm.province_name || "-" }}
+                {{ transference_personnels.r2_province || "-" }}
               </div>
             </td>
           </tr>
@@ -778,7 +778,7 @@
             </td>
             <td width="55%" colspan="2">
               <div class="regular16 td_line">
-                {{ province_sh_m.province_name || "-" }}
+               {{ transference_personnels.r3_province || "-" }}
               </div>
             </td>
           </tr>
@@ -1639,11 +1639,7 @@ export default {
 </script>
 <style>
 @import url(
-  https://fonts.googleapis.com/css?family=Prompt:400,
-  300|Roboto:400,
-  300&subset=latin,
-  thai
-);
+  https://fonts.googleapis.com/css?family=Prompt:400,300|Roboto:400,300&subset=latin,thai);
 
 body {
   font-family: "TH SarabunIT๙", "TH SarabunPSK", "Angsana New", AngsanaUPC;

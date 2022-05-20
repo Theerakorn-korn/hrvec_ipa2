@@ -17,11 +17,11 @@
       :background-color="color"
       dark
     >
-      <v-btn to="/admin/transference_location_detail">
+      <v-btn to="/admin/transference_manage_location_detail">
         <span>รายละเอียดผู้ยืนย้าย ประกอบพิจารณา </span>
         <v-icon>mdi-details</v-icon>
       </v-btn>
-      <v-btn to="/admin/transference_location">
+      <v-btn to="/admin/transference_manage_location">
         <span>รายละเอียดผู้ยืนย้าย </span>
         <v-icon>mdi-details</v-icon>
       </v-btn>
@@ -104,9 +104,10 @@
                 >ไม่ได้บันทึกรายการ</v-btn
               >
             </v-col>
-            <v-col cols="12" md="3">
+            <v-col cols="12" md="2">
               <v-btn
-                rounded                
+                rounded
+                large
                 block
                 color="info"
                 :href="
@@ -118,25 +119,10 @@
                     'teach'
                 "
                 target="_blank"
-                >พิมพ์รายงาน แบบที่ 1 ข้อมูลดิบใช้พิจารณา</v-btn
+                >พิมพ์รายงาน แบบที่ 1 </v-btn
               >
             </v-col>
-            <v-col cols="12" md="3">
-              <v-btn
-                rounded                
-                block
-                color="info"
-                :href="
-                  '#/admin/print_report_condition_all/' +
-                    times_select +
-                    '/' +
-                    years_select
-                "
-                target="_blank"
-                >พิมพ์รายงาน แบบที่ 2 แบบอัตราว่าง</v-btn
-              >
-            </v-col>
-            <!-- <v-col cols="12" md="2">
+            <v-col cols="12" md="2">
               <v-btn
                 rounded
                 large
@@ -171,7 +157,7 @@
                 target="_blank"
                 >พิมพ์รายงาน แบบที่ 3</v-btn
               >
-            </v-col> -->
+            </v-col>
             <v-col cols="6" md="6">
               <v-select
                 v-model="selectedHeaders"
@@ -195,11 +181,34 @@
         </v-card>
         <v-data-table          
           :headers="showHeaders"
-          :items="transference_locations"
+          :items="transference_manage_locations"
           :search="search"
           :loading="loading"
         >
        
+ <template v-slot:[`item.person_has`]="{ item }">
+            <v-chip v-if="item.person_has == null" color="green" dark>
+              <v-icon>mdi-checkbox-multiple-marked-circle</v-icon>
+            </v-chip>
+            <v-chip v-else color="red" dark>
+              <span style="font-size:16px;">{{ item.person_has }}</span>
+            </v-chip>
+          </template>
+
+          <template v-slot:[`item.person_location`]="{ item }">
+            <v-chip v-if="item.person_location == null && item.person_has == null" color="green" dark>
+              <v-icon>mdi-checkbox-multiple-marked-circle</v-icon>
+            </v-chip>
+             <v-chip v-else-if="item.person_location == null && item.person_has !== ''" color="red" dark>
+              <v-icon>mdi-close</v-icon>
+            </v-chip>
+             <v-chip v-else-if="item.person_location !== null" color="warning" dark>
+              <span style="font-size:16px;">{{ item.person_location }}</span>
+            </v-chip>
+            <v-chip v-else color="red" dark>
+              <span style="font-size:16px;">{{ item.person_location }}</span>
+            </v-chip>
+          </template>
 
                  <template v-slot:[`item.select_item`]="{ item }">
             <v-checkbox
@@ -314,7 +323,7 @@ export default {
       },
       time_ss: [1, 2],
       year_ss: [2565, 2566, 2567, 2568, 2569, 2570],
-      transference_locations: [],
+      transference_manage_locations: [],
 
       search: "",
 
@@ -326,31 +335,23 @@ export default {
       headersMap: [
         /*  { text: "อ้างอิง", align: "center", value: "id_ref" }, */
         { text: "เลือก", align: "center", value: "select_item" },       
-        { text: "รหัสสถานศึกษา", align: "center", value: "new_college_code" },
-        { text: "สถานศึกษาที่ขอย้ายไป", align: "center", value: "new_college" },
-        { text: "ตำแหน่งว่าง", align: "center", value: "count_manpower" },
-        { text: "สาขาที่เปิดรับ", align: "center", value: "name_branch_all" },
-        {
-          text: "เลขที่ตำแหน่งว่าง",
-          align: "center",
-          value: "id_position_all"
-        },
-        { text: "On/Off.", align: "center", value: "status_position" },
-        { text: "ลำดับที่ขอย้าย", align: "center", value: "sequence_n" },
-        { text: "อายุงาน", align: "center", value: "age_app_time" },
-        
-        { text: "รหัสสาขา", align: "center", value: "id_branch_tran" },
-        { text: "สาขา", align: "center", value: "name_branch" },
-        { text: "รหัสบัตร", align: "center", value: "id_cards" },
-        { text: "ผู้ขอย้าย", align: "center", value: "frist_lastname" },
+        { text: "รหัสสถานศึกษา", align: "center", value: "college_code_new" },
+        { text: "สถานศึกษาที่ขอย้ายไป", align: "center", value: "college_name" },    
+        { text: "สถานะ ผอ", align: "center", value: "person_has" },    
+        { text: "สถานะ ผอ", align: "center", value: "person_location" },    
+                          
+        { text: "ลำดับที่ขอย้าย", align: "center", value: "manage_location_sequence_n" },
+        { text: "อายุงาน", align: "center", value: "manage_age_app_time" },  
+        { text: "รหัสบัตร", align: "center", value: "manage_location_id_card" },
+        { text: "ผู้ขอย้าย", align: "center", value: "manage_name" },
         {
           text: "ปัจจุบันดำรงตำแหน่ง",
           align: "center",
           value: "position_name"
         },
-        { text: "เลขที่ตำแหน่ง", align: "center", value: "id_postion" },
-        { text: "สังกัด", align: "center", value: "old_college" },
-        { text: "เหตุผล", align: "center", value: "reason" },
+        { text: "เลขที่ตำแหน่ง", align: "center", value: "id_position_now" },
+        { text: "สังกัด", align: "center", value: "college_name_now" },
+        { text: "เหตุผล", align: "center", value: "manage_reason_detail" },
 
         { text: "ความคิดเห็น ผอ.", align: "center", value: "comment_dr" },
         { text: "เนื่องจาก.", align: "center", value: "detail_comment" },
@@ -372,66 +373,50 @@ export default {
           text: "All",
           value: -1
         }
-      ],
-       periods: [],
+      ]
     };
-
   },
   async created() {
     this.headers = Object.values(this.headersMap);
     this.selectedHeaders = this.headers;
   },
   async mounted() {
-    
-   await this.periodQuery();
-   await this.transference_locationQueryAll();
+    this.transference_manage_locationQueryAll();
   },
 
   methods: {
-    async periodQuery() {
-      let result_period;
-      result_period = await this.$http.post("period.php", {
-        ApiKey: this.ApiKey,
-       period_enable_process: "1",
-       period_type: "teacher"    
-      });
-      this.periods = result_period.data;
-      console.log(result_period.data)
-    },
-
     async searchTimeYear() {
       this.loading = true;
       let result = await this.$http
-        .post("transference_location_detail.php", {
+        .post("transference_manage_location.php", {
           ApiKey: this.ApiKey,
           time_s: this.times_select,
           year_s: this.years_select
         })
         .finally(() => (this.loading = false));
-      this.transference_locations = result.data;
+      this.transference_manage_locations = result.data;
     },
 
     async search_not_confirm_submit() {
       this.loading = true;
       let result = await this.$http
-        .post("transference_location.php", {
+        .post("transference_manage_location.php", {
           ApiKey: this.ApiKey,
           not_confirm: "ok"
         })
         .finally(() => (this.loading = false));
-      this.transference_locations = result.data;
+      this.transference_manage_locations = result.data;
     },
 
-    async transference_locationQueryAll() {
+    async transference_manage_locationQueryAll() {
       this.loading = true;
       let result = await this.$http
-        .post("transference_location_detail.php", {
-          ApiKey: this.ApiKey,
-          time_s: this.periods.period_times,
-          year_s: parseInt(this.periods.period_year) + 543
+        .post("transference_manage_location.php", {
+          ApiKey: this.ApiKey
         })
         .finally(() => (this.loading = false));
-      this.transference_locations = result.data;
+      this.transference_manage_locations = result.data;
+      console.log(result.data)
     },
 
     getColor() {

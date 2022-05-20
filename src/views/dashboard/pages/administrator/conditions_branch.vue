@@ -55,7 +55,7 @@
         <v-icon>mdi-bookmark-check</v-icon>
       </v-btn>
     </v-bottom-navigation>
-    <v-container>
+    <v-container fluid>
       <base-material-card
         icon="mdi-clipboard-text"
         title="ข้อมูลการย้าย สายการสอนและสายสนับสนุน"
@@ -213,7 +213,7 @@
 export default {
   data() {
     return {
-      loading: true,
+      loading: false,
       ApiKey: "HRvec2021",
       valid: true,
       editconditions_transferdialog: false,
@@ -269,7 +269,7 @@ export default {
     };
   },
   async mounted() {
-    await this.conditions_transferQueryAll();
+    /* await this.conditions_transferQueryAll(); */
   },
   methods: {
     async searchTimeYear() {

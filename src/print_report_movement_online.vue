@@ -47,31 +47,28 @@
         </div>
         <table class="table" border="1" width="100%" align="center">
           <tr>
-            <td width="5%" class="bold16" rowspan="2" align="center">ที่</td>
-            <td width="45%" class="bold16" colspan="4" align="center">
-              สถานศึกษาที่ต้องการย้ายไป
-            </td>
-            <td width="50%" class="bold16" colspan="12" align="center">
-              ข้อมูลผู้เสนอย้าย
-            </td>
-          </tr>
-          <tr>
-            <td class="regular16 pa-1" align="center">สถานศึกษา</td>
-            <td class="regular16 pa-1" align="center">ตำแหน่งว่าง</td>
-            <td class="regular16 pa-1" align="center">สาขารับย้าย</td>
-            <td class="regular16 pa-1" align="center">เลขที่ตำแหน่งว่าง</td>  
-             <td class="regular16 pa-1" align="center">เปิดรับ/ไม่เปิดรับ</td>        
-            <td class="regular16 pa-1" align="center">ลำดับที่</td>
-            <td class="regular16 pa-1" align="center">รหัสสาขา</td>           
-            <td class="regular16 pa-1" align="center">สาขา</td>
-            <td class="regular16 pa-1" align="center">ชื่อ-นามสกุล</td>
-            <td class="regular16 pa-1" align="center">ตำแหน่ง</td>
-            <td class="regular16 pa-1" align="center">เลขที่ตำแหน่ง</td>
-            <td class="regular16 pa-1" align="center">สังกัด</td>
-            <td class="regular16 pa-1" align="center">เหตุผล</td>
-            <td class="regular16 pa-1" align="center">ความคิดเห็น ผอ.</td>
-            <td class="regular16 pa-1" align="center">ความคิดเห็น ผอ.เนื่องจาก</td>
-            <td class="regular16 pa-1" align="center">สถานะเอกสาร</td>
+            <td width="5%" class="bold16" align="center">ที่</td>
+            <td width="10%" class="bold16 pa-1" align="center">สถานศึกษา</td>
+            <td width="10%" class="bold16 pa-1" align="center">เงือนไขสาขารับย้าย</td>
+            <td width="5%" class="bold16 pa-1" align="center">จำนวนอัตราว่าง</td>
+            <!--   <td class="bold16 pa-1" align="center">เลขที่ตำแหน่งว่าง</td> -->
+            <td width="5%" class="bold16 pa-1" align="center">ลำดับที่ขอย้าย</td>
+            <!--         <td class="bold16 pa-1" align="center">รหัสสาขา</td>  -->
+
+            <td  width="10%" class="bold16 pa-1" align="center">ชื่อ-นามสกุล</td>
+            <td width="5%" class="bold16 pa-1" align="center">เปิดรับ/ไม่เปิดรับ</td>
+            <td class="bold16 pa-1" align="center">สาขา</td>
+            <!--  <td class="bold16 pa-1" align="center">ตำแหน่ง</td> -->
+            <td  width="5%" class="bold16 pa-1" align="center">เลขที่ตำแหน่ง</td>
+            <td width="10%" class="bold16 pa-1" align="center">สังกัดเดิม</td>
+            <td width="10%" class="bold16 pa-1" align="center">เหตุผลขอย้าย</td>
+            <td width="5%" class="bold16 pa-1" align="center">ความคิดเห็น ผอ.</td>
+            <td width="5%" class="bold16 pa-1" align="center">เหตุผล</td>
+            <td width="5%" class="bold16 pa-1" align="center">ความคิดเห็น ผอ.สถาบัน</td>
+            <td width="5%" class="bold16 pa-1" align="center">เหตุผล</td>
+            <td width="5%" class="bold16 pa-1" align="center">ช่วยราชการ</td>
+            <td width="10%" class="bold16 pa-1" align="center">อายุราชการ</td>          
+            <td width="5%" class="bold16 pa-1" align="center">สถานะ</td>          
           </tr>
 
           <tr
@@ -81,15 +78,26 @@
             <td class="regular16" align="center">{{ index + 1 }}</td>
             <td class="regular16 pa-1" align="left">{{ item.new_college }}</td>
             <td class="regular16 pa-1" align="center">
-              {{ item.count_manpower }}
-            </td>
-            <td class="regular16 pa-1" align="center">
               {{ item.name_branch_all }}
             </td>
             <td class="regular16 pa-1" align="center">
+              {{ item.count_manpower }}
+            </td>
+
+            <!--   <td class="regular16 pa-1" align="center">
               {{ item.id_position_all }}
             </td>
-             <td class="regular16 pa-1" align="center">
+              -->
+
+            <td class="regular16 pa-1" align="center">{{ item.sequence_n }}</td>
+            <!--    <td class="regular16 pa-1" align="center">
+              {{ item.id_branch_tran }}
+            </td> -->
+
+            <td class="regular16 pa-1" align="left">
+              {{ item.frist_lastname }}
+            </td>
+            <td class="regular16 pa-1" align="center">           
               <v-chip
                 v-if="item.status_position === item.id_branch_tran"
                 color="green"
@@ -101,23 +109,13 @@
                 ไม่เปิดรับ
               </v-chip>
             </td>
-
-            <td class="regular16 pa-1" align="center">{{ item.sequence_n }}</td>
-            <td class="regular16 pa-1" align="center">
-              {{ item.id_branch_tran }}
-            </td>
-           
             <td class="regular16 pa-1" align="left">{{ item.name_branch }}</td>
-            <td class="regular16 pa-1" align="left">
-              {{ item.frist_lastname }}
-            </td>
-            <td class="regular16 pa-1" align="center">
+            <!--  <td class="regular16 pa-1" align="center">
               {{ item.position_name }}
-            </td>
+            </td> -->
             <td class="regular16 pa-1" align="center">{{ item.id_postion }}</td>
             <td class="regular16 pa-1" align="left">{{ item.old_college }}</td>
             <td class="regular16 pa-1" align="left">{{ item.reason }}</td>
-
             <td class="regular16 pa-1" align="center">
               <v-chip v-if="item.comment_dr === 'approp'" color="green" dark>
                 เห็นควร
@@ -129,20 +127,62 @@
               >
                 ไม่เห็นควร
               </v-chip>
-              <v-chip v-else-if="item.comment_dr === 'suspend'" color="red" dark
-                > ระงับย้าย </v-chip
+              <v-chip
+                v-else-if="item.comment_dr === 'suspend'"
+                color="red"
+                dark
               >
+                ระงับย้าย
+              </v-chip>
 
               <v-chip v-else color="info" dark>
                 ยังไม่ได้บันทึกข้อมูล
               </v-chip>
-             
-            </td>
+            </td>         
             <td class="regular16 pa-1" align="left">
               {{ item.detail_comment }}
             </td>
-             <td class="regular16 pa-1" align="center">
- <v-chip
+
+ <td class="regular16 pa-1" align="center">   
+              <v-chip v-if="item.tp_comment_dr_stb === 'approp'" color="green" dark>
+                เห็นควร
+              </v-chip>
+              <v-chip
+                v-else-if="item.tp_comment_dr_stb === 'inapprop'"
+                color="warning"
+                dark
+              >
+                ไม่เห็นควร
+              </v-chip>
+              <v-chip
+                v-else-if="item.tp_comment_dr_stb === 'suspend'"
+                color="red"
+                dark
+              >
+                ระงับย้าย
+              </v-chip>
+
+              <v-chip v-else color="info" dark>
+                ยังไม่ได้บันทึกข้อมูล
+              </v-chip>
+            </td>         
+               <td class="regular16 pa-1" align="left">
+              {{ item.tp_reason_dr_stb }}
+            </td>
+               <td class="regular16 pa-1" align="left">
+                 <v-chip dark color="warning" v-if="item.service_status ==='gov_service'">
+                    ช่วยราชการ
+                 </v-chip>
+                 <v-chip  dark color="green" v-else>
+                    ปกติ
+                 </v-chip>          
+            </td>
+
+ <td class="regular16 pa-1" align="left">
+              {{ item.age_app_time }}
+            </td>
+            <td class="regular16 pa-1" align="center">
+              <v-chip
                 v-if="item.status_document === 'complete'"
                 color="green"
                 dark
@@ -160,7 +200,7 @@
                 dark
                 >ไม่จัดส่งเอกสาร</v-chip
               >
-             </td>
+            </td>
           </tr>
         </table>
       </div>
@@ -305,9 +345,7 @@ export default {
 };
 </script>
 <style>
-@import url(
-  https://fonts.googleapis.com/css?family=Prompt:400,300|Roboto:400,300&subset=latin,thai
-);
+@import url(https://fonts.googleapis.com/css?family=Prompt:400,300|Roboto:400,300&subset=latin,thai);
 
 body {
   font-family: "TH SarabunIT๙", "TH SarabunPSK", "Angsana New", AngsanaUPC;

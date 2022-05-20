@@ -1,61 +1,10 @@
 <template>
   <div>
-    <v-bottom-navigation color="info" horizontal :background-color="color" dark>
-      <v-btn to="/admin/conditions_branch">
-        <span>รายละเอียดเงือนไขสาขาวิชา </span>
-        <v-icon>mdi-source-branch</v-icon>
-      </v-btn>
-
-      <v-btn to="/admin/conditions_transfer">
-        <span>รายการเงือนไขสาขาวิชา</span>
-        <v-icon>mdi-source-branch</v-icon>
-      </v-btn>
-    </v-bottom-navigation>
-    <v-bottom-navigation
-      
-      color="info"
-      horizontal
-      
-      :background-color="color"
-      dark
-    >
-      <v-btn to="/admin/transference_location_detail">
-        <span>รายละเอียดผู้ยืนย้าย ประกอบพิจารณา </span>
-        <v-icon>mdi-details</v-icon>
-      </v-btn>
-      <v-btn to="/admin/transference_location">
-        <span>รายละเอียดผู้ยืนย้าย </span>
-        <v-icon>mdi-details</v-icon>
-      </v-btn>
-
-      <v-btn to="/admin/transference_personnel">
-        <span>ประมวลผล 1 </span>
-        <v-icon>mdi-calculator</v-icon>
-      </v-btn>
-
-      <v-btn to="/admin/process_transfer">
-        <span>ประมวลผล 2 [ระบบ]</span>
-        <v-icon>mdi-calculator</v-icon>
-      </v-btn>
-
-      <v-btn to="/admin/process_transfer_switch_normal">
-        <span>ประมวลผล 3 [สับเปลี่ยน ปกติ]</span>
-        <v-icon>mdi-calculator</v-icon>
-      </v-btn>
-
-      <v-btn to="/admin/process_transfer_switch">
-        <span>ประมวลผล 4 [สับเปลี่ยน]</span>
-        <v-icon>mdi-calculator</v-icon>
-      </v-btn>
-      <v-btn to="/admin/conditons_transfer_success">
-        <span>สรุปผล</span>
-        <v-icon>mdi-bookmark-check</v-icon>
-      </v-btn>
-    </v-bottom-navigation>
     <v-container fluid>
       <base-material-card
         icon="mdi-clipboard-text"
-        title="ข้อมูลการย้าย สายการสอนและสายสนับสนุน (ประมวลผลแบบที่ 1)"
+        title="ข้อมูลการย้าย สายงานการสอน (กรณีพิเศษ)"
+        color="warning"
       >
         <v-card class="mb-4 pa-2">
           <v-row>
@@ -70,16 +19,7 @@
                 filled
                 class="mb-2"
               />
-            </v-col>
-            <v-col cols="12" md="2">
-              <v-select
-                v-model="times_select"
-                :items="time_ss"
-                item-value="time_ss"
-                :value="1"
-                label="ครั้งที่ :"
-              ></v-select>
-            </v-col>
+            </v-col>          
             <v-col cols="12" md="2">
               <v-select
                 v-model="years_select"
@@ -129,8 +69,8 @@
               </v-select>
             </v-col>
             <v-col cols="12" md="6" class="text-right">
-              <h1 class="text--right">ประมวลผลแบบที่ 1</h1>
-              ย้ายครั้งที่ : {{ periods.period_times }} ปี :
+              <h1 class="text--right">กรณีพิเศษ</h1>
+              ย้าย ปี :
               {{
                 periods.period_year
                   | moment("add", "543 years")
@@ -143,7 +83,7 @@
           color="success"
           :loading="loading"
           :headers="showHeaders"
-          :items="transference_personnels"
+          :items="transference_personnel_sps"
           :search="search"
           item-key="tid_ref"
         >
@@ -155,11 +95,7 @@
             <v-chip color="">
               <span style="font-size:16px;"> {{ item.college_name }}</span>
             </v-chip>
-          </template>
-
-          <template v-slot:[`item.time_ss`]="{ item }">
-            {{ item.time_ss + "/" + item.year_ss }}
-          </template>
+          </template>         
 
           <template v-slot:[`item.succ_college`]="{ item }">
             <v-chip :color="getColor(item.succ_college)" dark>
@@ -335,21 +271,21 @@
                     <v-flex md6>
                       <p>
                         รหัสอ้างอิง :
-                        {{ transference_personnels_id_ref.id_ref }}
+                        {{ transference_personnel_sps_id_ref.id_ref }}
                       </p>
 
                       <div class="text--center">
                         รหัสบัตรประชาชน :
-                        {{ transference_personnels_id_ref.id_card }}
+                        {{ transference_personnel_sps_id_ref.id_card }}
                         ชื่อ-นามสกุล :
-                        {{ transference_personnels_id_ref.title_s
-                        }}{{ transference_personnels_id_ref.frist_name }}
-                        {{ transference_personnels_id_ref.last_name }}
+                        {{ transference_personnel_sps_id_ref.title_s
+                        }}{{ transference_personnel_sps_id_ref.frist_name }}
+                        {{ transference_personnel_sps_id_ref.last_name }}
 
                         สถานศึกษาปัจจุบัน :
-                        {{ transference_personnels_id_ref.college_name }}
+                        {{ transference_personnel_sps_id_ref.college_name }}
                         เลขที่ตำแหน่งปัจจุบัน :
-                        {{ transference_personnels_id_ref.id_position }}
+                        {{ transference_personnel_sps_id_ref.id_position }}
                       </div>
                     </v-flex>
                     <v-flex md6>
@@ -401,25 +337,25 @@
                     <v-col cols="12" sm="12" md="12">
                       <h3>
                         รหัสอ้างอิง :
-                        {{ transference_personnels_id_ref.tid_ref }}
+                        {{ transference_personnel_sps_id_ref.tid_ref }}
                       </h3>
                       รหัสบัตรประชาชน :
-                      {{ transference_personnels_id_ref.id_card }}
+                      {{ transference_personnel_sps_id_ref.id_card }}
                       <h3>
                         ชื่อ-นามสกุล :
-                        {{ transference_personnels_id_ref.title_s
-                        }}{{ transference_personnels_id_ref.frist_name }}
-                        {{ transference_personnels_id_ref.last_name }}
+                        {{ transference_personnel_sps_id_ref.title_s
+                        }}{{ transference_personnel_sps_id_ref.frist_name }}
+                        {{ transference_personnel_sps_id_ref.last_name }}
                         สถานศึกษาปัจจุบัน :
-                        {{ transference_personnels_id_ref.college_code }}
-                        {{ transference_personnels_id_ref.college_name }}
+                        {{ transference_personnel_sps_id_ref.college_code }}
+                        {{ transference_personnel_sps_id_ref.college_name }}
                         เลขที่ตำแหน่งปัจจุบัน :
-                        {{ transference_personnels_id_ref.id_position }}
+                        {{ transference_personnel_sps_id_ref.id_position }}
                       </h3>
                       <h4>
-                        ย้ายครั้งที่ : {{ transference_personnels_id_ref.time_ss }} ปี :
+                        ย้าย ปี :
                         {{
-                          this.transference_personnels_id_ref.year_ss
+                          this.transference_personnel_sps_id_ref.year_ss
                         }}
                       </h4>                     
                       <h4>
@@ -449,7 +385,7 @@
                         </h2>
 
                         <div
-                          v-if="transference_personnels_id_ref.reason_1 === '1'"
+                          v-if="transference_personnel_sps_id_ref.reason_1 === '1'"
                         >
                           <v-alert
                             border="left"
@@ -461,27 +397,27 @@
                             <h4>
                               คู่สมรสชื่อ :
                               {{
-                                transference_personnels_id_ref.reason_1_spouse ||
+                                transference_personnel_sps_id_ref.reason_1_spouse ||
                                   "-"
                               }}
                               คู่สมรสประกอบอาชีพ :
                               {{
-                                transference_personnels_id_ref.reason_1_occupation ||
+                                transference_personnel_sps_id_ref.reason_1_occupation ||
                                   "-"
                               }}
                               สถานที่ประกอบอาชีพของคู่สมรส :
                               {{
-                                transference_personnels_id_ref.reason_1_location ||
+                                transference_personnel_sps_id_ref.reason_1_location ||
                                   "-"
                               }}
                               ภูมิลำเนาของคู่สมรส จังหวัด
-                              {{ transference_personnels_id_ref.r1_province }}
+                              {{ transference_personnel_sps_id_ref.r1_province }}
                             </h4>
                           </v-alert>
                         </div>
 
                         <div
-                          v-if="transference_personnels_id_ref.reason_2 === '1'"
+                          v-if="transference_personnel_sps_id_ref.reason_2 === '1'"
                         >
                           <v-alert
                             border="left"
@@ -493,21 +429,21 @@
                             <h4>
                               อายุของบิดา :
                               {{
-                                transference_personnels_id_ref.reason_2_fyear ||
+                                transference_personnel_sps_id_ref.reason_2_fyear ||
                                   "-"
                               }}
                               ปี อายุของมารดา :
                               {{
-                                transference_personnels_id_ref.reason_2_myear ||
+                                transference_personnel_sps_id_ref.reason_2_myear ||
                                   "-"
                               }}
                               ปี ภูมิลำเนาของบิดา มารดา จังหวัด :
-                              {{ transference_personnels_id_ref.r2_province }}
+                              {{ transference_personnel_sps_id_ref.r2_province }}
                             </h4>
                           </v-alert>
                         </div>
                         <div
-                          v-if="transference_personnels_id_ref.reason_3 === '1'"
+                          v-if="transference_personnel_sps_id_ref.reason_3 === '1'"
                         >
                           <v-alert
                             border="left"
@@ -519,12 +455,12 @@
 
                             <h4>
                               จังหวัด :
-                              {{ transference_personnels_id_ref.r3_province }}
+                              {{ transference_personnel_sps_id_ref.r3_province }}
                             </h4>
                           </v-alert>
                         </div>
                         <div
-                          v-if="transference_personnels_id_ref.reason_4 === '1'"
+                          v-if="transference_personnel_sps_id_ref.reason_4 === '1'"
                         >
                           <v-alert
                             border="left"
@@ -537,7 +473,7 @@
                             </h3>
                             <h4>
                               {{
-                                transference_personnels_id_ref.reason_4_detail
+                                transference_personnel_sps_id_ref.reason_4_detail
                               }}
                             </h4>
                           </v-alert>
@@ -629,26 +565,26 @@
                     <v-col cols="12" sm="12" md="12">
                       <h3>
                         รหัสอ้างอิง :
-                        {{ transference_personnels_id_ref.tid_ref }}
-                        {{ transference_personnels_id_ref.id_tfp }}
+                        {{ transference_personnel_sps_id_ref.tid_ref }}
+                        {{ transference_personnel_sps_id_ref.id_tfp }}
                       </h3>
                       รหัสบัตรประชาชน :
-                      {{ transference_personnels_id_ref.id_card }}
+                      {{ transference_personnel_sps_id_ref.id_card }}
                       <h3>
                         ชื่อ-นามสกุล :
-                        {{ transference_personnels_id_ref.title_s
-                        }}{{ transference_personnels_id_ref.frist_name }}
-                        {{ transference_personnels_id_ref.last_name }}
+                        {{ transference_personnel_sps_id_ref.title_s
+                        }}{{ transference_personnel_sps_id_ref.frist_name }}
+                        {{ transference_personnel_sps_id_ref.last_name }}
                         สถานศึกษาปัจจุบัน :
-                        {{ transference_personnels_id_ref.college_code }}
-                        {{ transference_personnels_id_ref.college_name }}
+                        {{ transference_personnel_sps_id_ref.college_code }}
+                        {{ transference_personnel_sps_id_ref.college_name }}
                         เลขที่ตำแหน่งปัจจุบัน :
-                        {{ transference_personnels_id_ref.id_position }}
+                        {{ transference_personnel_sps_id_ref.id_position }}
                       </h3>
                        <h4>
-                        ย้ายครั้งที่ : {{ transference_personnels_id_ref.time_ss }} ปี :
+                        ย้าย ปี :
                         {{
-                          this.transference_personnels_id_ref.year_ss
+                          this.transference_personnel_sps_id_ref.year_ss
                         }}
                       </h4>      
                       <h4>
@@ -672,7 +608,7 @@
                         <h2>
                           <v-radio-group
                             v-model="
-                              transference_personnels_id_ref.comment_dr_c
+                              transference_personnel_sps_id_ref.comment_dr_c
                             "
                             row
                             required
@@ -721,7 +657,7 @@
                         <h2>
                           <v-radio-group
                             v-model="
-                              transference_personnels_id_ref.status_document
+                              transference_personnel_sps_id_ref.status_document
                             "
                             row
                             required
@@ -766,14 +702,14 @@
                         item-value="id_branch"
                         outlined
                         label="สาขาวิชารับย้าย :"
-                        v-model="transference_personnels_id_ref.id_branch_tan"
+                        v-model="transference_personnel_sps_id_ref.id_branch_tan"
                       ></v-autocomplete>
                     </v-col>
                     <v-col cols="12" md="6">
                       <v-text-field
                         outlined
                         label=" ไม่เห็นควรให้ย้ายเนื่องจาก:"
-                        v-model="transference_personnels_id_ref.detail_comment"
+                        v-model="transference_personnel_sps_id_ref.detail_comment"
                       ></v-text-field>
                     </v-col>
                   </v-row>
@@ -815,26 +751,26 @@
                     <v-col cols="12" sm="12" md="12">
                       <h3>
                         รหัสอ้างอิง :
-                        {{ transference_personnels_id_ref.tid_ref }}
-                        {{ transference_personnels_id_ref.id_tfp }}
+                        {{ transference_personnel_sps_id_ref.tid_ref }}
+                        {{ transference_personnel_sps_id_ref.id_tfp }}
                       </h3>
                       รหัสบัตรประชาชน :
-                      {{ transference_personnels_id_ref.id_card }}
+                      {{ transference_personnel_sps_id_ref.id_card }}
                       <h3>
                         ชื่อ-นามสกุล :
-                        {{ transference_personnels_id_ref.title_s
-                        }}{{ transference_personnels_id_ref.frist_name }}
-                        {{ transference_personnels_id_ref.last_name }}
+                        {{ transference_personnel_sps_id_ref.title_s
+                        }}{{ transference_personnel_sps_id_ref.frist_name }}
+                        {{ transference_personnel_sps_id_ref.last_name }}
                         สถานศึกษาปัจจุบัน :
-                        {{ transference_personnels_id_ref.college_code }}
-                        {{ transference_personnels_id_ref.college_name }}
+                        {{ transference_personnel_sps_id_ref.college_code }}
+                        {{ transference_personnel_sps_id_ref.college_name }}
                         เลขที่ตำแหน่งปัจจุบัน :
-                        {{ transference_personnels_id_ref.id_position }}
+                        {{ transference_personnel_sps_id_ref.id_position }}
                       </h3>
                        <h4>
-                        ย้ายครั้งที่ : {{ transference_personnels_id_ref.time_ss }} ปี :
+                        ย้าย ปี :
                         {{
-                          this.transference_personnels_id_ref.year_ss
+                          this.transference_personnel_sps_id_ref.year_ss
                         }}
                       </h4>      
                       <h4>
@@ -858,7 +794,7 @@
                         <h2>
                           <v-radio-group
                             v-model="
-                              transference_personnels_id_ref.tp_comment_dr_stb
+                              transference_personnel_sps_id_ref.tp_comment_dr_stb
                             "
                             row
                             required
@@ -898,7 +834,7 @@
                       <v-text-field
                         outlined
                         label=" ไม่เห็นควรให้ย้ายเนื่องจาก:"
-                        v-model="transference_personnels_id_ref.tp_reason_dr_stb"
+                        v-model="transference_personnel_sps_id_ref.tp_reason_dr_stb"
                       ></v-text-field>
                     </v-col>
                   </v-row>
@@ -966,11 +902,10 @@ export default {
         timeout: 5000,
         icon: "",
         text: ""
-      },
-      time_ss: [1, 2],
+      },   
       year_ss: [2565, 2566, 2567, 2568, 2569, 2570],
-      transference_personnels: [],
-      edittransference_personnel: {},
+      transference_personnel_sps: [],
+      edittransference_personnel_sp: {},
       search: "",
       pagination: {},
 
@@ -987,16 +922,12 @@ export default {
         { text: "นามสกุล", align: "left", value: "last_name" },
         { text: "สถานศึกษาปัจจุบัน", align: "left", value: "college_name" },
         { text: "เลขที่ตำแหน่งเดิม", align: "left", value: "id_position" },
-        { text: "ครั้งที่/ปี", align: "center", value: "time_ss" },
-        { text: "อายุงาน ณ ปัจจุบัน", align: "center", value: "age_app_time" },
-        { text: "ความคิดเห็น ผอ.วิทฯ", align: "center", value: "comment_dr_c" },
-        { text: "ความคิดเห็น ผอ.สถาฯ", align: "center", value: "tp_comment_dr_stb" },
-        { text: "เอกสาร", align: "center", value: "status_document" },
-        { text: "วันที่ทำรายการ", align: "center", value: "date_time" },
-        { text: "ย้ายแบบที่ 1", align: "center", value: "actions" },
-        { text: "แห่งใหม่", align: "center", value: "succ_college" },
-        { text: "วิทยาลัยแห่งใหม่", align: "left", value: "college_name_suss" },
-        { text: "เลขที่ตำแหน่งใหม่", align: "left", value: "id_position_new" }
+        { text: "ปี", align: "center", value: "tps_year_s" },
+        { text: "อายุงาน ณ ปัจจุบัน", align: "center", value: "tps_age_time" },
+        { text: "ความคิดเห็น ผอ.วิทฯ", align: "center", value: "tps_comment_dr_c" },
+        { text: "ความคิดเห็น ผอ.สถาฯ", align: "center", value: "tps_comment_dr_stb" },
+        { text: "เอกสาร", align: "center", value: "tps_status_document" },
+        { text: "วันที่ทำรายการ", align: "center", value: "tps_date_time" },
       ],
 
       header_trans: [
@@ -1014,8 +945,8 @@ export default {
           value: -1
         }
       ],
-      transference_personnelstatus: [],
-      transference_personnels_id_ref: [],
+      transference_personnel_spstatus: [],
+      transference_personnel_sps_id_ref: [],
       conditons_transfer_successs: [],
       updatepositions_condition: {},
       man_power_cancel: {},
@@ -1068,9 +999,9 @@ export default {
     });
     this.regions = result.data;
 
-/*     this.transference_personnelQueryAll(); */
+/*     this.transference_personnel_spQueryAll(); */
    await this.periodQuery();
-   await this.transference_personnelQueryAll();
+   await this.transference_personnel_spQueryAll();
   },
   methods: {
     async periodQuery() {
@@ -1087,30 +1018,30 @@ export default {
     async searchTimeYear() {
       this.loading = true;
       let result = await this.$http
-        .post("transference_personnel.php", {
+        .post("transference_personnel_sp.php", {
           ApiKey: this.ApiKey,
           time_s: this.times_select,
           year_s: this.years_select
         })
         .finally(() => (this.loading = false));
-      this.transference_personnels = result.data;
+      this.transference_personnel_sps = result.data;
     },
 
     async showSuccessPosition() {
       this.loading = true;
       let result = await this.$http
-        .post("transference_personnel.php", {
+        .post("transference_personnel_sp.php", {
           ApiKey: this.ApiKey,
           time_s: this.times_select,
           year_s: this.years_select,
           success_s: "ok"
         })
         .finally(() => (this.loading = false));
-      this.transference_personnels = result.data;
+      this.transference_personnel_sps = result.data;
     },
 
     async select_idPosition(tid_ref) {
-      let result_con = await this.$http.post("transference_personnel.php", {
+      let result_con = await this.$http.post("transference_personnel_sp.php", {
         ApiKey: this.ApiKey,
         id_ref: tid_ref
       });
@@ -1120,42 +1051,39 @@ export default {
         id_ref: tid_ref
       });
       this.transference_locations = result.data;
-      this.transference_personnels_id_ref = result_con.data;
+      this.transference_personnel_sps_id_ref = result_con.data;
       this.positiondialog = true;
     },
 
     async comment_idPosition(tid_ref) {
-      let result_con = await this.$http.post("transference_personnel.php", {
+      let result_con = await this.$http.post("transference_personnel_sp.php", {
         ApiKey: this.ApiKey,
         id_ref: tid_ref
       });
-      this.transference_personnels_id_ref = result_con.data;
+      this.transference_personnel_sps_id_ref = result_con.data;
       this.commentDrdialog = true;
     },
 
  async tp_comment_dr_stbPosition(tid_ref) {
-      let result_con = await this.$http.post("transference_personnel.php", {
+      let result_con = await this.$http.post("transference_personnel_sp.php", {
         ApiKey: this.ApiKey,
         id_ref: tid_ref
       });
-      this.transference_personnels_id_ref = result_con.data;
+      this.transference_personnel_sps_id_ref = result_con.data;
       this.comment_stb_Drdialog = true;
     },
 
     
 
-    async transference_personnelQueryAll() {
+    async transference_personnel_spQueryAll() {
       this.loading = true;
       let result = await this.$http
-        .post("transference_personnel.php", {
-          ApiKey: this.ApiKey,
-          time_s: this.periods.period_times,
-          year_s: parseInt(this.periods.period_year) + 543
+        .post("transference_personnel_sp.php", {
+          ApiKey: this.ApiKey,         
+          tps_year_s: parseInt(this.periods.period_year) + 543
         })
         .finally(() => (this.loading = false));
-      this.transference_personnels = result.data;
-      console.log(this.periods.period_times)
-      console.log(parseInt(this.periods.period_year) + 543)
+      this.transference_personnel_sps = result.data;      
     },
 
     async man_powerQuery() {
@@ -1170,14 +1098,14 @@ export default {
     async updatecommentSubmit() {
       if (this.$refs.updatecommentform.validate()) {
         this.updatecomment.ApiKey = this.ApiKey;
-        this.updatecomment.id_tfp = this.transference_personnels_id_ref.id_tfp;
-        this.updatecomment.comment_dr_c = this.transference_personnels_id_ref.comment_dr_c;
-        this.updatecomment.id_branch = this.transference_personnels_id_ref.id_branch_tan;
-        this.updatecomment.detail_comment = this.transference_personnels_id_ref.detail_comment;
-        this.updatecomment.status_document = this.transference_personnels_id_ref.status_document;
+        this.updatecomment.id_tfp = this.transference_personnel_sps_id_ref.id_tfp;
+        this.updatecomment.comment_dr_c = this.transference_personnel_sps_id_ref.comment_dr_c;
+        this.updatecomment.id_branch = this.transference_personnel_sps_id_ref.id_branch_tan;
+        this.updatecomment.detail_comment = this.transference_personnel_sps_id_ref.detail_comment;
+        this.updatecomment.status_document = this.transference_personnel_sps_id_ref.status_document;
 
         let result = await this.$http.post(
-          "transference_personnel.update.php",
+          "transference_personnel_sp.update.php",
           this.updatecomment
         );
 
@@ -1186,7 +1114,7 @@ export default {
           this.snackbar.color = "success";
           this.snackbar.text = "บันทึกข้อมูลเรียบร้อย";
           this.snackbar.show = true;
-          this.transference_personnelQueryAll();
+          this.transference_personnel_spQueryAll();
         } else {
           this.snackbar.icon = "mdi-close-network";
           this.snackbar.color = "red";
@@ -1201,12 +1129,12 @@ export default {
     async updatecomment_stbSubmit() {
       if (this.$refs.updatecomment_stbform.validate()) {
         this.updatecomment.ApiKey = this.ApiKey;
-        this.updatecomment.id_tfp = this.transference_personnels_id_ref.id_tfp;
-        this.updatecomment.tp_comment_dr_stb = this.transference_personnels_id_ref.tp_comment_dr_stb;       
-        this.updatecomment.tp_reason_dr_stb = this.transference_personnels_id_ref.tp_reason_dr_stb;
+        this.updatecomment.id_tfp = this.transference_personnel_sps_id_ref.id_tfp;
+        this.updatecomment.tp_comment_dr_stb = this.transference_personnel_sps_id_ref.tp_comment_dr_stb;       
+        this.updatecomment.tp_reason_dr_stb = this.transference_personnel_sps_id_ref.tp_reason_dr_stb;
      
         let result = await this.$http.post(
-          "transference_personnel.update.php",
+          "transference_personnel_sp.update.php",
           this.updatecomment
         );
 
@@ -1215,7 +1143,7 @@ export default {
           this.snackbar.color = "success";
           this.snackbar.text = "บันทึกข้อมูลเรียบร้อย";
           this.snackbar.show = true;
-          this.transference_personnelQueryAll();
+          this.transference_personnel_spQueryAll();
         } else {
           this.snackbar.icon = "mdi-close-network";
           this.snackbar.color = "red";
@@ -1232,25 +1160,25 @@ export default {
     async updatepositionSubmit() {
       if (this.$refs.updatepositionform.validate()) {
         this.updatepositions.ApiKey = this.ApiKey;
-        this.updatepositions.time_s = this.transference_personnels_id_ref.time_ss;
-        this.updatepositions.year_s = this.transference_personnels_id_ref.year_ss;
-        this.updatepositions.college_code_old = this.transference_personnels_id_ref.college_code;
-        this.updatepositions.id_postion_old = this.transference_personnels_id_ref.id_position;
-        this.updatepositions.id_card = this.transference_personnels_id_ref.id_card;
-        this.updatepositions.id_ref = this.transference_personnels_id_ref.tid_ref;
+        this.updatepositions.time_s = this.transference_personnel_sps_id_ref.time_ss;
+        this.updatepositions.year_s = this.transference_personnel_sps_id_ref.year_ss;
+        this.updatepositions.college_code_old = this.transference_personnel_sps_id_ref.college_code;
+        this.updatepositions.id_postion_old = this.transference_personnel_sps_id_ref.id_position;
+        this.updatepositions.id_card = this.transference_personnel_sps_id_ref.id_card;
+        this.updatepositions.id_ref = this.transference_personnel_sps_id_ref.tid_ref;
         this.updatepositions.name_position = this.position;
         this.updatepositions.status_select = "demand";
 
         this.updatepositions_condition.ApiKey = this.ApiKey;
         this.updatepositions_condition.id_position = this.updatepositions.id_position;
-        this.updatepositions_condition.status_booking = this.transference_personnels_id_ref.id_card;
+        this.updatepositions_condition.status_booking = this.transference_personnel_sps_id_ref.id_card;
 
         this.addreturn_man_power.ApiKey = this.ApiKey;
-        this.addreturn_man_power.college_code = this.transference_personnels_id_ref.college_code;
-        this.addreturn_man_power.id_position = this.transference_personnels_id_ref.id_position;
+        this.addreturn_man_power.college_code = this.transference_personnel_sps_id_ref.college_code;
+        this.addreturn_man_power.id_position = this.transference_personnel_sps_id_ref.id_position;
         this.addreturn_man_power.position = this.position;
         this.addreturn_man_power.case_vacancy =
-          "ย้ายรอบ-" + this.transference_personnels_id_ref.time_ss + "/" + this.transference_personnels_id_ref.year_ss;
+          "ย้ายรอบ-" + this.transference_personnel_sps_id_ref.time_ss + "/" + this.transference_personnel_sps_id_ref.year_ss;
 
         let result_man_return = await this.$http.post(
           "man_power.insert.php",
@@ -1273,7 +1201,7 @@ export default {
             this.snackbar.color = "success";
             this.snackbar.text = "บันทึกข้อมูลเรียบร้อย";
             this.snackbar.show = true;
-            this.transference_personnelQueryAll();
+            this.transference_personnel_spQueryAll();
           }
         } else {
           this.snackbar.icon = "mdi-close-network";
@@ -1286,15 +1214,15 @@ export default {
     },
 
     async deletePosition(id_ref) {
-      let result_con = await this.$http.post("transference_personnel.php", {
+      let result_con = await this.$http.post("transference_personnel_sp.php", {
         ApiKey: this.ApiKey,
         id_ref: id_ref
       });
-      this.transference_personnels_id_ref = result_con.data;
+      this.transference_personnel_sps_id_ref = result_con.data;
 
       let result_man = await this.$http.post("man_power.php", {
         ApiKey: this.ApiKey,
-        id_card: this.transference_personnels_id_ref.id_card
+        id_card: this.transference_personnel_sps_id_ref.id_card
       });
       this.man_powerss = result_man.data;
 
@@ -1341,7 +1269,7 @@ export default {
           this.snackbar.color = "success";
           this.snackbar.text = "ยกเลิกข้อมูลเรียบร้อย";
           this.snackbar.show = true;
-          this.transference_personnelQueryAll();
+          this.transference_personnel_spQueryAll();
         } else {
           this.snackbar.icon = "mdi-close-network";
           this.snackbar.color = "red";

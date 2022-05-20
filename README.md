@@ -11,6 +11,8 @@ You can also run additional npm tasks such as
 - `npm run lint` to run linting.
 
 # GitHub
+node v12.12.0
+npm 6.11.3
 # Remote
 - git remote add origin https://github.com/Theerakorn-korn/hrvec.git  
 

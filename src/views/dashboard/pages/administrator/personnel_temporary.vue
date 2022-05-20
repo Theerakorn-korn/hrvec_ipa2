@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-container>
+    <v-container fluid>
       <base-material-card
         icon="mdi-clipboard-text"
         title="ข้าราชการครูและบุคลากรทางการศึกษา"
@@ -16,45 +16,90 @@
                 single-line
                 hide-details
                 v-on:keyup.enter="OnEnter()"
-                dense
                 filled
                 class="mb-2"
               />
-            </v-col>
+              <v-radio-group row>
+                <v-radio
+                  label="ชื่อ"
+                  value="radio-1"
+                  @click.native="search_name()"
+                ></v-radio>
+                <v-radio
+                  label="นามสกุล"
+                  value="radio-2"
+                  @click.native="search_lastname()"
+                ></v-radio>
+                <v-radio
+                  label="รหัสบัตรประชาชน"
+                  value="radio-3"
+                  @click.native="search_idcard()"
+                ></v-radio>
 
-            <v-col cols="12" lg="6" class="text-right">
+                <v-radio
+                  label="ปีที่เกษียณ"
+                  value="radio-5"
+                  @click.native="search_yearretire()"
+                ></v-radio>
+                <v-radio
+                  label="แสดงทั้งหมด"
+                  value="radio-6"
+                  @click.native="personnel_temporaryQueryAll()"
+                ></v-radio>
+              </v-radio-group>
+              <v-autocomplete
+                v-model="college_search"
+                outlined
+                :items="colleges"
+                item-text="college_name"
+                item-value="college_code"
+                label="สถานศึกษา"
+                @change="search_college()"
+              >
+              </v-autocomplete>
+            </v-col>
+            <v-col cols="12" lg="2" class="text-right">
+              <v-select
+                v-model="position_search"
+                outlined
+                :items="position_select"
+                item-text="text"
+                item-value="value"
+                label="ตำแหน่ง"
+                @change="search_position()"
+              >
+              </v-select>
+                <v-btn
+                large
+                color="primary"
+                @click.native="personnel_temporaryCSV()"
+              >
+                <v-icon>mdi-plus-circle-outline</v-icon>
+                <h3>นำเข้าไฟล์รายชื่อ CSV</h3>
+              </v-btn>
+            </v-col>
+            <v-col cols="12" lg="2" class="text-right">
+              <v-select
+                v-model="rangname_search"
+                outlined
+                :items="rang_names"
+                item-text="text"
+                item-value="value"
+                label="วิทยฐานะ"
+                @change="search_rang()"
+              >
+              </v-select>
+            </v-col>
+            <v-col cols="12" lg="2" class="text-left">
               <v-btn
                 large
-                right
-                depressed
                 color="primary"
                 @click.native="personnel_temporaryAdd()"
               >
                 <v-icon>mdi-plus-circle-outline</v-icon>
                 <h3>เพิ่มรายการ</h3>
               </v-btn>
-            </v-col>
-            <v-col cols="12" lg="12" class="text-left">
-              <v-btn
-                large
-                right
-                depressed
-                color="info"
-                @click.native="personnel_temporaryQueryAll()"
-              >
-                <v-icon>mdi-book-search</v-icon>
-                <h3>แสดงทั้งหมด</h3>
-              </v-btn>
-              <v-btn
-                large
-                right
-                depressed
-                color="info"
-                @click.native="searchWait()"
-              >
-                <v-icon>mdi-book-search</v-icon>
-                <h3>อยู่ระหว่างพิจารณาย้าย</h3>
-              </v-btn>
+            
             </v-col>
           </v-row>
         </v-card>
@@ -76,12 +121,13 @@
             }}
           </template>
 
-           <template v-slot:[`item.date_app_now`]="{ item }">
-                 {{ item.date_app_now| moment("add","543 years") | moment("D MMMM YYYY") }}
+          <template v-slot:[`item.date_app_now`]="{ item }">
+            {{
+              item.date_app_now
+                | moment("add", "543 years")
+                | moment("D MMMM YYYY")
+            }}
           </template>
-
-
-
 
           <template v-slot:[`item.actions`]="{ item }">
             <v-icon
@@ -91,7 +137,7 @@
               mdi-pencil
             </v-icon>
           </template>
-         <!--  <template v-slot:[`item.action_s`]="{ item }">
+          <!--  <template v-slot:[`item.action_s`]="{ item }">
             <v-icon
               color="red"
               @click.stop="personnel_temporaryDelete(item.id_rc)"
@@ -130,9 +176,11 @@
                         item-text="user_status_name"
                         item-value="user_status_sub"
                         v-model="addpersonnel_temporary.user_status"
-                        label="Type"
+                        label="ประเภท"
                         required
                         :rules="[v => !!v || '']"
+                        outlined
+                        prepend-icon="mdi-format-list-bulleted-type"
                       ></v-select>
                     </v-flex>
                     <v-flex
@@ -144,6 +192,8 @@
                       "
                     >
                       <v-autocomplete
+                      outlined
+                       prepend-icon="mdi-school"
                         :items="colleges"
                         item-text="college_name"
                         item-value="college_code"
@@ -160,6 +210,8 @@
                     </v-flex>
                     <v-flex md12>
                       <v-text-field
+                      outlined
+                      prepend-icon="mdi-content-duplicate"
                         label="คำสั่งที่"
                         v-model="addpersonnel_temporary.order_app_now"
                         required
@@ -168,6 +220,8 @@
                     </v-flex>
                     <v-flex md6>
                       <v-text-field
+                      outlined
+                      prepend-icon="mdi-account-key"
                         label="รหัสบัตรประชาชน"
                         v-model="addpersonnel_temporary.id_card"
                         required
@@ -177,6 +231,8 @@
                     <v-flex md6> </v-flex>
                     <v-flex md4>
                       <v-text-field
+                       prepend-icon="mdi-account-box"                      
+                      outlined
                         label="คำนำหน้าชื่อ"
                         v-model="addpersonnel_temporary.title_s"
                         require
@@ -185,6 +241,8 @@
                     </v-flex>
                     <v-flex md4>
                       <v-text-field
+                      prepend-icon="mdi-account-box"      
+                      outlined
                         label="ชื่อ"
                         v-model="addpersonnel_temporary.frist_name"
                         require
@@ -193,6 +251,8 @@
                     </v-flex>
                     <v-flex md4>
                       <v-text-field
+                      prepend-icon="mdi-account-box"      
+                      outlined
                         label="นามสกุล"
                         v-model="addpersonnel_temporary.last_name"
                         required
@@ -201,6 +261,8 @@
                     </v-flex>
                     <v-flex md6>
                       <v-autocomplete
+                      prepend-icon="mdi-account-settings"    
+                      outlined
                         :items="userstatus"
                         item-text="user_status_name"
                         item-value="user_status_name"
@@ -212,6 +274,8 @@
                     </v-flex>
                     <v-flex md6>
                       <v-autocomplete
+                       prepend-icon="mdi-account-settings"    
+                      outlined
                         :items="man_powers"
                         item-text="college_position"
                         item-value="id_position"
@@ -223,6 +287,8 @@
                     </v-flex>
                     <v-flex md6>
                       <v-autocomplete
+                       prepend-icon="mdi-account-settings"    
+                      outlined
                         :items="rang_names"
                         item-text="text"
                         item-value="value"
@@ -234,6 +300,8 @@
                     </v-flex>
                     <v-flex md6>
                       <v-select
+                      outlined
+                       prepend-icon="mdi-account-settings"    
                         :items="rang_levels"
                         label="ระดับ"
                         v-model="addpersonnel_temporary.rang_level"
@@ -243,6 +311,8 @@
                     </v-flex>
                     <v-flex md6>
                       <v-text-field
+                       prepend-icon="mdi-account-settings"    
+                      outlined
                         label="คุณวิฒิ"
                         v-model="addpersonnel_temporary.ed_abb"
                         required
@@ -250,7 +320,9 @@
                       ></v-text-field>
                     </v-flex>
                     <v-flex md6>
-                      <v-text-field
+                      <v-text-field     
+                       prepend-icon="mdi-account-settings"    
+                      outlined
                         label="สาขาวิชา"
                         v-model="addpersonnel_temporary.ed_name"
                         required
@@ -269,6 +341,7 @@
                       >
                         <template v-slot:activator="{ on, attrs }">
                           <v-text-field
+                          outlined
                             v-model="addpersonnel_temporary.birthday"
                             label="วันเดือนปีเกิด"
                             prepend-icon="mdi-calendar"
@@ -298,14 +371,7 @@
                             OK
                           </v-btn>
                         </v-date-picker>
-                      </v-menu>
-                      {{ brith_day }}
-                      <!--     <span>อายุปี : {{ cal_date_age }} </span><br>
-                                  <span>เดือน :{{ birth_month }}</span><br>
-                                  <span>ปี :{{ birth_year }}</span><br>
-                                  <span>ปี :{{ retrire_year }}</span>
-                                   -->
-                      <span>ปีเกษียณ :{{ retrire_year }}</span>
+                      </v-menu>      
                     </v-flex>
                     <v-flex md6>
                       <v-menu
@@ -319,6 +385,7 @@
                       >
                         <template v-slot:activator="{ on, attrs }">
                           <v-text-field
+                          outlined
                             v-model="addpersonnel_temporary.appoin_days"
                             label="วันเดือนปีที่บรรจุ"
                             prepend-icon="mdi-calendar"
@@ -352,6 +419,8 @@
                     </v-flex>
                     <v-flex md6>
                       <v-text-field
+                      prepend-icon="mdi-cellphone" 
+                      outlined
                         label="เบอร์โทร"
                         v-model="addpersonnel_temporary.tel_p"
                         required
@@ -360,6 +429,8 @@
                     </v-flex>
                     <v-flex md6>
                       <v-text-field
+                      prepend-icon="mdi-email" 
+                      outlined
                         label="E-mail"
                         v-model="addpersonnel_temporary.e_mail"
                         required
@@ -368,7 +439,7 @@
                     </v-flex>
                   </v-layout>
                 </v-container>
-                <small>* จำเป็น</small>
+                <small>* จำเป็น</small> <span>ปีเกษียณ :{{ retrire_year }}</span>
               </v-form>
             </v-card-text>
             <v-card-actions>
@@ -389,6 +460,94 @@
                 <v-icon dark>mdi-content-save</v-icon>&nbsp;&nbsp;บันทึก
               </v-btn>
             </v-card-actions>
+          </v-card>
+        </v-dialog>
+      </v-layout>
+
+      <!-- V-model csvpersonnel_temporarydialog -->
+      <v-layout>
+        <v-dialog
+          v-model="csvpersonnel_temporarydialog"
+          persistent
+          max-width="50%"
+        >
+          <v-card class="mx-auto pa-5">
+            <base-material-card
+              color="green"
+              icon="mdi-content-paste"
+              title="นำเข้าข้อมูลไฟล์ CSV"
+              class="px-5 py-3 text_google"
+            >
+            </base-material-card>
+
+            <v-card-text>
+              <v-card>
+                <v-card-text>
+                  <v-form
+                    ref="csvpersonnel_temporarydialogform"
+                    lazy-validation
+                  >
+                    <v-container grid-list-md>
+                      <v-row>
+                        <v-col cols="12" md="12">
+                          <v-alert
+                            border="left"
+                            colored-border
+                            type="info"
+                            elevation="2"
+                          >
+                            <h2>
+                              นำเข้าข้อมูลไฟล์ CSV
+                              <input type="file" ref="file2" id="file2" />
+                            </h2>
+                          </v-alert>
+
+                          <!--   <v-file-input
+                          type="file"                          
+                            label="File input"
+                            ref="file2" id="file2"
+                          ></v-file-input> -->
+                        </v-col>
+                        <v-col cols="12" md="12" class="text-center">
+                          <v-btn
+                            large
+                            color="green"
+                            @click.stop="csvpersonnel_temporarySubmit()"
+                          >
+                            <v-icon>mdi-book-plus</v-icon>
+                            นำเข้า</v-btn
+                          ><v-btn
+                            large
+                            color="info"
+                            to="/college/personnel_form_import/"
+                            target="_blank"
+                          >
+                            <v-icon>mdi-exit-to-app</v-icon
+                            >ส่งออกไฟล์บันทึกข้อมูล</v-btn
+                          >
+                        </v-col>
+                      </v-row>
+                    </v-container>
+                  </v-form>
+                </v-card-text>
+              </v-card>
+            </v-card-text>
+            <v-row>
+              <v-col cols="12" md="12" class="text-right">
+                <v-btn
+                  class="mx-2"
+                  fab
+                  dark
+                  large
+                  color="grey"
+                  @click.stop="csvpersonnel_temporarydialog = false"
+                >
+                  <v-icon dark>
+                    mdi-close
+                  </v-icon>
+                </v-btn>
+              </v-col>
+            </v-row>
           </v-card>
         </v-dialog>
       </v-layout>
@@ -665,21 +824,21 @@
                         </v-date-picker>
                       </v-menu>
                     </v-flex>
-                     <v-flex md6>
-                    <v-text-field
-                            v-model="editpersonnel_temporary.order_app_now"
-                            label="คำสั่งที่"
-                            prepend-icon="mdi-calendar"                         
-                          ></v-text-field>
+                    <v-flex md6>
+                      <v-text-field
+                        v-model="editpersonnel_temporary.order_app_now"
+                        label="คำสั่งที่"
+                        prepend-icon="mdi-calendar"
+                      ></v-text-field>
                     </v-flex>
 
                     <v-flex md6>
-                    <v-text-field
-                            v-model="editpersonnel_temporary.date_app_now"
-                            label="วันเดือนปีที่เริ่มปฏิบัติงาน ณ สถานศึกษาปัจจุบัน"
-                            prepend-icon="mdi-calendar"
-                          type="date"
-                          ></v-text-field>
+                      <v-text-field
+                        v-model="editpersonnel_temporary.date_app_now"
+                        label="วันเดือนปีที่เริ่มปฏิบัติงาน ณ สถานศึกษาปัจจุบัน"
+                        prepend-icon="mdi-calendar"
+                        type="date"
+                      ></v-text-field>
                     </v-flex>
 
                     <v-flex md6>
@@ -747,12 +906,13 @@
 export default {
   data() {
     return {
-      loading: true,
+      loading: false,
       ApiKey: "HRvec2021",
       valid: true,
       addpersonnel_temporarydialog: false,
       editpersonnel_temporarydialog: false,
       deletepersonnel_temporarydialog: false,
+      csvpersonnel_temporarydialog: false,
       snackbar: {
         show: false,
         color: "",
@@ -781,18 +941,24 @@ export default {
         { text: "เลขที่ตำแหน่ง", align: "center", value: "id_position" },
         { text: "วิทยฐานะ", align: "center", value: "rang_name" },
         { text: "ระดับ", align: "center", value: "rang_level" },
+        { text: "สาขาวิชา", align: "center", value: "branch_name_th" },
+        
         { text: "วันเดือนปีเกิด", align: "center", value: "brith_day" },
         { text: "วันเดือนปีบรรจุ", align: "center", value: "appoin_day" },
-      { text: "คำสั่งที่", align: "center", value: "order_app_now" },
-        { text: "วันที่ปฏิบัติหน้าที่ ณ สถานศึกษาปัจจุบัน", align: "center", value: "date_app_now" },
+        { text: "คำสั่งที่", align: "center", value: "order_app_now" },
+        {
+          text: "วันที่ปฏิบัติหน้าที่ ณ สถานศึกษาปัจจุบัน",
+          align: "center",
+          value: "date_app_now"
+        },
         { text: "เกษียณ", align: "center", value: "retrire_year" },
         {
           text: "แก้ไข",
           align: "center",
           value: "actions",
           icon: "mdi-file-document-edit"
-        },
-      /*   {
+        }
+        /*   {
           text: "ลบ",
           align: "center",
           value: "action_s",
@@ -801,10 +967,45 @@ export default {
       ],
       rang_names: [
         { text: "-", value: "-" },
+        { text: "ต้น", value: "ต้น" },
+        { text: "ปฏิบัติงาน", value: "ปฏิบัติงาน" },
+        { text: "ปฏิบัติการ", value: "ปฏิบัติการ" },
+        { text: "ชำนาญงาน", value: "ชำนาญงาน" },
         { text: "ชำนาญการ", value: "ชำนาญการ" },
-        { text: "ชำนาญการพิเศษ", value: "ชำนาญการพิเศษ" },
-        { text: "เชี่ยวชาญ", value: "เชี่ยวชาญ" },
-        { text: "เชี่ยวชาญพิเศษ", value: "เชี่ยวชาญพิเศษ" }
+        { text: "ครูชำนาญการ", value: "ครูชำนาญการ" },
+        { text: "ครูชำนาญการพิเศษ", value: "ครูชำนาญการพิเศษ" },
+        { text: "ครูเชี่ยวชาญ", value: "ครูเชี่ยวชาญ" },
+        { text: "ครูเชี่ยวชาญพิเศษ", value: "ครูเชี่ยวชาญพิเศษ" },
+        { text: "รองผู้อำนวยการชำนาญการ", value: "รองผู้อำนวยการชำนาญการ" },
+        {
+          text: "รองผู้อำนวยการชำนาญการพิเศษ",
+          value: "รองผู้อำนวยการชำนาญการพิเศษ"
+        },
+        { text: "รองผู้อำนวยการเชี่ยวชาญ", value: "รองผู้อำนวยการเชี่ยวชาญ" },
+        { text: "ผู้อำนวยการชำนาญการ", value: "ผู้อำนวยการชำนาญการ" },
+        { text: "ผู้อำนวยการชำนาญการพิเศษ", value: "ผู้อำนวยการชำนาญการพิเศษ" },
+        { text: "ผู้อำนวยการเชี่ยวชาญ", value: "ผู้อำนวยการเชี่ยวชาญ" },
+        {
+          text: "ผู้อำนวยการเชี่ยวชาญพิเศษ",
+          value: "ผู้อำนวยการเชี่ยวชาญพิเศษ"
+        },
+        { text: "ศึกษานิเทศก์ชำนาญการ", value: "ศึกษานิเทศก์ชำนาญการ" },
+        {
+          text: "ศึกษานิเทศก์ชำนาญการพิเศษ",
+          value: "ศึกษานิเทศก์ชำนาญการพิเศษ"
+        },
+        { text: "ศึกษานิเทศก์เชี่ยวชาญ", value: "ศึกษานิเทศก์เชี่ยวชาญ" },
+        {
+          text: "ศึกษานิเทศก์เชี่ยวชาญพิเศษ",
+          value: "ศึกษานิเทศก์เชี่ยวชาญพิเศษ"
+        }
+      ],
+      position_select: [
+        { text: "ผู้อำนวยการ", value: "director" },
+        { text: "รองผู้อำนวยการ", value: "se_director" },
+        { text: "ข้าราชการครู", value: "tech" },
+        { text: "ศึกษานิเทศก์", value: "supervision" },
+        { text: "38", value: "38" }
       ],
       rang_levels: ["-", 1, 2, 3, 4, 5],
       rowsperpage: [
@@ -822,7 +1023,7 @@ export default {
       prefectures: [],
       userstatus: [],
       man_powers: [],
-      collgegs: [],
+      colleges: [],
       personnel_temporarystatus: [],
       regions: [],
       region_ena: true,
@@ -833,12 +1034,17 @@ export default {
       menu2: false,
       menu3: false,
       menu4: false,
-      data_syslog:{},
+      data_syslog: {},
+      college_search: {},
+      position_search: {},
+      rangname_search: {},
+      upcsv_file: {},
+   
     };
   },
 
   async mounted() {
-    await this.personnel_temporaryQueryAll();
+    /*    await this.personnel_temporaryQueryAll(); */
 
     let result;
     result = await this.$http.post("collegetype.php", {
@@ -871,6 +1077,72 @@ export default {
   },
 
   methods: {
+    async search_name() {
+      let result = await this.$http.post("personnel_temporary.php", {
+        ApiKey: this.ApiKey,
+        frist_name: this.search
+      });
+      this.personnel_temporarys = result.data;
+    },
+    async search_lastname() {
+      let result = await this.$http.post("personnel_temporary.php", {
+        ApiKey: this.ApiKey,
+        last_name: this.search
+      });
+      this.personnel_temporarys = result.data;
+    },
+
+    async search_idcard() {
+      let result = await this.$http.post("personnel_temporary.php", {
+        ApiKey: this.ApiKey,
+        id_cards: this.search
+      });
+      this.personnel_temporarys = result.data;
+    },
+
+    async search_college() {
+      this.loading = true;
+      let result = await this.$http
+        .post("personnel_temporary.php", {
+          ApiKey: this.ApiKey,
+          college_code: this.college_search
+        })
+        .finally(() => (this.loading = false));
+      this.personnel_temporarys = result.data;
+    },
+
+    async search_position() {
+      this.loading = true;
+      let result = await this.$http
+        .post("personnel_temporary.php", {
+          ApiKey: this.ApiKey,
+          user_status: this.position_search
+        })
+        .finally(() => (this.loading = false));
+      this.personnel_temporarys = result.data;
+    },
+
+    async search_rang() {
+      this.loading = true;
+      let result = await this.$http
+        .post("personnel_temporary.php", {
+          ApiKey: this.ApiKey,
+          rang_name: this.rangname_search
+        })
+        .finally(() => (this.loading = false));
+      this.personnel_temporarys = result.data;
+    },
+    async search_yearretire() {
+      this.loading = true;
+      let result = await this.$http
+        .post("personnel_temporary.php", {
+          ApiKey: this.ApiKey,
+          retrire_year: this.search
+        })
+        .finally(() => (this.loading = false));
+      this.personnel_temporarys = result.data;
+    },
+
     async OnEnter() {
       let result = await this.$http.post("personnel_temporary.php", {
         ApiKey: this.ApiKey,
@@ -913,6 +1185,11 @@ export default {
       this.addpersonnel_temporary = {};
       this.addpersonnel_temporarydialog = true;
     },
+
+    async personnel_temporaryCSV() {
+      this.csvpersonnel_temporarydialog = true;
+    },
+
     async addpersonnel_temporarySubmit() {
       if (this.$refs.addpersonnel_temporaryform.validate()) {
         this.addpersonnel_temporary.ApiKey = this.ApiKey;
@@ -935,6 +1212,14 @@ export default {
           this.snackbar.color = "success";
           this.snackbar.text = "บันทึกข้อมูลเรียบร้อย";
           this.snackbar.show = true;
+          let userSession = JSON.parse(sessionStorage.getItem("user")) || 0;
+          this.data_syslog.ApiKey = this.ApiKey;
+          this.data_syslog.user_account = userSession.user_name;
+          this.data_syslog.event_log = "insert";
+          this.data_syslog.page_log = "personnel_temporary";
+          this.data_syslog.table_log = "personnel_temporary";
+          this.data_syslog.detail_log = this.personnel_temporary.id_card;
+          this.data_syslog.date_times = this.date_today_log;
           this.personnel_temporaryQueryAll();
         } else {
           this.snackbar.icon = "mdi-close-network";
@@ -987,7 +1272,6 @@ export default {
           this.data_syslog.detail_log = this.personnel_temporary.id_card;
           this.data_syslog.date_times = this.date_today_log;
           await this.$http.post("data_syslog.insert.php", this.data_syslog);
-
         } else {
           this.snackbar.icon = "mdi-close-network";
           this.snackbar.color = "red";
@@ -1020,7 +1304,7 @@ export default {
           this.snackbar.text = "ลบข้อมูลเรียบร้อย";
           this.snackbar.show = true;
           this.personnel_temporaryQueryAll();
-           let userSession = JSON.parse(sessionStorage.getItem("user")) || 0;
+          let userSession = JSON.parse(sessionStorage.getItem("user")) || 0;
           this.data_syslog.ApiKey = this.ApiKey;
           this.data_syslog.user_account = userSession.user_name;
           this.data_syslog.event_log = "delete";
@@ -1037,9 +1321,48 @@ export default {
         }
         this.deletepersonnel_temporarydialog = false;
       }
+    },
+    async csvpersonnel_temporarySubmit() {
+      let result = "";
+      let uploaded = null;
+      if (this.$refs.file2.files[0]) {
+        let formData = new FormData();
+        let filename = this.time_stamp + ".personnel.csv";
+        formData.append("file", this.$refs.file2.files[0]);
+        formData.append("filename", "../HRvecfiles/" + filename);
+        formData.append("ApiKey", this.ApiKey);
+        result = await this.$http.post("personnel_importcsv.php", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data"
+          }
+        });
+        uploaded = true;
+      } else {
+        uploaded = false;
+      }
+      if (result.data.status == true) {
+        this.personnel_temporary = result.data;
+        this.snackbar.icon = "mdi-font-awesome";
+        this.snackbar.color = "success";
+        this.snackbar.text = "บันทึกข้อมูลเรียบร้อย";
+        this.snackbar.show = true;
+        this.personnel_temporaryQueryAll();
+      } else {
+        this.snackbar.icon = "mdi-close-network";
+        this.snackbar.color = "red";
+        this.snackbar.text = "บันทึกข้อมูลผิดพลาด";
+        this.snackbar.show = true;
+        this.personnel_temporaryQueryAll();
+      }
+      this.csvpersonnel_temporarydialog = false;
     }
   },
   computed: {
+    time_stamp() {
+      const d = new Date();
+      let time = d.getTime();
+      return time;
+    },
     pages() {
       if (
         this.pagination.rowsPerPage == null ||
@@ -1087,7 +1410,7 @@ export default {
       return yyyy;
     },
 
-   /*  appoin_days(){
+    /*  appoin_days(){
       let result 
       let appoin_day=this.editpersonnel_temporary.appoin_day
       let appoin_month=this.editpersonnel_temporary.appoin_month
@@ -1249,10 +1572,11 @@ export default {
       let dd = String(today.getDate()).padStart(2, "0");
       let mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
       let yyyy = today.getFullYear() + 543;
-let time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+      let time =
+        today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
       today = dd + "/" + mm + "/" + yyyy + "/" + time;
       return today;
-    },
+    }
   }
 };
 </script>

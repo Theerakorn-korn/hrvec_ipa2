@@ -17,10 +17,10 @@
       </v-btn>
     </v-bottom-navigation>
     <v-bottom-navigation
-      :value="value"
+      
       color="info"
       horizontal
-      v-model="value"
+      
       :background-color="color"
       dark
     >
@@ -507,7 +507,7 @@ export default {
       man_powers: [],
       man_powers: [], 
       value: "4",
-      loading: true,
+      loading: false,
       snackbar: {
         show: false,
         color: "",
@@ -580,7 +580,7 @@ export default {
 
   async mounted() {
     //await this.conditions_transferQueryAll();
-    await this.Switch_personnelAll();
+   /*  await this.Switch_personnelAll(); */
     await this.period_QueryAll();
     await this.man_powerQuery();
   },
@@ -616,6 +616,7 @@ export default {
         })
         .finally(() => (this.loading = false));
       this.conditions_transfers = result.data;
+      console.log(result.data)
     },
 
     async Switch_personnel() {
@@ -629,6 +630,7 @@ export default {
         })
         .finally(() => (this.loading = false));
       this.conditions_transfers = result.data;
+       console.log(result.data)
     },
 
     async conditions_transferQueryAll() {

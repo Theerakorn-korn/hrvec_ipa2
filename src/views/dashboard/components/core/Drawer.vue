@@ -118,11 +118,11 @@
           icon: 'mdi-login',
           to: '/pages/login',
         },    
-        /*  {
+         {
           title: 'รายงาน',
           icon: 'mdi-information-variant',
           to: '/pages/chart_report',
-        },       */
+        },      
       ],
     }),
 

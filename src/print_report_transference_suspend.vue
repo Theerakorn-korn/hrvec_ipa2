@@ -38,98 +38,53 @@
 
     <div id="exportContent" style="mso-page-orientation: landscape;">
       <div class="page">
-        <div align="center">
+        <div align="center"></div>  
+                 <div align="center">
           <div class="head">
-            บัญชีรายละเอียดการพิจารณาย้ายข้าราชการครูและบุคลากรทางการศึกษาประจำปี
-            ครั้งที่ {{ order_appoints.time_s }}/{{ order_appoints.year_s }}
-          </div>
-          <div class="head">
-            แนบท้ายวาระการประชุมคณะกรรมการกลั่นกรองฯ
-            สำนักงานคณะกรรมการการอาชีวศึกษา ครั้งที่ {{ order_appoints.meeting_no }} เมื่อวันที่ {{ order_appoints.meeting_date | moment("add", "543 years")
-                | moment("D MMMM YYYY") }}
-          </div>
-          <div class="head">
-            วาระ (ลับ) การย้ายกรณีปกติข้าราชการครูและบุคลากรทางการศึกษา
-            ตำแหน่งครู จำนวน  {{ order_appoints.count_personnel }} ราย
+           รายชื่อผู้ขอย้ายถูกระงับย้าย  {{ time_ss }}/{{
+              year_ss
+            }}
           </div>
         </div>
         <table class="table" border="1" width="100%" align="center">
           <tr>
-            <td width="5%" class="bold16" rowspan="2" align="center">ที่</td>
-            <td width="25%" class="bold16" colspan="2" align="center">
-              อัตราว่าง
+            <td width="5%" class="regular16 pa-1" align="center">ที่</td>
+            <td width="20%" class="regular16 pa-1" align="center">สังกัด</td>
+            <td width="20%" class="regular16 pa-1" align="center">ชื่อ-สกุล</td>
+            <td width="10%" class="regular16 pa-1" align="center">
+              เลขที่ตำแหน่ง
             </td>
-            <td width="70%" class="bold16" colspan="7" align="center">
-              พิจารณาคัดเลือก
+            <td width="5%" class="regular16 pa-1" align="center">
+              ความคิดเห็น ผอ.วิทยาลัย
             </td>
-          </tr>
-          <tr>
-            <td width="15%" class="bold16 pa-1" align="center">สังกัด</td>
-            <td width="5%" class="bold16 pa-1" align="center">
-              เลขที่ตำแหน่งว่าง
-            </td>
-            <td width="15%" class="bold16 pa-1" align="center">ชื่อ-สกุล</td>
-            <td width="15%" class="bold16 pa-1" align="center">สังกัด</td>
-            <td width="5%" class="bold16 pa-1" align="center">เลขที่</td>
-            <td width="15%" class="bold16 pa-1" align="center">สาขา</td>
-            <td width="5%" class="bold16 pa-1" align="center">
-              เปิดรับ/ไม่เปิดรับ
-            </td>
-            <td width="20%" class="bold16 pa-1" align="center">
-              เหตุผลในการย้าย
-            </td>
-            <td width="20%" class="bold16 pa-1" align="center">
-              ช่วยราชการ
+             <td width="5%" class="regular16 pa-1" align="center">
+              ความคิดเห็น ผอ.สถาบัน
             </td>
           </tr>
 
           <tr
-            v-for="(item, index) in conditons_transfer_successs"
+            v-for="(item, index) in transference_personnels"
             :key="item.id_cts"
           >
             <td class="regular16" align="center">{{ index + 1 }}</td>
-            <td class="regular16 pa-1" align="center">
-              {{ item.college_name_new }}
-            </td>
-            <td class="regular16 pa-1" align="center">
-              {{ item.id_position }}
-            </td>
-            <td class="regular16 pa-1" align="center">
-              {{ item.title_s }}
-            </td>
-            <td class="regular16 pa-1" align="center">
-              {{ item.college_name_old }}
-            </td>
-            <td class="regular16 pa-1" align="center">
-              {{ item.id_postion_old }}
-            </td>
-
             <td class="regular16 pa-1" align="left">
-              {{ item.id_branch }} : {{ item.branch_name }}
+              {{ item.college_name_now }}
             </td>
-            <td class="regular16 pa-1" align="center">
-              <span v-if="item.status_select === 'sw_normal'">
-                ย้ายสับเปลี่ยน
-              </span>
-              <span v-else>
-                เปิดรับ
-              </span>
-            </td>
-
             <td class="regular16 pa-1" align="left">
-              {{ item.reason }}
+              {{ item.title_s + item.frist_name + " " + item.last_name }}
             </td>
             <td class="regular16 pa-1" align="center">
-              <v-chip
-                color="green"
-                dark
-                v-if="item.service_statuss === 'not_service'"
-              >
-                ปกติ
-              </v-chip>
-              <v-chip v-else color="warning" dark>
-                ช่วยราชการ
-              </v-chip>
+              {{ item.id_position_now }}
+            </td>
+            <td class="regular16 pa-1" align="center">
+                <v-chip dark color="red" v-if="item.comment_dr_c ==='suspend'">
+                    ระงับย้าย
+                </v-chip>
+            </td>
+            <td class="regular16 pa-1" align="center">           
+                <v-chip dark color="red" v-if="item.tp_comment_dr_stb ==='suspend'">
+                    ระงับย้าย
+                </v-chip>
             </td>
           </tr>
         </table>
@@ -144,51 +99,27 @@ export default {
   data: () => ({
     ApiKey: "HRvec2021",
     order_appoints: [],
-    conditons_transfer_successs: [],
+    transference_personnels: [],
     valid: true
   }),
 
   async mounted() {
-    await this.order_appointQueryAll();
-    await this.order_appoint_num();
     await this.conditons_transfer_successQueryAll();
   },
 
   methods: {
-    async order_appointQueryAll() {
-      this.loading = true;
-      let result = await this.$http
-        .post("order_appoint.php", {
-          ApiKey: this.ApiKey,
-          id_oa: this.id_url
-        })
-        .finally(() => (this.loading = false));
-      this.order_appoints = result.data;
-      console.log(result.data)
-    },
-
-    async order_appoint_num() {
-      let result = await this.$http.post("order_appoint.php", {
-        ApiKey: this.ApiKey,
-        id_oa: this.id_url,
-        time_s: this.order_appoints.time_s,
-        year_s: this.order_appoints.year_s,
-        name_position: this.position_url
-      });
-      this.order_appoints = result.data;
-    },
-
     async conditons_transfer_successQueryAll() {
-      let result = await this.$http.post(
-        "conditons_transfer_success_filter_2.php",
-        {
-          ApiKey: this.ApiKey,
-          time_s: this.order_appoints.time_s,
-          year_s: this.order_appoints.year_s,
-          name_position: this.position_url
-        }
-      );
-      this.conditons_transfer_successs = result.data;
+      let result = await this.$http.post("transference_personnel.php", {
+        ApiKey: this.ApiKey,
+        time_s: this.time_ss,
+        year_s: this.year_ss,
+        suspend: "ok"
+      });
+      this.transference_personnels = result.data;
+      console.log(result.data);
+      console.log(this.time_ss);
+      console.log(this.year_ss);
+    
     },
 
     Export2Doc(element, filename) {
@@ -273,31 +204,22 @@ export default {
   },
 
   computed: {
-    url_result() {
+    time_ss() {
       let result = window.location.href;
       let split_s = result.split("/");
       return split_s[6];
-    },
-
-    position_url() {
-      let result = this.url_result.slice(6);
-      if (result == "teach") {
-        result = "ครู";
-      } else {
-        result = "บริหาร";
-      }
-      return result;
-    },
-    id_url() {
-      let result = this.url_result;
-      return result[0];
-    }
+    },   
+     year_ss() {
+      let result = window.location.href;
+      let split_s = result.split("/");
+      return split_s[7];
+    },   
+   
   }
 };
 </script>
 <style>
 @import url(https://fonts.googleapis.com/css?family=Prompt:400,300|Roboto:400,300&subset=latin,thai);
-
 body {
   font-family: "TH SarabunIT๙", "TH SarabunPSK", "Angsana New", AngsanaUPC;
   font-size: 16px;
@@ -370,8 +292,8 @@ tfoot td {
 .page {
   font-family: "TH SarabunIT๙", "TH SarabunPSK", "Angsana New", AngsanaUPC;
   font-size: 16pt;
-  width: 29.7cm;
-  min-height: 21cm;
+  width: 21cm;
+  min-height: 29.7cm;
   border: 1px #d3d3d3 solid;
   border-radius: 5px;
   background: white;

@@ -12,10 +12,10 @@
       </v-btn>
     </v-bottom-navigation>
     <v-bottom-navigation
-      :value="value"
+      
       color="info"
       horizontal
-      v-model="value"
+      
       :background-color="color"
       dark
     >
@@ -114,7 +114,7 @@
                     target="_blank"
                   >
                     <v-icon class="pa-1">mdi-printer</v-icon> พิมพ์รายงาน แบบที่
-                    1 สถานศึกษารับย้ายและผู้ขอย้าย</v-btn
+                    1 ข้อมูลดิบใช้พิจารณา</v-btn
                   >
                 </v-col>
                 <v-col cols="12" md="4">
@@ -124,16 +124,13 @@
                     outlined
                     color="info"
                     :href="
-                      '#/admin/print_report_movement_online_2/' +
+                      '#/admin/print_report_condition_all/' +
                         times_select +
                         '/' +
-                        years_select +
-                        '/' +
-                        'teach'
-                    "
+                        years_select"
                     target="_blank"
                     ><v-icon class="pa-1">mdi-printer</v-icon> พิมพ์รายงาน
-                    แบบที่ 2 ผู้ขอย้ายและสถานศึกษา</v-btn
+                    แบบที่ 2 แบบอัตราว่าง</v-btn
                   >
                 </v-col>
                 <v-col cols="12" md="4">
@@ -141,18 +138,16 @@
                     block
                     large
                     outlined
-                    color="info"
+                    color="red"
                     :href="
-                      '#/admin/print_report_movement_online_3/' +
+                      '#/admin/print_report_transference_suspend/' +
                         times_select +
                         '/' +
-                        years_select +
-                        '/' +
-                        'teach'
+                        years_select
                     "
                     target="_blank"
                     ><v-icon class="pa-1">mdi-printer</v-icon>พิมพ์รายงาน แบบที่
-                    3 สถานศึกษารับย้ายและผู้ขอย้ายพร้อมเหตุผล</v-btn
+                    3 ผู้ขอย้ายถูกระงับย้าย</v-btn
                   >
                 </v-col>
                 <v-col cols="12" md="4">
@@ -204,7 +199,7 @@
                     ตำแหน่งว่าง</v-btn
                   >
                 </v-col>
-                 <v-col cols="12" md="4">
+                 <v-col cols="12" md="6">
                   <v-btn
                     block
                     large
@@ -221,7 +216,7 @@
                     สถานศึกษาไม่ดำเนินการรายงานเงือนไขสาขาวิชา</v-btn
                   >
                 </v-col>
-                <v-col cols="12" md="4">
+                <v-col cols="12" md="6">
                   <v-btn
                     block
                     large

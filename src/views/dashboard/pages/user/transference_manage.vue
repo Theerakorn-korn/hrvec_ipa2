@@ -93,7 +93,6 @@
                     </h3>
                     <h2>ปฏิบัติหน้าที่เป็นเวลา : {{ get_Appoint_Age }}</h2>
                   </div>
-
                   <v-btn
                     v-if="transference_manages.manage_id_ref === manage_id_ref"
                     x-large
@@ -1751,13 +1750,13 @@ export default {
       id_card: userSession.id_card
     });
     this.user = result_user.data;
-
+await this.periodQuery();
     await this.transference_manageAll();
     await this.transference_manage_locationQueryAll();
     await this.personnel_educationsQueryAll();
     await this.personnel_educations_checkQueryAll();
     await this.personnel_work_historyQueryAll();
-    await this.periodQuery();
+    
   },
 
   methods: {
@@ -1845,7 +1844,11 @@ export default {
         })
         .finally(() => (this.loading = false));
       this.transference_manages = result.data;
+
+      console.log(result.data)
+      console.log(this.manage_id_ref)
     },
+
     async transference_manage_locationQueryAll() {
       let result = await this.$http.post("transference_manage_location.php", {
         ApiKey: this.ApiKey,

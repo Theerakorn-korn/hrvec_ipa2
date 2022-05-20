@@ -71,8 +71,41 @@
                   <v-icon>mdi-pencil</v-icon> แก้ไขรูปโปรไฟล์</v-btn
                 >
               </div>
+              <div>
+                <v-btn
+                  elevation="2"
+                  x-large
+                  rounded
+                  color="warning"
+                  class="mr-0"
+                  @click.native="passwordUpdate()"
+                >
+                  <v-icon>mdi-pencil</v-icon>
+                  แก้ไขรหัสผ่านเข้าสู่ระบบ</v-btn
+                >
+              </div>
             </v-card-text>
           </base-material-card>
+          <v-card color="#FFF3E0">
+            <r-row>
+              <v-col cols="12" md="12">
+                <div class="text-center">
+                  <h3>ขอย้ายกรณีพิเศษ</h3>
+                  <span></span>
+                  <div class="text-center">
+                    <v-btn
+                      rounded
+                      color="warning"
+                      large
+                      to="/transference_personnel_sp"
+                    >
+                      <v-icon class="pa-2">mdi-pencil</v-icon> ย้ายกรณีพิเศษ
+                    </v-btn>
+                  </div>
+                </div>
+              </v-col>
+            </r-row>
+          </v-card>
         </v-col>
         <v-col cols="12" md="8">
           <base-material-card class="text_google">
@@ -119,7 +152,7 @@
                                 ระหว่างวันที่ 1 - 15 ส.ค.
                               </h4>
                             </v-alert>
-                          </v-col>                          
+                          </v-col>
                           <v-col
                             cols="12"
                             md="12"
@@ -190,67 +223,217 @@
                         </v-alert>
                       </div>
                     </v-col>
+                    <v-col cols="12" md="6">
+                      <v-list two-line outlined>
+                        <v-list-item>
+                          <v-list-item-icon>
+                            <v-icon color="indigo">
+                              mdi-domain
+                            </v-icon>
+                          </v-list-item-icon>
 
-                    <v-col cols="12" md="4">
-                      <v-icon large>mdi-menu-right</v-icon> สังกัด :
-                      {{ user.college_name }}
+                          <v-list-item-content>
+                            <v-list-item-title>สังกัด</v-list-item-title>
+                            <v-list-item-subtitle>{{
+                              user.college_name
+                            }}</v-list-item-subtitle>
+                          </v-list-item-content>
+                        </v-list-item>
+
+                        <v-list-item>
+                          <v-list-item-action></v-list-item-action>
+
+                          <v-list-item-content>
+                            <v-list-item-title>เลขที่ตำแหน่ง</v-list-item-title>
+                            <v-list-item-subtitle>
+                              {{ user.id_position }}</v-list-item-subtitle
+                            >
+                          </v-list-item-content>
+                          <v-list-item-content>
+                            <v-list-item-title>ตำแหน่ง</v-list-item-title>
+                            <v-list-item-subtitle>
+                              {{ user.position_name }}</v-list-item-subtitle
+                            >
+                          </v-list-item-content>
+                        </v-list-item>
+
+                        <v-divider inset></v-divider>
+
+                        <v-list-item>
+                          <v-list-item-icon>
+                            <v-icon color="indigo">
+                              mdi-school
+                            </v-icon>
+                          </v-list-item-icon>
+
+                          <v-list-item-content>
+                            <v-list-item-title>คุณวุฒิ</v-list-item-title>
+                            <v-list-item-subtitle>{{
+                              user.ed_abb
+                            }}</v-list-item-subtitle>
+                          </v-list-item-content>
+                          <v-list-item-content>
+                            <v-list-item-title>สาขาวิชาเอก</v-list-item-title>
+                            <v-list-item-subtitle>{{
+                              user.ed_name
+                            }}</v-list-item-subtitle>
+                          </v-list-item-content>
+                        </v-list-item>
+
+                        <v-divider inset></v-divider>
+
+                        <v-list-item>
+                          <v-list-item-icon>
+                            <v-icon color="indigo">
+                              mdi-account-settings
+                            </v-icon>
+                          </v-list-item-icon>
+
+                          <v-list-item-content>
+                            <v-list-item-title>วิทยฐานะ</v-list-item-title>
+                            <v-list-item-subtitle>{{
+                              user.rang_name
+                            }}</v-list-item-subtitle>
+                          </v-list-item-content>
+                          <v-list-item-content>
+                            <v-list-item-title>ระดับ</v-list-item-title>
+                            <v-list-item-subtitle>{{
+                              user.rang_level
+                            }}</v-list-item-subtitle>
+                          </v-list-item-content>
+                        </v-list-item>
+                      </v-list>
                     </v-col>
-                    <v-col cols="12" md="4">
-                      <v-icon large left>mdi-menu-right</v-icon> รหัสบัตรประชาชน
-                      : {{ user.id_card }}
+                    <v-col cols="12" md="6">
+                      <v-list two-line outlined>
+                        <v-list-item>
+                          <v-list-item-icon>
+                            <v-icon color="indigo">
+                              mdi-account-box
+                            </v-icon>
+                          </v-list-item-icon>
+
+                          <v-list-item-content>
+                            <v-list-item-title
+                              >รหัสบัตรประชาชน</v-list-item-title
+                            >
+                            <v-list-item-subtitle>{{
+                              user.id_card
+                            }}</v-list-item-subtitle>
+                          </v-list-item-content>
+                        </v-list-item>
+
+                        <v-list-item>
+                          <v-list-item-action></v-list-item-action>
+
+                          <v-list-item-content>
+                            <v-list-item-title
+                              >วันเดือนปี เกิด</v-list-item-title
+                            >
+                            <v-list-item-subtitle>
+                              {{ user.brith_day }}/{{ user.brith_month }}/{{
+                                user.brith_year
+                              }}</v-list-item-subtitle
+                            >
+                          </v-list-item-content>
+
+                          <v-list-item-content>
+                            <v-list-item-title
+                              >วันเดือนปี บรรจุ</v-list-item-title
+                            >
+                            <v-list-item-subtitle>
+                              {{ user.appoin_day }}/{{ user.appoin_month }}/{{
+                                user.appoin_year
+                              }}</v-list-item-subtitle
+                            >
+                          </v-list-item-content>
+                        </v-list-item>
+
+                        <v-divider inset></v-divider>
+
+                        <v-list-item>
+                          <v-list-item-icon>
+                            <v-icon color="indigo">
+                              mdi-school
+                            </v-icon>
+                          </v-list-item-icon>
+
+                          <v-list-item-content>
+                            <v-list-item-title>คุณวุฒิ</v-list-item-title>
+                            <v-list-item-subtitle>{{
+                              user.ed_abb
+                            }}</v-list-item-subtitle>
+                          </v-list-item-content>
+                          <v-list-item-content>
+                            <v-list-item-title>สาขาวิชาเอก</v-list-item-title>
+                            <v-list-item-subtitle>{{
+                              user.ed_name
+                            }}</v-list-item-subtitle>
+                          </v-list-item-content>
+                        </v-list-item>
+
+                        <v-divider inset></v-divider>
+
+                        <v-list-item>
+                          <v-list-item-icon>
+                            <v-icon color="indigo">
+                              mdi-account-settings
+                            </v-icon>
+                          </v-list-item-icon>
+
+                          <v-list-item-content>
+                            <v-list-item-title>เกษียณ</v-list-item-title>
+                            <v-list-item-subtitle>{{
+                              user.retrire_year
+                            }}</v-list-item-subtitle>
+                          </v-list-item-content>
+                          <v-list-item-content>
+                            <v-list-item-title
+                              >เบอร์โทรติดต่อ</v-list-item-title
+                            >
+                            <v-list-item-subtitle>{{
+                              user.tel_p
+                            }}</v-list-item-subtitle>
+                          </v-list-item-content>
+                        </v-list-item>
+                        <v-divider inset></v-divider>
+
+                        <v-list-item>
+                          <v-list-item-icon>
+                            <v-icon color="indigo">
+                              mdi-account-settings
+                            </v-icon>
+                          </v-list-item-icon>
+
+                          <v-list-item-content>
+                            <v-list-item-title>สถานภาพสมรส</v-list-item-title>
+                            <v-list-item-subtitle>{{
+                              marital_status
+                            }}</v-list-item-subtitle>
+                          </v-list-item-content>
+                          <v-list-item-content>
+                            <v-list-item-title>E-mail</v-list-item-title>
+                            <v-list-item-subtitle>{{
+                              user.e_mail
+                            }}</v-list-item-subtitle>
+                          </v-list-item-content>
+                        </v-list-item>
+                        <div class="text-center">
+                          <v-btn
+                            elevation="2"
+                            x-large
+                            rounded
+                            color="warning"
+                            class="mr-0"
+                            @click.native="personnelUpdate()"
+                          >
+                            <v-icon>mdi-pencil</v-icon>
+                            แก้ไขข้อมูลเบื้องต้น</v-btn
+                          >
+                        </div>
+                      </v-list>
                     </v-col>
-                    <v-col cols="12" md="4">
-                      <v-icon large left>mdi-menu-right</v-icon> ตำแหน่ง :
-                      {{ user.position_name }}
-                    </v-col>
-                    <v-col cols="12" md="4">
-                      <v-icon large left>mdi-menu-right</v-icon> เลขที่ตำแหน่ง :
-                      {{ user.id_position }}
-                    </v-col>
-                    <v-col cols="12" md="4">
-                      <v-icon large left>mdi-menu-right</v-icon> วิทยฐานะ :
-                      {{ user.rang_name }}
-                    </v-col>
-                    <v-col cols="12" md="4">
-                      <v-icon large left>mdi-menu-right</v-icon> ระดับ :
-                      {{ user.rang_level }}
-                    </v-col>
-                    <v-col cols="12" md="4">
-                      <v-icon large left>mdi-menu-right</v-icon> คุณวุฒิ :
-                      {{ user.ed_abb }}
-                    </v-col>
-                    <v-col cols="12" md="4">
-                      <v-icon large left>mdi-menu-right</v-icon> สาขาวิชาเอก :
-                      {{ user.ed_name }}
-                    </v-col>
-                    <v-col cols="12" md="4">
-                      <v-icon large left>mdi-menu-right</v-icon> วันเดือนปี เกิด
-                      : {{ user.brith_day }}/{{ user.brith_month }}/{{
-                        user.brith_year
-                      }}
-                    </v-col>
-                    <v-col cols="12" md="4">
-                      <v-icon large left>mdi-menu-right</v-icon> วันเดือนปี
-                      บรรจุ : {{ user.appoin_day }}/{{ user.appoin_month }}/{{
-                        user.appoin_year
-                      }}
-                    </v-col>
-                    <v-col cols="12" md="4">
-                      <v-icon large left>mdi-menu-right</v-icon> เกษียณ :
-                      {{ user.retrire_year }}
-                    </v-col>
-                    <v-col cols="12" md="4">
-                      <v-icon large left>mdi-menu-right</v-icon> เบอร์โทรติดต่อ
-                      : {{ user.tel_p }}
-                    </v-col>
-                    <v-col cols="12" md="4">
-                      <v-icon large left>mdi-menu-right</v-icon> E-mail :
-                      {{ user.e_mail }}
-                    </v-col>
-                    <v-col cols="12" md="4">
-                      <v-icon large left>mdi-menu-right</v-icon> สถานภาพสมรส :
-                      {{ marital_status }}
-                    </v-col>
+
                     <v-col cols="12" md="12">
                       <dir v-if="user.status_appove === 'wait'"></dir>
                       <div v-else>
@@ -259,31 +442,6 @@
                           และแก้ไขข้อมูลให้เรียบร้อยก่อนการ เสนอย้าย
                         </h2>
                       </div>
-                    </v-col>
-                    <v-col cols="12" md="12" class="text-right">
-                      <v-btn
-                        elevation="2"
-                        x-large
-                        rounded
-                        color="warning"
-                        class="mr-0"
-                        @click.native="personnelUpdate()"
-                      >
-                        <v-icon>mdi-pencil</v-icon> แก้ไขข้อมูลเบื้องต้น</v-btn
-                      >
-                    </v-col>
-                    <v-col cols="12" md="12" class="text-right">
-                      <v-btn
-                        elevation="2"
-                        x-large
-                        rounded
-                        color="warning"
-                        class="mr-0"
-                        @click.native="passwordUpdate()"
-                      >
-                        <v-icon>mdi-pencil</v-icon>
-                        แก้ไขรหัสผ่านเข้าสู่ระบบ</v-btn
-                      >
                     </v-col>
                   </v-row>
                 </v-container>
@@ -471,21 +629,35 @@
                       ></v-autocomplete>
                     </v-flex>
                     <v-flex xs12>
-                      <v-divider></v-divider>
+                    <hr color="primary">
                     </v-flex>
-                    <v-flex md6>
+                    <v-flex md4>
                       <v-text-field
                         outlined
                         label="เบอร์โทรติดต่อ ของท่าน : "
                         v-model="user.tel_p"
                       ></v-text-field>
                     </v-flex>
-                    <v-flex md6>
+                    <v-flex md4>
                       <v-text-field
                         outlined
                         label="E-mail ของท่าน :"
                         v-model="user.e_mail"
                       ></v-text-field>
+                    </v-flex>
+                     <v-flex
+                      md4                    
+                    >
+                      <v-autocomplete
+                        :items="provices_sh"
+                        item-text="province_name"
+                        item-value="province_ID"
+                        label="ภูมิลำเนาของข้าพเจ้า จังหวัด : "
+                        required
+                        outlined
+                        :rules="[v => !!v || '']"
+                        v-model="user.domicile_pt"
+                      ></v-autocomplete>
                     </v-flex>
                     <v-flex xs12>
                       <v-divider></v-divider>
@@ -761,22 +933,21 @@ export default {
       ApiKey: this.ApiKey
     });
     this.provices_sh = result_provice.data;
-   
+
     await this.personnelQuery();
     await this.transference_personnelQueryAll();
     await this.periodQuery();
   },
 
   methods: {
-
     async periodQuery() {
-       let result_period;
-    result_period = await this.$http.post("period.php", {
-      ApiKey: this.ApiKey,
-      period_enable: this.period_enable,
-      period_type: this.user_status_type
-    });
-    this.periods = result_period.data;    
+      let result_period;
+      result_period = await this.$http.post("period.php", {
+        ApiKey: this.ApiKey,
+        period_enable: this.period_enable,
+        period_type: this.user_status_type
+      });
+      this.periods = result_period.data;
     },
 
     async personnelQuery() {
@@ -988,10 +1159,9 @@ export default {
       let result;
       if (user_status == "tech") {
         result = "teacher";
-      } else if (user_status == "director"){
+      } else if (user_status == "director") {
         result = "manage";
-      }
-      else if (user_status == "se_director"){
+      } else if (user_status == "se_director") {
         result = "manage";
       }
       return result;

@@ -1,6 +1,6 @@
 <template>
   <div>
-        <v-bottom-navigation color="info" horizontal :background-color="color" dark>
+    <v-bottom-navigation color="info" horizontal :background-color="color" dark>
       <v-btn to="/admin/assistant_teacher_detail">
         <span>รายละเอียดการประเมินครูผู้ช่วยเอก </span>
         <v-icon>mdi-account-star</v-icon>
@@ -23,15 +23,19 @@
               <v-text-field
                 v-model="search"
                 append-icon="mdi-magnify"
-                label="ค้นหา ระบุคำ หรือ ส่วนข้อความเกี่ยวข้อง"             
-                v-on:keyup.enter="OnEnter()"               
+                label="ค้นหา ระบุคำ หรือ ส่วนข้อความเกี่ยวข้อง"
+                v-on:keyup.enter="OnEnter()"
                 filled
                 class="mb-2"
               />
             </v-col>
             <v-col cols="12" md="6">
-              <v-select filled label="ค้นหา :" v-model="select_per" :items="select_personel">
-
+              <v-select
+                filled
+                label="ค้นหา :"
+                v-model="select_per"
+                :items="select_personel"
+              >
               </v-select>
             </v-col>
           </v-row>
@@ -61,9 +65,6 @@
             }}
           </template>
 
-
-          
-
           <template v-slot:[`item.evaluate_s`]="{ item }">
             <v-chip
               color="green"
@@ -75,7 +76,12 @@
               </h2>
             </v-chip>
             <v-chip
-              v-else-if="item.last_time_ass === '1' || item.last_time_ass === '2' || item.last_time_ass === '3' || item.last_time_ass === '4'"
+              v-else-if="
+                item.last_time_ass === '1' ||
+                  item.last_time_ass === '2' ||
+                  item.last_time_ass === '3' ||
+                  item.last_time_ass === '4'
+              "
               color="info"
               @click.stop="evaluate_assistant(item.id_card)"
               dark
@@ -88,32 +94,34 @@
               color="red"
               @click.stop="evaluate_assistant(item.id_card)"
             >
-              <h2> <v-icon class="pa-1">mdi-cursor-pointer</v-icon> ไม่ได้เริ่มประเมิน</h2>
+              <h2>
+                <v-icon class="pa-1">mdi-cursor-pointer</v-icon>
+                ไม่ได้เริ่มประเมิน
+              </h2>
             </v-chip>
           </template>
 
-           <template v-slot:[`item.prints`]="{ item }">
+          <template v-slot:[`item.prints`]="{ item }">
             <v-chip
               color="info"
               dark
               v-if="item.report_id_card === item.id_card"
             >
-              <h2>
-                <v-icon>mdi-printer</v-icon> พิมพ์รายงาน
-              </h2>
+              <h2><v-icon>mdi-printer</v-icon> พิมพ์รายงาน</h2>
             </v-chip>
             <v-chip
-             v-else-if="item.last_time_ass === '1' || item.last_time_ass === '2' || item.last_time_ass === '3' || item.last_time_ass === '4'"
-              color="info" 
-              dark           
+              v-else-if="
+                item.last_time_ass === '1' ||
+                  item.last_time_ass === '2' ||
+                  item.last_time_ass === '3' ||
+                  item.last_time_ass === '4'
+              "
+              color="info"
+              dark
             >
               <h2>อยู่ระหว่างการประเมิน</h2>
             </v-chip>
-            <v-chip
-              v-else
-              color="red"  
-              dark        
-            >
+            <v-chip v-else color="red" dark>
               <h2>ไม่ได้เริ่มประเมิน</h2>
             </v-chip>
           </template>
@@ -457,7 +465,7 @@
             <v-card-actions>
               <v-spacer></v-spacer>
               <v-btn
-              color="warning"
+                color="warning"
                 large
                 @click.stop="assistant_teacherdialog = false"
                 rounded
@@ -598,7 +606,7 @@
             <v-card-actions>
               <v-spacer></v-spacer>
               <v-btn
-              color="warning"
+                color="warning"
                 large
                 @click.stop="assistant_teacherEditdialog = false"
                 rounded
@@ -835,7 +843,7 @@
             <v-card-actions>
               <v-spacer></v-spacer>
               <v-btn
-              color="warning"
+                color="warning"
                 large
                 @click.stop="editpersonnel_temporarydialog = false"
                 rounded
@@ -917,7 +925,7 @@ export default {
         { text: "เลขที่ตำแหน่ง", align: "center", value: "id_position" },
         { text: "วิทยฐานะ", align: "center", value: "rang_name" },
         { text: "ระดับ", align: "center", value: "rang_level" },
-         { text: "การประเมิน", align: "center", value: "evaluate_s" },
+        { text: "การประเมิน", align: "center", value: "evaluate_s" },
         { text: "พิมพ์", align: "center", value: "prints" },
         { text: "วันเดือนปีเกิด", align: "center", value: "brith_day" },
         { text: "วันเดือนปีบรรจุ", align: "center", value: "appoin_day" },
@@ -988,16 +996,16 @@ export default {
           value: -1
         }
       ],
-select_per:'',
-select_personel:[
-   { text: "แสดงทั้งหมด ", value: "show_all" },
+      select_per: "",
+      select_personel: [
+        { text: "แสดงทั้งหมด ", value: "show_all" },
         { text: "ประเมินครั้งที่ 1 ", value: "1" },
         { text: "ประเมินครั้งที่ 2 ", value: "2" },
         { text: "ประเมินครั้งที่ 3 ", value: "3" },
         { text: "ประเมินครั้งที่ 4 ", value: "4" },
         { text: "ส่งผลการประเมิน ", value: "confirm" },
         { text: "ไม่ได้รับการประเมิน ", value: "not_evaluated" }
-],
+      ],
 
       college: {},
       provinces: [],
@@ -1024,7 +1032,8 @@ select_personel:[
       assistant_teacher_report_s: {},
       result_assistant_teacher_reports: {},
       cancel_assistant_teacher_reports: {},
-      cancel_assistant_teachers: {}
+      cancel_assistant_teachers: {},
+      data_syslog: {}
     };
   },
 
@@ -1102,8 +1111,6 @@ select_personel:[
         assistant_teacher_id: assistant_teacher_id
       });
       this.assistant_teachers_edit = result_assistant.data;
-    /*   console.log(result_assistant.data);
-      console.log(assistant_teacher_id); */
       this.assistant_teacherEditdialog = true;
     },
 
@@ -1124,7 +1131,7 @@ select_personel:[
         this.addassistant_teacher.assistant_teacher_college_code = this.personnel_temporary_id_card.college_code;
         this.addassistant_teacher.assistant_teacher_id_card = this.personnel_temporary_id_card.id_card;
         this.addassistant_teacher.assistant_teacher_times = this.times_s;
-       /*  console.log(this.addassistant_teacher); */
+        /*  console.log(this.addassistant_teacher); */
 
         let result = await this.$http.post(
           "assistant_teacher.insert.php",
@@ -1152,6 +1159,15 @@ select_personel:[
           this.snackbar.color = "success";
           this.snackbar.text = "บันทึกข้อมูลเรียบร้อย";
           this.snackbar.show = true;
+          let userSession = JSON.parse(sessionStorage.getItem("user")) || 0;
+          this.data_syslog.ApiKey = this.ApiKey;
+          this.data_syslog.user_account = userSession.user_name;
+          this.data_syslog.event_log = "update";
+          this.data_syslog.page_log = "assistant_teacher";
+          this.data_syslog.table_log = "assistant_teacher";
+          this.data_syslog.detail_log = this.addassistant_teacher.assistant_teacher_id_card;
+          this.data_syslog.date_times = this.date_today_log;
+          await this.$http.post("data_syslog.insert.php", this.data_syslog);
           this.personnel_temporaryQueryAll();
         } else {
           this.snackbar.icon = "mdi-close-network";
@@ -1166,8 +1182,8 @@ select_personel:[
     async assistant_teacherEditdialogSubmit() {
       if (this.$refs.assistant_teacherEditform.validate()) {
         this.assistant_teachers_edit.ApiKey = this.ApiKey;
-       /*  console.log(this.assistant_teachers_edit);
- */
+        /*  console.log(this.assistant_teachers_edit);
+         */
         let result = await this.$http.post(
           "assistant_teacher.update.php",
           this.assistant_teachers_edit
@@ -1193,6 +1209,15 @@ select_personel:[
           this.snackbar.color = "success";
           this.snackbar.text = "บันทึกข้อมูลเรียบร้อย";
           this.snackbar.show = true;
+          let userSession = JSON.parse(sessionStorage.getItem("user")) || 0;
+          this.data_syslog.ApiKey = this.ApiKey;
+          this.data_syslog.user_account = userSession.user_name;
+          this.data_syslog.event_log = "update";
+          this.data_syslog.page_log = "assistant_teacher";
+          this.data_syslog.table_log = "assistant_teacher";
+          this.data_syslog.detail_log = this.assistant_teachers_edit.assistant_teacher_id_card;
+          this.data_syslog.date_times = this.date_today_log;
+          await this.$http.post("data_syslog.insert.php", this.data_syslog);
           this.personnel_temporaryQueryAll();
         } else {
           this.snackbar.icon = "mdi-close-network";
@@ -1217,7 +1242,7 @@ select_personel:[
       this.assistant_teacher_report_s.assistant_teacher_re_datetime = this.date_today;
       this.assistant_teacher_report_s.assistant_teacher_re_avg_score = this.personnel_temporary_id_card.avg_score;
 
- /*      console.log(this.assistant_teachers_confrim);
+      /*      console.log(this.assistant_teachers_confrim);
       console.log(this.assistant_teacher_report_s); */
 
       let result = await this.$http.post(
@@ -1255,6 +1280,16 @@ select_personel:[
         );
         this.result_assistant_teacher_reports =
           result_assistant_teacher_report.data;
+
+        let userSession = JSON.parse(sessionStorage.getItem("user")) || 0;
+        this.data_syslog.ApiKey = this.ApiKey;
+        this.data_syslog.user_account = userSession.user_name;
+        this.data_syslog.event_log = "insert";
+        this.data_syslog.page_log = "assistant_teacher_report";
+        this.data_syslog.table_log = "assistant_teacher_report";
+        this.data_syslog.detail_log = this.assistant_teacher_report_s.assistant_teacher_re_id_card;
+        this.data_syslog.date_times = this.date_today_log;
+        await this.$http.post("data_syslog.insert.php", this.data_syslog);
 
         this.assistant_teachers = result_assistant.data;
         this.snackbar.icon = "mdi-font-awesome";
@@ -1301,6 +1336,17 @@ select_personel:[
           this.snackbar.color = "success";
           this.snackbar.text = "แก้ไขข้อมูลเรียบร้อย";
           this.snackbar.show = true;
+
+          let userSession = JSON.parse(sessionStorage.getItem("user")) || 0;
+          this.data_syslog.ApiKey = this.ApiKey;
+          this.data_syslog.user_account = userSession.user_name;
+          this.data_syslog.event_log = "update";
+          this.data_syslog.page_log = "assistant_teacher";
+          this.data_syslog.table_log = "personnel_temporary";
+          this.data_syslog.detail_log = this.editpersonnel_temporary.id_card;
+          this.data_syslog.date_times = this.date_today_log;
+          await this.$http.post("data_syslog.insert.php", this.data_syslog);
+
           this.personnel_temporaryQueryAll();
         } else {
           this.snackbar.icon = "mdi-close-network";
@@ -1319,7 +1365,7 @@ select_personel:[
       this.cancel_assistant_teachers.assistant_teacher_id_card = this.personnel_temporary_id_card.id_card;
       this.cancel_assistant_teachers.assistant_teacher_status = "";
 
-   /*    console.log(this.cancel_assistant_teacher_reports);
+      /*    console.log(this.cancel_assistant_teacher_reports);
       console.log(this.cancel_assistant_teachers);
  */
       let result = await this.$http.post(
@@ -1363,6 +1409,18 @@ select_personel:[
         this.snackbar.color = "success";
         this.snackbar.text = "บันทึกข้อมูลเรียบร้อย";
         this.snackbar.show = true;
+
+         let userSession = JSON.parse(sessionStorage.getItem("user")) || 0;
+          this.data_syslog.ApiKey = this.ApiKey;
+          this.data_syslog.user_account = userSession.user_name;
+          this.data_syslog.event_log = "Cancel";
+          this.data_syslog.page_log = "assistant_teacher";
+          this.data_syslog.table_log = "assistant_teacher_report";
+          this.data_syslog.detail_log = this.cancel_assistant_teachers.assistant_teacher_id_card;
+          this.data_syslog.date_times = this.date_today_log;
+          await this.$http.post("data_syslog.insert.php", this.data_syslog);
+
+
         this.personnel_temporaryQueryAll();
       } else {
         this.snackbar.icon = "mdi-close-network";
@@ -1410,8 +1468,18 @@ select_personel:[
       today = dd + "/" + mm + "/" + yyyy;
       return today;
     },
-     color() {
+    color() {
       return "indigo darken-4";
+    },
+    date_today_log() {
+      let today = new Date();
+      let dd = String(today.getDate()).padStart(2, "0");
+      let mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
+      let yyyy = today.getFullYear() + 543;
+      let time =
+        today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+      today = dd + "/" + mm + "/" + yyyy + "/" + time;
+      return today;
     }
   }
 };

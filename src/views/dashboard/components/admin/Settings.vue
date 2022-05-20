@@ -127,7 +127,10 @@
           </v-item-group>        
 
           
-          <div class="my-12" />      
+          <div class="my-12" />   
+          <v-btn rounded color="info" to="/admin/data_syslog">
+          Sys Log
+          </v-btn>
 
          
         </v-card-text>

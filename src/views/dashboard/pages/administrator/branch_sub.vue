@@ -396,6 +396,7 @@ export default {
       branchs_id_sub: [],
       branch_sub_ds_select: [],
       branch_sub_ds_select_sh: [],
+      data_syslog:{},
     };
   },
   async mounted() {
@@ -467,6 +468,17 @@ export default {
           this.snackbar.color = "success";
           this.snackbar.text = "บันทึกข้อมูลเรียบร้อย";
           this.snackbar.show = true;
+
+          let userSession = JSON.parse(sessionStorage.getItem("user")) || 0;
+          this.data_syslog.ApiKey = this.ApiKey;
+          this.data_syslog.user_account = userSession.user_name;
+          this.data_syslog.event_log = "update";
+          this.data_syslog.page_log = "personnel";
+          this.data_syslog.table_log = "personnel_temporary";
+          this.data_syslog.detail_log = this.editpersonnel_temporary_admin.id_card;
+          this.data_syslog.date_times = this.date_today_log;
+          await this.$http.post("data_syslog.insert.php", this.data_syslog);
+
           this.branch_sub_dQueryAll();
         } else {
           this.snackbar.icon = "mdi-close-network";
@@ -568,7 +580,16 @@ export default {
     },
     color() {
       return "teal darken-4";
-    }
+    },
+    date_today_log() {
+      let today = new Date();
+      let dd = String(today.getDate()).padStart(2, "0");
+      let mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
+      let yyyy = today.getFullYear() + 543;
+let time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+      today = dd + "/" + mm + "/" + yyyy + "/" + time;
+      return today;
+    },
   }
 };
 </script>

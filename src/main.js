@@ -16,7 +16,7 @@ import VueApexCharts from 'vue-apexcharts'
 /* import VueMoment from 'vue-moment'
 import moment from 'moment-timezone' */
 const request = axios.create({
-    /* baseURL: 'https://hrvec.org/HRvec_api/', */
+   /*  baseURL: 'https://hrvec.org/HRvec_api/', */
     baseURL: 'http://localhost:8080/HRvec_api/',
 })
 Vue.config.productionTip = false

@@ -324,9 +324,14 @@ export default {
 
       user_items: [
         {
-          text: "ข้อมูลเกี่ยวกับบุคคล",
+          text: "ข้อมูลเกี่ยวกับข้าราชการครูและบุคลากรทางการศึกษา (จากส่วนกลาง)",
           icon: "mdi-account",
           to: "/college/personnel_tem"
+        },
+         {
+          text: "ข้อมูลข้าราชการครูและบุคลากรทางการศึกษา (สถานศึกษา) อัตรากำลัง",
+          icon: "mdi-account",
+          to: "/college/personnel_etc"
         },
         {
           text: "ข้อมูลคุณวุฒิการศึกษา",

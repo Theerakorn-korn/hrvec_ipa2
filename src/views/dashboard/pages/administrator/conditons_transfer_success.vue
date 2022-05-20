@@ -67,7 +67,7 @@
       >
         <v-card class="mb-4 pa-2">
           <v-row>
-            <v-col cols="12" md="4" class="text-right">
+            <v-col cols="12" md="6" class="text-right">
               <v-text-field
                 v-model="search"
                 append-icon="mdi-magnify"
@@ -79,7 +79,7 @@
                 class="mb-2"
               />
             </v-col>
-            <v-col cols="12" md="1">
+            <v-col cols="12" md="2">
               <v-select
                 v-model="times_select"
                 :items="time_ss"
@@ -87,33 +87,26 @@
                 label="ครั้งที่ :"
               ></v-select>
             </v-col>
-            <v-col cols="12" md="1">
+            <v-col cols="12" md="2">
               <v-select
                 v-model="years_select"
                 :items="year_ss"
                 item-value="year_ss"
                 label="ปีที่ :"
               ></v-select>
-            </v-col>
-            <v-col cols="12" md="4">
-              <v-select
-                v-model="type_name_position"
-                :items="name_position_s"
-                item-value="value"
-                label="ประเภท :"
-              ></v-select>
-            </v-col>
+            </v-col>            
             <v-col cols="12" md="2">
               <v-btn large block @click="searchTimeYear()">ค้นหา</v-btn>
             </v-col>
           </v-row>
         </v-card>
         <v-data-table
-          color="success"
-          :loading="loading"
+          color="success"          
           :headers="headers"
           :items="conditons_transfer_successs"
           :search="search"
+          :loading="loading"
+
         >
           <template v-slot:[`item.college_name_old`]="{ item }">
             <v-chip color="grey" dark>
@@ -203,7 +196,7 @@ export default {
     return {
       i:0,
       value: 6,
-      loading: true,
+      loading: false,
       ApiKey: "HRvec2021",
       branch_s: [],
       tid_ref: [],
@@ -289,7 +282,7 @@ export default {
     };
   },
   async mounted() {
-    this.conditons_transfer_successQueryAll();
+    /* this.conditons_transfer_successQueryAll(); */
   },
   methods: {
     async searchTimeYear() {
@@ -298,15 +291,10 @@ export default {
         .post("conditons_transfer_success.php", {
           ApiKey: this.ApiKey,
           time_s: this.times_select,
-          year_s: this.years_select,
-          name_position: this.type_name_position
+          year_s: this.years_select          
         })
         .finally(() => (this.loading = false));
-      this.conditons_transfer_successs = result.data;     
-      console.log(result.data)
-      console.log(this.times_select)
-      console.log(this.years_select)
-      console.log(this.type_name_position)
+      this.conditons_transfer_successs = result.data;           
     },
 
     async conditons_transfer_successQueryAll() {

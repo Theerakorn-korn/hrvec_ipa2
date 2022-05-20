@@ -572,7 +572,7 @@ export default {
   data() {
     return {
       value: "1",
-      loading: true,
+      loading: false,
       ApiKey: "HRvec2021",
       branch_s: [],
       id_ref: [],
@@ -692,8 +692,9 @@ export default {
     });
     this.regions = result.data;
 
-    this.transference_locationQueryAll();
-    this.periodQuery();
+    await this.periodQuery();
+    await this.transference_locationQueryAll();
+  
     this.man_powerQuery();
   },
   methods: {
@@ -701,7 +702,8 @@ export default {
       let result_period;
       result_period = await this.$http.post("period.php", {
         ApiKey: this.ApiKey,
-        period_enable_process: this.period_enable_process
+           period_enable_process: "1",
+       period_type: "teacher"    
       });
       this.periods = result_period.data;
     },
@@ -758,7 +760,9 @@ export default {
       this.loading = true;
       let result = await this.$http
         .post("transference_location.php", {
-          ApiKey: this.ApiKey
+          ApiKey: this.ApiKey,
+           time_s: this.periods.period_times,
+          year_s: parseInt(this.periods.period_year) + 543
         })
         .finally(() => (this.loading = false));
       this.transference_locations = result.data;

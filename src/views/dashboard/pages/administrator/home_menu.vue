@@ -162,14 +162,14 @@
 
       <v-col cols="12" md="12">
         <v-alert text dense color="teal" icon="mdi-clock-fast" border="left">
-          <h2>ส่วนเงือนไขการย้ายและการย้าย</h2>
+          <h2>ส่วนเการย้ายสายการสอน</h2>
         </v-alert>
       </v-col>
 
       <v-col cols="12" md="4">
         <v-card>
           <v-card-title
-            >ระบบการย้ายข้าราชการครูและบุคลากรทางการศึกษา</v-card-title
+            >ระบบการย้ายข้าราชการครู สายการสอน</v-card-title
           >
           <v-list>
             <v-list-item-group>
@@ -187,9 +187,10 @@
               </v-list-item>
             </v-list-item-group>
           </v-list>
-        </v-card>
+        </v-card>        
       </v-col>
-      <v-col cols="12" md="4">
+
+       <v-col cols="12" md="4">
         <v-card>
           <v-card-title>เงือนไขสาขาวิชาสถานศึกษา</v-card-title>
           <v-list>
@@ -210,7 +211,9 @@
           </v-list>
         </v-card>
       </v-col>
-      <v-col cols="12" md="4">
+     
+
+       <v-col cols="12" md="4">
         <v-card>
           <v-card-title>หนังสือราชการ</v-card-title>
           <v-list>
@@ -231,6 +234,38 @@
           </v-list>
         </v-card>
       </v-col>
+
+       <v-col cols="12" md="12">
+        <v-alert text dense color="teal" icon="mdi-clock-fast" border="left">
+          <h2>ส่วนการย้ายสายงานบริหารสถานศึกษา</h2>
+        </v-alert>
+      </v-col>
+ <v-col cols="12" md="4">
+        <v-card>
+          <v-card-title
+            >ระบบการย้ายบุคลากรทางการศึกษา สายงานบริหารสถานศึกษา</v-card-title
+          >
+          <v-list>
+            <v-list-item-group>
+              <v-list-item
+                v-for="(item, i) in movement_manage_items"
+                :key="i"
+                :to="item.to"
+              >
+                <v-list-item-icon>
+                  <v-icon v-text="item.icon"></v-icon>
+                </v-list-item-icon>
+                <v-list-item-content>
+                  <v-list-item-title v-text="item.text"></v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
+            </v-list-item-group>
+          </v-list>
+        </v-card>        
+      </v-col>
+
+     
+
       <v-col cols="12" md="12">
         <v-alert text dense color="teal" icon="mdi-clock-fast" border="left">
           <h2>งานอัตรากำลัง</h2>
@@ -507,28 +542,48 @@ export default {
         
       ],
 
-      movement_items: [
-        
+      movement_items: [        
          {
-          text: "สายงานสอนและสายสนับสนุนการสอน ประกอบการพิจารณา",
+          text: "สายงานการสอน ประกอบการพิจารณา",
           icon: "mdi-account-switch",
           to: "/admin/transference_location_detail"
         },
           {
-          text: "สายงานการสอนและสายสนับสนุนการสอน รายละเอียด",
+          text: "สายงานการสอน รายละเอียด",
           icon: "mdi-account-switch",
           to: "/admin/transference_location"
         },
         {
-          text: "สายงานการสอนและสายสนับสนุนการสอน [ประมวลผลแบบ 1]",
+          text: "สายงานการสอน [ประมวลผลแบบ 1]",
           icon: "mdi-calculator",
           to: "/admin/transference_personnel"
         },
-      
+        {
+          text: "สายงานการสอน [กรณีพิเศษ]",
+          icon: "mdi-calculator",
+          to: "/admin/transference_personnel_sp"
+        },   
 
-        /*   { text: "สายงานบริหารสถานศึกษา", icon: "mdi-alarm-light", to: "/Dashboard" },
-          { text: "การย้ายกรณีพิเศษ", icon: "mdi-alarm-light", to: "/Dashboard" }, */
-      ],
+
+           ],
+
+           movement_manage_items: [        
+         {
+          text: "สายงานบริหารสถานศึกษา ประกอบการพิจารณา",
+          icon: "mdi-account-switch",
+          to: "/admin/transference_manage_location_detail"
+        },
+          {
+          text: "สายงานบริหารสถานศึกษา รายละเอียด",
+          icon: "mdi-account-switch",
+          to: "/admin/transference_manage_location"
+        },
+        {
+          text: "สายงานบริหารสถานศึกษา [ประมวลผลแบบ 1]",
+          icon: "mdi-calculator",
+          to: "/admin/transference_manage"
+        },   
+           ],
 
       condition_items: [
         {

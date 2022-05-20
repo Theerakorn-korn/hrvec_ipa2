@@ -4,7 +4,7 @@
     <v-container>
     <base-material-card
         icon="mdi-clipboard-text"
-        title="ข้อมูลประเภทสถานศึกษา"
+        title="System Log"
         class="px-5 py-3"
         
       >
@@ -22,38 +22,14 @@
                 filled
                 class="mb-2"
               />
-            </v-col>
-            <v-col cols="12" md="2"><v-btn
-              color="info"   
-              :href="
-                '#/admin/print_report_manpower'                
-              "              target="_blank"
-            
-            >
-              <v-icon   class="pa-1">
-                mdi-printer
-              </v-icon>
-              รายงานตำแหน่งว่างคงเหลือ
-            </v-btn></v-col>
-            <v-col cols="12" md="4" class="text-right">
-              <v-btn
-                
-                large
-                right
-                depressed
-                color="primary"
-                @click.native="man_powerAdd()"
-              >
-                <v-icon>mdi-plus-circle-outline</v-icon>เพิ่มรายการ
-              </v-btn>
-            </v-col>
+            </v-col>       
           </v-row>
         </v-card>
         <v-data-table
           color="success"
           :loading="loading"
           :headers="headers"
-          :items="man_powers"
+          :items="data_syslogs"
           :search="search"          
        > 
          <template v-slot:[`item.status_booking`]="{ item }">
@@ -69,7 +45,7 @@
             <v-icon
               color="yellow"
               
-              @click.stop="man_powerEdit(item.id_m)"
+              @click.stop="data_syslogEdit(item.id_m)"
             >
               mdi-pencil
             </v-icon>          
@@ -78,7 +54,7 @@
             <v-icon
               color="red"
               
-              @click.stop="man_powerDelete(item.id_m)"
+              @click.stop="data_syslogDelete(item.id_m)"
             >
               mdi-delete
             </v-icon>
@@ -92,9 +68,9 @@
         </v-data-table>
       </base-material-card>
 
-      <!--addman_powerdialog  -->
+      <!--adddata_syslogdialog  -->
       <v-layout row justify-center>
-        <v-dialog v-model="addman_powerdialog" persistent max-width="50%">
+        <v-dialog v-model="adddata_syslogdialog" persistent max-width="50%">
           <v-card class="mx-auto pa-5" >
             <base-material-card
               icon="mdi-account-multiple"
@@ -105,24 +81,24 @@
             </base-material-card>
 
             <v-card-text>
-             <v-form ref="addman_powerform" lazy-validation>
+             <v-form ref="adddata_syslogform" lazy-validation>
               <v-container grid-list-md>
                 <v-layout wrap>
                   <v-flex md12>
-                       <v-autocomplete :items="colleges" item-text="college_name" item-value="college_code" v-model="addman_power.college_code" label="สถานศึกษา"
+                       <v-autocomplete :items="colleges" item-text="college_name" item-value="college_code" v-model="adddata_syslog.college_code" label="สถานศึกษา"
                       required :rules="[v => !!v || '']">                      
                       </v-autocomplete>                  
                   </v-flex>
                    <v-flex md12>
-                    <v-text-field label="เลขที่ตำแหน่ง" v-model="addman_power.id_position" required :rules="[v => !!v || '']"></v-text-field>
+                    <v-text-field label="เลขที่ตำแหน่ง" v-model="adddata_syslog.id_position" required :rules="[v => !!v || '']"></v-text-field>
                   </v-flex>
                    <v-flex md12>
                         <v-flex md6>
-                    <v-autocomplete  v-model="addman_power.position" :items="userstatus" item-text="user_status_name" item-value="user_status_name" label="ตำแหน่ง" required :rules="[v => !!v || '']"></v-autocomplete>
+                    <v-autocomplete  v-model="adddata_syslog.position" :items="userstatus" item-text="user_status_name" item-value="user_status_name" label="ตำแหน่ง" required :rules="[v => !!v || '']"></v-autocomplete>
                   </v-flex>                   
                   </v-flex>
                    <v-flex md12>
-                    <v-text-field label="กรณี" v-model="addman_power.case_vacancy" required :rules="[v => !!v || '']"></v-text-field>
+                    <v-text-field label="กรณี" v-model="adddata_syslog.case_vacancy" required :rules="[v => !!v || '']"></v-text-field>
                   </v-flex>
                 </v-layout>
               </v-container>
@@ -134,14 +110,14 @@
               <v-btn
                 color="warning"
                 large
-                @click.stop="addman_powerdialog = false"
+                @click.stop="adddata_syslogdialog = false"
                 rounded
                 ><v-icon dark>mdi-close</v-icon> ยกเลิก</v-btn
               >
               <v-btn
                 large
                 color="success"
-                @click.stop="addman_powerSubmit()"
+                @click.stop="adddata_syslogSubmit()"
                 rounded
               >
                 <v-icon dark>mdi-content-save</v-icon>&nbsp;&nbsp;บันทึก
@@ -151,9 +127,9 @@
         </v-dialog>
       </v-layout>
 
-      <!-- V-model deleteman_powerdialog -->
+      <!-- V-model deletedata_syslogdialog -->
       <v-layout>
-        <v-dialog v-model="deleteman_powerdialog" persistent max-width="40%">
+        <v-dialog v-model="deletedata_syslogdialog" persistent max-width="40%">
           <v-card class="mx-auto pa-5" >                     
              <base-material-card
               color="error"
@@ -169,12 +145,12 @@
               
         <v-card>        
           <v-card-text>
-            <v-form ref="deleteman_powerform" lazy-validation>
+            <v-form ref="deletedata_syslogform" lazy-validation>
               <v-container grid-list-md>
                 <v-layout wrap>
                   <v-flex xs12>
                     ยืนยันการลบข้อมูล <br>
-                    {{ editman_power.college_name + ' : ' + editman_power.id_position }}
+                    {{ editdata_syslog.college_name + ' : ' + editdata_syslog.id_position }}
                   </v-flex>                                
                 </v-layout>
               </v-container>
@@ -185,12 +161,12 @@
             </v-card-text>
             <v-card-actions>
               <v-spacer></v-spacer>
-              <v-btn large  @click.stop="deleteman_powerdialog = false"
+              <v-btn large  @click.stop="deletedata_syslogdialog = false"
                 ><v-icon dark>mdi-close</v-icon>ยกเลิก</v-btn
               >
               <v-btn large
                 color="red darken-3"
-                @click.stop="deleteman_powerSubmit()"
+                @click.stop="deletedata_syslogSubmit()"
                 dark
               >
                 <v-icon dark>mdi-delete</v-icon>&nbsp;ลบ
@@ -200,9 +176,9 @@
         </v-dialog>
       </v-layout>
 
-      <!-- V-model editman_powerdialog -->
+      <!-- V-model editdata_syslogdialog -->
       <v-layout row justify-center>
-         <v-dialog v-model="editman_powerdialog" persistent max-width="80%">
+         <v-dialog v-model="editdata_syslogdialog" persistent max-width="80%">
         <v-card class="mx-auto pa-6" >
            <base-material-card
               color="yellow"
@@ -212,24 +188,24 @@
               
             ></base-material-card>
           <v-card-text>
-            <v-form ref="editman_powerform" lazy-validation>
+            <v-form ref="editdata_syslogform" lazy-validation>
               <v-container grid-list-md>
                 <v-layout wrap>                
                    <v-flex md12>
-                       <v-autocomplete :items="colleges" item-text="college_name" item-value="college_code" v-model="editman_power.college_code" label="สถานศึกษา"
+                       <v-autocomplete :items="colleges" item-text="college_name" item-value="college_code" v-model="editdata_syslog.college_code" label="สถานศึกษา"
                       required :rules="[v => !!v || '']">                      
                       </v-autocomplete>                  
                   </v-flex>
                    <v-flex md12>
-                    <v-text-field label="เลขที่ตำแหน่ง" v-model="editman_power.id_position" required :rules="[v => !!v || '']"></v-text-field>
+                    <v-text-field label="เลขที่ตำแหน่ง" v-model="editdata_syslog.id_position" required :rules="[v => !!v || '']"></v-text-field>
                   </v-flex>
                    <v-flex md12>
                         <v-flex md6>
-                    <v-autocomplete  v-model="editman_power.position" :items="userstatus" item-text="user_status_name" item-value="user_status_name" label="ตำแหน่ง" required :rules="[v => !!v || '']"></v-autocomplete>
+                    <v-autocomplete  v-model="editdata_syslog.position" :items="userstatus" item-text="user_status_name" item-value="user_status_name" label="ตำแหน่ง" required :rules="[v => !!v || '']"></v-autocomplete>
                   </v-flex>                   
                   </v-flex>
                    <v-flex md12>
-                    <v-text-field label="กรณี" v-model="editman_power.case_vacancy" required :rules="[v => !!v || '']"></v-text-field>
+                    <v-text-field label="กรณี" v-model="editdata_syslog.case_vacancy" required :rules="[v => !!v || '']"></v-text-field>
                   </v-flex>
                 </v-layout>
               </v-container>
@@ -238,10 +214,10 @@
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn large  @click.stop="editman_powerdialog = false" rounded>
+            <v-btn large  @click.stop="editdata_syslogdialog = false" rounded>
                 <v-icon dark>mdi-close</v-icon>ยกเลิก
               </v-btn>
-              <v-btn large color="warning" @click.stop="editman_powerSubmit()" rounded>
+              <v-btn large color="warning" @click.stop="editdata_syslogSubmit()" rounded>
                 <v-icon dark>mdi-pencil</v-icon>&nbsp;บันทึก
               </v-btn>
 
@@ -276,9 +252,9 @@ export default {
        loading: true,       
      ApiKey: 'HRvec2021',
       valid: true,
-      addman_powerdialog: false,
-      editman_powerdialog: false,
-      deleteman_powerdialog: false,
+      adddata_syslogdialog: false,
+      editdata_syslogdialog: false,
+      deletedata_syslogdialog: false,
       snackbar: {
         show: false,
         color: '',
@@ -286,24 +262,22 @@ export default {
         icon: '',
         text: ''
       },
-      man_powers: [],
-      addman_power: {},
-      editman_power: {},
+      data_syslogs: [],
+      adddata_syslog: {},
+      editdata_syslog: {},
       colleges: [],
       userstatus: [],
       search: '',
       pagination: {},      
       headers: [       
-        { text: "สถานศึกษา", align: "left", value: "college_name" }, 
-        { text: "จังหวัด", align: "left", value: "province_name" }, 
-        { text: "อัตราว่าง", align: "left", value: "num_position" }, 
-        { text: "รหัสตำแหน่ง", align: "left", value: "id_position" }, 
-        { text: "ตำแหน่ง", align: "left", value: "position" }, 
-        { text: "กรณี", align: "left", value: "case_vacancy" },       
-        { text: "จอง", align: "left", value: "status_booking" },       
-        { text: "แก้ไข", align: "center", value: "actions", icon: "mdi-file-document-edit" },
-        { text: "ลบ", align: "center", value: "action_s" , icon: "mdi-delete-forever" },
-      ],
+        { text: "Id_log", align: "left", value: "id_log" }, 
+        { text: "User_ID", align: "left", value: "user_account" }, 
+        { text: "Event", align: "left", value: "event_log" }, 
+        { text: "Page", align: "left", value: "page_log" }, 
+        { text: "Table Action", align: "left", value: "table_log" }, 
+        { text: "Datail", align: "left", value: "detail_log" },       
+        { text: "Date & Time", align: "left", value: "date_times" },       
+         ],
       rowsperpage: [
         25,
         50,
@@ -318,14 +292,13 @@ export default {
       provinces: [],
       prefectures: [],      
      collgegs: [],
-     man_powerstatus:[],
+     data_syslogstatus:[],
       regions: [],
-      region_ena: true,
-      data_syslog:{},
+      region_ena: true
     };
   },
 async mounted() {
-    await this.man_powerQueryAll()
+    await this.data_syslogQueryAll()
       
       let result
       result = await this.$http.post('college.php', {
@@ -353,124 +326,95 @@ async mounted() {
 
 
     methods: {
-      async man_powerQueryAll() {
+      async data_syslogQueryAll() {
           this.loading = true
-        let result = await this.$http.post('man_power.php', {
+        let result = await this.$http.post('data_syslog.php', {
           ApiKey: this.ApiKey
         }).finally(() => this.loading = false)
-        this.man_powers = result.data
+        this.data_syslogs = result.data
       },
-       async man_powerAdd() {
-      this.addman_power = {};
-      this.addman_powerdialog = true;
+       async data_syslogAdd() {
+      this.adddata_syslog = {};
+      this.adddata_syslogdialog = true;
     },
-      async addman_powerSubmit() {
-        if (this.$refs.addman_powerform.validate()) {         
-          this.addman_power.ApiKey = this.ApiKey;
-          let result = await this.$http.post('man_power.insert.php', this.addman_power)        
+      async adddata_syslogSubmit() {
+        if (this.$refs.adddata_syslogform.validate()) {         
+          this.adddata_syslog.ApiKey = this.ApiKey;
+          let result = await this.$http.post('data_syslog.insert.php', this.adddata_syslog)        
           if (result.data.status == true) {
-            this.man_power = result.data
+            this.data_syslog = result.data
             this.snackbar.icon = 'mdi-font-awesome'
             this.snackbar.color = 'success'
             this.snackbar.text = 'บันทึกข้อมูลเรียบร้อย'
             this.snackbar.show = true
-              let userSession = JSON.parse(sessionStorage.getItem("user")) || 0;
-          this.data_syslog.ApiKey = this.ApiKey;
-          this.data_syslog.user_account = userSession.user_name;
-          this.data_syslog.event_log = "insert";
-          this.data_syslog.page_log = "man_power";
-          this.data_syslog.table_log = "man_power";
-          this.data_syslog.detail_log = this.addman_power.id_position + ":" + this.addman_power.college_code;
-          this.data_syslog.date_times = this.date_today_log;
-          await this.$http.post("data_syslog.insert.php", this.data_syslog);
-
-            this.man_powerQueryAll()
+            this.data_syslogQueryAll()
           } else {
             this.snackbar.icon = 'mdi-close-network'
             this.snackbar.color = 'red'
             this.snackbar.text = 'บันทึกข้อมูลผิดพลาด'
             this.snackbar.show = true
-             this.man_powerQueryAll()
+             this.data_syslogQueryAll()
           }
-          this.addman_powerdialog = false
+          this.adddata_syslogdialog = false
         }
       },
 
-      async man_powerEdit(id_m) {
-        let result = await this.$http.post('man_power.php', {
+      async data_syslogEdit(id_m) {
+        let result = await this.$http.post('data_syslog.php', {
           ApiKey: this.ApiKey,
           id_m: id_m
         })
-        this.editman_power = result.data       
-        this.editman_powerdialog = true
+        this.editdata_syslog = result.data       
+        this.editdata_syslogdialog = true
        
        
       },
-      async editman_powerSubmit() {
-        if (this.$refs.editman_powerform.validate()) {
-          this.editman_power.ApiKey = this.ApiKey;         
-          let result = await this.$http.post('man_power.update.php', this.editman_power)
+      async editdata_syslogSubmit() {
+        if (this.$refs.editdata_syslogform.validate()) {
+          this.editdata_syslog.ApiKey = this.ApiKey;         
+          let result = await this.$http.post('data_syslog.update.php', this.editdata_syslog)
           if (result.data.status == true) {
-            this.man_power = result.data
+            this.data_syslog = result.data
             this.snackbar.icon = 'mdi-font-awesome'
             this.snackbar.color = 'success'
             this.snackbar.text = 'แก้ไขข้อมูลเรียบร้อย'
             this.snackbar.show = true
-            let userSession = JSON.parse(sessionStorage.getItem("user")) || 0;
-          this.data_syslog.ApiKey = this.ApiKey;
-          this.data_syslog.user_account = userSession.user_name;
-          this.data_syslog.event_log = "update";
-          this.data_syslog.page_log = "man_power";
-          this.data_syslog.table_log = "man_power";
-          this.data_syslog.detail_log = this.editman_power.id_position + " : " + this.editman_power.college_code + " : " + this.editman_power.case_vacancy;
-          this.data_syslog.date_times = this.date_today_log;
-          await this.$http.post("data_syslog.insert.php", this.data_syslog);
-
-            this.man_powerQueryAll()
+            this.data_syslogQueryAll()
           } else {
             this.snackbar.icon = 'mdi-close-network'
             this.snackbar.color = 'red'
             this.snackbar.text = 'แก้ไขข้อมูลผิดพลาด'
             this.snackbar.show = true
           }
-          this.editman_powerdialog = false
+          this.editdata_syslogdialog = false
         }
       },
-      async man_powerDelete(id_m) {
-        let result = await this.$http.post('man_power.php', {
+      async data_syslogDelete(id_m) {
+        let result = await this.$http.post('data_syslog.php', {
           ApiKey: this.ApiKey,
           id_m: id_m
         })
-        this.editman_power = result.data
-        this.deleteman_powerdialog = true
+        this.editdata_syslog = result.data
+        this.deletedata_syslogdialog = true
       },
-      async deleteman_powerSubmit() {
-        if (this.$refs.deleteman_powerform.validate()) {
-          this.editman_power.ApiKey = this.ApiKey;          
-          let result = await this.$http.post('man_power.delete.php', this.editman_power)
+      async deletedata_syslogSubmit() {
+        if (this.$refs.deletedata_syslogform.validate()) {
+          this.editdata_syslog.ApiKey = this.ApiKey;          
+          let result = await this.$http.post('data_syslog.delete.php', this.editdata_syslog)
           if (result.data.status == true) {
-            this.man_power = result.data
+            this.data_syslog = result.data
             this.snackbar.icon = 'mdi-font-awesome'
             this.snackbar.color = 'success'
             this.snackbar.text = 'ลบข้อมูลเรียบร้อย'
             this.snackbar.show = true
-             let userSession = JSON.parse(sessionStorage.getItem("user")) || 0;
-          this.data_syslog.ApiKey = this.ApiKey;
-          this.data_syslog.user_account = userSession.user_name;
-          this.data_syslog.event_log = "delete";
-          this.data_syslog.page_log = "man_power";
-          this.data_syslog.table_log = "man_power";
-          this.data_syslog.detail_log = this.editman_power.id_position + " : " + this.editman_power.college_code + " : " + this.editman_power.case_vacancy;
-          this.data_syslog.date_times = this.date_today_log;
-          await this.$http.post("data_syslog.insert.php", this.data_syslog);
-            this.man_powerQueryAll()
+            this.data_syslogQueryAll()
           } else {
             this.snackbar.icon = 'mdi-close-network'
             this.snackbar.color = 'red'
             this.snackbar.text = 'ลบข้อมูลผิดพลาด'
             this.snackbar.show = true
           }
-          this.deleteman_powerdialog = false
+          this.deletedata_syslogdialog = false
         }
       },     
     },
@@ -481,16 +425,7 @@ async mounted() {
         ) return 0
 
         return Math.ceil(this.pagination.totalItems / this.pagination.rowsPerPage)
-      },
-      date_today_log() {
-      let today = new Date();
-      let dd = String(today.getDate()).padStart(2, "0");
-      let mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
-      let yyyy = today.getFullYear() + 543;
-let time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-      today = dd + "/" + mm + "/" + yyyy + "/" + time;
-      return today;
-    },
+      }
     },
 
   

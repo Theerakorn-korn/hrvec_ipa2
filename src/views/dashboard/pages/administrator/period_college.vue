@@ -79,7 +79,7 @@
               >เงือนไขการย้าย</span
             >
             <span v-if="item.period_college_type === 'update_college'"
-              >ปรับปรุงข้อมูล</span
+              >อัตรากำลัง</span
             >
           </template>
 
@@ -408,7 +408,7 @@ export default {
       },
       period_college_types: [
         { text: "เงือนไขการย้าย", value: "movement_college" },
-        { text: "ปรับปรุงข้อมูล", value: "update_college" }
+        { text: "อัตรากำลัง", value: "update_college" }
       ],
       period_colleges: [],
       addperiod_college: {},

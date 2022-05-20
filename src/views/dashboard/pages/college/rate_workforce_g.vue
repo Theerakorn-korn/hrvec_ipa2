@@ -17,16 +17,39 @@
         <span>ประมวลผลอัตรากำลัง </span>
         <v-icon>mdi-numeric-4-box</v-icon>
       </v-btn>
+       <v-btn to="/college/rate_workforce_report">
+        <span>รายงานผลอัตรากำลัง </span>
+        <v-icon>mdi-numeric-5-box</v-icon>
+      </v-btn>
     </v-bottom-navigation>
 
     <v-container id="upgrade" fluid tag="section" class="text_google">
       <v-row>
+          <v-col cols="12" md="12">
+     <v-alert
+      prominent
+      type="error"
+      v-if="period_colleges.period_college_enable ==='1' && period_colleges.period_college_type ==='update_college'"
+    >
+      <v-row align="center">
+        <v-col class="grow">
+        ขณะนี้ได้ทำการเปิดระบบ รายงานข้อมูลสถานศึกษา รายงานอัตรากำลัง ให้สถานศึกษาดำเนินการ ก่อนระบบปิดในวันที่ {{ period_colleges.period_college_stop  | moment("add", "543 years")
+                | moment("D MMMM YYYY")}}
+        </v-col>
+        <v-col class="shrink">
+          <v-btn to="/college/rate_workforce_g"> <v-icon class="pa-2">mdi-arrow-right-bold-hexagon-outline</v-icon> รายงานข้อมูล</v-btn>
+        </v-col>
+      </v-row>
+    </v-alert>
+      </v-col>
         <v-col cols="12" md="12">
           <base-material-card color="primary">
             <template v-slot:heading>
               <h2 class="h1 font-weight-light text_google">
                 <v-icon large left>mdi-file-send</v-icon>ข้อมูลสถานศึกษา
                 ประเภทวิทยาลัย : {{ user.college_id_code_type_manpower }}
+                ประจำปีการศึกษา : {{ period_colleges.period_college_yearbd }} <br>
+                สิ้นสุดวันที่บันทึกข้อมูล : {{  }}
               </h2>
             </template>
 
@@ -42,7 +65,7 @@
                           :items="year_s"
                           item-value="year_s"
                           @change="rate_work_g_search()"
-                          label="เลือกปี : "
+                          label="เลือกปีเพื่อแสดงข้อมูลที่เคยได้บันทึกรายการ : "
                         >
                         </v-select>
                       </v-alert>
@@ -631,16 +654,16 @@
                                   </v-flex>
                                 </v-layout>
                                 <v-spacer></v-spacer>
-                                <v-row>
+                                <v-row v-if="period_colleges.period_college_enable ==='1' && period_colleges.period_college_type ==='update_college'">
                                   <v-col cols="12" md="12" class="text-right">
                                     <v-btn
                                       large
-                                      color="warning"
+                                      color="green"
                                       @click.stop="addrate_work_gSubmit()"
                                       rounded
                                     >
-                                      <v-icon dark>mdi-pencil</v-icon
-                                      >&nbsp;&nbsp;แก้ไข</v-btn
+                                      <v-icon dark>mdi-content-save</v-icon
+                                      >&nbsp;&nbsp;บันทึก/ปรับปรุงข้อมูล</v-btn
                                     >
                                   </v-col>
                                 </v-row>
@@ -1379,7 +1402,8 @@ export default {
       course_select_main: "",
       rate_work_colleges_update_stu: {},
       rate_work_college_sum_20: [],
-      rate_work_college_sum_30: []
+      rate_work_college_sum_30: [],
+      period_colleges:[],
     };
   },
 
@@ -1392,6 +1416,7 @@ export default {
     });
     this.user = result.data;
 
+    await this.period_collegeQuery();
     await this.rate_work_collegeQuery_20();
     await this.rate_work_collegeQuery_30();
     await this.rate_work_gQueryAll();
@@ -1403,6 +1428,17 @@ export default {
   },
 
   methods: {
+    async period_collegeQuery() {
+       let result_period_college;
+    result_period_college = await this.$http.post("period_college.php", {
+      ApiKey: this.ApiKey,
+      period_college_enable: "1",
+      period_college_type: "update_college"
+    });
+    this.period_colleges = result_period_college.data;    
+    console.log(result_period_college.data)
+    },
+
     async field_study_lavel_update(rate_work_college_id) {
       let result = await this.$http.post("rate_work_college.php", {
         ApiKey: this.ApiKey,

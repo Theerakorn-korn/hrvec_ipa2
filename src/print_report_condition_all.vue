@@ -18,7 +18,7 @@
           <v-icon>mdi-printer</v-icon>&nbsp; พิมพ์
         </v-btn>
         <v-btn
-          @click.stop="Export2Doc('exportContent', 'word-content')"
+          @click.stop="Export2Doc('exportContent', 'ตำแหน่งว่างหลังการพิจารณาย้าย')"
           class="title elevation-0 mr-2"
           color="grey darken-1"
           x-large
@@ -26,7 +26,7 @@
           <v-icon>mdi-file-word</v-icon>&nbsp; Export to Word
         </v-btn>
         <v-btn
-          @click.stop="exportToExcel('exportContent', 'excel-content')"
+          @click.stop="exportToExcel('exportContent', 'ตำแหน่งว่างหลังการพิจารณาย้าย')"
           class="title elevation-0"
           color="grey darken-1"
           x-large
@@ -35,102 +35,41 @@
         </v-btn>
       </v-toolbar-items>
     </v-system-bar>
-
     <div id="exportContent" style="mso-page-orientation: landscape;">
       <div class="page">
         <div align="center">
           <div class="head">
-            บัญชีรายละเอียดการพิจารณาย้ายข้าราชการครูและบุคลากรทางการศึกษาประจำปี
-            ครั้งที่ {{ order_appoints.time_s }}/{{ order_appoints.year_s }}
-          </div>
-          <div class="head">
-            แนบท้ายวาระการประชุมคณะกรรมการกลั่นกรองฯ
-            สำนักงานคณะกรรมการการอาชีวศึกษา ครั้งที่ {{ order_appoints.meeting_no }} เมื่อวันที่ {{ order_appoints.meeting_date | moment("add", "543 years")
-                | moment("D MMMM YYYY") }}
-          </div>
-          <div class="head">
-            วาระ (ลับ) การย้ายกรณีปกติข้าราชการครูและบุคลากรทางการศึกษา
-            ตำแหน่งครู จำนวน  {{ order_appoints.count_personnel }} ราย
+            ตำแหน่งว่าง หลังการพิจารณาย้าย รอบ
           </div>
         </div>
         <table class="table" border="1" width="100%" align="center">
           <tr>
-            <td width="5%" class="bold16" rowspan="2" align="center">ที่</td>
-            <td width="25%" class="bold16" colspan="2" align="center">
-              อัตราว่าง
-            </td>
-            <td width="70%" class="bold16" colspan="7" align="center">
-              พิจารณาคัดเลือก
-            </td>
-          </tr>
-          <tr>
-            <td width="15%" class="bold16 pa-1" align="center">สังกัด</td>
-            <td width="5%" class="bold16 pa-1" align="center">
-              เลขที่ตำแหน่งว่าง
-            </td>
-            <td width="15%" class="bold16 pa-1" align="center">ชื่อ-สกุล</td>
-            <td width="15%" class="bold16 pa-1" align="center">สังกัด</td>
-            <td width="5%" class="bold16 pa-1" align="center">เลขที่</td>
-            <td width="15%" class="bold16 pa-1" align="center">สาขา</td>
-            <td width="5%" class="bold16 pa-1" align="center">
-              เปิดรับ/ไม่เปิดรับ
-            </td>
-            <td width="20%" class="bold16 pa-1" align="center">
-              เหตุผลในการย้าย
-            </td>
-            <td width="20%" class="bold16 pa-1" align="center">
-              ช่วยราชการ
-            </td>
+            <td width="5%" class="bold16" align="center">ที่</td>          
+            <td width="20%" class="bold16 pa-1" align="center">สถานศึกษา</td>
+            <td width="10%" class="bold16 pa-1" align="center">ตำแหน่งว่าง</td>
+            <td width="30%" class="bold16 pa-1" align="center">เงือนไขสาขาวิชา(จำนวนที่ต้องการ)</td>
+            <td width="20%" class="bold16 pa-1" align="center">เลขที่ตำแหน่งว่าง</td>
+            <td width="15%" class="bold16 pa-1" align="center">หมายเหตุ</td>           
           </tr>
 
-          <tr
-            v-for="(item, index) in conditons_transfer_successs"
-            :key="item.id_cts"
-          >
-            <td class="regular16" align="center">{{ index + 1 }}</td>
-            <td class="regular16 pa-1" align="center">
-              {{ item.college_name_new }}
+          <tr v-for="(item, index) in conditions_branchs" :key="item.id_m">
+            <td class="regular16" align="center">{{ index + 1 }}</td>          
+            <td class="regular16 pa-2" align="left">
+              {{ item.college_names }}
             </td>
             <td class="regular16 pa-1" align="center">
-              {{ item.id_position }}
+              {{ item.man_power_college }}
             </td>
             <td class="regular16 pa-1" align="center">
-              {{ item.title_s }}
+           {{ item.conditions_branch_detail }}
             </td>
-            <td class="regular16 pa-1" align="center">
-              {{ item.college_name_old }}
+             <td class="regular16 pa-1" align="center">
+           {{ item.id_position_all }}
             </td>
-            <td class="regular16 pa-1" align="center">
-              {{ item.id_postion_old }}
+           <td class="regular16 pa-1" align="center">
+           
             </td>
-
-            <td class="regular16 pa-1" align="left">
-              {{ item.id_branch }} : {{ item.branch_name }}
-            </td>
-            <td class="regular16 pa-1" align="center">
-              <span v-if="item.status_select === 'sw_normal'">
-                ย้ายสับเปลี่ยน
-              </span>
-              <span v-else>
-                เปิดรับ
-              </span>
-            </td>
-
-            <td class="regular16 pa-1" align="left">
-              {{ item.reason }}
-            </td>
-            <td class="regular16 pa-1" align="center">
-              <v-chip
-                color="green"
-                dark
-                v-if="item.service_statuss === 'not_service'"
-              >
-                ปกติ
-              </v-chip>
-              <v-chip v-else color="warning" dark>
-                ช่วยราชการ
-              </v-chip>
-            </td>
+           
           </tr>
         </table>
       </div>
@@ -144,51 +83,26 @@ export default {
   data: () => ({
     ApiKey: "HRvec2021",
     order_appoints: [],
-    conditons_transfer_successs: [],
+    conditions_branchs: [],
     valid: true
   }),
 
   async mounted() {
-    await this.order_appointQueryAll();
-    await this.order_appoint_num();
-    await this.conditons_transfer_successQueryAll();
+    await this.conditions_branchQueryAll();   
   },
 
-  methods: {
-    async order_appointQueryAll() {
+  methods: {    
+
+    async conditions_branchQueryAll() {
       this.loading = true;
       let result = await this.$http
-        .post("order_appoint.php", {
+        .post("conditions_branch.php", {
           ApiKey: this.ApiKey,
-          id_oa: this.id_url
+          time_s: this.time_ss,
+          year_s: this.year_ss
         })
         .finally(() => (this.loading = false));
-      this.order_appoints = result.data;
-      console.log(result.data)
-    },
-
-    async order_appoint_num() {
-      let result = await this.$http.post("order_appoint.php", {
-        ApiKey: this.ApiKey,
-        id_oa: this.id_url,
-        time_s: this.order_appoints.time_s,
-        year_s: this.order_appoints.year_s,
-        name_position: this.position_url
-      });
-      this.order_appoints = result.data;
-    },
-
-    async conditons_transfer_successQueryAll() {
-      let result = await this.$http.post(
-        "conditons_transfer_success_filter_2.php",
-        {
-          ApiKey: this.ApiKey,
-          time_s: this.order_appoints.time_s,
-          year_s: this.order_appoints.year_s,
-          name_position: this.position_url
-        }
-      );
-      this.conditons_transfer_successs = result.data;
+      this.conditions_branchs = result.data;
     },
 
     Export2Doc(element, filename) {
@@ -229,7 +143,7 @@ export default {
       }
       document.body.removeChild(downloadLink);
     },
-    exportToExcel(element, filename) {
+     exportToExcel(element, filename) {
       var preHtml =
         "<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:excel' xmlns='http://www.w3.org/TR/REC-html40'><head><meta charset='utf-8'><title>Export HTML To Excel</title></head><body>";
       var postHtml = "</body></html>";
@@ -273,30 +187,25 @@ export default {
   },
 
   computed: {
-    url_result() {
+
+      time_ss() {
       let result = window.location.href;
       let split_s = result.split("/");
       return split_s[6];
     },
-
-    position_url() {
-      let result = this.url_result.slice(6);
-      if (result == "teach") {
-        result = "ครู";
-      } else {
-        result = "บริหาร";
-      }
-      return result;
+    
+     year_ss() {
+      let result = window.location.href;
+      let split_s = result.split("/");
+      return split_s[7];
     },
-    id_url() {
-      let result = this.url_result;
-      return result[0];
-    }
+    
   }
 };
 </script>
 <style>
-@import url(https://fonts.googleapis.com/css?family=Prompt:400,300|Roboto:400,300&subset=latin,thai);
+@import url(
+  https://fonts.googleapis.com/css?family=Prompt:400,300|Roboto:400,300&subset=latin,thai);
 
 body {
   font-family: "TH SarabunIT๙", "TH SarabunPSK", "Angsana New", AngsanaUPC;

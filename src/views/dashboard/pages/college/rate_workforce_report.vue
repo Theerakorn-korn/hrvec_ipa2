@@ -17,10 +17,12 @@
         <span>ประมวลผลอัตรากำลัง </span>
         <v-icon>mdi-numeric-4-box</v-icon>
       </v-btn>
-       <v-btn to="/college/rate_workforce_report">
+ <v-btn to="/college/rate_workforce_report">
         <span>รายงานผลอัตรากำลัง </span>
         <v-icon>mdi-numeric-5-box</v-icon>
       </v-btn>
+
+      
     </v-bottom-navigation>
 
     <v-container id="upgrade" fluid tag="section" class="text_google">
@@ -43,7 +45,7 @@
                     <v-col md="10">
                       <v-card>
                         <v-row class="ma-2">                          
-                        <!--   <v-col cols="12" md="10">
+                          <v-col cols="12" md="12">
                             <h3>
                               <v-select
                                 filled
@@ -53,14 +55,14 @@
                                 item-text="state"
                                 @change="rate_work_g_search()"
                                 label="ปีการศึกษา พ.ศ.  : "
-                                :hint="`${select.state}, ${select.abbr}`"
+                                :hint="`อัตรากำลังปี : ,${select.state}, ${select.abbr}`"
                                 persistent-hint
                                 return-object
                                 single-line
                               >
                               </v-select>
                             </h3>
-                          </v-col> -->
+                          </v-col>
                           <v-col cols="12" md="2" class="text-center"> </v-col>
                           <v-col cols="12" md="5" class="text-center">
                             <h3>รหัสสถานศึกษา :{{ user.user_name }}</h3>
@@ -69,44 +71,8 @@
                           <v-col cols="12" md="5" class="text-center">
                             <h3>ประเภทสถานศึกษา : {{ user.name_ctm }}</h3>
                             
-                             <h3 v-if="rate_work_g_query.rate_criterion_incomplete_all > 1 || rate_work_g_query.rate_criterion_incomplete_all < 0 ">
-                              <v-chip
-                                class="ma-2"
-                                color="teal"
-                                text-color="white"
-                              >
-                                <v-avatar left>
-                                  <v-icon>mdi-checkbox-marked-circle</v-icon>
-                                </v-avatar>
-                                <h3>บันทึกข้อมูลเรียบร้อย</h3>
-                              </v-chip>
-                            </h3>
-                            <h3
-                              v-else
-                            >
-                              <v-chip
-                                class="ma-2"
-                                color="warning"
-                                text-color="white"
-                              >
-                                <v-avatar left>
-                                  <v-icon>mdi-alert-circle-outline</v-icon>
-                                </v-avatar>
-                                <h3>ยังไม่ได้บันทึกข้อมูล</h3>
-                              </v-chip>
-                            </h3>
+                                                        
                            
-                           <v-btn
-                                    v-if="period_colleges.period_college_enable ==='1' && period_colleges.period_college_type ==='update_college' && rate_work_g_query.sumall != '0'"
-                                      
-                                      color="green"
-                                      @click.stop="rate_work_g_querySubmit()"
-                                      rounded
-                                    >
-                                      <v-icon dark class="pa-1"
-                                        >mdi-content-save</v-icon
-                                      >&nbsp;&nbsp;บันทึก</v-btn
-                                    >
                           </v-col>
                         </v-row>
                       </v-card>
@@ -174,38 +140,49 @@
                                                 class="text-center grey lighten-1"
                                                 rowspan="2"
                                               >
-                                                {{
-                                                  rate_work_college_cal_room_for_dr.rate_work_cal_room_dr
-                                                }}
+                                                
                                               </td>
                                               <td class="text-center ">
-                                                {{ criterion_dr }}
+                                                {{
+                                                  rate_work_g_query.rate_criterion_dr
+                                                }}
                                               </td>
                                               <td
                                                 class="text-center grey lighten-1"
                                                 rowspan="2"
                                               >
-                                                {{
-                                                  Math.round(rate_work_college_cal_room_for_teach.rate_sum_man_all)
-                                                }}
+                                               
                                               </td>
                                               <td class="text-center">
-                                                {{ incomplete_dr }}
+                                                {{
+                                                  rate_work_g_query.rate_criterion_incomplete_dr
+                                                }}
                                               </td>
                                             </tr>
+                                            
                                             <tr>
                                               <td>รอง ผอ.สถานศึกษา</td>
                                               <td class="text-center">
-                                                {{
+                                               {{
                                                   rate_work_g_query.rate_work_g_sedr
                                                 }}
                                               </td>
                                               <td class="text-center">
-                                                {{ criterion_sec_dr }}
+                                                 {{
+                                                  rate_work_g_query.rate_criterion_sedr
+                                                }}
                                               </td>
                                               <td class="text-center">
-                                                {{ incomplete_sec_dr }}
+                                               {{
+                                                  rate_work_g_query.rate_criterion_incomplete_sedr
+                                                }}
                                               </td>
+                                            </tr>
+                                            <tr>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                             </tr>
                                             <tr>
                                               <td
@@ -217,31 +194,35 @@
                                                 class="text-center green lighten-1 white--text"
                                               >
                                                 {{
-                                                  rate_work_g_query.sumteach_a
+                                                  rate_work_g_query.rate_teach_official_all
                                                 }}
                                               </td>
                                               <td
                                                 class="text-center green lighten-1 white--text"
                                               >
                                                 {{
-                                                  rate_work_g_query.sumteach_b
+                                                  rate_work_g_query.rate_teach_civil_all
                                                 }}
                                               </td>
                                               <td
                                                 class="text-center cyan lighten-2 white--text"
                                               >
-                                                {{ criterion_sec_teach }}
+                                                 {{
+                                                  rate_work_g_query.rate_criterion_teach_all
+                                                }}
                                               </td>
                                               <td
                                                 class="text-center cyan lighten-2 white--text"
                                               >
-                                                {{ incomplete_rate_teach }}
+                                                {{
+                                                  rate_work_g_query.rate_criterion_teach_alls
+                                                }}
                                               </td>
                                               <td
                                                 class="text-center blue darken-1 white--text"
                                               >
-                                                {{
-                                                  incomplete_rate_teach_result
+                                                 {{
+                                                  rate_work_g_query.rate_criterion_incomplete_teach_all
                                                 }}
                                               </td>
                                             </tr>
@@ -274,13 +255,19 @@
                                                 }}
                                               </td>
                                               <td class="text-center">
-                                                {{ official_rate_00 }}
+                                               {{
+                                                  rate_work_g_query.rate_work_g_gs_ta_official
+                                                }}
                                               </td>
                                               <td class="text-center">
-                                                {{ civil_servant_rate_00 }}
+                                                {{
+                                                  rate_work_g_query.rate_work_g_gs_tb_civil
+                                                }}
                                               </td>
                                               <td class="text-center">
-                                                {{ incomplete_rate_00 }}
+                                                 {{
+                                                  rate_work_g_query.rate_work_g_gs_incomplete
+                                                }}
                                               </td>
                                             </tr>
                                             <tr>
@@ -296,13 +283,19 @@
                                                 }}
                                               </td>
                                               <td class="text-center">
-                                                {{ official_rate_01 }}
+                                                {{
+                                                  rate_work_g_query.rate_work_g_is_ta_official
+                                                }}
                                               </td>
                                               <td class="text-center">
-                                                {{ civil_servant_rate_01 }}
+                                                {{
+                                                  rate_work_g_query.rate_work_g_is_tb_civil
+                                                }}
                                               </td>
                                               <td class="text-center">
-                                                {{ incomplete_rate_01 }}
+                                                  {{
+                                                  rate_work_g_query.rate_work_g_is_incomplete
+                                                }}
                                               </td>
                                             </tr>
                                             <tr>
@@ -318,13 +311,19 @@
                                                 }}
                                               </td>
                                               <td class="text-center">
-                                                {{ official_rate_02 }}
+                                               {{
+                                                  rate_work_g_query.rate_work_g_cm_ta_official
+                                                }}
                                               </td>
                                               <td class="text-center">
-                                                {{ civil_servant_rate_02 }}
+                                                {{
+                                                  rate_work_g_query.rate_work_g_cm_tb_civil
+                                                }}
                                               </td>
                                               <td class="text-center">
-                                                {{ incomplete_rate_02 }}
+                                                {{
+                                                  rate_work_g_query.rate_work_g_cm_incomplete
+                                                }}
                                               </td>
                                             </tr>
                                             <tr>
@@ -340,13 +339,19 @@
                                                 }}
                                               </td>
                                               <td class="text-center">
-                                                {{ official_rate_03 }}
+                                                {{
+                                                  rate_work_g_query.rate_work_g_art_ta_official
+                                                }}
                                               </td>
                                               <td class="text-center">
-                                                {{ civil_servant_rate_03 }}
+                                               {{
+                                                  rate_work_g_query.rate_work_g_art_tb_civil
+                                                }}
                                               </td>
                                               <td class="text-center">
-                                                {{ incomplete_rate_03 }}
+                                               {{
+                                                  rate_work_g_query.rate_work_g_art_incomplete
+                                                }}
                                               </td>
                                             </tr>
                                             <tr>
@@ -362,13 +367,19 @@
                                                 }}
                                               </td>
                                               <td class="text-center">
-                                                {{ official_rate_04 }}
+                                               {{
+                                                  rate_work_g_query.rate_work_g_em_ta_official
+                                                }}
                                               </td>
                                               <td class="text-center">
-                                                {{ civil_servant_rate_04 }}
+                                                 {{
+                                                  rate_work_g_query.rate_work_g_em_tb_civil
+                                                }}
                                               </td>
                                               <td class="text-center">
-                                                {{ incomplete_rate_04 }}
+                                              {{
+                                                  rate_work_g_query.rate_work_g_em_incomplete
+                                                }}
                                               </td>
                                             </tr>
                                             <tr>
@@ -384,13 +395,19 @@
                                                 }}
                                               </td>
                                               <td class="text-center">
-                                                {{ official_rate_05 }}
+                                               {{
+                                                  rate_work_g_query.rate_work_g_ag_ta_official
+                                                }}
                                               </td>
                                               <td class="text-center">
-                                                {{ civil_servant_rate_05 }}
+                                               {{
+                                                  rate_work_g_query.rate_work_g_ag_tb_civil
+                                                }}
                                               </td>
                                               <td class="text-center">
-                                                {{ incomplete_rate_05 }}
+                                            {{
+                                                  rate_work_g_query.rate_work_g_ag_incomplete
+                                                }}
                                               </td>
                                             </tr>
                                             <tr>
@@ -406,13 +423,19 @@
                                                 }}
                                               </td>
                                               <td class="text-center">
-                                                {{ official_rate_06 }}
+                                                 {{
+                                                  rate_work_g_query.rate_work_g_fish_ta_official
+                                                }}
                                               </td>
                                               <td class="text-center">
-                                                {{ civil_servant_rate_06 }}
+                                               {{
+                                                  rate_work_g_query.rate_work_g_fish_tb_civil
+                                                }}
                                               </td>
                                               <td class="text-center">
-                                                {{ incomplete_rate_06 }}
+                                                 {{
+                                                  rate_work_g_query.rate_work_g_fish_incomplete
+                                                }}
                                               </td>
                                             </tr>
                                             <tr>
@@ -430,13 +453,19 @@
                                                 }}
                                               </td>
                                               <td class="text-center">
-                                                {{ official_rate_07 }}
+                                                {{
+                                                  rate_work_g_query.rate_work_g_tour_ta_official
+                                                }}
                                               </td>
                                               <td class="text-center">
-                                                {{ civil_servant_rate_07 }}
+                                               {{
+                                                  rate_work_g_query.rate_work_g_tour_tb_civil
+                                                }}
                                               </td>
                                               <td class="text-center">
-                                                {{ incomplete_rate_07 }}
+                                               {{
+                                                  rate_work_g_query.rate_work_g_tour_incomplete
+                                                }}
                                               </td>
                                             </tr>
                                             <tr>
@@ -454,13 +483,19 @@
                                                 }}
                                               </td>
                                               <td class="text-center">
-                                                {{ official_rate_08 }}
+                                                {{
+                                                  rate_work_g_query.rate_work_g_textile_ta_official
+                                                }}
                                               </td>
                                               <td class="text-center">
-                                                {{ civil_servant_rate_08 }}
+                                                {{
+                                                  rate_work_g_query.rate_work_g_textile_tb_civil
+                                                }}
                                               </td>
                                               <td class="text-center">
-                                                {{ incomplete_rate_08 }}
+                                                {{
+                                                  rate_work_g_query.rate_work_g_textile_incomplete
+                                                }}
                                               </td>
                                             </tr>
                                             <tr>
@@ -478,13 +513,19 @@
                                                 }}
                                               </td>
                                               <td class="text-center">
-                                                {{ official_rate_09 }}
+                                               {{
+                                                  rate_work_g_query.rate_work_g_insy_ta_official
+                                                }}
                                               </td>
                                               <td class="text-center">
-                                                {{ civil_servant_rate_09 }}
+                                              {{
+                                                  rate_work_g_query.rate_work_g_insy_tb_civil
+                                                }}
                                               </td>
                                               <td class="text-center">
-                                                {{ incomplete_rate_09 }}
+                                            {{
+                                                  rate_work_g_query.rate_work_g_insy_incomplete
+                                                }}
                                               </td>
                                             </tr>
                                             <tr>
@@ -500,13 +541,19 @@
                                                 }}
                                               </td>
                                               <td class="text-center">
-                                                {{ official_rate_66 }}
+                                           {{
+                                                  rate_work_g_query.rate_work_g_sc_ta_official
+                                                }}
                                               </td>
                                               <td class="text-center">
-                                                {{ civil_servant_rate_66 }}
+                                            {{
+                                                  rate_work_g_query.rate_work_g_sc_tb_civil
+                                                }}
                                               </td>
                                               <td class="text-center">
-                                                {{ incomplete_rate_66 }}
+                                             {{
+                                                  rate_work_g_query.rate_work_g_sc_incomplete
+                                                }}
                                               </td>
                                             </tr>
                                             <tr>
@@ -526,13 +573,19 @@
                                                 }}
                                               </td>
                                               <td class="text-center">
-                                                {{ official_rate_sup }}
+                                                {{
+                                                  rate_work_g_query.rate_work_g_sup_ta_official
+                                                }}
                                               </td>
                                               <td class="text-center">
-                                                {{ civil_servant_rate_sub }}
+                                               {{
+                                                  rate_work_g_query.rate_work_g_sup_tb_civil
+                                                }}
                                               </td>
                                               <td class="text-center">
-                                                {{ incomplete_rate_sup }}
+                                             {{
+                                                  rate_work_g_query.rate_work_g_sup_incomplete
+                                                }}
                                               </td>
                                             </tr>
                                             <tr>
@@ -546,14 +599,14 @@
                                                 colspan="2"
                                               >
                                                 <h3>
-                                                  {{ rate_work_g_query.sumall }}
+                                                  {{ rate_work_g_query.rate_man_power_all }}
                                                 </h3>
                                               </td>
 
                                               <td
                                                 class="text-center cyan lighten-2 white--text"
                                               >
-                                                {{ rate_work_all_criterion }}
+                                            {{ rate_work_g_query.rate_criterion_all }}
                                               </td>
                                               <td
                                                 class="text-center cyan lighten-2 white--text"
@@ -561,9 +614,7 @@
                                               <td
                                                 class="text-center cyan lighten-2 white--text"
                                               >
-                                                {{
-                                                  incomplete_rate_teach_result_all
-                                                }}
+                                              {{ rate_work_g_query.rate_criterion_incomplete_all }}
                                               </td>
                                             </tr>
                                             <tr>
@@ -596,7 +647,7 @@
                                 <v-row>
                                   <v-col cols="12" md="12" class="text-right">
                                     <v-btn
-                                    v-if="period_colleges.period_college_enable ==='1' && period_colleges.period_college_type ==='update_college' && rate_work_g_query.sumall != '0'"
+                                    v-if="period_colleges.period_college_enable ==='1' && period_colleges.period_college_type ==='update_college'"
                                       large
                                       color="green"
                                       @click.stop="rate_work_g_querySubmit()"
@@ -657,13 +708,14 @@ export default {
       ApiKey: "HRvec2021",
       user: {},
       users: [],
-      select: { state: "2564", abbr: "2021" },
-      items: [
-        { state: "2564", abbr: "2021" },
+      select: { state: "2565", abbr: "2022" },
+      items: [        
         { state: "2565", abbr: "2022" },
         { state: "2566", abbr: "2023" },
         { state: "2567", abbr: "2024" },
-        { state: "2568", abbr: "2025" }
+        { state: "2568", abbr: "2025" },
+        { state: "2569", abbr: "2026" },
+        { state: "2570", abbr: "2027" },
       ],
       snackbar: {
         show: false,
@@ -681,56 +733,7 @@ export default {
           value: -1
         }
       ],
-      rate_work_g_query: [],
-      rate_work_college_cal_room_for_dr: [],
-      criterion_dr: [],
-      incomplete_dr: [],
-      criterion_sec_dr: [],
-      criterion_sec_teach: [],
-      incomplete_sec_dr: [],
-      rate_work_college_cal_room_for_teach: [],
-      official_rate_00: [],
-      official_rate_01: [],
-      official_rate_02: [],
-      official_rate_03: [],
-      official_rate_04: [],
-      official_rate_05: [],
-      official_rate_06: [],
-      official_rate_07: [],
-      official_rate_08: [],
-      official_rate_09: [],
-      official_rate_66: [],
-      official_rate_sup: [],
-      civil_servant_rate_00: [],
-      civil_servant_rate_01: [],
-      civil_servant_rate_02: [],
-      civil_servant_rate_03: [],
-      civil_servant_rate_04: [],
-      civil_servant_rate_05: [],
-      civil_servant_rate_06: [],
-      civil_servant_rate_07: [],
-      civil_servant_rate_08: [],
-      civil_servant_rate_09: [],
-      civil_servant_rate_66: [],
-      civil_servant_rate_sub: [],
-      incomplete_rate_00: [],
-      incomplete_rate_01: [],
-      incomplete_rate_02: [],
-      incomplete_rate_03: [],
-      incomplete_rate_04: [],
-      incomplete_rate_05: [],
-      incomplete_rate_06: [],
-      incomplete_rate_07: [],
-      incomplete_rate_08: [],
-      incomplete_rate_09: [],
-      incomplete_rate_66: [],
-      incomplete_rate_sup: [],
-      incomplete_rate_teach: [],
-      incomplete_rate_teach_result: [],
-      rate_work_college_cal_room_for_sc: [],
-      rate_work_all_criterion: [],
-      incomplete_rate_teach_result_all: [],
-      rate_work_g_update: {},
+      rate_work_g_query: [],      
       period_colleges:[],
     };
   },
@@ -745,11 +748,6 @@ export default {
     this.user = result.data;
     await this.period_collegeQuery();
     await this.rate_work_gQueryAll();
-    await this.rate_work_cal_room_for_dr();
-    await this.cal_man_power();
-    await this.rate_work_cal_room_for_teach();
-    await this.cal_man_power_teach();
-    await this.cal_man_power_cri();
   },
 
   methods: {
@@ -778,474 +776,22 @@ export default {
         })
         .finally(() => (this.loading = false));
       this.rate_work_g_query = result.data;
-      /* console.log(result.data); */
+      /* console.log(result.data); */     
+    },   
 
-      this.rate_work_g_query.rate_work_g_dr =
-        parseInt(this.rate_work_g_query.rate_work_g_dr) || 0;
-      this.rate_work_g_query.rate_work_g_sedr =
-        parseInt(this.rate_work_g_query.rate_work_g_sedr) || 0;
-      this.rate_work_g_query.rate_work_g_gs_ta =
-        parseInt(this.rate_work_g_query.rate_work_g_gs_ta) || 0;
-      this.rate_work_g_query.rate_work_g_gs_tb =
-        parseInt(this.rate_work_g_query.rate_work_g_gs_tb) || 0;
-      this.rate_work_g_query.rate_work_g_is_ta =
-        parseInt(this.rate_work_g_query.rate_work_g_is_ta) || 0;
-      this.rate_work_g_query.rate_work_g_is_tb =
-        parseInt(this.rate_work_g_query.rate_work_g_is_tb) || 0;
-      this.rate_work_g_query.rate_work_g_cm_ta =
-        parseInt(this.rate_work_g_query.rate_work_g_cm_ta) || 0;
-      this.rate_work_g_query.rate_work_g_cm_tb =
-        parseInt(this.rate_work_g_query.rate_work_g_cm_tb) || 0;
-      this.rate_work_g_query.rate_work_g_art_ta =
-        parseInt(this.rate_work_g_query.rate_work_g_art_ta) || 0;
-      this.rate_work_g_query.rate_work_g_art_tb =
-        parseInt(this.rate_work_g_query.rate_work_g_art_tb) || 0;
-      this.rate_work_g_query.rate_work_g_em_ta =
-        parseInt(this.rate_work_g_query.rate_work_g_em_ta) || 0;
-      this.rate_work_g_query.rate_work_g_em_tb =
-        parseInt(this.rate_work_g_query.rate_work_g_em_tb) || 0;
-      this.rate_work_g_query.rate_work_g_ag_ta =
-        parseInt(this.rate_work_g_query.rate_work_g_ag_ta) || 0;
-      this.rate_work_g_query.rate_work_g_ag_tb =
-        parseInt(this.rate_work_g_query.rate_work_g_ag_tb) || 0;
-      this.rate_work_g_query.rate_work_g_fish_ta =
-        parseInt(this.rate_work_g_query.rate_work_g_fish_ta) || 0;
-      this.rate_work_g_query.rate_work_g_fish_tb =
-        parseInt(this.rate_work_g_query.rate_work_g_fish_tb) || 0;
-      this.rate_work_g_query.rate_work_g_tour_ta =
-        parseInt(this.rate_work_g_query.rate_work_g_tour_ta) || 0;
-      this.rate_work_g_query.rate_work_g_tour_tb =
-        parseInt(this.rate_work_g_query.rate_work_g_tour_tb) || 0;
-      this.rate_work_g_query.rate_work_g_textile_ta =
-        parseInt(this.rate_work_g_query.rate_work_g_textile_ta) || 0;
-      this.rate_work_g_query.rate_work_g_textile_tb =
-        parseInt(this.rate_work_g_query.rate_work_g_textile_tb) || 0;
-      this.rate_work_g_query.rate_work_g_insy_ta =
-        parseInt(this.rate_work_g_query.rate_work_g_insy_ta) || 0;
-      this.rate_work_g_query.rate_work_g_insy_tb =
-        parseInt(this.rate_work_g_query.rate_work_g_insy_tb) || 0;
-      this.rate_work_g_query.rate_work_g_sc_ta =
-        parseInt(this.rate_work_g_query.rate_work_g_sc_ta) || 0;
-      this.rate_work_g_query.rate_work_g_sc_tb =
-        parseInt(this.rate_work_g_query.rate_work_g_sc_tb) || 0;
-      this.rate_work_g_query.rate_work_g_sup_ta =
-        parseInt(this.rate_work_g_query.rate_work_g_sup_ta) || 0;
-      this.rate_work_g_query.rate_work_g_sup_tb =
-        parseInt(this.rate_work_g_query.rate_work_g_sup_tb) || 0;
-      this.rate_work_g_query.rate_work_g_pte_ta =
-        parseInt(this.rate_work_g_query.rate_work_g_pte_ta) || 0;
-      this.rate_work_g_query.rate_work_g_pte_tb =
-        parseInt(this.rate_work_g_query.rate_work_g_pte_tb) || 0;
-
-      this.rate_work_g_query.sumteach_a =
-        this.rate_work_g_query.rate_work_g_gs_ta +
-        this.rate_work_g_query.rate_work_g_is_ta +
-        this.rate_work_g_query.rate_work_g_cm_ta +
-        this.rate_work_g_query.rate_work_g_art_ta +
-        this.rate_work_g_query.rate_work_g_em_ta +
-        this.rate_work_g_query.rate_work_g_ag_ta +
-        this.rate_work_g_query.rate_work_g_fish_ta +
-        this.rate_work_g_query.rate_work_g_tour_ta +
-        this.rate_work_g_query.rate_work_g_textile_ta +
-        this.rate_work_g_query.rate_work_g_insy_ta +
-        this.rate_work_g_query.rate_work_g_sc_ta;
-
-      this.rate_work_g_query.sumteach_b =
-        this.rate_work_g_query.rate_work_g_gs_tb +
-        this.rate_work_g_query.rate_work_g_is_tb +
-        this.rate_work_g_query.rate_work_g_cm_tb +
-        this.rate_work_g_query.rate_work_g_art_tb +
-        this.rate_work_g_query.rate_work_g_em_tb +
-        this.rate_work_g_query.rate_work_g_ag_tb +
-        this.rate_work_g_query.rate_work_g_fish_tb +
-        this.rate_work_g_query.rate_work_g_tour_tb +
-        this.rate_work_g_query.rate_work_g_textile_tb +
-        this.rate_work_g_query.rate_work_g_insy_tb +
-        this.rate_work_g_query.rate_work_g_sc_tb;
-
-      this.rate_work_g_query.sumall =
-        this.rate_work_g_query.rate_work_g_dr +
-        this.rate_work_g_query.rate_work_g_sedr +
-        this.rate_work_g_query.rate_work_g_sup_ta +
-        this.rate_work_g_query.rate_work_g_sup_tb +
-        this.rate_work_g_query.sumteach_a +
-        this.rate_work_g_query.sumteach_b;
-    },
-    async rate_work_cal_room_for_dr() {
+     async rate_work_g_search() {
+      this.loading = true;
       let userSession = JSON.parse(sessionStorage.getItem("user")) || 0;
-      let result = await this.$http.post("rate_work_college_cal_room.php", {
-        ApiKey: this.ApiKey,
-        rate_work_ccr_code: userSession.user_name,
-        rate_work_ccr_year: this.year_now,
-        cal_room_for_dr: "Ok"
-      });
-      this.rate_work_college_cal_room_for_dr = result.data;
-    },
-
-    async rate_work_cal_room_for_teach() {
-      let userSession = JSON.parse(sessionStorage.getItem("user")) || 0;
-      let result = await this.$http.post("rate_work_college_cal_room.php", {
-        ApiKey: this.ApiKey,
-        rate_work_ccr_code: userSession.user_name,
-        rate_work_ccr_year: this.year_now,
-        cal_room_for_teach: "Ok"
-      });
-      this.rate_work_college_cal_room_for_teach = result.data;
-    },
-
-    async rate_work_g_querySubmit() {
-      this.rate_work_g_update.ApiKey = this.ApiKey;
-      this.rate_work_g_update.rate_work_g_id = this.rate_work_g_query.rate_work_g_id;
-      this.rate_work_g_update.rate_criterion_dr = this.criterion_dr;
-      this.rate_work_g_update.rate_criterion_incomplete_dr = this.incomplete_dr;
-      this.rate_work_g_update.rate_criterion_sedr = this.criterion_sec_dr;
-      this.rate_work_g_update.rate_criterion_incomplete_sedr = this.incomplete_sec_dr;
-      this.rate_work_g_update.rate_teach_official_all = this.rate_work_g_query.sumteach_a;
-      this.rate_work_g_update.rate_teach_civil_all = this.rate_work_g_query.sumteach_b;
-      this.rate_work_g_update.rate_criterion_teach_all = this.criterion_sec_teach;
-      this.rate_work_g_update.rate_criterion_teach_alls = this.incomplete_rate_teach;
-      this.rate_work_g_update.rate_criterion_incomplete_teach_all = this.incomplete_rate_teach_result;
-      this.rate_work_g_update.rate_man_power_teach_all = this.rate_work_college_cal_room_for_teach.rate_sum_man_all;
-      this.rate_work_g_update.rate_room_cal_all = this.rate_work_college_cal_room_for_dr.rate_work_cal_room_dr;
-
-      this.rate_work_g_update.rate_work_g_gs_ta_official = this.official_rate_00;
-      this.rate_work_g_update.rate_work_g_gs_tb_civil = this.civil_servant_rate_00;
-      this.rate_work_g_update.rate_work_g_gs_incomplete = this.incomplete_rate_00;
-
-      this.rate_work_g_update.rate_work_g_is_ta_official = this.official_rate_01;
-      this.rate_work_g_update.rate_work_g_is_tb_civil = this.civil_servant_rate_01;
-      this.rate_work_g_update.rate_work_g_is_incomplete = this.incomplete_rate_01;
-
-      this.rate_work_g_update.rate_work_g_cm_ta_official = this.official_rate_02;
-      this.rate_work_g_update.rate_work_g_cm_tb_civil = this.civil_servant_rate_02;
-      this.rate_work_g_update.rate_work_g_cm_incomplete = this.incomplete_rate_02;
-
-      this.rate_work_g_update.rate_work_g_art_ta_official = this.official_rate_03;
-      this.rate_work_g_update.rate_work_g_art_tb_civil = this.civil_servant_rate_03;
-      this.rate_work_g_update.rate_work_g_art_incomplete = this.incomplete_rate_03;
-
-      this.rate_work_g_update.rate_work_g_em_ta_official = this.official_rate_04;
-      this.rate_work_g_update.rate_work_g_em_tb_civil = this.civil_servant_rate_04;
-      this.rate_work_g_update.rate_work_g_em_incomplete = this.incomplete_rate_04;
-
-      this.rate_work_g_update.rate_work_g_ag_ta_official = this.official_rate_05;
-      this.rate_work_g_update.rate_work_g_ag_tb_civil = this.civil_servant_rate_05;
-      this.rate_work_g_update.rate_work_g_ag_incomplete = this.incomplete_rate_05;
-
-      this.rate_work_g_update.rate_work_g_fish_ta_official = this.official_rate_06;
-      this.rate_work_g_update.rate_work_g_fish_tb_civil = this.civil_servant_rate_06;
-      this.rate_work_g_update.rate_work_g_fish_incomplete = this.incomplete_rate_06;
-
-      this.rate_work_g_update.rate_work_g_tour_ta_official = this.official_rate_07;
-      this.rate_work_g_update.rate_work_g_tour_tb_civil = this.civil_servant_rate_07;
-      this.rate_work_g_update.rate_work_g_tour_incomplete = this.incomplete_rate_07;
-
-      this.rate_work_g_update.rate_work_g_textile_ta_official = this.official_rate_08;
-      this.rate_work_g_update.rate_work_g_textile_tb_civil = this.civil_servant_rate_08;
-      this.rate_work_g_update.rate_work_g_textile_incomplete = this.incomplete_rate_08;
-
-      this.rate_work_g_update.rate_work_g_insy_ta_official = this.official_rate_09;
-      this.rate_work_g_update.rate_work_g_insy_tb_civil = this.civil_servant_rate_09;
-      this.rate_work_g_update.rate_work_g_insy_incomplete = this.incomplete_rate_09;
-
-      this.rate_work_g_update.rate_work_g_sc_ta_official = this.official_rate_66;
-      this.rate_work_g_update.rate_work_g_sc_tb_civil = this.civil_servant_rate_66;
-      this.rate_work_g_update.rate_work_g_sc_incomplete = this.incomplete_rate_66;
-
-      this.rate_work_g_update.rate_work_g_sup_ta_official = this.official_rate_sup;
-      this.rate_work_g_update.rate_work_g_sup_tb_civil = this.civil_servant_rate_sub;
-      this.rate_work_g_update.rate_work_g_sup_incomplete = this.incomplete_rate_sup;
-
-      this.rate_work_g_update.rate_man_power_all = this.rate_work_g_query.sumall;
-      this.rate_work_g_update.rate_criterion_all = this.rate_work_all_criterion;
-      this.rate_work_g_update.rate_criterion_incomplete_all = this.incomplete_rate_teach_result_all;
-
-      /*  console.log(this.rate_work_g_update) */
-      let result_update = await this.$http.post(
-        "rate_work_g_cal.update.php",
-        this.rate_work_g_update
-      );
-      if (result_update.data.status == true) {
-        this.snackbar.icon = "mdi-content-save";
-        this.snackbar.color = "success";
-        this.snackbar.text = "บันทึกข้อมูลเรียบร้อย";
-        this.snackbar.show = true;
-        this.rate_work_gQueryAll();
-      } else {
-        this.snackbar.icon = "mdi-content-save";
-        this.snackbar.color = "success";
-        this.snackbar.text = "บันทึกข้อมูลเรียบร้อย";
-        this.snackbar.show = true;
-        this.rate_work_gQueryAll();
-      }
-    },
-
-    async cal_man_power() {
-      let rate_work_g_dr = this.rate_work_g_query.rate_work_g_dr;
-      let room = this.rate_work_college_cal_room_for_dr.rate_work_cal_room_dr;
-      let result_cri_dr;
-      if (room < 1) {
-        result_cri_dr = 0;
-      } else {
-        result_cri_dr = 1;
-      }
-      this.criterion_dr = result_cri_dr;
-      let incomplete_dr_cal = parseInt(rate_work_g_dr - result_cri_dr);
-      this.incomplete_dr = incomplete_dr_cal;
-
-      let rate_work_g_sec_dr = this.rate_work_g_query.rate_work_g_sedr;
-      let result_cri_sec_dr;
-      if (room < 37) result_cri_sec_dr = 3;
-      else if (room < 26) result_cri_sec_dr = 2;
-      else if (room < 16) result_cri_sec_dr = 1;
-      else if (room < 3) result_cri_sec_dr = 0;
-      else result_cri_sec_dr = 4;
-      this.criterion_sec_dr = result_cri_sec_dr;
-      let incomplete_sec_dr_cal = parseInt(
-        rate_work_g_sec_dr - result_cri_sec_dr
-      );
-      this.incomplete_sec_dr = incomplete_sec_dr_cal;
-    },
-
-    async cal_man_power_teach() {
-      let rate_00 = this.rate_work_college_cal_room_for_teach.rate_00;
-      let rate_01 = this.rate_work_college_cal_room_for_teach.rate_01;
-      let rate_02 = this.rate_work_college_cal_room_for_teach.rate_02;
-      let rate_03 = this.rate_work_college_cal_room_for_teach.rate_03;
-      let rate_04 = this.rate_work_college_cal_room_for_teach.rate_04;
-      let rate_05 = this.rate_work_college_cal_room_for_teach.rate_05;
-      let rate_06 = this.rate_work_college_cal_room_for_teach.rate_06;
-      let rate_07 = this.rate_work_college_cal_room_for_teach.rate_07;
-      let rate_08 = this.rate_work_college_cal_room_for_teach.rate_08;
-      let rate_09 = this.rate_work_college_cal_room_for_teach.rate_09;
-      let rate_66 = this.rate_work_college_cal_room_for_teach.rate_66;
-      let rate_std_00 = this.rate_work_college_cal_room_for_teach.rate_std_00;
-
-      let official_rate_00 = ((90 * rate_00) / 100).toFixed(2);
-      let civil_servant_rate_00 = ((10 * rate_00) / 100).toFixed(2);
-      let sum_of_ci_rate00 = (90 * rate_00) / 100 + (10 * rate_00) / 100;
-      this.official_rate_00 = official_rate_00;
-      this.civil_servant_rate_00 = civil_servant_rate_00;
-      let incomplete_rate_00 = parseFloat(
-        parseFloat(
-          this.rate_work_g_query.rate_work_g_gs_ta +
-            this.rate_work_g_query.rate_work_g_gs_tb
-        ) - parseFloat(sum_of_ci_rate00)
-      ).toFixed(2);
-      this.incomplete_rate_00 = incomplete_rate_00;
-
-      let official_rate_01 = ((90 * rate_01) / 100).toFixed(2);
-      let civil_servant_rate_01 = ((10 * rate_01) / 100).toFixed(2);
-      let sum_of_ci_rate01 = (90 * rate_01) / 100 + (10 * rate_01) / 100;
-      this.official_rate_01 = official_rate_01;
-      this.civil_servant_rate_01 = civil_servant_rate_01;
-      let incomplete_rate_01 = parseFloat(
-        parseFloat(
-          this.rate_work_g_query.rate_work_g_is_ta +
-            this.rate_work_g_query.rate_work_g_is_tb
-        ) - parseFloat(sum_of_ci_rate01)
-      ).toFixed(2);
-      this.incomplete_rate_01 = incomplete_rate_01;
-
-      let official_rate_02 = ((90 * rate_02) / 100).toFixed(2);
-      let civil_servant_rate_02 = ((10 * rate_02) / 100).toFixed(2);
-      let sum_of_ci_rate02 = (90 * rate_02) / 100 + (10 * rate_02) / 100;
-      this.official_rate_02 = official_rate_02;
-      this.civil_servant_rate_02 = civil_servant_rate_02;
-      let incomplete_rate_02 = parseFloat(
-        parseFloat(
-          this.rate_work_g_query.rate_work_g_cm_ta +
-            this.rate_work_g_query.rate_work_g_cm_tb
-        ) - parseFloat(sum_of_ci_rate02)
-      ).toFixed(2);
-      this.incomplete_rate_02 = incomplete_rate_02;
-
-      let official_rate_03 = ((90 * rate_03) / 100).toFixed(2);
-      let civil_servant_rate_03 = ((10 * rate_03) / 100).toFixed(2);
-      let sum_of_ci_rate03 = (90 * rate_03) / 100 + (10 * rate_03) / 100;
-      this.official_rate_03 = official_rate_03;
-      this.civil_servant_rate_03 = civil_servant_rate_03;
-      let incomplete_rate_03 = parseFloat(
-        parseFloat(
-          this.rate_work_g_query.rate_work_g_art_ta +
-            this.rate_work_g_query.rate_work_g_art_tb
-        ) - parseFloat(sum_of_ci_rate03)
-      ).toFixed(2);
-      this.incomplete_rate_03 = incomplete_rate_03;
-
-      let official_rate_04 = ((90 * rate_04) / 100).toFixed(2);
-      let civil_servant_rate_04 = ((10 * rate_04) / 100).toFixed(2);
-      let sum_of_ci_rate04 = (90 * rate_04) / 100 + (10 * rate_04) / 100;
-      this.official_rate_04 = official_rate_04;
-      this.civil_servant_rate_04 = civil_servant_rate_04;
-      let incomplete_rate_04 = parseFloat(
-        parseFloat(
-          this.rate_work_g_query.rate_work_g_em_ta +
-            this.rate_work_g_query.rate_work_g_em_tb
-        ) - parseFloat(sum_of_ci_rate04)
-      ).toFixed(2);
-      this.incomplete_rate_04 = incomplete_rate_04;
-
-      let official_rate_05 = ((90 * rate_05) / 100).toFixed(2);
-      let civil_servant_rate_05 = ((10 * rate_05) / 100).toFixed(2);
-      let sum_of_ci_rate05 = (90 * rate_05) / 100 + (10 * rate_05) / 100;
-      this.official_rate_05 = official_rate_05;
-      this.civil_servant_rate_05 = civil_servant_rate_05;
-      let incomplete_rate_05 = parseFloat(
-        parseFloat(
-          this.rate_work_g_query.rate_work_g_ag_ta +
-            this.rate_work_g_query.rate_work_g_ag_tb
-        ) - parseFloat(sum_of_ci_rate05)
-      ).toFixed(2);
-      this.incomplete_rate_05 = incomplete_rate_05;
-
-      let official_rate_06 = ((90 * rate_06) / 100).toFixed(2);
-      let civil_servant_rate_06 = ((10 * rate_06) / 100).toFixed(2);
-      let sum_of_ci_rate06 = (90 * rate_06) / 100 + (10 * rate_06) / 100;
-      this.official_rate_06 = official_rate_06;
-      this.civil_servant_rate_06 = civil_servant_rate_06;
-      let incomplete_rate_06 = parseFloat(
-        parseFloat(
-          this.rate_work_g_query.rate_work_g_fish_ta +
-            this.rate_work_g_query.rate_work_g_fish_tb
-        ) - parseFloat(sum_of_ci_rate06)
-      ).toFixed(2);
-      this.incomplete_rate_06 = incomplete_rate_06;
-
-      let official_rate_07 = ((90 * rate_07) / 100).toFixed(2);
-      let civil_servant_rate_07 = ((10 * rate_07) / 100).toFixed(2);
-      let sum_of_ci_rate07 = (90 * rate_07) / 100 + (10 * rate_07) / 100;
-      this.official_rate_07 = official_rate_07;
-      this.civil_servant_rate_07 = civil_servant_rate_07;
-      let incomplete_rate_07 = parseFloat(
-        parseFloat(
-          this.rate_work_g_query.rate_work_g_tour_ta +
-            this.rate_work_g_query.rate_work_g_tour_tb
-        ) - parseFloat(sum_of_ci_rate07)
-      ).toFixed(2);
-      this.incomplete_rate_07 = incomplete_rate_07;
-
-      let official_rate_08 = ((90 * rate_08) / 100).toFixed(2);
-      let civil_servant_rate_08 = ((10 * rate_08) / 100).toFixed(2);
-      let sum_of_ci_rate08 = (90 * rate_08) / 100 + (10 * rate_08) / 100;
-      this.official_rate_08 = official_rate_08;
-      this.civil_servant_rate_08 = civil_servant_rate_08;
-      let incomplete_rate_08 = parseFloat(
-        parseFloat(
-          this.rate_work_g_query.rate_work_g_textile_ta +
-            this.rate_work_g_query.rate_work_g_textile_tb
-        ) - parseFloat(sum_of_ci_rate08)
-      ).toFixed(2);
-      this.incomplete_rate_08 = incomplete_rate_08;
-
-      let official_rate_09 = ((90 * rate_09) / 100).toFixed(2);
-      let civil_servant_rate_09 = ((10 * rate_09) / 100).toFixed(2);
-      let sum_of_ci_rate09 = (90 * rate_09) / 100 + (10 * rate_09) / 100;
-      this.official_rate_09 = official_rate_09;
-      this.civil_servant_rate_09 = civil_servant_rate_09;
-      let incomplete_rate_09 = parseFloat(
-        parseFloat(
-          this.rate_work_g_query.rate_work_g_insy_ta +
-            this.rate_work_g_query.rate_work_g_insy_tb
-        ) - parseFloat(sum_of_ci_rate09)
-      ).toFixed(2);
-      this.incomplete_rate_09 = incomplete_rate_09;
-
-      let type_college_s = this.user.college_id_code_type_manpower;
-      if (type_college_s == "6") {
-        let official_rate_66 = ((90 * rate_66) / 100).toFixed(2);
-        let civil_servant_rate_66 = ((10 * rate_66) / 100).toFixed(2);
-        let sum_of_ci_rate66 = (90 * rate_66) / 100 + (10 * rate_66) / 100;
-        this.official_rate_66 = official_rate_66;
-        this.civil_servant_rate_66 = civil_servant_rate_66;
-        let incomplete_rate_66 = parseFloat(
-          parseFloat(
-            this.rate_work_g_query.rate_work_g_sc_ta +
-              this.rate_work_g_query.rate_work_g_sc_tb
-          ) - parseFloat(sum_of_ci_rate66)
-        ).toFixed(2);
-        this.incomplete_rate_66 = incomplete_rate_66;
-      } else {
-        this.official_rate_66 = 0;
-        this.civil_servant_rate_66 = 0;
-        this.incomplete_rate_66 = 0;
-      }
-
-      let official_rate_sup;
-      let rate_work_cal_room_dr = this.rate_work_college_cal_room_for_dr
-        .rate_work_cal_room_dr;
-      if (rate_std_00 > 479) {
-        official_rate_sup = Math.round(
-          (50 * ((8.5 * rate_work_cal_room_dr + 24.5) / 30)) / 100
-        );
-      } else {
-        official_rate_sup = 0;
-      }
-      this.official_rate_sup = official_rate_sup;
-
-      let civil_servant_rate_sub;
-      if (rate_std_00 < 480) {
-        civil_servant_rate_sub = Math.round(
-          (8.5 * rate_work_cal_room_dr + 24.5) / 30
-        );
-      } else if (rate_std_00 >= 480) {
-        civil_servant_rate_sub = Math.round(
-          (8.5 * rate_work_cal_room_dr + 24.5) / 30 -  official_rate_sup
-        );
-      }
-      this.civil_servant_rate_sub = civil_servant_rate_sub;
-
-      console.log(rate_work_cal_room_dr)
-
-      let incomplete_rate_sup;
-      incomplete_rate_sup =
-        parseInt(
-          this.rate_work_g_query.rate_work_g_sup_ta +
-            this.rate_work_g_query.rate_work_g_sup_tb
-        ) -
-        (civil_servant_rate_sub + official_rate_sup);
-      this.incomplete_rate_sup = incomplete_rate_sup;
-    },
-
-    async cal_man_power_cri() {
-      let criterion_sec_teach;
-      let rate_sum_man_all = this.rate_work_college_cal_room_for_teach
-        .rate_sum_man_all;
-      criterion_sec_teach = Math.round((90 * rate_sum_man_all) / 100);
-      this.criterion_sec_teach = criterion_sec_teach;
-
-      let incomplete_rate_teach;
-      incomplete_rate_teach = Math.round(
-        rate_sum_man_all - criterion_sec_teach
-      );
-      this.incomplete_rate_teach = incomplete_rate_teach;
-
-      let incomplete_rate_teach_result;
-      let rate_teach_true =
-        this.rate_work_g_query.sumteach_a + this.rate_work_g_query.sumteach_b;
-      let sum_incomplete_rate_teach =
-        criterion_sec_teach + incomplete_rate_teach;
-
-      incomplete_rate_teach_result =
-        rate_teach_true - sum_incomplete_rate_teach;
-      this.incomplete_rate_teach_result = incomplete_rate_teach_result;
-      /* incomplete_rate_teach_result =  */
-
-      let rate_work_all_criterion;
-      rate_work_all_criterion = Math.round(
-        this.criterion_dr +
-        this.criterion_sec_dr +
-        this.criterion_sec_teach +
-        this.incomplete_rate_teach +
-        this.official_rate_sup +
-        this.civil_servant_rate_sub);
-      this.rate_work_all_criterion = rate_work_all_criterion;
-
-      let incomplete_rate_teach_result_all;
-      incomplete_rate_teach_result_all =
-        this.rate_work_g_query.sumall - this.rate_work_all_criterion;
-      this.incomplete_rate_teach_result_all = incomplete_rate_teach_result_all;
-    }
+      let result = await this.$http
+        .post("rate_work_g.php", {
+          ApiKey: this.ApiKey,
+          rate_work_g_college_code: userSession.user_name,
+          rate_work_g_year: this.select.state
+        })
+        .finally(() => (this.loading = false));
+      this.rate_work_g_query = result.data;
+      /* console.log(result.data); */     
+    },   
   },
 
   computed: {

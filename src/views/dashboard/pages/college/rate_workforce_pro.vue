@@ -17,6 +17,10 @@
         <span>ประมวลผลอัตรากำลัง </span>
         <v-icon>mdi-numeric-4-box</v-icon>
       </v-btn>
+  <v-btn to="/college/rate_workforce_report">
+        <span>รายงานผลอัตรากำลัง </span>
+        <v-icon>mdi-numeric-5-box</v-icon>
+      </v-btn>
     </v-bottom-navigation>
 
     <v-container id="upgrade" fluid tag="section" class="text_google">
@@ -27,7 +31,7 @@
               <h2 class="h1 font-weight-light text_google">
                 <v-icon large left>mdi-file-send</v-icon>ข้อมูลสรุปผลอัตรากำลัง
                 : ประเภทวิทยาลัย {{ user.college_id_code_type_manpower }}
-                <v-select
+                <!-- <v-select
                   v-model="years_select"
                   :items="year_s"
                   item-value="year_s"
@@ -40,7 +44,7 @@
                   "
                   label="เลือกปี : "
                 >
-                </v-select>
+                </v-select> -->
               </h2>
             </template>
 
@@ -177,13 +181,13 @@
                                   item.rate_work_college_code,
                                   item.rate_work_course_id,
                                   item.rate_work_college_id_class
-                                )
-                              "
+                                )"
                             >
                               mdi-delete
                             </v-icon>
-                          </template>
+                          </template>                          
                         </v-data-table>
+                       <h3 class="red--text">*กรณีแก้ไขเปลี่ยนแปลงข้อมูลจำนวน นักเรียน นักศึกษา ในขั้นตอนที่ 2 กรุณากดปุ่มประมวลผลซ้ำอีกครั้ง เพื่อปรับปรุงข้อมูล</h3>  
                       </v-card>
 
                       <v-card>
@@ -383,6 +387,7 @@
                             </tr>
                           </tbody>
                         </v-simple-table>
+                            <h3 class="red--text">*กรณีแก้ไขเปลี่ยนแปลงข้อมูลจำนวน นักเรียน นักศึกษา ในขั้นตอนที่ 2 กรุณากดปุ่มประมวลผลซ้ำอีกครั้ง เพื่อปรับปรุงข้อมูล</h3>  
                       </v-card>
                         <!-- v-if="user.college_id_code_type_manpower === '6'" -->
                       <v-card>
@@ -423,7 +428,7 @@
                               </th>
                             </tr>
                           </thead>
-                          <tbody>
+                          <tbody v-if="rate_work_sc_show.rate_sc_year">
                             <tr>
                               <td class="text-center">
                                 {{ rate_work_sc_show.rate_sc_year }}
@@ -776,12 +781,7 @@
                             ที่คุณกำลังค้นหา.</v-alert
                           >
                         </v-data-table>
-                      </v-card>
-                      <v-col cols="12">
-                        <v-btn rounded color="green">
-                          <h2>รายงานจำนวนนักเรียนนักศึกษา</h2>
-                        </v-btn>
-                      </v-col>
+                      </v-card>                     
                     </v-card>
                   </v-col>
                 </v-row>
@@ -3344,7 +3344,7 @@ export default {
         cal_01 = 0;
       } else if (level_1 < 40) {
         cal_01 = 1;
-      } else if ((level_1 / 40) % 1 < 1 / 4) {
+      } else if (((level_1 / 40)%1) < 1 / 4) {
         cal_01 = Math.floor(level_1 / 40);
       } else {
         cal_01 = Math.ceil(level_1 / 40);
@@ -3355,7 +3355,7 @@ export default {
         cal_02 = 0;
       } else if (level_2 < 40) {
         cal_02 = 1;
-      } else if ((level_2 / 40) % 1 < 1 / 4) {
+      } else if (((level_2 / 40)%1) < 1 / 4) {
         cal_02 = Math.floor(level_2 / 40);
       } else {
         cal_02 = Math.ceil(level_2 / 40);
@@ -3367,7 +3367,7 @@ export default {
         cal_03 = 0;
       } else if (level_3 < 40) {
         cal_03 = 1;
-      } else if ((level_3 / 40) % 1 < 1 / 4) {
+      } else if (((level_3 / 40)%1) < 1 / 4) {
         cal_03 = Math.floor(level_3 / 40);
       } else {
         cal_03 = Math.ceil(level_3 / 40);
@@ -3379,7 +3379,7 @@ export default {
         cal_04 = 0;
       } else if (level_4 < 30) {
         cal_04 = 1;
-      } else if ((level_4 / 30) % 1 < 1 / 3) {
+      } else if ((1 % (level_4 / 30)) < 1 / 3) {
         cal_04 = Math.floor(level_4 / 30);
       } else {
         cal_04 = Math.ceil(level_4 / 30);
@@ -3391,12 +3391,13 @@ export default {
         cal_05 = 0;
       } else if (level_5 < 30) {
         cal_05 = 1;
-      } else if ((level_5 / 30) % 1 < 1 / 3) {
+      } else if ((1 % (level_5 / 30)) < 1 / 3) {
         cal_05 = Math.floor(level_5 / 30);
       } else {
         cal_05 = Math.ceil(level_5 / 30);
       }
       this.analysis_data_s_result_05 = cal_05;
+
       this.analysis_data_s_result_sum_room_20 = cal_01 + cal_02 + cal_03;
       this.analysis_data_s_result_sum_room_30 = cal_04 + cal_05;
       this.analysis_data_s_result_sum_room =
@@ -3443,7 +3444,7 @@ export default {
               cal_01 = 0;
             } else if (level_1 < 30) {
               cal_01 = 1;
-            } else if ((level_1 / 30) % 1 < 1 / 3) {
+            } else if (((level_1 / 30)%1)< 1 / 3) {
               cal_01 = Math.floor(level_1 / 30);
             } else {
               cal_01 = Math.ceil(level_1 / 30);
@@ -3455,7 +3456,7 @@ export default {
               cal_02 = 0;
             } else if (level_2 < 30) {
               cal_02 = 1;
-            } else if ((level_2 / 30) % 1 < 1 / 3) {
+            } else if (((level_2 / 30)%1) < 1 / 3) {
               cal_02 = Math.floor(level_2 / 30);
             } else {
               cal_02 = Math.ceil(level_2 / 30);
@@ -3467,7 +3468,7 @@ export default {
               cal_03 = 0;
             } else if (level_3 < 30) {
               cal_03 = 1;
-            } else if ((level_3 / 30) % 1 < 1 / 3) {
+            } else if (((level_3 / 30)%1) < 1 / 3) {
               cal_03 = Math.floor(level_3 / 30);
             } else {
               cal_03 = Math.ceil(level_3 / 30);
@@ -3481,7 +3482,7 @@ export default {
               cal_01 = 0;
             } else if (level_1 < 40) {
               cal_01 = 1;
-            } else if ((level_1 / 40) % 1 < 1 / 4) {
+            } else if (((level_1 / 40)%1) < 1 / 4) {
               cal_01 = Math.floor(level_1 / 40);
             } else {
               cal_01 = Math.ceil(level_1 / 40);
@@ -3493,7 +3494,7 @@ export default {
               cal_02 = 0;
             } else if (level_2 < 40) {
               cal_02 = 1;
-            } else if ((level_2 / 40) % 1 < 1 / 4) {
+            } else if (((level_2 / 40)%1) < 1 / 4) {
               cal_02 = Math.floor(level_2 / 40);
             } else {
               cal_02 = Math.ceil(level_2 / 40);
@@ -3505,7 +3506,7 @@ export default {
               cal_03 = 0;
             } else if (level_3 < 40) {
               cal_03 = 1;
-            } else if ((level_3 / 40) % 1 < 1 / 4) {
+            } else if (((level_3 / 40)%1) < 1 / 4) {
               cal_03 = Math.floor(level_3 / 40);
             } else {
               cal_03 = Math.ceil(level_3 / 40);
@@ -3519,7 +3520,7 @@ export default {
               cal_01 = 0;
             } else if (level_1 < 40) {
               cal_01 = 1;
-            } else if ((level_1 / 40) % 1 < 1 / 4) {
+            } else if (((level_1 / 40)%1) < 1 / 4) {
               cal_01 = Math.floor(level_1 / 40);
             } else {
               cal_01 = Math.ceil(level_1 / 40);
@@ -3531,7 +3532,7 @@ export default {
               cal_02 = 0;
             } else if (level_2 < 40) {
               cal_02 = 1;
-            } else if ((level_2 / 40) % 1 < 1 / 4) {
+            } else if (((level_2 / 40)%1) < 1 / 4) {
               cal_02 = Math.floor(level_2 / 40);
             } else {
               cal_02 = Math.ceil(level_2 / 40);
@@ -3543,7 +3544,7 @@ export default {
               cal_03 = 0;
             } else if (level_3 < 40) {
               cal_03 = 1;
-            } else if ((level_3 / 40) % 1 < 1 / 4) {
+            } else if (((level_3 / 40)%1) < 1 / 4) {
               cal_03 = Math.floor(level_3 / 40);
             } else {
               cal_03 = Math.ceil(level_3 / 40);
@@ -3557,7 +3558,7 @@ export default {
               cal_01 = 0;
             } else if (level_1 < 30) {
               cal_01 = 1;
-            } else if ((level_1 / 30) % 1 < 1 / 3) {
+            } else if (((level_1 / 30)%1)< 1 / 3) {
               cal_01 = Math.floor(level_1 / 30);
             } else {
               cal_01 = Math.ceil(level_1 / 30);
@@ -3569,7 +3570,7 @@ export default {
               cal_02 = 0;
             } else if (level_2 < 30) {
               cal_02 = 1;
-            } else if ((level_2 / 30) % 1 < 1 / 3) {
+            } else if (((level_2 / 30)%1) < 1 / 3) {
               cal_02 = Math.floor(level_2 / 30);
             } else {
               cal_02 = Math.ceil(level_2 / 30);
@@ -3581,7 +3582,7 @@ export default {
               cal_03 = 0;
             } else if (level_3 < 30) {
               cal_03 = 1;
-            } else if ((level_3 / 30) % 1 < 1 / 3) {
+            } else if (((level_3 / 30)%1) < 1 / 3) {
               cal_03 = Math.floor(level_3 / 30);
             } else {
               cal_03 = Math.ceil(level_3 / 30);
@@ -3601,7 +3602,7 @@ export default {
               cal_01 = 0;
             } else if (level_1 < 30) {
               cal_01 = 1;
-            } else if ((level_1 / 30) % 1 < 1 / 3) {
+            } else if (((level_1 / 30)%1)< 1 / 3) {
               cal_01 = Math.floor(level_1 / 30);
             } else {
               cal_01 = Math.ceil(level_1 / 30);
@@ -3613,7 +3614,7 @@ export default {
               cal_02 = 0;
             } else if (level_2 < 30) {
               cal_02 = 1;
-            } else if ((level_2 / 30) % 1 < 1 / 3) {
+            } else if (((level_2 / 30)%1) < 1 / 3) {
               cal_02 = Math.floor(level_2 / 30);
             } else {
               cal_02 = Math.ceil(level_2 / 30);
@@ -3627,7 +3628,7 @@ export default {
               cal_01 = 0;
             } else if (level_1 < 30) {
               cal_01 = 1;
-            } else if ((level_1 / 30) % 1 < 1 / 3) {
+            } else if (((level_1 / 30)%1)< 1 / 3) {
               cal_01 = Math.floor(level_1 / 30);
             } else {
               cal_01 = Math.ceil(level_1 / 30);
@@ -3639,7 +3640,7 @@ export default {
               cal_02 = 0;
             } else if (level_2 < 30) {
               cal_02 = 1;
-            } else if ((level_2 / 30) % 1 < 1 / 3) {
+            } else if (((level_2 / 30)%1) < 1 / 3) {
               cal_02 = Math.floor(level_2 / 30);
             } else {
               cal_02 = Math.ceil(level_2 / 30);
@@ -3659,7 +3660,7 @@ export default {
               cal_01 = 0;
             } else if (level_1 < 30) {
               cal_01 = 1;
-            } else if ((level_1 / 30) % 1 < 1 / 3) {
+            } else if (((level_1 / 30)%1)< 1 / 3) {
               cal_01 = Math.floor(level_1 / 30);
             } else {
               cal_01 = Math.ceil(level_1 / 30);
@@ -3671,7 +3672,7 @@ export default {
               cal_02 = 0;
             } else if (level_2 < 30) {
               cal_02 = 1;
-            } else if ((level_2 / 30) % 1 < 1 / 3) {
+            } else if (((level_2 / 30)%1) < 1 / 3) {
               cal_02 = Math.floor(level_2 / 30);
             } else {
               cal_02 = Math.ceil(level_2 / 30);
@@ -3683,7 +3684,7 @@ export default {
               cal_03 = 0;
             } else if (level_3 < 30) {
               cal_03 = 1;
-            } else if ((level_3 / 30) % 1 < 1 / 3) {
+            } else if (((level_3 / 30)%1) < 1 / 3) {
               cal_03 = Math.floor(level_3 / 30);
             } else {
               cal_03 = Math.ceil(level_3 / 30);
@@ -3697,7 +3698,7 @@ export default {
               cal_01 = 0;
             } else if (level_1 < 40) {
               cal_01 = 1;
-            } else if ((level_1 / 40) % 1 < 1 / 4) {
+            } else if (((level_1 / 40)%1) < 1 / 4) {
               cal_01 = Math.floor(level_1 / 40);
             } else {
               cal_01 = Math.ceil(level_1 / 40);
@@ -3709,7 +3710,7 @@ export default {
               cal_02 = 0;
             } else if (level_2 < 40) {
               cal_02 = 1;
-            } else if ((level_2 / 40) % 1 < 1 / 4) {
+            } else if (((level_2 / 40)%1) < 1 / 4) {
               cal_02 = Math.floor(level_2 / 40);
             } else {
               cal_02 = Math.ceil(level_2 / 40);
@@ -3721,7 +3722,7 @@ export default {
               cal_03 = 0;
             } else if (level_3 < 40) {
               cal_03 = 1;
-            } else if ((level_3 / 40) % 1 < 1 / 4) {
+            } else if (((level_3 / 40)%1) < 1 / 4) {
               cal_03 = Math.floor(level_3 / 40);
             } else {
               cal_03 = Math.ceil(level_3 / 40);
@@ -3735,7 +3736,7 @@ export default {
               cal_01 = 0;
             } else if (level_1 < 40) {
               cal_01 = 1;
-            } else if ((level_1 / 40) % 1 < 1 / 4) {
+            } else if (((level_1 / 40)%1) < 1 / 4) {
               cal_01 = Math.floor(level_1 / 40);
             } else {
               cal_01 = Math.ceil(level_1 / 40);
@@ -3747,7 +3748,7 @@ export default {
               cal_02 = 0;
             } else if (level_2 < 40) {
               cal_02 = 1;
-            } else if ((level_2 / 40) % 1 < 1 / 4) {
+            } else if (((level_2 / 40)%1) < 1 / 4) {
               cal_02 = Math.floor(level_2 / 40);
             } else {
               cal_02 = Math.ceil(level_2 / 40);
@@ -3759,7 +3760,7 @@ export default {
               cal_03 = 0;
             } else if (level_3 < 40) {
               cal_03 = 1;
-            } else if ((level_3 / 40) % 1 < 1 / 4) {
+            } else if (((level_3 / 40)%1) < 1 / 4) {
               cal_03 = Math.floor(level_3 / 40);
             } else {
               cal_03 = Math.ceil(level_3 / 40);
@@ -3773,7 +3774,7 @@ export default {
               cal_01 = 0;
             } else if (level_1 < 30) {
               cal_01 = 1;
-            } else if ((level_1 / 30) % 1 < 1 / 3) {
+            } else if (((level_1 / 30)%1)< 1 / 3) {
               cal_01 = Math.floor(level_1 / 30);
             } else {
               cal_01 = Math.ceil(level_1 / 30);
@@ -3785,7 +3786,7 @@ export default {
               cal_02 = 0;
             } else if (level_2 < 30) {
               cal_02 = 1;
-            } else if ((level_2 / 30) % 1 < 1 / 3) {
+            } else if (((level_2 / 30)%1) < 1 / 3) {
               cal_02 = Math.floor(level_2 / 30);
             } else {
               cal_02 = Math.ceil(level_2 / 30);
@@ -3797,7 +3798,7 @@ export default {
               cal_03 = 0;
             } else if (level_3 < 30) {
               cal_03 = 1;
-            } else if ((level_3 / 30) % 1 < 1 / 3) {
+            } else if (((level_3 / 30)%1) < 1 / 3) {
               cal_03 = Math.floor(level_3 / 30);
             } else {
               cal_03 = Math.ceil(level_3 / 30);
@@ -3817,7 +3818,7 @@ export default {
               cal_01 = 0;
             } else if (level_1 < 30) {
               cal_01 = 1;
-            } else if ((level_1 / 30) % 1 < 1 / 3) {
+            } else if (((level_1 / 30)%1)< 1 / 3) {
               cal_01 = Math.floor(level_1 / 30);
             } else {
               cal_01 = Math.ceil(level_1 / 30);
@@ -3829,7 +3830,7 @@ export default {
               cal_02 = 0;
             } else if (level_2 < 30) {
               cal_02 = 1;
-            } else if ((level_2 / 30) % 1 < 1 / 3) {
+            } else if (((level_2 / 30)%1) < 1 / 3) {
               cal_02 = Math.floor(level_2 / 30);
             } else {
               cal_02 = Math.ceil(level_2 / 30);
@@ -3843,7 +3844,7 @@ export default {
               cal_01 = 0;
             } else if (level_1 < 30) {
               cal_01 = 1;
-            } else if ((level_1 / 30) % 1 < 1 / 3) {
+            } else if (((level_1 / 30)%1)< 1 / 3) {
               cal_01 = Math.floor(level_1 / 30);
             } else {
               cal_01 = Math.ceil(level_1 / 30);
@@ -3855,7 +3856,7 @@ export default {
               cal_02 = 0;
             } else if (level_2 < 30) {
               cal_02 = 1;
-            } else if ((level_2 / 30) % 1 < 1 / 3) {
+            } else if (((level_2 / 30)%1) < 1 / 3) {
               cal_02 = Math.floor(level_2 / 30);
             } else {
               cal_02 = Math.ceil(level_2 / 30);
@@ -3876,7 +3877,7 @@ export default {
               cal_01 = 0;
             } else if (level_1 < 40) {
               cal_01 = 1;
-            } else if ((level_1 / 40) % 1 < 1 / 4) {
+            } else if (((level_1 / 40)%1) < 1 / 4) {
               cal_01 = Math.floor(level_1 / 40);
             } else {
               cal_01 = Math.ceil(level_1 / 40);
@@ -3888,7 +3889,7 @@ export default {
               cal_02 = 0;
             } else if (level_2 < 40) {
               cal_02 = 1;
-            } else if ((level_2 / 40) % 1 < 1 / 4) {
+            } else if (((level_2 / 40)%1) < 1 / 4) {
               cal_02 = Math.floor(level_2 / 40);
             } else {
               cal_02 = Math.ceil(level_2 / 40);
@@ -3900,7 +3901,7 @@ export default {
               cal_03 = 0;
             } else if (level_3 < 40) {
               cal_03 = 1;
-            } else if ((level_3 / 40) % 1 < 1 / 4) {
+            } else if (((level_3 / 40)%1) < 1 / 4) {
               cal_03 = Math.floor(level_3 / 40);
             } else {
               cal_03 = Math.ceil(level_3 / 40);
@@ -3914,7 +3915,7 @@ export default {
               cal_01 = 0;
             } else if (level_1 < 40) {
               cal_01 = 1;
-            } else if ((level_1 / 40) % 1 < 1 / 4) {
+            } else if (((level_1 / 40)%1) < 1 / 4) {
               cal_01 = Math.floor(level_1 / 40);
             } else {
               cal_01 = Math.ceil(level_1 / 40);
@@ -3926,7 +3927,7 @@ export default {
               cal_02 = 0;
             } else if (level_2 < 40) {
               cal_02 = 1;
-            } else if ((level_2 / 40) % 1 < 1 / 4) {
+            } else if (((level_2 / 40)%1) < 1 / 4) {
               cal_02 = Math.floor(level_2 / 40);
             } else {
               cal_02 = Math.ceil(level_2 / 40);
@@ -3938,7 +3939,7 @@ export default {
               cal_03 = 0;
             } else if (level_3 < 40) {
               cal_03 = 1;
-            } else if ((level_3 / 40) % 1 < 1 / 4) {
+            } else if (((level_3 / 40)%1) < 1 / 4) {
               cal_03 = Math.floor(level_3 / 40);
             } else {
               cal_03 = Math.ceil(level_3 / 40);
@@ -3952,7 +3953,7 @@ export default {
               cal_01 = 0;
             } else if (level_1 < 30) {
               cal_01 = 1;
-            } else if ((level_1 / 30) % 1 < 1 / 3) {
+            } else if (((level_1 / 30)%1)< 1 / 3) {
               cal_01 = Math.floor(level_1 / 30);
             } else {
               cal_01 = Math.ceil(level_1 / 30);
@@ -3964,7 +3965,7 @@ export default {
               cal_02 = 0;
             } else if (level_2 < 30) {
               cal_02 = 1;
-            } else if ((level_2 / 30) % 1 < 1 / 3) {
+            } else if (((level_2 / 30)%1) < 1 / 3) {
               cal_02 = Math.floor(level_2 / 30);
             } else {
               cal_02 = Math.ceil(level_2 / 30);
@@ -3976,7 +3977,7 @@ export default {
               cal_03 = 0;
             } else if (level_3 < 30) {
               cal_03 = 1;
-            } else if ((level_3 / 30) % 1 < 1 / 3) {
+            } else if (((level_3 / 30)%1) < 1 / 3) {
               cal_03 = Math.floor(level_3 / 30);
             } else {
               cal_03 = Math.ceil(level_3 / 30);
@@ -3992,7 +3993,7 @@ export default {
               cal_01 = 0;
             } else if (level_1 < 30) {
               cal_01 = 1;
-            } else if ((level_1 / 30) % 1 < 1 / 3) {
+            } else if (((level_1 / 30)%1)< 1 / 3) {
               cal_01 = Math.floor(level_1 / 30);
             } else {
               cal_01 = Math.ceil(level_1 / 30);
@@ -4004,7 +4005,7 @@ export default {
               cal_02 = 0;
             } else if (level_2 < 30) {
               cal_02 = 1;
-            } else if ((level_2 / 30) % 1 < 1 / 3) {
+            } else if (((level_2 / 30)%1) < 1 / 3) {
               cal_02 = Math.floor(level_2 / 30);
             } else {
               cal_02 = Math.ceil(level_2 / 30);
@@ -4018,7 +4019,7 @@ export default {
               cal_01 = 0;
             } else if (level_1 < 30) {
               cal_01 = 1;
-            } else if ((level_1 / 30) % 1 < 1 / 3) {
+            } else if (((level_1 / 30)%1)< 1 / 3) {
               cal_01 = Math.floor(level_1 / 30);
             } else {
               cal_01 = Math.ceil(level_1 / 30);
@@ -4030,7 +4031,7 @@ export default {
               cal_02 = 0;
             } else if (level_2 < 30) {
               cal_02 = 1;
-            } else if ((level_2 / 30) % 1 < 1 / 3) {
+            } else if (((level_2 / 30)%1) < 1 / 3) {
               cal_02 = Math.floor(level_2 / 30);
             } else {
               cal_02 = Math.ceil(level_2 / 30);
@@ -4051,7 +4052,7 @@ export default {
               cal_01 = 0;
             } else if (level_1 < 40) {
               cal_01 = 1;
-            } else if ((level_1 / 40) % 1 < 1 / 4) {
+            } else if (((level_1 / 40)%1) < 1 / 4) {
               cal_01 = Math.floor(level_1 / 40);
             } else {
               cal_01 = Math.ceil(level_1 / 40);
@@ -4063,7 +4064,7 @@ export default {
               cal_02 = 0;
             } else if (level_2 < 40) {
               cal_02 = 1;
-            } else if ((level_2 / 40) % 1 < 1 / 4) {
+            } else if (((level_2 / 40)%1) < 1 / 4) {
               cal_02 = Math.floor(level_2 / 40);
             } else {
               cal_02 = Math.ceil(level_2 / 40);
@@ -4075,7 +4076,7 @@ export default {
               cal_03 = 0;
             } else if (level_3 < 40) {
               cal_03 = 1;
-            } else if ((level_3 / 40) % 1 < 1 / 4) {
+            } else if (((level_3 / 40)%1) < 1 / 4) {
               cal_03 = Math.floor(level_3 / 40);
             } else {
               cal_03 = Math.ceil(level_3 / 40);
@@ -4089,7 +4090,7 @@ export default {
               cal_01 = 0;
             } else if (level_1 < 40) {
               cal_01 = 1;
-            } else if ((level_1 / 40) % 1 < 1 / 4) {
+            } else if (((level_1 / 40)%1) < 1 / 4) {
               cal_01 = Math.floor(level_1 / 40);
             } else {
               cal_01 = Math.ceil(level_1 / 40);
@@ -4101,7 +4102,7 @@ export default {
               cal_02 = 0;
             } else if (level_2 < 40) {
               cal_02 = 1;
-            } else if ((level_2 / 40) % 1 < 1 / 4) {
+            } else if (((level_2 / 40)%1) < 1 / 4) {
               cal_02 = Math.floor(level_2 / 40);
             } else {
               cal_02 = Math.ceil(level_2 / 40);
@@ -4113,7 +4114,7 @@ export default {
               cal_03 = 0;
             } else if (level_3 < 40) {
               cal_03 = 1;
-            } else if ((level_3 / 40) % 1 < 1 / 4) {
+            } else if (((level_3 / 40)%1) < 1 / 4) {
               cal_03 = Math.floor(level_3 / 40);
             } else {
               cal_03 = Math.ceil(level_3 / 40);
@@ -4127,7 +4128,7 @@ export default {
               cal_01 = 0;
             } else if (level_1 < 30) {
               cal_01 = 1;
-            } else if ((level_1 / 30) % 1 < 1 / 3) {
+            } else if (((level_1 / 30)%1)< 1 / 3) {
               cal_01 = Math.floor(level_1 / 30);
             } else {
               cal_01 = Math.ceil(level_1 / 30);
@@ -4139,7 +4140,7 @@ export default {
               cal_02 = 0;
             } else if (level_2 < 30) {
               cal_02 = 1;
-            } else if ((level_2 / 30) % 1 < 1 / 3) {
+            } else if (((level_2 / 30)%1) < 1 / 3) {
               cal_02 = Math.floor(level_2 / 30);
             } else {
               cal_02 = Math.ceil(level_2 / 30);
@@ -4151,7 +4152,7 @@ export default {
               cal_03 = 0;
             } else if (level_3 < 30) {
               cal_03 = 1;
-            } else if ((level_3 / 30) % 1 < 1 / 3) {
+            } else if (((level_3 / 30)%1) < 1 / 3) {
               cal_03 = Math.floor(level_3 / 30);
             } else {
               cal_03 = Math.ceil(level_3 / 30);
@@ -4167,7 +4168,7 @@ export default {
               cal_01 = 0;
             } else if (level_1 < 30) {
               cal_01 = 1;
-            } else if ((level_1 / 30) % 1 < 1 / 3) {
+            } else if (((level_1 / 30)%1)< 1 / 3) {
               cal_01 = Math.floor(level_1 / 30);
             } else {
               cal_01 = Math.ceil(level_1 / 30);
@@ -4179,7 +4180,7 @@ export default {
               cal_02 = 0;
             } else if (level_2 < 30) {
               cal_02 = 1;
-            } else if ((level_2 / 30) % 1 < 1 / 3) {
+            } else if (((level_2 / 30)%1) < 1 / 3) {
               cal_02 = Math.floor(level_2 / 30);
             } else {
               cal_02 = Math.ceil(level_2 / 30);
@@ -4193,7 +4194,7 @@ export default {
               cal_01 = 0;
             } else if (level_1 < 30) {
               cal_01 = 1;
-            } else if ((level_1 / 30) % 1 < 1 / 3) {
+            } else if (((level_1 / 30)%1)< 1 / 3) {
               cal_01 = Math.floor(level_1 / 30);
             } else {
               cal_01 = Math.ceil(level_1 / 30);
@@ -4205,7 +4206,7 @@ export default {
               cal_02 = 0;
             } else if (level_2 < 30) {
               cal_02 = 1;
-            } else if ((level_2 / 30) % 1 < 1 / 3) {
+            } else if (((level_2 / 30)%1) < 1 / 3) {
               cal_02 = Math.floor(level_2 / 30);
             } else {
               cal_02 = Math.ceil(level_2 / 30);
@@ -4226,7 +4227,7 @@ export default {
               cal_01 = 0;
             } else if (level_1 < 30) {
               cal_01 = 1;
-            } else if ((level_1 / 30) % 1 < 1 / 3) {
+            } else if (((level_1 / 30)%1)< 1 / 3) {
               cal_01 = Math.floor(level_1 / 30);
             } else {
               cal_01 = Math.ceil(level_1 / 30);
@@ -4238,7 +4239,7 @@ export default {
               cal_02 = 0;
             } else if (level_2 < 30) {
               cal_02 = 1;
-            } else if ((level_2 / 30) % 1 < 1 / 3) {
+            } else if (((level_2 / 30)%1) < 1 / 3) {
               cal_02 = Math.floor(level_2 / 30);
             } else {
               cal_02 = Math.ceil(level_2 / 30);
@@ -4250,7 +4251,7 @@ export default {
               cal_03 = 0;
             } else if (level_3 < 30) {
               cal_03 = 1;
-            } else if ((level_3 / 30) % 1 < 1 / 3) {
+            } else if (((level_3 / 30)%1) < 1 / 3) {
               cal_03 = Math.floor(level_3 / 30);
             } else {
               cal_03 = Math.ceil(level_3 / 30);
@@ -4267,7 +4268,7 @@ export default {
               cal_01 = 0;
             } else if (level_1 < 40) {
               cal_01 = 1;
-            } else if ((level_1 / 40) % 1 < 1 / 4) {
+            } else if (((level_1 / 40)%1) < 1 / 4) {
               cal_01 = Math.floor(level_1 / 40);
             } else {
               cal_01 = Math.ceil(level_1 / 40);
@@ -4279,7 +4280,7 @@ export default {
               cal_02 = 0;
             } else if (level_2 < 40) {
               cal_02 = 1;
-            } else if ((level_2 / 40) % 1 < 1 / 4) {
+            } else if (((level_2 / 40)%1) < 1 / 4) {
               cal_02 = Math.floor(level_2 / 40);
             } else {
               cal_02 = Math.ceil(level_2 / 40);
@@ -4291,7 +4292,7 @@ export default {
               cal_03 = 0;
             } else if (level_3 < 40) {
               cal_03 = 1;
-            } else if ((level_3 / 40) % 1 < 1 / 4) {
+            } else if (((level_3 / 40)%1) < 1 / 4) {
               cal_03 = Math.floor(level_3 / 40);
             } else {
               cal_03 = Math.ceil(level_3 / 40);
@@ -4305,7 +4306,7 @@ export default {
               cal_01 = 0;
             } else if (level_1 < 30) {
               cal_01 = 1;
-            } else if ((level_1 / 30) % 1 < 1 / 3) {
+            } else if (((level_1 / 30)%1)< 1 / 3) {
               cal_01 = Math.floor(level_1 / 30);
             } else {
               cal_01 = Math.ceil(level_1 / 30);
@@ -4317,7 +4318,7 @@ export default {
               cal_02 = 0;
             } else if (level_2 < 30) {
               cal_02 = 1;
-            } else if ((level_2 / 30) % 1 < 1 / 3) {
+            } else if (((level_2 / 30)%1) < 1 / 3) {
               cal_02 = Math.floor(level_2 / 30);
             } else {
               cal_02 = Math.ceil(level_2 / 30);
@@ -4329,7 +4330,7 @@ export default {
               cal_03 = 0;
             } else if (level_3 < 30) {
               cal_03 = 1;
-            } else if ((level_3 / 30) % 1 < 1 / 3) {
+            } else if (((level_3 / 30)%1) < 1 / 3) {
               cal_03 = Math.floor(level_3 / 30);
             } else {
               cal_03 = Math.ceil(level_3 / 30);
@@ -4345,7 +4346,7 @@ export default {
               cal_01 = 0;
             } else if (level_1 < 30) {
               cal_01 = 1;
-            } else if ((level_1 / 30) % 1 < 1 / 3) {
+            } else if (((level_1 / 30)%1)< 1 / 3) {
               cal_01 = Math.floor(level_1 / 30);
             } else {
               cal_01 = Math.ceil(level_1 / 30);
@@ -4357,7 +4358,7 @@ export default {
               cal_02 = 0;
             } else if (level_2 < 30) {
               cal_02 = 1;
-            } else if ((level_2 / 30) % 1 < 1 / 3) {
+            } else if (((level_2 / 30)%1) < 1 / 3) {
               cal_02 = Math.floor(level_2 / 30);
             } else {
               cal_02 = Math.ceil(level_2 / 30);
@@ -4371,7 +4372,7 @@ export default {
               cal_01 = 0;
             } else if (level_1 < 30) {
               cal_01 = 1;
-            } else if ((level_1 / 30) % 1 < 1 / 3) {
+            } else if (((level_1 / 30)%1)< 1 / 3) {
               cal_01 = Math.floor(level_1 / 30);
             } else {
               cal_01 = Math.ceil(level_1 / 30);
@@ -4383,7 +4384,7 @@ export default {
               cal_02 = 0;
             } else if (level_2 < 30) {
               cal_02 = 1;
-            } else if ((level_2 / 30) % 1 < 1 / 3) {
+            } else if (((level_2 / 30)%1) < 1 / 3) {
               cal_02 = Math.floor(level_2 / 30);
             } else {
               cal_02 = Math.ceil(level_2 / 30);
@@ -4403,7 +4404,7 @@ export default {
               cal_01 = 0;
             } else if (level_1 < 40) {
               cal_01 = 1;
-            } else if ((level_1 / 40) % 1 < 1 / 4) {
+            } else if (((level_1 / 40)%1) < 1 / 4) {
               cal_01 = Math.floor(level_1 / 40);
             } else {
               cal_01 = Math.ceil(level_1 / 40);
@@ -4415,7 +4416,7 @@ export default {
               cal_02 = 0;
             } else if (level_2 < 40) {
               cal_02 = 1;
-            } else if ((level_2 / 40) % 1 < 1 / 4) {
+            } else if (((level_2 / 40)%1) < 1 / 4) {
               cal_02 = Math.floor(level_2 / 40);
             } else {
               cal_02 = Math.ceil(level_2 / 40);
@@ -4427,7 +4428,7 @@ export default {
               cal_03 = 0;
             } else if (level_3 < 40) {
               cal_03 = 1;
-            } else if ((level_3 / 40) % 1 < 1 / 4) {
+            } else if (((level_3 / 40)%1) < 1 / 4) {
               cal_03 = Math.floor(level_3 / 40);
             } else {
               cal_03 = Math.ceil(level_3 / 40);
@@ -4441,7 +4442,7 @@ export default {
               cal_01 = 0;
             } else if (level_1 < 30) {
               cal_01 = 1;
-            } else if ((level_1 / 30) % 1 < 1 / 3) {
+            } else if (((level_1 / 30)%1)< 1 / 3) {
               cal_01 = Math.floor(level_1 / 30);
             } else {
               cal_01 = Math.ceil(level_1 / 30);
@@ -4453,7 +4454,7 @@ export default {
               cal_02 = 0;
             } else if (level_2 < 30) {
               cal_02 = 1;
-            } else if ((level_2 / 30) % 1 < 1 / 3) {
+            } else if (((level_2 / 30)%1) < 1 / 3) {
               cal_02 = Math.floor(level_2 / 30);
             } else {
               cal_02 = Math.ceil(level_2 / 30);
@@ -4465,7 +4466,7 @@ export default {
               cal_03 = 0;
             } else if (level_3 < 30) {
               cal_03 = 1;
-            } else if ((level_3 / 30) % 1 < 1 / 3) {
+            } else if (((level_3 / 30)%1) < 1 / 3) {
               cal_03 = Math.floor(level_3 / 30);
             } else {
               cal_03 = Math.ceil(level_3 / 30);
@@ -4480,7 +4481,7 @@ export default {
             cal_01 = 0;
           } else if (level_1 < 30) {
             cal_01 = 1;
-          } else if ((level_1 / 30) % 1 < 1 / 3) {
+          } else if (((level_1 / 30)%1)< 1 / 3) {
             cal_01 = Math.floor(level_1 / 30);
           } else {
             cal_01 = Math.ceil(level_1 / 30);
@@ -4492,7 +4493,7 @@ export default {
             cal_02 = 0;
           } else if (level_2 < 30) {
             cal_02 = 1;
-          } else if ((level_2 / 30) % 1 < 1 / 3) {
+          } else if (((level_2 / 30)%1) < 1 / 3) {
             cal_02 = Math.floor(level_2 / 30);
           } else {
             cal_02 = Math.ceil(level_2 / 30);
@@ -4512,7 +4513,7 @@ export default {
               cal_01 = 0;
             } else if (level_1 < 40) {
               cal_01 = 1;
-            } else if ((level_1 / 40) % 1 < 1 / 3) {
+            } else if (((level_1 / 40)%1) < 1 / 4) {
               cal_01 = Math.floor(level_1 / 40);
             } else {
               cal_01 = Math.ceil(level_1 / 40);
@@ -4524,7 +4525,7 @@ export default {
               cal_02 = 0;
             } else if (level_2 < 40) {
               cal_02 = 1;
-            } else if ((level_2 / 40) % 1 < 1 / 3) {
+            } else if (((level_2 / 40)%1) < 1 / 4) {
               cal_02 = Math.floor(level_2 / 40);
             } else {
               cal_02 = Math.ceil(level_2 / 40);
@@ -4536,7 +4537,7 @@ export default {
               cal_03 = 0;
             } else if (level_3 < 40) {
               cal_03 = 1;
-            } else if ((level_3 / 40) % 1 < 1 / 3) {
+            } else if (((level_3 / 40)%1) < 1 / 4) {
               cal_03 = Math.floor(level_3 / 40);
             } else {
               cal_03 = Math.ceil(level_3 / 40);
@@ -4550,7 +4551,7 @@ export default {
               cal_01 = 0;
             } else if (level_1 < 30) {
               cal_01 = 1;
-            } else if ((level_1 / 30) % 1 < 1 / 3) {
+            } else if (((level_1 / 30)%1)< 1 / 3) {
               cal_01 = Math.floor(level_1 / 30);
             } else {
               cal_01 = Math.ceil(level_1 / 30);
@@ -4562,7 +4563,7 @@ export default {
               cal_02 = 0;
             } else if (level_2 < 30) {
               cal_02 = 1;
-            } else if ((level_2 / 40) % 1 < 1 / 3) {
+            } else if (((level_2 / 30)%1) < 1 / 3) {
               cal_02 = Math.floor(level_2 / 30);
             } else {
               cal_02 = Math.ceil(level_2 / 30);
@@ -4573,7 +4574,7 @@ export default {
               cal_03 = 0;
             } else if (level_3 < 30) {
               cal_03 = 1;
-            } else if ((level_3 / 40) % 1 < 1 / 3) {
+            } else if (((level_3 / 30)%1) < 1 / 3) {
               cal_03 = Math.floor(level_3 / 30);
             } else {
               cal_03 = Math.ceil(level_3 / 30);
@@ -4586,7 +4587,7 @@ export default {
               cal_01 = 0;
             } else if (level_1 < 40) {
               cal_01 = 1;
-            } else if ((level_1 / 40) % 1 < 1 / 3) {
+            } else if (((level_1 / 40)%1) < 1 / 4) {
               cal_01 = Math.floor(level_1 / 40);
             } else {
               cal_01 = Math.ceil(level_1 / 40);
@@ -4598,7 +4599,7 @@ export default {
               cal_02 = 0;
             } else if (level_2 < 40) {
               cal_02 = 1;
-            } else if ((level_2 / 40) % 1 < 1 / 3) {
+            } else if (((level_2 / 40)%1) < 1 / 4) {
               cal_02 = Math.floor(level_2 / 40);
             } else {
               cal_02 = Math.ceil(level_2 / 40);
@@ -4610,7 +4611,7 @@ export default {
               cal_03 = 0;
             } else if (level_3 < 40) {
               cal_03 = 1;
-            } else if ((level_3 / 40) % 1 < 1 / 3) {
+            } else if (((level_3 / 40)%1) < 1 / 4) {
               cal_03 = Math.floor(level_3 / 40);
             } else {
               cal_03 = Math.ceil(level_3 / 40);
@@ -4624,7 +4625,7 @@ export default {
               cal_01 = 0;
             } else if (level_1 < 30) {
               cal_01 = 1;
-            } else if ((level_1 / 30) % 1 < 1 / 3) {
+            } else if (((level_1 / 30)%1)< 1 / 3) {
               cal_01 = Math.floor(level_1 / 30);
             } else {
               cal_01 = Math.ceil(level_1 / 30);
@@ -4636,7 +4637,7 @@ export default {
               cal_02 = 0;
             } else if (level_2 < 30) {
               cal_02 = 1;
-            } else if ((level_2 / 30) % 1 < 1 / 3) {
+            } else if (((level_2 / 30)%1) < 1 / 3) {
               cal_02 = Math.floor(level_2 / 30);
             } else {
               cal_02 = Math.ceil(level_2 / 30);
@@ -4648,7 +4649,7 @@ export default {
               cal_03 = 0;
             } else if (level_3 < 30) {
               cal_03 = 1;
-            } else if ((level_3 / 30) % 1 < 1 / 3) {
+            } else if (((level_3 / 30)%1) < 1 / 3) {
               cal_03 = Math.floor(level_3 / 30);
             } else {
               cal_03 = Math.ceil(level_3 / 30);
@@ -4668,7 +4669,7 @@ export default {
               cal_01 = 0;
             } else if (level_1 < 30) {
               cal_01 = 1;
-            } else if ((level_1 / 30) % 1 < 1 / 3) {
+            } else if (((level_1 / 30)%1)< 1 / 3) {
               cal_01 = Math.floor(level_1 / 30);
             } else {
               cal_01 = Math.ceil(level_1 / 30);
@@ -4680,7 +4681,7 @@ export default {
               cal_02 = 0;
             } else if (level_2 < 30) {
               cal_02 = 1;
-            } else if ((level_2 / 30) % 1 < 1 / 3) {
+            } else if (((level_2 / 30)%1) < 1 / 3) {
               cal_02 = Math.floor(level_2 / 30);
             } else {
               cal_02 = Math.ceil(level_2 / 30);
@@ -4694,7 +4695,7 @@ export default {
               cal_01 = 0;
             } else if (level_1 < 30) {
               cal_01 = 1;
-            } else if ((level_1 / 30) % 1 < 1 / 3) {
+            } else if (((level_1 / 30)%1)< 1 / 3) {
               cal_01 = Math.floor(level_1 / 30);
             } else {
               cal_01 = Math.ceil(level_1 / 30);
@@ -4706,7 +4707,7 @@ export default {
               cal_02 = 0;
             } else if (level_2 < 30) {
               cal_02 = 1;
-            } else if ((level_2 / 30) % 1 < 1 / 3) {
+            } else if (((level_2 / 30)%1) < 1 / 3) {
               cal_02 = Math.floor(level_2 / 30);
             } else {
               cal_02 = Math.ceil(level_2 / 30);
@@ -4726,7 +4727,7 @@ export default {
               cal_01 = 0;
             } else if (level_1 < 30) {
               cal_01 = 1;
-            } else if ((level_1 / 30) % 1 < 1 / 3) {
+            } else if (((level_1 / 30)%1)< 1 / 3) {
               cal_01 = Math.floor(level_1 / 30);
             } else {
               cal_01 = Math.ceil(level_1 / 30);
@@ -4738,7 +4739,7 @@ export default {
               cal_02 = 0;
             } else if (level_2 < 30) {
               cal_02 = 1;
-            } else if ((level_2 / 30) % 1 < 1 / 3) {
+            } else if (((level_2 / 30)%1) < 1 / 3) {
               cal_02 = Math.floor(level_2 / 30);
             } else {
               cal_02 = Math.ceil(level_2 / 30);
@@ -4750,7 +4751,7 @@ export default {
               cal_03 = 0;
             } else if (level_3 < 30) {
               cal_03 = 1;
-            } else if ((level_3 / 30) % 1 < 1 / 3) {
+            } else if (((level_3 / 30)%1) < 1 / 3) {
               cal_03 = Math.floor(level_3 / 30);
             } else {
               cal_03 = Math.ceil(level_3 / 30);
@@ -4764,7 +4765,7 @@ export default {
               cal_01 = 0;
             } else if (level_1 < 40) {
               cal_01 = 1;
-            } else if ((level_1 / 40) % 1 < 1 / 4) {
+            } else if (((level_1 / 40)%1) < 1 / 4) {
               cal_01 = Math.floor(level_1 / 40);
             } else {
               cal_01 = Math.ceil(level_1 / 40);
@@ -4776,7 +4777,7 @@ export default {
               cal_02 = 0;
             } else if (level_2 < 40) {
               cal_02 = 1;
-            } else if ((level_2 / 40) % 1 < 1 / 4) {
+            } else if (((level_2 / 40)%1) < 1 / 4) {
               cal_02 = Math.floor(level_2 / 40);
             } else {
               cal_02 = Math.ceil(level_2 / 40);
@@ -4788,7 +4789,7 @@ export default {
               cal_03 = 0;
             } else if (level_3 < 40) {
               cal_03 = 1;
-            } else if ((level_3 / 40) % 1 < 1 / 4) {
+            } else if (((level_3 / 40)%1) < 1 / 4) {
               cal_03 = Math.floor(level_3 / 40);
             } else {
               cal_03 = Math.ceil(level_3 / 40);
@@ -4802,7 +4803,7 @@ export default {
               cal_01 = 0;
             } else if (level_1 < 40) {
               cal_01 = 1;
-            } else if ((level_1 / 40) % 1 < 1 / 4) {
+            } else if (((level_1 / 40)%1) < 1 / 4) {
               cal_01 = Math.floor(level_1 / 40);
             } else {
               cal_01 = Math.ceil(level_1 / 40);
@@ -4814,7 +4815,7 @@ export default {
               cal_02 = 0;
             } else if (level_2 < 40) {
               cal_02 = 1;
-            } else if ((level_2 / 40) % 1 < 1 / 4) {
+            } else if (((level_2 / 40)%1) < 1 / 4) {
               cal_02 = Math.floor(level_2 / 40);
             } else {
               cal_02 = Math.ceil(level_2 / 40);
@@ -4826,7 +4827,7 @@ export default {
               cal_03 = 0;
             } else if (level_3 < 40) {
               cal_03 = 1;
-            } else if ((level_3 / 40) % 1 < 1 / 4) {
+            } else if (((level_3 / 40)%1) < 1 / 4) {
               cal_03 = Math.floor(level_3 / 40);
             } else {
               cal_03 = Math.ceil(level_3 / 40);
@@ -4840,7 +4841,7 @@ export default {
               cal_01 = 0;
             } else if (level_1 < 30) {
               cal_01 = 1;
-            } else if ((level_1 / 30) % 1 < 1 / 3) {
+            } else if (((level_1 / 30)%1)< 1 / 3) {
               cal_01 = Math.floor(level_1 / 30);
             } else {
               cal_01 = Math.ceil(level_1 / 30);
@@ -4852,7 +4853,7 @@ export default {
               cal_02 = 0;
             } else if (level_2 < 30) {
               cal_02 = 1;
-            } else if ((level_2 / 30) % 1 < 1 / 3) {
+            } else if (((level_2 / 30)%1) < 1 / 3) {
               cal_02 = Math.floor(level_2 / 30);
             } else {
               cal_02 = Math.ceil(level_2 / 30);
@@ -4864,7 +4865,7 @@ export default {
               cal_03 = 0;
             } else if (level_3 < 30) {
               cal_03 = 1;
-            } else if ((level_3 / 30) % 1 < 1 / 3) {
+            } else if (((level_3 / 30)%1) < 1 / 3) {
               cal_03 = Math.floor(level_3 / 30);
             } else {
               cal_03 = Math.ceil(level_3 / 30);
@@ -4884,7 +4885,7 @@ export default {
               cal_01 = 0;
             } else if (level_1 < 30) {
               cal_01 = 1;
-            } else if ((level_1 / 30) % 1 < 1 / 3) {
+            } else if (((level_1 / 30)%1)< 1 / 3) {
               cal_01 = Math.floor(level_1 / 30);
             } else {
               cal_01 = Math.ceil(level_1 / 30);
@@ -4896,7 +4897,7 @@ export default {
               cal_02 = 0;
             } else if (level_2 < 30) {
               cal_02 = 1;
-            } else if ((level_2 / 30) % 1 < 1 / 3) {
+            } else if (((level_2 / 30)%1) < 1 / 3) {
               cal_02 = Math.floor(level_2 / 30);
             } else {
               cal_02 = Math.ceil(level_2 / 30);
@@ -4910,7 +4911,7 @@ export default {
               cal_01 = 0;
             } else if (level_1 < 30) {
               cal_01 = 1;
-            } else if ((level_1 / 30) % 1 < 1 / 3) {
+            } else if (((level_1 / 30)%1)< 1 / 3) {
               cal_01 = Math.floor(level_1 / 30);
             } else {
               cal_01 = Math.ceil(level_1 / 30);
@@ -4922,7 +4923,7 @@ export default {
               cal_02 = 0;
             } else if (level_2 < 30) {
               cal_02 = 1;
-            } else if ((level_2 / 30) % 1 < 1 / 3) {
+            } else if (((level_2 / 30)%1) < 1 / 3) {
               cal_02 = Math.floor(level_2 / 30);
             } else {
               cal_02 = Math.ceil(level_2 / 30);
@@ -4943,7 +4944,7 @@ export default {
               cal_01 = 0;
             } else if (level_1 < 30) {
               cal_01 = 1;
-            } else if ((level_1 / 30) % 1 < 1 / 3) {
+            } else if (((level_1 / 30)%1)< 1 / 3) {
               cal_01 = Math.floor(level_1 / 30);
             } else {
               cal_01 = Math.ceil(level_1 / 30);
@@ -4955,7 +4956,7 @@ export default {
               cal_02 = 0;
             } else if (level_2 < 30) {
               cal_02 = 1;
-            } else if ((level_2 / 30) % 1 < 1 / 3) {
+            } else if (((level_2 / 30)%1) < 1 / 3) {
               cal_02 = Math.floor(level_2 / 30);
             } else {
               cal_02 = Math.ceil(level_2 / 30);
@@ -4967,7 +4968,7 @@ export default {
               cal_03 = 0;
             } else if (level_3 < 30) {
               cal_03 = 1;
-            } else if ((level_3 / 30) % 1 < 1 / 3) {
+            } else if (((level_3 / 30)%1) < 1 / 3) {
               cal_03 = Math.floor(level_3 / 30);
             } else {
               cal_03 = Math.ceil(level_3 / 30);
@@ -4984,7 +4985,7 @@ export default {
               cal_01 = 0;
             } else if (level_1 < 40) {
               cal_01 = 1;
-            } else if ((level_1 / 40) % 1 < 1 / 4) {
+            } else if (((level_1 / 40)%1) < 1 / 4) {
               cal_01 = Math.floor(level_1 / 40);
             } else {
               cal_01 = Math.ceil(level_1 / 40);
@@ -4996,7 +4997,7 @@ export default {
               cal_02 = 0;
             } else if (level_2 < 40) {
               cal_02 = 1;
-            } else if ((level_2 / 40) % 1 < 1 / 4) {
+            } else if (((level_2 / 40)%1) < 1 / 4) {
               cal_02 = Math.floor(level_2 / 40);
             } else {
               cal_02 = Math.ceil(level_2 / 40);
@@ -5008,7 +5009,7 @@ export default {
               cal_03 = 0;
             } else if (level_3 < 40) {
               cal_03 = 1;
-            } else if ((level_3 / 40) % 1 < 1 / 4) {
+            } else if (((level_3 / 40)%1) < 1 / 4) {
               cal_03 = Math.floor(level_3 / 40);
             } else {
               cal_03 = Math.ceil(level_3 / 40);
@@ -5022,7 +5023,7 @@ export default {
               cal_01 = 0;
             } else if (level_1 < 30) {
               cal_01 = 1;
-            } else if ((level_1 / 30) % 1 < 1 / 3) {
+            } else if (((level_1 / 30)%1)< 1 / 3) {
               cal_01 = Math.floor(level_1 / 30);
             } else {
               cal_01 = Math.ceil(level_1 / 30);
@@ -5034,7 +5035,7 @@ export default {
               cal_02 = 0;
             } else if (level_2 < 30) {
               cal_02 = 1;
-            } else if ((level_2 / 30) % 1 < 1 / 3) {
+            } else if (((level_2 / 30)%1) < 1 / 3) {
               cal_02 = Math.floor(level_2 / 30);
             } else {
               cal_02 = Math.ceil(level_2 / 30);
@@ -5046,7 +5047,7 @@ export default {
               cal_03 = 0;
             } else if (level_3 < 30) {
               cal_03 = 1;
-            } else if ((level_3 / 30) % 1 < 1 / 3) {
+            } else if (((level_3 / 30)%1) < 1 / 3) {
               cal_03 = Math.floor(level_3 / 30);
             } else {
               cal_03 = Math.ceil(level_3 / 30);
@@ -5062,7 +5063,7 @@ export default {
               cal_01 = 0;
             } else if (level_1 < 30) {
               cal_01 = 1;
-            } else if ((level_1 / 30) % 1 < 1 / 3) {
+            } else if (((level_1 / 30)%1)< 1 / 3) {
               cal_01 = Math.floor(level_1 / 30);
             } else {
               cal_01 = Math.ceil(level_1 / 30);
@@ -5074,7 +5075,7 @@ export default {
               cal_02 = 0;
             } else if (level_2 < 30) {
               cal_02 = 1;
-            } else if ((level_2 / 30) % 1 < 1 / 3) {
+            } else if (((level_2 / 30)%1) < 1 / 3) {
               cal_02 = Math.floor(level_2 / 30);
             } else {
               cal_02 = Math.ceil(level_2 / 30);
@@ -5088,7 +5089,7 @@ export default {
               cal_01 = 0;
             } else if (level_1 < 30) {
               cal_01 = 1;
-            } else if ((level_1 / 30) % 1 < 1 / 3) {
+            } else if (((level_1 / 30)%1)< 1 / 3) {
               cal_01 = Math.floor(level_1 / 30);
             } else {
               cal_01 = Math.ceil(level_1 / 30);
@@ -5100,7 +5101,7 @@ export default {
               cal_02 = 0;
             } else if (level_2 < 30) {
               cal_02 = 1;
-            } else if ((level_2 / 30) % 1 < 1 / 3) {
+            } else if (((level_2 / 30)%1) < 1 / 3) {
               cal_02 = Math.floor(level_2 / 30);
             } else {
               cal_02 = Math.ceil(level_2 / 30);
@@ -5121,7 +5122,7 @@ export default {
               cal_01 = 0;
             } else if (level_1 < 30) {
               cal_01 = 1;
-            } else if ((level_1 / 30) % 1 < 1 / 3) {
+            } else if (((level_1 / 30)%1)< 1 / 3) {
               cal_01 = Math.floor(level_1 / 30);
             } else {
               cal_01 = Math.ceil(level_1 / 30);
@@ -5133,7 +5134,7 @@ export default {
               cal_02 = 0;
             } else if (level_2 < 30) {
               cal_02 = 1;
-            } else if ((level_2 / 30) % 1 < 1 / 3) {
+            } else if (((level_2 / 30)%1) < 1 / 3) {
               cal_02 = Math.floor(level_2 / 30);
             } else {
               cal_02 = Math.ceil(level_2 / 30);
@@ -5145,7 +5146,7 @@ export default {
               cal_03 = 0;
             } else if (level_3 < 30) {
               cal_03 = 1;
-            } else if ((level_3 / 30) % 1 < 1 / 3) {
+            } else if (((level_3 / 30)%1) < 1 / 3) {
               cal_03 = Math.floor(level_3 / 30);
             } else {
               cal_03 = Math.ceil(level_3 / 30);
@@ -5162,7 +5163,7 @@ export default {
               cal_01 = 0;
             } else if (level_1 < 40) {
               cal_01 = 1;
-            } else if ((level_1 / 40) % 1 < 1 / 4) {
+            } else if (((level_1 / 40)%1) < 1 / 4) {
               cal_01 = Math.floor(level_1 / 40);
             } else {
               cal_01 = Math.ceil(level_1 / 40);
@@ -5174,7 +5175,7 @@ export default {
               cal_02 = 0;
             } else if (level_2 < 40) {
               cal_02 = 1;
-            } else if ((level_2 / 40) % 1 < 1 / 4) {
+            } else if (((level_2 / 40)%1) < 1 / 4) {
               cal_02 = Math.floor(level_2 / 40);
             } else {
               cal_02 = Math.ceil(level_2 / 40);
@@ -5186,7 +5187,7 @@ export default {
               cal_03 = 0;
             } else if (level_3 < 40) {
               cal_03 = 1;
-            } else if ((level_3 / 40) % 1 < 1 / 4) {
+            } else if (((level_3 / 40)%1) < 1 / 4) {
               cal_03 = Math.floor(level_3 / 40);
             } else {
               cal_03 = Math.ceil(level_3 / 40);
@@ -5200,7 +5201,7 @@ export default {
               cal_01 = 0;
             } else if (level_1 < 30) {
               cal_01 = 1;
-            } else if ((level_1 / 30) % 1 < 1 / 3) {
+            } else if (((level_1 / 30)%1)< 1 / 3) {
               cal_01 = Math.floor(level_1 / 30);
             } else {
               cal_01 = Math.ceil(level_1 / 30);
@@ -5212,7 +5213,7 @@ export default {
               cal_02 = 0;
             } else if (level_2 < 30) {
               cal_02 = 1;
-            } else if ((level_2 / 30) % 1 < 1 / 3) {
+            } else if (((level_2 / 30)%1) < 1 / 3) {
               cal_02 = Math.floor(level_2 / 30);
             } else {
               cal_02 = Math.ceil(level_2 / 30);
@@ -5224,7 +5225,7 @@ export default {
               cal_03 = 0;
             } else if (level_3 < 30) {
               cal_03 = 1;
-            } else if ((level_3 / 30) % 1 < 1 / 3) {
+            } else if (((level_3 / 30)%1) < 1 / 3) {
               cal_03 = Math.floor(level_3 / 30);
             } else {
               cal_03 = Math.ceil(level_3 / 30);
@@ -5240,7 +5241,7 @@ export default {
               cal_01 = 0;
             } else if (level_1 < 30) {
               cal_01 = 1;
-            } else if ((level_1 / 30) % 1 < 1 / 3) {
+            } else if (((level_1 / 30)%1)< 1 / 3) {
               cal_01 = Math.floor(level_1 / 30);
             } else {
               cal_01 = Math.ceil(level_1 / 30);
@@ -5252,7 +5253,7 @@ export default {
               cal_02 = 0;
             } else if (level_2 < 30) {
               cal_02 = 1;
-            } else if ((level_2 / 30) % 1 < 1 / 3) {
+            } else if (((level_2 / 30)%1) < 1 / 3) {
               cal_02 = Math.floor(level_2 / 30);
             } else {
               cal_02 = Math.ceil(level_2 / 30);
@@ -5266,7 +5267,7 @@ export default {
               cal_01 = 0;
             } else if (level_1 < 30) {
               cal_01 = 1;
-            } else if ((level_1 / 30) % 1 < 1 / 3) {
+            } else if (((level_1 / 30)%1)< 1 / 3) {
               cal_01 = Math.floor(level_1 / 30);
             } else {
               cal_01 = Math.ceil(level_1 / 30);
@@ -5278,7 +5279,7 @@ export default {
               cal_02 = 0;
             } else if (level_2 < 30) {
               cal_02 = 1;
-            } else if ((level_2 / 30) % 1 < 1 / 3) {
+            } else if (((level_2 / 30)%1) < 1 / 3) {
               cal_02 = Math.floor(level_2 / 30);
             } else {
               cal_02 = Math.ceil(level_2 / 30);
@@ -5299,7 +5300,7 @@ export default {
               cal_01 = 0;
             } else if (level_1 < 30) {
               cal_01 = 1;
-            } else if ((level_1 / 30) % 1 < 1 / 3) {
+            } else if (((level_1 / 30)%1)< 1 / 3) {
               cal_01 = Math.floor(level_1 / 30);
             } else {
               cal_01 = Math.ceil(level_1 / 30);
@@ -5311,7 +5312,7 @@ export default {
               cal_02 = 0;
             } else if (level_2 < 30) {
               cal_02 = 1;
-            } else if ((level_2 / 30) % 1 < 1 / 3) {
+            } else if (((level_2 / 30)%1) < 1 / 3) {
               cal_02 = Math.floor(level_2 / 30);
             } else {
               cal_02 = Math.ceil(level_2 / 30);
@@ -5323,7 +5324,7 @@ export default {
               cal_03 = 0;
             } else if (level_3 < 30) {
               cal_03 = 1;
-            } else if ((level_3 / 30) % 1 < 1 / 3) {
+            } else if (((level_3 / 30)%1) < 1 / 3) {
               cal_03 = Math.floor(level_3 / 30);
             } else {
               cal_03 = Math.ceil(level_3 / 30);
@@ -5340,7 +5341,7 @@ export default {
               cal_01 = 0;
             } else if (level_1 < 40) {
               cal_01 = 1;
-            } else if ((level_1 / 40) % 1 < 1 / 4) {
+            } else if (((level_1 / 40)%1) < 1 / 4) {
               cal_01 = Math.floor(level_1 / 40);
             } else {
               cal_01 = Math.ceil(level_1 / 40);
@@ -5352,7 +5353,7 @@ export default {
               cal_02 = 0;
             } else if (level_2 < 40) {
               cal_02 = 1;
-            } else if ((level_2 / 40) % 1 < 1 / 4) {
+            } else if (((level_2 / 40)%1) < 1 / 4) {
               cal_02 = Math.floor(level_2 / 40);
             } else {
               cal_02 = Math.ceil(level_2 / 40);
@@ -5364,7 +5365,7 @@ export default {
               cal_03 = 0;
             } else if (level_3 < 40) {
               cal_03 = 1;
-            } else if ((level_3 / 40) % 1 < 1 / 4) {
+            } else if (((level_3 / 40)%1) < 1 / 4) {
               cal_03 = Math.floor(level_3 / 40);
             } else {
               cal_03 = Math.ceil(level_3 / 40);
@@ -5378,7 +5379,7 @@ export default {
               cal_01 = 0;
             } else if (level_1 < 30) {
               cal_01 = 1;
-            } else if ((level_1 / 30) % 1 < 1 / 3) {
+            } else if (((level_1 / 30)%1)< 1 / 3) {
               cal_01 = Math.floor(level_1 / 30);
             } else {
               cal_01 = Math.ceil(level_1 / 30);
@@ -5390,7 +5391,7 @@ export default {
               cal_02 = 0;
             } else if (level_2 < 30) {
               cal_02 = 1;
-            } else if ((level_2 / 30) % 1 < 1 / 3) {
+            } else if (((level_2 / 30)%1) < 1 / 3) {
               cal_02 = Math.floor(level_2 / 30);
             } else {
               cal_02 = Math.ceil(level_2 / 30);
@@ -5402,7 +5403,7 @@ export default {
               cal_03 = 0;
             } else if (level_3 < 30) {
               cal_03 = 1;
-            } else if ((level_3 / 30) % 1 < 1 / 3) {
+            } else if (((level_3 / 30)%1) < 1 / 3) {
               cal_03 = Math.floor(level_3 / 30);
             } else {
               cal_03 = Math.ceil(level_3 / 30);
@@ -5418,7 +5419,7 @@ export default {
               cal_01 = 0;
             } else if (level_1 < 30) {
               cal_01 = 1;
-            } else if ((level_1 / 30) % 1 < 1 / 3) {
+            } else if (((level_1 / 30)%1)< 1 / 3) {
               cal_01 = Math.floor(level_1 / 30);
             } else {
               cal_01 = Math.ceil(level_1 / 30);
@@ -5430,7 +5431,7 @@ export default {
               cal_02 = 0;
             } else if (level_2 < 30) {
               cal_02 = 1;
-            } else if ((level_2 / 30) % 1 < 1 / 3) {
+            } else if (((level_2 / 30)%1) < 1 / 3) {
               cal_02 = Math.floor(level_2 / 30);
             } else {
               cal_02 = Math.ceil(level_2 / 30);
@@ -5444,7 +5445,7 @@ export default {
               cal_01 = 0;
             } else if (level_1 < 30) {
               cal_01 = 1;
-            } else if ((level_1 / 30) % 1 < 1 / 3) {
+            } else if (((level_1 / 30)%1)< 1 / 3) {
               cal_01 = Math.floor(level_1 / 30);
             } else {
               cal_01 = Math.ceil(level_1 / 30);
@@ -5456,7 +5457,7 @@ export default {
               cal_02 = 0;
             } else if (level_2 < 30) {
               cal_02 = 1;
-            } else if ((level_2 / 30) % 1 < 1 / 3) {
+            } else if (((level_2 / 30)%1) < 1 / 3) {
               cal_02 = Math.floor(level_2 / 30);
             } else {
               cal_02 = Math.ceil(level_2 / 30);
@@ -5477,7 +5478,7 @@ export default {
               cal_01 = 0;
             } else if (level_1 < 30) {
               cal_01 = 1;
-            } else if ((level_1 / 30) % 1 < 1 / 3) {
+            } else if (((level_1 / 30)%1)< 1 / 3) {
               cal_01 = Math.floor(level_1 / 30);
             } else {
               cal_01 = Math.ceil(level_1 / 30);
@@ -5489,7 +5490,7 @@ export default {
               cal_02 = 0;
             } else if (level_2 < 30) {
               cal_02 = 1;
-            } else if ((level_2 / 30) % 1 < 1 / 3) {
+            } else if (((level_2 / 30)%1) < 1 / 3) {
               cal_02 = Math.floor(level_2 / 30);
             } else {
               cal_02 = Math.ceil(level_2 / 30);
@@ -5501,7 +5502,7 @@ export default {
               cal_03 = 0;
             } else if (level_3 < 30) {
               cal_03 = 1;
-            } else if ((level_3 / 30) % 1 < 1 / 3) {
+            } else if (((level_3 / 30)%1) < 1 / 3) {
               cal_03 = Math.floor(level_3 / 30);
             } else {
               cal_03 = Math.ceil(level_3 / 30);
@@ -5518,7 +5519,7 @@ export default {
               cal_01 = 0;
             } else if (level_1 < 40) {
               cal_01 = 1;
-            } else if ((level_1 / 40) % 1 < 1 / 4) {
+            } else if (((level_1 / 40)%1) < 1 / 4) {
               cal_01 = Math.floor(level_1 / 40);
             } else {
               cal_01 = Math.ceil(level_1 / 40);
@@ -5530,7 +5531,7 @@ export default {
               cal_02 = 0;
             } else if (level_2 < 40) {
               cal_02 = 1;
-            } else if ((level_2 / 40) % 1 < 1 / 4) {
+            } else if (((level_2 / 40)%1) < 1 / 4) {
               cal_02 = Math.floor(level_2 / 40);
             } else {
               cal_02 = Math.ceil(level_2 / 40);
@@ -5542,7 +5543,7 @@ export default {
               cal_03 = 0;
             } else if (level_3 < 40) {
               cal_03 = 1;
-            } else if ((level_3 / 40) % 1 < 1 / 4) {
+            } else if (((level_3 / 40)%1) < 1 / 4) {
               cal_03 = Math.floor(level_3 / 40);
             } else {
               cal_03 = Math.ceil(level_3 / 40);
@@ -5556,7 +5557,7 @@ export default {
               cal_01 = 0;
             } else if (level_1 < 30) {
               cal_01 = 1;
-            } else if ((level_1 / 30) % 1 < 1 / 3) {
+            } else if (((level_1 / 30)%1)< 1 / 3) {
               cal_01 = Math.floor(level_1 / 30);
             } else {
               cal_01 = Math.ceil(level_1 / 30);
@@ -5568,7 +5569,7 @@ export default {
               cal_02 = 0;
             } else if (level_2 < 30) {
               cal_02 = 1;
-            } else if ((level_2 / 30) % 1 < 1 / 3) {
+            } else if (((level_2 / 30)%1) < 1 / 3) {
               cal_02 = Math.floor(level_2 / 30);
             } else {
               cal_02 = Math.ceil(level_2 / 30);
@@ -5580,7 +5581,7 @@ export default {
               cal_03 = 0;
             } else if (level_3 < 30) {
               cal_03 = 1;
-            } else if ((level_3 / 30) % 1 < 1 / 3) {
+            } else if (((level_3 / 30)%1) < 1 / 3) {
               cal_03 = Math.floor(level_3 / 30);
             } else {
               cal_03 = Math.ceil(level_3 / 30);
@@ -5596,7 +5597,7 @@ export default {
               cal_01 = 0;
             } else if (level_1 < 30) {
               cal_01 = 1;
-            } else if ((level_1 / 30) % 1 < 1 / 3) {
+            } else if (((level_1 / 30)%1)< 1 / 3) {
               cal_01 = Math.floor(level_1 / 30);
             } else {
               cal_01 = Math.ceil(level_1 / 30);
@@ -5608,7 +5609,7 @@ export default {
               cal_02 = 0;
             } else if (level_2 < 30) {
               cal_02 = 1;
-            } else if ((level_2 / 30) % 1 < 1 / 3) {
+            } else if (((level_2 / 30)%1) < 1 / 3) {
               cal_02 = Math.floor(level_2 / 30);
             } else {
               cal_02 = Math.ceil(level_2 / 30);
@@ -5622,7 +5623,7 @@ export default {
               cal_01 = 0;
             } else if (level_1 < 30) {
               cal_01 = 1;
-            } else if ((level_1 / 30) % 1 < 1 / 3) {
+            } else if (((level_1 / 30)%1)< 1 / 3) {
               cal_01 = Math.floor(level_1 / 30);
             } else {
               cal_01 = Math.ceil(level_1 / 30);
@@ -5634,7 +5635,7 @@ export default {
               cal_02 = 0;
             } else if (level_2 < 30) {
               cal_02 = 1;
-            } else if ((level_2 / 30) % 1 < 1 / 3) {
+            } else if (((level_2 / 30)%1) < 1 / 3) {
               cal_02 = Math.floor(level_2 / 30);
             } else {
               cal_02 = Math.ceil(level_2 / 30);

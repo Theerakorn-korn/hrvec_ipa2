@@ -1,6 +1,40 @@
 <template>
   <v-container id="dashboard" fluid tag="section">
     <v-row>
+      <v-col cols="12" md="12">
+     <v-alert
+      prominent
+      icon="mdi-bell-ring"
+      type="error"
+      v-if="period_colleges.period_college_enable ==='1' && period_colleges.period_college_type ==='update_college'"
+    >
+      <v-row align="center">
+        <v-col class="grow">
+        ขณะนี้ได้ทำการเปิดระบบ <span class="font-weight-black yellow--text"> รายงานข้อมูลสถานศึกษา รายงานอัตรากำลัง </span>  <h3>ให้สถานศึกษาดำเนินการ ก่อนระบบปิดในวันที่ {{ period_colleges.period_college_stop  | moment("add", "543 years")
+                | moment("D MMMM YYYY")}}</h3> 
+        </v-col>
+        <v-col class="shrink">
+          <v-btn to="/college/rate_workforce_g"> <v-icon class="pa-2">mdi-arrow-right-bold-hexagon-outline</v-icon> รายงานข้อมูล</v-btn>
+        </v-col>
+      </v-row>
+    </v-alert>
+      <v-alert
+      prominent
+      icon="mdi-bell-ring"
+      type="error"
+      v-if="period_college_moves.period_college_enable ==='1' && period_college_moves.period_college_type ==='movement_college'"
+    >
+      <v-row align="center">
+        <v-col class="grow">
+        ขณะนี้ได้ทำการเปิดระบบ <span class="font-weight-black yellow--text"> การย้ายและแจ้งเงือนไขสาขาวิชา </span> <h3>ให้สถานศึกษาดำเนินการ ก่อนระบบปิดในวันที่  {{ period_college_moves.period_college_stop  | moment("add", "543 years")
+                | moment("D MMMM YYYY")}}</h3> 
+        </v-col>
+        <v-col class="shrink">
+          <v-btn to="/college/conditions_branch"> <v-icon class="pa-2">mdi-arrow-right-bold-hexagon-outline</v-icon> แจ้งเงือนไขสาขาวิชา</v-btn>
+        </v-col>
+      </v-row>
+    </v-alert>
+      </v-col>
       <v-col cols="12" sm="6" lg="4">
         <base-material-stats-card          
           :value="Number(showAlldata.count_all).toLocaleString()"
@@ -186,7 +220,7 @@
         </base-material-chart-card>
       </v-col>
  -->
-      <v-col cols="12" md="12">
+     <!--  <v-col cols="12" md="12">
         <base-material-card color="warning" class="px-5 py-3">
           <template v-slot:heading>
             <div class="font-weight-light">สถานศึกษา</div>
@@ -205,7 +239,7 @@
             </v-data-table>
           </v-card-text>
         </base-material-card>
-      </v-col>
+      </v-col> -->
 
 
 
@@ -340,6 +374,8 @@ export default {
       showAlldata: {},    
       showcollegedata: {},   
        showbranchdata: [],  
+       period_colleges:[],
+       period_college_moves:[],
     };
   },
 
@@ -371,6 +407,8 @@ export default {
   await this.getPersonnelChart();
   await this.getPersonnel_rangChart();  
   await this.getAllbranchdata();
+  await this.period_collegeQuery();
+  await this.period_college_moveQuery();
   
    },
 
@@ -418,6 +456,28 @@ export default {
       });
       this.showbranchdata = result.data;
     },
+
+     async period_collegeQuery() {
+       let result_period_college;
+    result_period_college = await this.$http.post("period_college.php", {
+      ApiKey: this.ApiKey,
+      period_college_enable: "1",
+      period_college_type: "update_college"
+    });
+    this.period_colleges = result_period_college.data;    
+    console.log(result_period_college.data)
+    },
+ async period_college_moveQuery() {
+       let result_period_college;
+    result_period_college = await this.$http.post("period_college.php", {
+      ApiKey: this.ApiKey,
+      period_college_enable: "1",
+      period_college_type: "movement_college"
+    });
+    this.period_college_moves = result_period_college.data;    
+    console.log(result_period_college.data)
+    },
+
   },
   computed:{   
  num_dr(){
